@@ -2193,7 +2193,7 @@ export interface StatusResponse {
      * @type {RedisConnectionResponse}
      * @memberof StatusResponse
      */
-    redis_connection?: RedisConnectionResponse;
+    redis_connection: RedisConnectionResponse;
     /**
      * Storage information
      * @type {StorageResponse}

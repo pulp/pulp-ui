@@ -97,7 +97,7 @@ const Status: React.FunctionComponent = () => {
     function statusREAD() {
         const setupData = async () => {
             const configuration = new PulpCoreClient.Configuration({username: 'admin', password: 'password', basePath: 'http://localhost:8080'});
-            const statusAPI = new PulpCoreClient.StatusApi({configuration: configuration});
+            const statusAPI = new PulpCoreClient.StatusApi(configuration);
             const my_status = await statusAPI.statusRead();
             
             console.log(my_status);
@@ -138,13 +138,13 @@ const Status: React.FunctionComponent = () => {
     }
     function displayWorkers(){
         let listWorkers = "";
-        my_data.onWorkers.forEach((worker) => {listWorkers += worker.name + ', '})
+        my_data.onWorkers.forEach((worker) => {listWorkers += worker['name'] + ', '})
         listWorkers = listWorkers.substring(0, listWorkers.length - 2); 
         return <CardBody>{listWorkers}</CardBody>;
     }
     function displayOnContent(){
         let listContApps = "";
-        my_data.onContApp.forEach((app) => {listContApps += app.name + ', '})
+        my_data.onContApp.forEach((app) => {listContApps += app['name'] + ', '})
         listContApps = listContApps.substring(0, listContApps.length - 2); 
         return <CardBody>{listContApps}</CardBody>;
     }
