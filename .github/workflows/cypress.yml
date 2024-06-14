@@ -4,10 +4,10 @@ on:
   # allow running manually
   workflow_dispatch:
   pull_request:
-    branches: [ 'master', 'stable-*' ]
+    branches: [ 'main' ]
   push:
-    branches: [ 'master', 'stable-*' ]
-  # daily on master
+    branches: [ 'main' ]
+  # daily on main
   schedule:
   - cron: '30 5 * * *'
 
@@ -19,8 +19,8 @@ jobs:
   cypress:
     runs-on: ubuntu-latest
     env:
-      # base of a PR, or pushed-to branch outside PRs, or master
-      BRANCH: ${{ github.base_ref || github.ref || 'refs/heads/master' }}
+      # base of a PR, or pushed-to branch outside PRs, or main
+      BRANCH: ${{ github.base_ref || github.ref || 'refs/heads/main' }}
 
     strategy:
       fail-fast: false

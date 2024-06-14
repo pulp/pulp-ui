@@ -2,7 +2,7 @@ name: Automerge
 
 on:
   pull_request_target:
-    branches: [ 'master', 'stable-*' ]
+    branches: [ 'main' ]
 
 jobs:
   automerge:
@@ -17,13 +17,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20'
-
-    - name: "Check automerge conditions"
-      working-directory: ".github/workflows"
-      env:
-        PR_TITLE: "${{ github.event.pull_request.title }}"
-      run: |
-        node automerge-condition.js
 
     - name: "Wait for other tests"
       working-directory: ".github/workflows"

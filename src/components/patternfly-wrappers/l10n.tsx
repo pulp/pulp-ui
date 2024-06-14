@@ -165,7 +165,7 @@ export const NavList = (props: Omit<NavListProps, 'ref'>) => (
   />
 );
 
-// AAP-3737 - support both "1 - 2 of 3" and "3 的 1 - 2"
+// support both "1 - 2 of 3" and "3 的 1 - 2"
 const ToggleTemplate = ({
   firstIndex = 0,
   lastIndex = 0,

@@ -31,7 +31,6 @@ interface IProps {
 }
 
 interface IApplicationInfo {
-  aap_version?: string;
   galaxy_importer_version?: string;
   galaxy_ng_commit?: string;
   galaxy_ng_version?: string;
@@ -53,12 +52,11 @@ export const HubAboutModal = ({ isOpen, onClose, user, userName }: IProps) => {
   const {
     server_version, // 4.8.0dev
     galaxy_ng_version, // 4.8.0dev | 4.8.1
-    galaxy_ng_commit, // origin/master:1234567 | master:12345678 | ""
+    galaxy_ng_commit, // origin/main:1234567 | main:12345678 | ""
     galaxy_importer_version, // 0.4.13
     pulp_core_version, // 3.28.12
     pulp_ansible_version, // 0.19.0
     pulp_container_version, // 2.15.2
-    aap_version, // ?
   } = applicationInfo;
 
   const galaxy_ng_sha = galaxy_ng_commit?.split(':')[1];
@@ -142,13 +140,6 @@ export const HubAboutModal = ({ isOpen, onClose, user, userName }: IProps) => {
               {galaxy_importer_version}
             </ExternalLink>
           </Value>
-
-          {aap_version && (
-            <>
-              <Label>{t`Ansible Automation Platform`}</Label>
-              <Value>{aap_version}</Value>
-            </>
-          )}
 
           <Label>{t`UI Version`}</Label>
           <Value>

@@ -92,7 +92,7 @@ export class RemoteForm extends Component<IProps, IState> {
       },
     };
 
-    // Shim in a default concurrency value to pass form validation (AAH-959)
+    // Shim in a default concurrency value to pass form validation
     if (
       this.props.remoteType !== 'registry' &&
       this.props.remote.download_concurrency === null
