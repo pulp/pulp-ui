@@ -21,7 +21,6 @@ import { Link } from 'react-router-dom';
 import {
   ActiveUserAPI,
   type FeatureFlagsType,
-  GatewayLogoutAPI,
   type SettingsType,
   type UserType,
 } from 'src/api';
@@ -54,7 +53,6 @@ export const StandaloneLayout = ({
   user,
 }: IProps) => {
   const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
-  const isGateway = featureFlags?.dab_resource_registry;
 
   let aboutModal = null;
   let docsDropdownItems = [];
@@ -85,11 +83,6 @@ export const StandaloneLayout = ({
         aria-label={'logout'}
         onClick={() =>
           ActiveUserAPI.logout()
-            .then(
-              isGateway
-                ? () => GatewayLogoutAPI.logout().catch(() => null)
-                : () => null,
-            )
             .then(() => ActiveUserAPI.getUser().catch(() => null))
             .then((user) => setUser(user))
         }
@@ -99,68 +92,15 @@ export const StandaloneLayout = ({
     ];
 
     docsDropdownItems = [
-      !IS_COMMUNITY && (
-        <DropdownItem
-          key='documentation'
-          component={
-            <ExternalLink
-              href={UI_DOCS_URL}
-              variant='menu'
-            >{t`Documentation`}</ExternalLink>
-          }
-        />
-      ),
       <DropdownItem
-        key='customer_support'
+        key='documentation'
         component={
           <ExternalLink
-            href='https://access.redhat.com/support'
+            href={UI_DOCS_URL}
             variant='menu'
-          >{t`Customer Support`}</ExternalLink>
+          >{t`Documentation`}</ExternalLink>
         }
       />,
-      <DropdownItem
-        key='training'
-        component={
-          <ExternalLink
-            href='https://www.ansible.com/resources/webinars-training'
-            variant='menu'
-          >{t`Training`}</ExternalLink>
-        }
-      />,
-      IS_COMMUNITY && (
-        <DropdownItem
-          key='forum'
-          component={
-            <ExternalLink
-              href='https://forum.ansible.com'
-              variant='menu'
-            >{t`Ansible Community Forum`}</ExternalLink>
-          }
-        />
-      ),
-      IS_COMMUNITY && (
-        <DropdownItem
-          key='communication'
-          component={
-            <ExternalLink
-              href='https://docs.ansible.com/ansible/latest/community/communication.html'
-              variant='menu'
-            >{t`Communicating with the Ansible community`}</ExternalLink>
-          }
-        />
-      ),
-      IS_COMMUNITY && (
-        <DropdownItem
-          key='community'
-          component={
-            <ExternalLink
-              href='https://ansible.readthedocs.io/projects/galaxy-ng/en/latest/community/userguide/'
-              variant='menu'
-            >{t`Community User Guide`}</ExternalLink>
-          }
-        />
-      ),
       <DropdownItem key='about' onClick={() => setAboutModalVisible(true)}>
         {t`About`}
       </DropdownItem>,
@@ -185,7 +125,7 @@ export const StandaloneLayout = ({
       </MastheadToggle>
       <MastheadMain>
         <MastheadBrand>
-          <Link to={formatPath(Paths.landingPage)}>
+          <Link to={formatPath(Paths.search)}>
             <SmallLogo alt={APPLICATION_NAME} />
           </Link>
         </MastheadBrand>

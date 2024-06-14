@@ -18,13 +18,11 @@ export {
   mapErrorMessages,
 } from './map-error-messages';
 export { mapNetworkErrors, validateInput } from './map-role-errors';
-export { namespaceTitle } from './namespace-title';
 export { ParamHelper, type ParamType } from './param-helper';
 export { parsePulpIDFromURL } from './parse-pulp-id';
 export { RepoSigningUtils } from './repo-signing';
 export { repositoryBasePath } from './repository-base-path';
 export { repositoryRemoveCollection } from './repository-remove-collection';
-export { roleNamespaceInfo } from './role-namespace-info';
 export { taskAlert } from './task-alert';
 export { translateLockedRole } from './translate-locked-role';
 export { translateTask } from './translate-task';

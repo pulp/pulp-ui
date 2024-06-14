@@ -4,7 +4,6 @@ import {
   type CollectionVersionSearch,
   type ImportDetailType,
   type ImportListType,
-  type LegacyRoleImportDetailType,
   PulpStatus,
 } from 'src/api';
 import { Spinner, StatusIndicator, Tooltip } from 'src/components';
@@ -16,18 +15,9 @@ interface IProps {
   empty?: boolean;
   followMessages?: boolean;
   loading?: boolean;
-  roleImport?: LegacyRoleImportDetailType;
   selectedImport?: ImportListType;
   setFollowMessages?: (follow: boolean) => void;
   task?: ImportDetailType;
-}
-
-function legacyStatusToPulpStatus(v1status: string): PulpStatus {
-  return (
-    {
-      SUCCESS: PulpStatus.completed,
-    }[v1status] || PulpStatus[v1status.toLowerCase() as PulpStatus]
-  );
 }
 
 export function ImportConsole({
@@ -36,18 +26,13 @@ export function ImportConsole({
   empty,
   followMessages,
   loading,
-  roleImport,
   selectedImport,
   setFollowMessages,
   task,
 }: IProps) {
   const lastImport = useRef<HTMLDivElement>(null);
 
-  const state =
-    selectedImport?.state ||
-    task?.state ||
-    (roleImport?.state && legacyStatusToPulpStatus(roleImport.state)) ||
-    null;
+  const state = selectedImport?.state || task?.state || null;
 
   const inProgress = [PulpStatus.running, PulpStatus.waiting].includes(state);
 
@@ -72,10 +57,10 @@ export function ImportConsole({
   }, [followMessages, inProgress]);
 
   const collectionPipeline = collection?.repository?.pulp_labels?.pipeline;
-  const error = task?.error || roleImport?.error;
+  const error = task?.error;
 
   const title =
-    empty || (!selectedImport && !roleImport) ? null : (
+    empty || !selectedImport ? null : (
       <div>
         <div className='title-bar'>
           <div>
@@ -134,16 +119,7 @@ export function ImportConsole({
     </div>
   );
 
-  const messages = task
-    ? task.messages
-    : roleImport
-      ? roleImport.summary_fields.task_messages.map(
-          ({ message_type: level, message_text: message }) => ({
-            level,
-            message,
-          }),
-        )
-      : [];
+  const messages = task ? task.messages : [];
 
   return (
     <div className='hub-import-console' data-cy={'ImportConsole'}>

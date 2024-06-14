@@ -32,8 +32,6 @@ const defaultConfigs = [
   { name: 'UI_COMMIT_HASH', default: gitCommit, scope: 'global' },
   { name: 'UI_DOCS_URL', default: docsURL, scope: 'global' },
   { name: 'UI_EXTERNAL_LOGIN_URI', default: '/login', scope: 'global' },
-  { name: 'IS_INSIGHTS', default: false, scope: 'global' },
-  { name: 'IS_COMMUNITY', default: false, scope: 'global' },
 
   // Webpack scope: only available in customConfigs here, not exposed to the UI
   { name: 'UI_PORT', default: 8002, scope: 'webpack' },

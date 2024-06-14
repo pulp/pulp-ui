@@ -88,25 +88,6 @@ function standaloneMenu() {
         }),
       ],
     ),
-    menuSection(
-      t`Roles`,
-      {
-        condition: ({ featureFlags }) => featureFlags.legacy_roles,
-      },
-      [
-        menuItem(t`Roles`, {
-          url: formatPath(Paths.standaloneRoles),
-        }),
-        menuItem(t`Role Namespaces`, {
-          url: formatPath(Paths.standaloneNamespaces),
-        }),
-        menuItem(t`Role Imports`, {
-          url: formatPath(Paths.standaloneImports),
-          condition: ({ featureFlags, user }) =>
-            featureFlags.legacy_roles && !user.is_anonymous,
-        }),
-      ],
-    ),
     menuItem(t`Task Management`, {
       url: formatPath(Paths.taskList),
       condition: isLoggedIn,
@@ -134,19 +115,6 @@ function standaloneMenu() {
         alternativeUrls: [altPath(Paths.roleEdit)],
       }),
     ]),
-    menuItem(t`Documentation`, {
-      url: 'https://ansible.readthedocs.io/projects/galaxy-ng/en/latest/community/userguide/',
-      external: true,
-      condition: ({ settings, user }) =>
-        IS_COMMUNITY &&
-        (settings.GALAXY_ENABLE_UNAUTHENTICATED_COLLECTION_ACCESS ||
-          !user.is_anonymous),
-    }),
-    menuItem(t`Terms of Use`, {
-      url: 'https://www.redhat.com/en/about/terms-use',
-      external: true,
-      condition: ({ featureFlags }) => featureFlags.legacy_roles,
-    }),
   ];
 }
 

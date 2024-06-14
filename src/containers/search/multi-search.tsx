@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 import {
   CollectionVersionAPI,
   ExecutionEnvironmentAPI,
-  LegacyNamespaceAPI,
-  LegacyRoleAPI,
   NamespaceAPI,
 } from 'src/api';
 import {
@@ -19,8 +17,6 @@ import {
   Main,
   MultiSearchSearch,
   NamespaceListItem,
-  RoleItem,
-  RoleNamespaceItem,
   Tooltip,
   closeAlert,
 } from 'src/components';
@@ -69,9 +65,7 @@ const MultiSearch = (props: RouteProps) => {
   const [params, setParams] = useState({});
 
   const [collections, setCollections] = useState([]);
-  const [roles, setRoles] = useState([]);
   const [namespaces, setNamespaces] = useState([]);
-  const [roleNamespaces, setRoleNamespaces] = useState([]);
   const [containers, setContainers] = useState([]);
 
   const keywords = (params as { keywords: string })?.keywords || '';
@@ -84,8 +78,6 @@ const MultiSearch = (props: RouteProps) => {
     if (!keywords) {
       setCollections([]);
       setNamespaces([]);
-      setRoles([]);
-      setRoleNamespaces([]);
       setContainers([]);
       return;
     }
@@ -113,30 +105,6 @@ const MultiSearch = (props: RouteProps) => {
           addAlert,
         ),
       );
-
-    if (featureFlags.legacy_roles) {
-      setRoles(loading);
-      LegacyRoleAPI.list({ ...shared, keywords })
-        .then(({ data: { results } }) => setRoles(results || []))
-        .catch(
-          handleHttpError(
-            t`Failed to search roles (${keywords})`,
-            () => setRoles([]),
-            addAlert,
-          ),
-        );
-
-      setRoleNamespaces(loading);
-      LegacyNamespaceAPI.list({ ...shared, keywords })
-        .then(({ data: { results } }) => setRoleNamespaces(results || []))
-        .catch(
-          handleHttpError(
-            t`Failed to search role namespaces (${keywords})`,
-            () => setRoleNamespaces([]),
-            addAlert,
-          ),
-        );
-    }
 
     if (featureFlags.execution_environments) {
       setContainers(loading);
@@ -278,52 +246,6 @@ const MultiSearch = (props: RouteProps) => {
           </DataList>
         </ResultsSection>
 
-        {featureFlags.legacy_roles ? (
-          <ResultsSection
-            items={roles}
-            title={t`Roles`}
-            showAllLink={
-              <Link
-                to={formatPath(Paths.standaloneRoles)}
-              >{t`Show all roles`}</Link>
-            }
-            showMoreLink={
-              <Link
-                to={formatPath(Paths.standaloneRoles, {}, { keywords })}
-              >{t`Show more roles`}</Link>
-            }
-          >
-            <DataList aria-label={t`Available matching roles`}>
-              {roles.map((r) => (
-                <RoleItem key={r.id} role={r} show_thumbnail />
-              ))}
-            </DataList>
-          </ResultsSection>
-        ) : null}
-
-        {featureFlags.legacy_roles ? (
-          <ResultsSection
-            items={roleNamespaces}
-            title={t`Role namespaces`}
-            showAllLink={
-              <Link
-                to={formatPath(Paths.standaloneNamespaces)}
-              >{t`Show all role namespaces`}</Link>
-            }
-            showMoreLink={
-              <Link
-                to={formatPath(Paths.standaloneNamespaces, {}, { keywords })}
-              >{t`Show more role namespaces`}</Link>
-            }
-          >
-            <DataList aria-label={t`Available matching role namespaces`}>
-              {roleNamespaces.map((r) => (
-                <RoleNamespaceItem key={r.id} namespace={r} />
-              ))}
-            </DataList>
-          </ResultsSection>
-        ) : null}
-
         {featureFlags.execution_environments ? (
           <ResultsSection
             items={containers}
@@ -407,32 +329,6 @@ const MultiSearch = (props: RouteProps) => {
             >{t`Show all namespaces`}</Link>
           }
         />
-
-        {featureFlags.legacy_roles ? (
-          <NotFoundSection
-            items={roles}
-            title={t`Roles`}
-            emptyStateTitle={t`No matching roles found.`}
-            showAllLink={
-              <Link
-                to={formatPath(Paths.standaloneRoles)}
-              >{t`Show all roles`}</Link>
-            }
-          />
-        ) : null}
-
-        {featureFlags.legacy_roles ? (
-          <NotFoundSection
-            items={roleNamespaces}
-            title={t`Role namespaces`}
-            emptyStateTitle={t`No matching role namespaces found.`}
-            showAllLink={
-              <Link
-                to={formatPath(Paths.standaloneNamespaces)}
-              >{t`Show all role namespaces`}</Link>
-            }
-          />
-        ) : null}
 
         {featureFlags.execution_environments ? (
           <NotFoundSection

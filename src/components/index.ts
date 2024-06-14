@@ -52,11 +52,9 @@ export { HubPagination } from './hub-pagination';
 export { ImportConsole } from './import-console';
 export { ImportList } from './import-list';
 export { ImportModal } from './import-modal';
-export { LandingPageCard } from './landing-page-card';
 export { LanguageSwitcher } from './language-switcher';
 export { LazyDistributions } from './lazy-distributions';
 export { LazyRepositories } from './lazy-repositories';
-export { LightspeedModal } from './lightspeed-modal';
 export { LinkTabs, type LinkTabsProps } from './link-tabs';
 export { ListItemActions } from './list-item-actions';
 export {
@@ -107,7 +105,6 @@ export { PermissionChipSelector } from './permission-chip-selector';
 export { PreviewRoles } from './preview-roles';
 export { ProviderLink } from './provider-link';
 export { PulpLabels } from './pulp-labels';
-export { CollectionRatings, RoleRatings } from './ratings';
 export { RemoteForm } from './remote-form';
 export { RenderPluginDoc } from './render-plugin-doc';
 export { RepositoryBadge } from './repository-badge';
@@ -115,20 +112,13 @@ export { RepositoryForm } from './repository-form';
 export { ResourcesForm } from './resources-form';
 export { RoleForm } from './role-form';
 export { RoleHeader } from './role-header';
-export { RoleImportForm } from './role-import-form';
-export { RoleImportList } from './role-import-list';
-export { RoleItem } from './role-item';
 export {
   CheckboxRow,
   ExpandableRow,
   RadioRow,
   RoleListTable,
 } from './role-list-table';
-export { RoleNamespaceEditModal } from './role-namespace-edit-modal';
-export { RoleNamespaceItem } from './role-namespace-item';
-export { RoleNamespaceModal } from './role-namespace-modal';
 export { RolePermissions } from './role-permissions';
-export { RoleSyncForm } from './role-sync-form';
 export { SelectGroup } from './select-group';
 export { SelectRoles } from './select-roles';
 export { SelectUser } from './select-user';

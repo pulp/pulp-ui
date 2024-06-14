@@ -414,7 +414,7 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
         content={
           item.is_indexable
             ? t`Find execution environments in this registry`
-            : t`Indexing execution environments is only supported on registry.redhat.io`
+            : t`Indexing execution environments is not supported`
         }
       >
         <DropdownItem

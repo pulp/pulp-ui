@@ -8,19 +8,7 @@ describe('Documentation dropdown', () => {
 
   it('user can open docs dropdown menu', () => {
     cy.get('[data-cy="docs-dropdown"]').click();
-
-    cy.get('.pf-v5-c-dropdown__menu')
-      .contains('Customer Support')
-      .should('have.attr', 'href')
-      .and('contain', 'https://access.redhat.com/support');
-
-    cy.get('.pf-v5-c-dropdown__menu')
-      .contains('Training')
-      .should('have.attr', 'href')
-      .and('contain', 'https://www.ansible.com/resources/webinars-training');
-
     cy.get('.pf-v5-c-dropdown__menu').contains('Documentation');
-
     cy.get('.pf-v5-c-dropdown__menu').contains('About');
   });
 

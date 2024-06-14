@@ -13,13 +13,6 @@ import {
   AnsibleRepositoryDetail,
   AnsibleRepositoryEdit,
   AnsibleRepositoryList,
-  AnsibleRoleDetail,
-  AnsibleRoleImport,
-  AnsibleRoleImports,
-  AnsibleRoleList,
-  AnsibleRoleNamespaceDetail,
-  AnsibleRoleNamespaceList,
-  AnsibleRoleSync,
   CertificationDashboard,
   CollectionContent,
   CollectionDependencies,
@@ -40,7 +33,6 @@ import {
   ExecutionEnvironmentRegistryList,
   GroupDetail,
   GroupList,
-  LandingPage,
   LoginPage,
   MultiSearch,
   MyImports,
@@ -131,7 +123,7 @@ const AuthHandler = ({
     const isExternalAuth = featureFlags.external_authentication;
     // NOTE: also update LoginLink when changing this
     if (isExternalAuth && UI_EXTERNAL_LOGIN_URI) {
-      window.location.replace(loginURL(pathname, featureFlags));
+      window.location.replace(loginURL(pathname));
       return null;
     }
 
@@ -197,16 +189,6 @@ export class StandaloneRoutes extends Component<IRoutesProps> {
         path: Paths.executionEnvironmentsRegistries,
         isDisabled: isContainerDisabled,
       },
-      { component: AnsibleRoleDetail, path: Paths.standaloneRole },
-      { component: AnsibleRoleImport, path: Paths.standaloneRoleImport },
-      { component: AnsibleRoleImports, path: Paths.standaloneImports },
-      { component: AnsibleRoleList, path: Paths.standaloneRoles },
-      {
-        component: AnsibleRoleNamespaceDetail,
-        path: Paths.standaloneNamespace,
-      },
-      { component: AnsibleRoleNamespaceList, path: Paths.standaloneNamespaces },
-      { component: AnsibleRoleSync, path: Paths.standaloneRoleSync },
       {
         component: TaskListView,
         path: Paths.taskList,
@@ -252,8 +234,6 @@ export class StandaloneRoutes extends Component<IRoutesProps> {
       { component: TokenStandalone, path: Paths.token },
       { component: Partners, path: Paths.namespaces },
       { component: EditNamespace, path: Paths.editNamespace },
-      { component: NamespaceDetail, path: Paths.myCollections },
-      { component: NamespaceDetail, path: Paths.myCollectionsByRepo },
       { component: MyNamespaces, path: Paths.myNamespaces },
       { component: LoginPage, path: Paths.login, noAuth: true },
       { component: CollectionDocs, path: Paths.collectionDocsPageByRepo },
@@ -270,17 +250,10 @@ export class StandaloneRoutes extends Component<IRoutesProps> {
         path: Paths.collectionDependenciesByRepo,
       },
       { component: CollectionDetail, path: Paths.collectionByRepo },
+      { component: Search, path: Paths.collections },
+      { component: MyImports, path: Paths.myImports },
       { component: NamespaceDetail, path: Paths.namespaceDetail },
       { component: Search, path: Paths.collections },
-      { component: CollectionDocs, path: Paths.collectionDocsPage },
-      { component: CollectionDocs, path: Paths.collectionDocsIndex },
-      { component: CollectionDocs, path: Paths.collectionContentDocs },
-      { component: CollectionContent, path: Paths.collectionContentList },
-      { component: CollectionImportLog, path: Paths.collectionImportLog },
-      { component: MyImports, path: Paths.myImports },
-      { component: NamespaceDetail, path: Paths.namespace },
-      { component: Search, path: Paths.collections },
-      { component: LandingPage, path: Paths.landingPage },
       { component: Dispatch, path: Paths.dispatch },
       { component: MultiSearch, path: Paths.search },
     ];

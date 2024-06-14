@@ -2,14 +2,13 @@ import { Trans, t } from '@lingui/macro';
 import { Bullseye, DataList } from '@patternfly/react-core';
 import React, { type ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CollectionVersionAPI, LegacyRoleAPI } from 'src/api';
+import { CollectionVersionAPI } from 'src/api';
 import {
   BaseHeader,
   CollectionListItem,
   EmptyStateNoData,
   LoadingSpinner,
   Main,
-  RoleItem,
 } from 'src/components';
 import { useHubContext } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
@@ -38,59 +37,28 @@ const Dispatch = ({ location, navigate }: RouteProps) => {
   const [namespace, name] = pathname.split('/').filter(Boolean);
 
   const [collections, setCollections] = useState(null);
-  const [roles, setRoles] = useState(null);
 
   useEffect(() => {
-    const wait = [];
+    CollectionVersionAPI.list({ namespace, name, is_highest: true })
+      .then(({ data: { data } }) => data || [])
+      .catch(() => [])
+      .then((c) => (setCollections(c), c))
+      .then((collections) => {
+        if (collections.length === 1) {
+          const {
+            collection_version: { name: collection, namespace },
+            repository: { name: repo },
+          } = collections[0];
 
-    wait.push(
-      CollectionVersionAPI.list({ namespace, name, is_highest: true })
-        .then(({ data: { data } }) => data || [])
-        .catch(() => [])
-        .then((c) => (setCollections(c), c)),
-    );
-
-    if (featureFlags.legacy_roles) {
-      wait.push(
-        LegacyRoleAPI.list({ name, namespace })
-          .then(({ data: { results } }) => results || [])
-          .catch(() => [])
-          .then((r) => (setRoles(r), r)),
-      );
-    }
-
-    Promise.all(wait).then(([collections, roles]) => {
-      if (collections.length === 1 && !roles?.length) {
-        const {
-          collection_version: { name: collection, namespace },
-          repository: { name: repo },
-        } = collections[0];
-
-        navigate(
-          formatPath(Paths.collectionByRepo, {
-            collection,
-            namespace,
-            repo,
-          }),
-        );
-      }
-
-      if (roles.length === 1 && !collections.length) {
-        const {
-          name,
-          summary_fields: {
-            namespace: { name: namespace },
-          },
-        } = roles[0];
-
-        navigate(
-          formatPath(Paths.standaloneRole, {
-            namespace,
-            name,
-          }),
-        );
-      }
-    });
+          navigate(
+            formatPath(Paths.collectionByRepo, {
+              collection,
+              namespace,
+              repo,
+            }),
+          );
+        }
+      });
   }, [pathname]);
 
   return (
@@ -106,11 +74,8 @@ const Dispatch = ({ location, navigate }: RouteProps) => {
                 <Trans>
                   Pathname{' '}
                   <pre style={{ display: 'inline-block' }}>{pathname}</pre>{' '}
-                  could refer to a collection or a role.
+                  could refer to a collection.
                 </Trans>{' '}
-                {featureFlags.legacy_roles ? null : (
-                  <Trans>Roles are not currently enabled.</Trans>
-                )}
               </div>
             </div>
           </Bullseye>
@@ -148,38 +113,6 @@ const Dispatch = ({ location, navigate }: RouteProps) => {
             </>
           )}
         </PageSection>
-        {featureFlags.legacy_roles ? (
-          <>
-            <SectionSeparator />
-            <PageSection>
-              <SectionTitle>{t`Roles`}</SectionTitle>
-
-              {roles === null ? (
-                <LoadingSpinner />
-              ) : roles.length === 0 ? (
-                <EmptyStateNoData
-                  title={t`No matching roles found.`}
-                  description={
-                    <Link
-                      to={formatPath(Paths.standaloneRoles)}
-                    >{t`Show all roles`}</Link>
-                  }
-                />
-              ) : (
-                <>
-                  <DataList aria-label={t`Available matching roles`}>
-                    {roles.map((r) => (
-                      <RoleItem key={r.id} role={r} show_thumbnail />
-                    ))}
-                  </DataList>
-                  <Link
-                    to={formatPath(Paths.standaloneRoles)}
-                  >{t`Show all roles`}</Link>
-                </>
-              )}
-            </PageSection>
-          </>
-        ) : null}
       </Main>
     </>
   );
