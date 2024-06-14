@@ -1,0 +1,13 @@
+*.json
+*.md
+*.mp4
+*.png
+*.po
+*.sh
+*.xml
+.*.sw[po]
+.DS_Store
+Dockerfile
+test/cypress.env.json.template
+test/cypress/e2e/*/compose.env
+test/cypress/fixtures/

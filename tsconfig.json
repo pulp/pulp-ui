@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "jsx": "react",
+    "lib": ["es2021", "dom"],
+    "module": "es2020",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "outDir": "./dist/",
+    "paths": {
+      "src/*": ["src/*"],
+      "static/*": ["static/*"]
+    },
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strictNullChecks": false,
+    "target": "es5"
+  },
+  "include": ["./src/"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,134 @@
+name: "PR checks"
+
+on:
+  pull_request:
+    branches: [ 'master', 'stable-*' ]
+
+jobs:
+
+  pr-checks:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: "Checkout ansible-hub-ui (${{ github.ref }})"
+      uses: actions/checkout@v4
+
+    - name: "Install node 18"
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: "Checks"
+      run: |
+        # fail if npm install had to change package-lock.json
+        npm install
+        git diff --exit-code package-lock.json
+
+        # same in test/
+        pushd test/
+        npm install
+        git diff --exit-code package-lock.json
+        popd
+
+        # dependencies
+        npm run lint-setup
+
+        # run linters
+        npm run lint
+
+        # uses `this` but not `class`
+        sudo apt install -y ripgrep
+        rg '\bclass\b' src/ | cut -d: -f1 | sort -u > src.class
+        rg '\bthis[\.,)\]}]\b' src/ | cut -d: -f1 | sort -u > src.this
+        if [ `comm -13 src.class src.this | wc -l` -ne 0 ]; then
+          echo
+          echo "Files using this but not class:"
+          echo
+          comm -13 src.class src.this
+          echo
+          rg '\bthis[\.,)\]}]\b' `comm -13 src.class src.this`
+          echo
+          exit 1
+        fi
+
+  merge-commits:
+    runs-on: ubuntu-latest
+    steps:
+
+    # need to checkout out head, the merge commit won't have any merges in history
+    # also need more than 1 commit, assuming no PR will have more than 128
+    - name: "Checkout ansible-hub-ui HEAD"
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 128
+        ref: ${{ github.event.pull_request.head.sha }}
+
+    - name: "Ensure no merge commits"
+      run: |
+        # fail on merge commits in the PR
+        # since squash&merge doesn't create merge commits,
+        # and the last non-squash merges were in Jul 2019,
+        # we can just look for any merge commits since 2020
+        count=`git log --min-parents=2 --since 2020-01-01 | tee /dev/stderr | wc -l`
+        [ "$count" = 0 ]
+
+  webpack-config:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: "Checkout ansible-hub-ui (${{ github.base_ref }})"
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.base_ref }}
+        path: 'base'
+
+    - name: "Checkout ansible-hub-ui (${{ github.ref }})"
+      uses: actions/checkout@v4
+      with:
+        path: 'pr'
+
+    - name: "Install node 18"
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: |
+          base/package-lock.json
+          pr/package-lock.json
+
+    - name: 'npm install (base)'
+      working-directory: 'base'
+      run: 'npm install'
+
+    - name: 'npm install (pr)'
+      working-directory: 'pr'
+      run: 'npm install'
+
+    - name: "Diff configs"
+      run: |
+        mkdir ~/webpack-config/
+
+        # eliminate differences caused by branch name based logic in f-c-config
+        export BRANCH="${{ github.base_ref }}"
+
+        for version in base pr; do
+          mkdir ~/webpack-config/$version/
+          pushd $version/config/
+
+          for file in *.webpack.config.js; do
+            export NODE_ENV=`grep -q '\.prod\.' <<< "$file" && echo production || echo development`
+
+            node -e 'console.log(JSON.stringify(require("./'"$file"'"), null, 2))' |
+              sed -e 's/\/home\/.*\/\(base\|pr\)\//\/DIR\//g' \
+                -e 's/"UI_COMMIT_HASH": ".*"/"UI_COMMIT_HASH": "HASH"/' |
+              perl -ne 'print unless /^[0-9a-f]{64,64}$/d' |
+              grep -v '^Current branch:' |
+              grep -v '^Waiting for ' |
+              grep -v 'Root folder:' > ~/webpack-config/"$version"/"$file".json
+          done
+
+          popd
+        done
+
+        diff -Naur ~/webpack-config/{base,pr}

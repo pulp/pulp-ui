@@ -1,0 +1,14 @@
+ls:
+  .config.js: point.case
+  .d.ts: kebab-case
+  .js: kebab-case
+  .jsx: kebab-case
+  .ts: kebab-case
+  .tsx: kebab-case
+
+ignore:
+  - '.git'
+  - 'dist'
+  - 'node_modules'
+  - 'test/node_modules'
+  - 'test/cypress.config.js'

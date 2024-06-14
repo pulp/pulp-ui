@@ -1,0 +1,13 @@
+singleQuote: true
+jsxSingleQuote: true
+trailingComma: 'all'
+bracketSameLine: false
+importOrder:
+  - '^[.][.]/app.scss'
+  - '<THIRD_PARTY_MODULES>'
+  - "^src/"
+  - "^static/"
+  - "^[./]"
+importOrderSortSpecifiers: true
+plugins:
+  - '@trivago/prettier-plugin-sort-imports'

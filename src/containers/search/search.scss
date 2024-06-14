@@ -1,0 +1,54 @@
+.hub-search-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .collection-container {
+    padding-top: 24px;
+    flex-grow: 1;
+
+    .hub-cards {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+
+      .hub-c-card-collection-container {
+        margin-left: 24px;
+        margin-bottom: 24px;
+      }
+    }
+
+    .list-container {
+      width: 100%;
+    }
+
+    .hub-list {
+      margin-bottom: 24px;
+      margin-left: 24px;
+      margin-right: 24px;
+      padding-top: 16px;
+      padding-bottom: 16px;
+
+      // Hack to hide the annoying line at the top of the data list.
+      overflow: hidden;
+
+      .data-list {
+        margin-top: -17px;
+        margin-bottom: -17px;
+      }
+
+      .sync-toggle {
+        margin-right: 10px;
+      }
+    }
+
+    .empty {
+      flex-grow: 1;
+    }
+  }
+
+  .footer {
+    border-top: 1px solid #d8d8d8;
+    flex-shrink: 0;
+  }
+}

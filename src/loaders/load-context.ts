@@ -1,0 +1,47 @@
+import {
+  ActiveUserAPI,
+  FeatureFlagsAPI,
+  type FeatureFlagsType,
+  SettingsAPI,
+  type SettingsType,
+  type UserType,
+} from 'src/api';
+import { type AlertType } from 'src/components';
+
+interface ContextFragment {
+  alerts: AlertType[];
+  featureFlags: FeatureFlagsType;
+  settings?: SettingsType;
+  user?: UserType;
+}
+
+export function loadContext(): Promise<ContextFragment> {
+  const getFeatureFlags = FeatureFlagsAPI.get().then(
+    ({ data: featureFlags }) => ({
+      alerts: (featureFlags._messages || []).map((msg) => ({
+        variant: 'warning',
+        title: msg.split(':')[1],
+      })),
+      featureFlags,
+    }),
+  );
+
+  return Promise.all([
+    ActiveUserAPI.getUser(),
+    SettingsAPI.get(),
+    getFeatureFlags,
+  ])
+    .then(([user, { data: settings }, { alerts, featureFlags }]) => ({
+      alerts,
+      featureFlags,
+      settings,
+      user,
+    }))
+    .catch(() => {
+      // we need this even if ActiveUserAPI fails, otherwise isExternalAuth will always be false, breaking keycloak redirect
+      return getFeatureFlags.then(({ alerts, featureFlags }) => ({
+        alerts,
+        featureFlags,
+      }));
+    });
+}
