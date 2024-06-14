@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import { type DocsBlobType } from 'src/api';
 import { NavList, SearchInput } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
-import { ParamHelper, sanitizeDocsUrls } from 'src/utilities';
+import { ParamHelper } from 'src/utilities';
 
 class DocsEntry {
   display: string;
@@ -121,16 +121,14 @@ function parseLinks(docs_blob: DocsBlobType, props): Table {
 
   if (docs_blob.documentation_files) {
     for (const file of docs_blob.documentation_files) {
-      const url = sanitizeDocsUrls(file.name);
       table.documentation.push({
         display: my_capitalize(file.name.split('.')[0].split('_').join(' ')),
         url: formatPath(Paths.collectionDocsPageByRepo, {
           ...baseUrlParams,
-          page: url,
+          page: file.name,
         }),
-        // selected: selectedType === 'docs' && selectedName === url,
         type: 'docs',
-        name: url,
+        name: file.name,
       });
     }
   }

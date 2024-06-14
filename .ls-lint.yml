@@ -10,5 +10,3 @@ ignore:
   - '.git'
   - 'dist'
   - 'node_modules'
-  - 'test/node_modules'
-  - 'test/cypress.config.js'

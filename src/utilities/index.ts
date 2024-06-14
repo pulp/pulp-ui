@@ -25,7 +25,6 @@ export { RepoSigningUtils } from './repo-signing';
 export { repositoryBasePath } from './repository-base-path';
 export { repositoryRemoveCollection } from './repository-remove-collection';
 export { roleNamespaceInfo } from './role-namespace-info';
-export { sanitizeDocsUrls } from './sanitize-docs-urls';
 export { taskAlert } from './task-alert';
 export { translateLockedRole } from './translate-locked-role';
 export { translateTask } from './translate-task';

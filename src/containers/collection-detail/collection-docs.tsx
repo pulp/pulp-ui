@@ -17,12 +17,7 @@ import {
 } from 'src/components';
 import { AppContext } from 'src/loaders/app-context';
 import { Paths, formatPath, namespaceBreadcrumb } from 'src/paths';
-import {
-  ParamHelper,
-  type RouteProps,
-  sanitizeDocsUrls,
-  withRouter,
-} from 'src/utilities';
+import { ParamHelper, type RouteProps, withRouter } from 'src/utilities';
 import { type IBaseCollectionState, loadCollection } from './base';
 import './collection-detail.scss';
 
@@ -79,7 +74,7 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
     if (contentType === 'docs' && contentName) {
       if (content.docs_blob.documentation_files) {
         const file = content.docs_blob.documentation_files.find(
-          (x) => sanitizeDocsUrls(x.name) === urlFields['page'],
+          ({ name }) => name === urlFields['page'],
         );
 
         if (file) {
@@ -233,7 +228,7 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
             {
               namespace: collection_version.namespace,
               collection: collection_version.name,
-              page: sanitizeDocsUrls(href),
+              page: href,
               repo: repository.name,
             },
             params,

@@ -16,12 +16,6 @@ class API extends HubAPI {
   // page to refresh before loading the token that can't be done witha single
   // API request.
   getToken(): Promise<{ data: { token: string } }> {
-    if (IS_INSIGHTS) {
-      return Promise.reject(
-        'Use window.insights.chrome.auth to get tokens for insights deployments',
-      );
-    }
-
     return this.http.post('v3/auth/token/', {});
   }
 

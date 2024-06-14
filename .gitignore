@@ -1,34 +1,12 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
-
-# vscode config
-.vscode/
-
-# ide config
-.idea/
-
-# vim swap
 .*.sw[po]
-
-# dependencies
-node_modules
-
-# production
-dist
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
 .DS_Store
-coverage
-
-# testing
-test/cypress/screenshots/*
-test/cypress/videos/*
-test/cypress/downloads/*
-test/cypress.env.json
-test/results
-test/cypress/fixtures/example.json
-
-# pycache files
-*pyc
+.idea/
+.vscode/
+coverage/
+cypress/downloads/*
+cypress/fixtures/example.json
+cypress/screenshots/*
+cypress/videos/*
+dist/
+node_modules/
+npm-debug.log*

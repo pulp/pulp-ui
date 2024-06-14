@@ -115,7 +115,7 @@ export default config(
     },
   },
   {
-    files: ['test/**/*.{js,jsx,ts,tsx}'],
+    files: ['cypress/**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
       globals: {
         ...globals.node,
