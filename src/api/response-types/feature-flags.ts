@@ -1,5 +1,5 @@
 export class FeatureFlagsType {
-  // execution environments
+  // containers
   container_signing: boolean;
   execution_environments: boolean;
 

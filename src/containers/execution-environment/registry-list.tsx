@@ -413,15 +413,15 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
         key='index'
         content={
           item.is_indexable
-            ? t`Find execution environments in this registry`
-            : t`Indexing execution environments is not supported`
+            ? t`Find containers in this registry`
+            : t`Indexing containers is not supported`
         }
       >
         <DropdownItem
           onClick={() => this.indexRegistry(item)}
           isDisabled={!item.is_indexable}
         >
-          <Trans>Index execution environments</Trans>
+          <Trans>Index containers</Trans>
         </DropdownItem>
       </Tooltip>,
     ].filter(Boolean);
@@ -517,7 +517,7 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
         this.addAlertObj(
           taskAlert(
             data.task,
-            t`Indexing started for execution environment "${name}".`,
+            t`Indexing started for container "${name}".`,
             'success',
           ),
         );
@@ -525,7 +525,7 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
       .catch((err) => {
         const { status, statusText } = err.response;
         this.addAlert(
-          t`Execution environment "${name}" could not be indexed.`,
+          t`Container "${name}" could not be indexed.`,
           'danger',
           jsxErrorMessage(status, statusText),
         );

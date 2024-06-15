@@ -139,7 +139,7 @@ export class RepositoryForm extends Component<IProps, IState> {
         onClose={onCancel}
         isOpen
         title={
-          isNew ? t`Add execution environment` : t`Edit execution environment`
+          isNew ? t`Add container` : t`Edit container`
         }
         actions={[
           <Button

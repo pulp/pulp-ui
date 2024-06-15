@@ -106,7 +106,7 @@ class ExecutionEnvironmentManifest extends Component<RouteProps, IState> {
             <Breadcrumbs
               links={[
                 {
-                  name: t`Execution Environments`,
+                  name: t`Containers`,
                   url: formatPath(Paths.executionEnvironments),
                 },
                 {

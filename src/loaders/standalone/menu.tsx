@@ -74,13 +74,13 @@ function standaloneMenu() {
       }),
     ]),
     menuSection(
-      t`Execution Environments`,
+      t`Containers`,
       {
         condition: ({ featureFlags, user }) =>
           featureFlags.execution_environments && !user.is_anonymous,
       },
       [
-        menuItem(t`Execution Environments`, {
+        menuItem(t`Containers`, {
           url: formatPath(Paths.executionEnvironments),
         }),
         menuItem(t`Remote Registries`, {

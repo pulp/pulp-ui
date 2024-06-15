@@ -103,7 +103,7 @@ describe('RBAC test for user without permissions', () => {
     cy.visit(`${uiPrefix}containers`);
 
     // cannot Create new containers
-    cy.contains('Add execution environment').should('not.exist');
+    cy.contains('Add container').should('not.exist');
 
     // cannot Change and Delete container
     cy.get(
@@ -340,7 +340,7 @@ describe('RBAC test for user with permissions', () => {
     cy.visit(`${uiPrefix}containers`);
 
     // can Create new containers
-    cy.contains('Add execution environment').should('exist');
+    cy.contains('Add container').should('exist');
 
     // can Change and Delete container
     cy.get(

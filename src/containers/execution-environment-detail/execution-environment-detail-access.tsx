@@ -140,7 +140,7 @@ class ExecutionEnvironmentDetailAccess extends Component<
           groups={groups}
           name={name}
           pulpObjectType='pulp_container/namespaces'
-          selectRolesMessage={t`The selected roles will be added to this specific Execution Environment.`}
+          selectRolesMessage={t`The selected roles will be added to this specific Container.`}
           showGroupRemoveModal={this.state.showGroupRemoveModal}
           showGroupSelectWizard={this.state.showGroupSelectWizard}
           showRoleRemoveModal={this.state.showRoleRemoveModal}

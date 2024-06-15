@@ -14,7 +14,7 @@ describe('Remote Registry Tests', () => {
   });
 
   it('checks for empty state', () => {
-    cy.menuGo('Execution Environments > Remote Registries');
+    cy.menuGo('Containers > Remote Registries');
     cy.get(
       '.pf-v5-c-empty-state__content .pf-v5-c-empty-state__title-text',
     ).should('have.text', 'No remote registries yet');
@@ -25,7 +25,7 @@ describe('Remote Registry Tests', () => {
   });
 
   it('admin can add new remote registry', () => {
-    cy.menuGo('Execution Environments > Remote Registries');
+    cy.menuGo('Containers > Remote Registries');
 
     cy.addRemoteRegistry('New remote registry1', 'https://some url1');
     cy.addRemoteRegistry('New remote registry2', 'https://some url2', {
@@ -86,7 +86,7 @@ describe('Remote Registry Tests', () => {
   });
 
   it('admin can edit new remote registry', () => {
-    cy.menuGo('Execution Environments > Remote Registries');
+    cy.menuGo('Containers > Remote Registries');
 
     cy.get(
       'tr[data-cy="ExecutionEnvironmentRegistryList-row-New remote registry1"] button[aria-label="Actions"]',

@@ -224,7 +224,7 @@ export function withContainerRepo(WrappedComponent) {
                         variant: 'success',
                         title: (
                           <Trans>
-                            Saved changes to execution environment &quot;
+                            Saved changes to container &quot;
                             {this.state.repo.name}&quot;.
                           </Trans>
                         ),

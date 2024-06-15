@@ -1,4 +1,4 @@
-describe('execution environments', () => {
+describe('containers', () => {
   const num = (~~(Math.random() * 1000000)).toString();
 
   before(() => {
@@ -22,12 +22,12 @@ describe('execution environments', () => {
 
   beforeEach(() => {
     cy.login();
-    cy.menuGo('Execution Environments > Execution Environments');
+    cy.menuGo('Containers > Containers');
   });
 
   it('checks the EE list view', () => {
     cy.contains('a', `remotepine${num}`);
-    cy.contains('button', 'Add execution environment');
+    cy.contains('button', 'Add container');
     cy.contains('button', 'Push container images');
     cy.contains('table th', 'Container repository name');
     cy.contains('table th', 'Description');

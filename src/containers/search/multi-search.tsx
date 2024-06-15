@@ -112,7 +112,7 @@ const MultiSearch = (props: RouteProps) => {
         .then(({ data: { data } }) => setContainers(data || []))
         .catch(
           handleHttpError(
-            t`Failed to search execution environments (${keywords})`,
+            t`Failed to search containers (${keywords})`,
             () => setContainers([]),
             addAlert,
           ),
@@ -249,11 +249,11 @@ const MultiSearch = (props: RouteProps) => {
         {featureFlags.execution_environments ? (
           <ResultsSection
             items={containers}
-            title={t`Execution environments`}
+            title={t`Containers`}
             showAllLink={
               <Link
                 to={formatPath(Paths.executionEnvironments)}
-              >{t`Show all execution environments`}</Link>
+              >{t`Show all containers`}</Link>
             }
             showMoreLink={
               <Link
@@ -262,11 +262,11 @@ const MultiSearch = (props: RouteProps) => {
                   {},
                   { name__icontains: keywords },
                 )}
-              >{t`Show more execution environments`}</Link>
+              >{t`Show more containers`}</Link>
             }
           >
             <DataList
-              aria-label={t`Available matching execution environments`}
+              aria-label={t`Available matching containers`}
               className='hub-card-layout'
               style={{ paddingTop: '8px' }}
             >
@@ -333,12 +333,12 @@ const MultiSearch = (props: RouteProps) => {
         {featureFlags.execution_environments ? (
           <NotFoundSection
             items={containers}
-            title={t`Execution environments`}
-            emptyStateTitle={t`No matching execution environments found.`}
+            title={t`Containers`}
+            emptyStateTitle={t`No matching containers found.`}
             showAllLink={
               <Link
                 to={formatPath(Paths.executionEnvironments)}
-              >{t`Show all execution environments`}</Link>
+              >{t`Show all containers`}</Link>
             }
           />
         ) : null}

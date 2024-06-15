@@ -67,7 +67,7 @@ function deleteContainer(
         closeAction();
         addAlert(
           <Trans>
-            Execution environment &quot;{selectedItem}&quot; has been
+            Container &quot;{selectedItem}&quot; has been
             successfully deleted.
           </Trans>,
           'success',
@@ -80,7 +80,7 @@ function deleteContainer(
       setConfirmDelete(false);
       setIsDeletionPending(false);
       addAlert(
-        t`Execution environment "${selectedItem}" could not be deleted.`,
+        t`Container "${selectedItem}" could not be deleted.`,
         'danger',
         jsxErrorMessage(status, statusText),
       );

@@ -179,7 +179,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
         }
         variant='primary'
       >
-        <Trans>Add execution environment</Trans>
+        <Trans>Add container</Trans>
       </Button>
     );
 
@@ -195,7 +195,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
           }
         />
         {showRemoteModal && this.renderRemoteModal(itemToEdit)}
-        <BaseHeader title={t`Execution environments`} />
+        <BaseHeader title={t`Containers`} />
 
         {showDeleteModal && (
           <DeleteExecutionEnvironmentModal
@@ -483,12 +483,12 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
                   variant: 'success',
                   title: isNew ? (
                     <Trans>
-                      Execution environment &quot;{form.name}&quot; has been
+                      Container &quot;{form.name}&quot; has been
                       added successfully.
                     </Trans>
                   ) : (
                     <Trans>
-                      Saved changes to execution environment &quot;{form.name}
+                      Saved changes to container &quot;{form.name}
                       &quot;.
                     </Trans>
                   ),
@@ -552,7 +552,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
         this.addAlertObj(
           taskAlert(
             data.task,
-            t`Sync started for execution environment "${name}".`,
+            t`Sync started for container "${name}".`,
           ),
         );
       })

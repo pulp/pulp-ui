@@ -43,7 +43,7 @@ function deleteRegistriesManual() {
   });
 }
 
-describe('execution environments', () => {
+describe('containers', () => {
   const num = (~~(Math.random() * 1000000)).toString();
 
   before(() => {
@@ -67,7 +67,7 @@ describe('execution environments', () => {
 
   beforeEach(() => {
     cy.login();
-    cy.menuGo('Execution Environments > Execution Environments');
+    cy.menuGo('Containers > Containers');
   });
 
   it('edits a remote container', () => {

@@ -133,7 +133,7 @@ Cypress.Commands.add('deleteTestGroups', {}, () => {
 });
 
 Cypress.Commands.add('addRemoteRegistry', {}, (name, url, extra = null) => {
-  cy.menuGo('Execution Environments > Remote Registries');
+  cy.menuGo('Containers > Remote Registries');
   cy.contains('button', 'Add remote registry').click();
 
   // add registry
@@ -186,8 +186,8 @@ Cypress.Commands.add(
   'addRemoteContainer',
   {},
   ({ name, upstream_name, registry, include_tags, exclude_tags }) => {
-    cy.menuGo('Execution Environments > Execution Environments');
-    cy.contains('button', 'Add execution environment').click();
+    cy.menuGo('Containers > Containers');
+    cy.contains('button', 'Add container').click();
 
     // add registry
     cy.get('input[id="name"]').type(name);
@@ -272,7 +272,7 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('syncRemoteContainer', {}, (name) => {
-  cy.menuGo('Execution Environments > Execution Environments');
+  cy.menuGo('Containers > Containers');
   cy.contains('tr', name)
     .find('button[aria-label="Actions"]')
     .click()
@@ -281,7 +281,7 @@ Cypress.Commands.add('syncRemoteContainer', {}, (name) => {
     .click();
   cy.contains(
     '.pf-v5-c-alert__title',
-    `Sync started for execution environment "${name}".`,
+    `Sync started for container "${name}".`,
   );
   // wait for finish
   cy.contains('a', 'detail page').click();

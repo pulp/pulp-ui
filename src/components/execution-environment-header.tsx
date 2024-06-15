@@ -64,7 +64,7 @@ export const ExecutionEnvironmentHeader = ({
           links={[
             {
               url: formatPath(Paths.executionEnvironments),
-              name: t`Execution Environments`,
+              name: t`Containers`,
             },
             {
               name: container.name,

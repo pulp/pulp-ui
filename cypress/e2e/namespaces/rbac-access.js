@@ -29,7 +29,7 @@ describe('Namespace Access tab', () => {
   });
 });
 
-describe('Execution Environment Access tab', () => {
+describe('Container Access tab', () => {
   const num = (~~(Math.random() * 1000000)).toString();
 
   before(() => {
