@@ -63,10 +63,6 @@ function standaloneMenu() {
         condition: canViewAnsibleRemotes,
         url: formatPath(Paths.ansibleRemotes),
       }),
-      menuItem(t`API token`, {
-        url: formatPath(Paths.token),
-        condition: isLoggedIn,
-      }),
       menuItem(t`Approval`, {
         condition: (context) =>
           hasPermission(context, 'ansible.modify_ansible_repo_content'),
@@ -92,6 +88,10 @@ function standaloneMenu() {
       url: formatPath(Paths.taskList),
       condition: isLoggedIn,
       alternativeUrls: [altPath(Paths.taskDetail)],
+    }),
+    menuItem(t`API token`, {
+      url: formatPath(Paths.token),
+      condition: isLoggedIn,
     }),
     menuItem(t`Signature Keys`, {
       url: formatPath(Paths.signatureKeys),

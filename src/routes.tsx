@@ -25,7 +25,6 @@ import {
   CollectionDistributions,
   CollectionDocs,
   CollectionImportLog,
-  Dispatch,
   EditNamespace,
   EditRole,
   EditUser,
@@ -254,7 +253,6 @@ export class StandaloneRoutes extends Component<IRoutesProps> {
       { component: MyImports, path: Paths.myImports },
       { component: NamespaceDetail, path: Paths.namespaceDetail },
       { component: Search, path: Paths.collections },
-      { component: Dispatch, path: Paths.dispatch },
       { component: MultiSearch, path: Paths.search },
     ];
   }

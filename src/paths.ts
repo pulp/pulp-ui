@@ -72,7 +72,6 @@ export const Paths = {
   collections: '/collections',
   createRole: '/roles/create',
   createUser: '/users/create',
-  dispatch: '/dispatch',
   editNamespace: '/my-namespaces/edit/:namespace',
   editUser: '/users/:userID/edit',
   executionEnvironmentDetailAccess:
