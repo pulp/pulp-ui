@@ -15,6 +15,7 @@ import {
   type RoleType,
   SignCollectionAPI,
 } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AccessTab,
   AlertList,
@@ -36,7 +37,6 @@ import {
   closeAlert,
   collectionFilter,
 } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import {
   DeleteCollectionUtils,

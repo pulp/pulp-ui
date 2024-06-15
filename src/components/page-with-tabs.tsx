@@ -7,6 +7,7 @@ import {
 } from '@patternfly/react-core';
 import React, { Component, type ReactNode } from 'react';
 import { type ActionType } from 'src/actions';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -20,7 +21,6 @@ import {
   closeAlert,
 } from 'src/components';
 import { NotFound } from 'src/containers/not-found/not-found';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import { type PermissionContextType } from 'src/permissions';
 import {
   ParamHelper,

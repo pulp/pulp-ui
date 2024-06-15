@@ -2,6 +2,7 @@ import { Trans, t } from '@lingui/macro';
 import { Button, Card, CardBody, CardTitle } from '@patternfly/react-core';
 import React, { Component } from 'react';
 import { ActiveUserAPI } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -13,7 +14,6 @@ import {
   Main,
   closeAlert,
 } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import { type RouteProps, jsxErrorMessage, withRouter } from 'src/utilities';
 
 interface IState {
@@ -22,7 +22,7 @@ interface IState {
   loadingToken: boolean;
 }
 
-class TokenStandalone extends Component<RouteProps, IState> {
+class Token extends Component<RouteProps, IState> {
   static contextType = AppContext;
 
   constructor(props) {
@@ -168,4 +168,4 @@ class TokenStandalone extends Component<RouteProps, IState> {
   }
 }
 
-export default withRouter(TokenStandalone);
+export default withRouter(Token);

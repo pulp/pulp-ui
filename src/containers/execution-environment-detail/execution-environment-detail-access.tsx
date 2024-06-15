@@ -7,8 +7,8 @@ import {
   type RoleType,
   UserAPI,
 } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import { AccessTab } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import { Paths, formatEEPath } from 'src/paths';
 import {
   ParamHelper,

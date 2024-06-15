@@ -4,8 +4,8 @@ import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclam
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import { ActiveUserAPI } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import { LoginForm } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import { ParamHelper, type RouteProps, withRouter } from 'src/utilities';
 import Logo from 'static/images/logo_large.svg';

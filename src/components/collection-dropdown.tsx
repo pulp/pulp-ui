@@ -1,8 +1,8 @@
 import { t } from '@lingui/macro';
 import { DropdownItem } from '@patternfly/react-core/deprecated';
 import React from 'react';
+import { useAppContext } from 'src/app-context';
 import { StatefulDropdown } from 'src/components';
-import { useHubContext } from 'src/loaders/app-context';
 import { DeleteCollectionUtils } from 'src/utilities';
 
 interface IProps {
@@ -48,7 +48,7 @@ export const CollectionDropdown = ({
     },
     hasPermission,
     user: { is_anonymous, is_superuser },
-  } = useHubContext();
+  } = useAppContext();
 
   const hasObjectPermission = (permission) =>
     namespace?.related_fields?.my_permissions?.includes?.(permission);

@@ -11,8 +11,8 @@ import {
 import DownloadIcon from '@patternfly/react-icons/dist/esm/icons/download-icon';
 import React, { useEffect, useState } from 'react';
 import { CollectionAPI, type CollectionVersionSearch } from 'src/api';
+import { useAppContext } from 'src/app-context';
 import { LoadingSpinner } from 'src/components';
-import { useHubContext } from 'src/loaders/app-context';
 
 interface IProps {
   collectionVersion: CollectionVersionSearch['collection_version'];
@@ -25,7 +25,7 @@ export const DownloadSignatureGridItem = ({
   repository,
   addAlert,
 }: IProps) => {
-  const { display_signatures } = useHubContext().featureFlags;
+  const { display_signatures } = useAppContext().featureFlags;
   const [show, setShow] = useState(false);
   const [signatures, setSignatures] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

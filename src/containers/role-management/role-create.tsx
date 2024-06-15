@@ -2,6 +2,7 @@ import { t } from '@lingui/macro';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import { RoleAPI } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   type AlertType,
   EmptyStateUnauthorized,
@@ -9,7 +10,6 @@ import {
   RoleForm,
   RoleHeader,
 } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import {
   type RouteProps,

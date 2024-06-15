@@ -16,6 +16,7 @@ import {
   ExecutionEnvironmentRemoteAPI,
   type ExecutionEnvironmentType,
 } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -39,7 +40,6 @@ import {
   Tooltip,
   closeAlert,
 } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import { Paths, formatEEPath } from 'src/paths';
 import {
   ParamHelper,
@@ -483,8 +483,8 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
                   variant: 'success',
                   title: isNew ? (
                     <Trans>
-                      Container &quot;{form.name}&quot; has been
-                      added successfully.
+                      Container &quot;{form.name}&quot; has been added
+                      successfully.
                     </Trans>
                   ) : (
                     <Trans>
@@ -550,10 +550,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
     ExecutionEnvironmentRemoteAPI.sync(name)
       .then(({ data }) => {
         this.addAlertObj(
-          taskAlert(
-            data.task,
-            t`Sync started for container "${name}".`,
-          ),
+          taskAlert(data.task, t`Sync started for container "${name}".`),
         );
       })
       .catch(() => this.addAlert(t`Sync failed for ${name}`, 'danger'));

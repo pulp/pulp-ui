@@ -5,6 +5,11 @@ import {
   type SettingsType,
   type UserType,
 } from 'src/api';
+import {
+  AppContext,
+  type IAppContextType,
+  useAppContext,
+} from 'src/app-context';
 import { type AlertType } from 'src/components';
 import {
   AnsibleRemoteDetail,
@@ -46,18 +51,13 @@ import {
   SignatureKeysList,
   TaskDetail,
   TaskListView,
-  TokenStandalone,
+  Token,
   UserCreate,
   UserDetail,
   UserList,
   UserProfile,
 } from 'src/containers';
-import {
-  AppContext,
-  type IAppContextType,
-  useHubContext,
-} from 'src/loaders/app-context';
-import { loadContext } from 'src/loaders/load-context';
+import { loadContext } from 'src/load-context';
 import { Paths, formatPath } from 'src/paths';
 import { loginURL } from 'src/utilities';
 
@@ -97,7 +97,7 @@ const AuthHandler = ({
   path,
   updateInitialData,
 }: IAuthHandlerProps) => {
-  const { user, settings, featureFlags } = useHubContext();
+  const { user, settings, featureFlags } = useAppContext();
   const [isLoading, setLoading] = useState<boolean>(
     !user || !settings || !featureFlags,
   );
@@ -231,7 +231,7 @@ export class StandaloneRoutes extends Component<IRoutesProps> {
       { component: UserList, path: Paths.userList },
       { component: CertificationDashboard, path: Paths.approvalDashboard },
       { component: NotFound, path: Paths.notFound },
-      { component: TokenStandalone, path: Paths.token },
+      { component: Token, path: Paths.token },
       { component: Partners, path: Paths.namespaces },
       { component: EditNamespace, path: Paths.editNamespace },
       { component: MyNamespaces, path: Paths.myNamespaces },

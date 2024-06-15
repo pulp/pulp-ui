@@ -14,6 +14,7 @@ import {
   CollectionVersionAPI,
   type CollectionVersionSearch,
 } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -33,7 +34,6 @@ import {
   UploadSignatureModal,
   closeAlert,
 } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import {
   ParamHelper,
   type RouteProps,

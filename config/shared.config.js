@@ -9,8 +9,7 @@ const webpack = require('webpack');
 
 // NOTE: This file is not meant to be consumed directly by weback. Instead it
 // should be imported, initialized with the following settings and exported like
-// a normal webpack config. See config/standalone.dev.webpack.config.js for an
-// example
+// a normal webpack config. See config/start.config.js for an example
 
 const isBuild = process.env.NODE_ENV === 'production';
 
@@ -93,7 +92,7 @@ module.exports = (inputConfigs) => {
           },
         }),
 
-    entry: { App: resolve(__dirname, '../src/entry-standalone.tsx') },
+    entry: { App: resolve(__dirname, '../src/entrypoint.tsx') },
     mode: isBuild ? 'production' : 'development',
     module: {
       rules: [

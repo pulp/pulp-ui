@@ -1,6 +1,7 @@
 import { t } from '@lingui/macro';
 import { isEqual } from 'lodash';
 import React, { Component } from 'react';
+import { AppContext } from 'src/app-context';
 import {
   AlertList,
   CollectionHeader,
@@ -9,7 +10,6 @@ import {
   Main,
   closeAlert,
 } from 'src/components';
-import { AppContext } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import { ParamHelper, type RouteProps, withRouter } from 'src/utilities';
 import { type IBaseCollectionState, loadCollection } from './base';

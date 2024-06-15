@@ -2,8 +2,8 @@ import { Trans } from '@lingui/macro';
 import { Divider, Flex, FlexItem, Label } from '@patternfly/react-core';
 import React, { Fragment } from 'react';
 import { type RoleType } from 'src/api';
+import { useAppContext } from 'src/app-context';
 import { Tooltip } from 'src/components';
-import { useHubContext } from 'src/loaders/app-context';
 import { translateLockedRole } from 'src/utilities';
 
 interface IProps {
@@ -27,7 +27,7 @@ const splitByDot = (perm: string) => {
 };
 
 export const PreviewRoles = ({ user, group, selectedRoles }: IProps) => {
-  const { model_permissions } = useHubContext().user;
+  const { model_permissions } = useAppContext().user;
 
   return (
     <div className='hub-custom-wizard-layout'>

@@ -19,6 +19,7 @@ import {
   type CollectionUploadType,
   type CollectionVersionSearch,
 } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -26,7 +27,6 @@ import {
   MultipleRepoSelector,
   closeAlert,
 } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import { repositoryBasePath } from 'src/utilities';
 import './import-modal.scss';
 

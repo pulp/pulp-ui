@@ -17,6 +17,7 @@ import DownloadIcon from '@patternfly/react-icons/dist/esm/icons/download-icon';
 import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import React, { Component, type ReactNode } from 'react';
 import { type RemoteType, type WriteOnlyFieldType } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   Alert,
   CodeEditor,
@@ -26,7 +27,6 @@ import {
   HelpButton,
   WriteOnlyField,
 } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import {
   type ErrorMessagesType,
   downloadString,

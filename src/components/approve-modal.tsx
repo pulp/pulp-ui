@@ -5,8 +5,8 @@ import {
   type CollectionVersionSearch,
   SigningServiceAPI,
 } from 'src/api';
+import { useAppContext } from 'src/app-context';
 import { type AlertType, MultiRepoModal } from 'src/components';
-import { useHubContext } from 'src/loaders/app-context';
 import { parsePulpIDFromURL, waitForTaskUrl } from 'src/utilities';
 
 interface IProps {
@@ -22,7 +22,7 @@ export const ApproveModal = ({
   collectionVersion,
   finishAction,
 }: IProps) => {
-  const { settings } = useHubContext();
+  const { settings } = useAppContext();
   const { collection_version, repository } = collectionVersion;
   const { namespace, name, version, pulp_href } = collection_version;
 

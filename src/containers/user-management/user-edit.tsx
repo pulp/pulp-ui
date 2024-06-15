@@ -2,13 +2,13 @@ import { t } from '@lingui/macro';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import { UserAPI, type UserType } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   BaseHeader,
   EmptyStateUnauthorized,
   LoadingPage,
   UserFormPage,
 } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import {
   type ErrorMessagesType,

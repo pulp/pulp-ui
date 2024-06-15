@@ -3,7 +3,7 @@ jsxSingleQuote: true
 trailingComma: 'all'
 bracketSameLine: false
 importOrder:
-  - '^[.][.]/app.scss'
+  - '^[.]/app.scss'
   - '<THIRD_PARTY_MODULES>'
   - "^src/"
   - "^static/"

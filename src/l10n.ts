@@ -62,9 +62,9 @@ if (searchParams.lang === '') {
   delete window.localStorage.override_l10n;
 }
 
-// ?lang and ?pseudolocalization get removed in entry-standalone
+// ?lang and ?pseudolocalization get removed in entrypoint.tsx
 // (removed to prevent the param getting passed to api calls)
-// (in entry-standalone to prevent interaction with pushState)
+// (in entrypoint.tsx to prevent interaction with pushState)
 
 const overrideLanguage =
   window.localStorage.override_l10n &&

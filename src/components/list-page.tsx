@@ -8,6 +8,7 @@ import {
 import { Table, Tbody } from '@patternfly/react-table';
 import React, { Component, type ReactNode } from 'react';
 import { type ActionType } from 'src/actions';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -24,7 +25,6 @@ import {
   SortTable,
   closeAlert,
 } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import { type PermissionContextType } from 'src/permissions';
 import {
   ParamHelper,

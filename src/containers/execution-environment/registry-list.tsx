@@ -10,6 +10,7 @@ import { DropdownItem } from '@patternfly/react-core/deprecated';
 import { Table, Tbody, Td, Tr } from '@patternfly/react-table';
 import React, { Component } from 'react';
 import { ExecutionEnvironmentRegistryAPI, type RemoteType } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -31,7 +32,6 @@ import {
   Tooltip,
   closeAlert,
 } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import {
   type ErrorMessagesType,
   ParamHelper,

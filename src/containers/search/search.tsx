@@ -8,6 +8,7 @@ import {
   type CollectionVersionSearch,
   MyNamespaceAPI,
 } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -26,7 +27,6 @@ import {
   closeAlert,
   collectionFilter,
 } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import {
   DeleteCollectionUtils,

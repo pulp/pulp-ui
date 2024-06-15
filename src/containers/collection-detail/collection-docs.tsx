@@ -5,6 +5,7 @@ import React, { Component, type RefObject, createRef } from 'react';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { type CollectionVersionSearch } from 'src/api';
+import { AppContext } from 'src/app-context';
 import {
   Alert,
   CollectionHeader,
@@ -15,7 +16,6 @@ import {
   RenderPluginDoc,
   TableOfContents,
 } from 'src/components';
-import { AppContext } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import { ParamHelper, type RouteProps, withRouter } from 'src/utilities';
 import { type IBaseCollectionState, loadCollection } from './base';

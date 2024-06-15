@@ -14,6 +14,7 @@ import {
   type CollectionVersionContentType,
   type CollectionVersionSearch,
 } from 'src/api';
+import { useAppContext } from 'src/app-context';
 import {
   Alert,
   CopyURL,
@@ -22,7 +23,6 @@ import {
   LoginLink,
   Tag,
 } from 'src/components';
-import { useHubContext } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import { jsxErrorMessage } from 'src/utilities';
 import './collection-info.scss';
@@ -44,7 +44,7 @@ export const CollectionInfo = ({
   addAlert,
 }: IProps) => {
   const downloadLinkRef = useRef<HTMLAnchorElement>(null);
-  const { user, settings } = useHubContext();
+  const { user, settings } = useAppContext();
 
   let installCommand = `ansible-galaxy collection install ${collection_version.namespace}.${collection_version.name}`;
 

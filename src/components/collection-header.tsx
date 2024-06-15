@@ -26,6 +26,7 @@ import {
   NamespaceAPI,
   SignCollectionAPI,
 } from 'src/api';
+import { useAppContext } from 'src/app-context';
 import {
   Alert,
   AlertList,
@@ -51,7 +52,6 @@ import {
   UploadSignatureModal,
   closeAlert,
 } from 'src/components';
-import { useHubContext } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import {
   DeleteCollectionUtils,
@@ -136,7 +136,7 @@ export const CollectionHeader = ({
     setModalCollections(collections);
   }, [collections]);
 
-  const context = useHubContext();
+  const context = useAppContext();
   const {
     featureFlags: { can_upload_signatures, display_signatures },
     queueAlert,

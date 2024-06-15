@@ -1,4 +1,4 @@
-const webpackBase = require('./webpack.base.config');
+const webpackBase = require('./shared.config');
 
 // Used for getting the correct host when running in a container
 const proxyHost = process.env.API_PROXY_HOST || 'localhost';

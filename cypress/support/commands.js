@@ -279,10 +279,7 @@ Cypress.Commands.add('syncRemoteContainer', {}, (name) => {
     .parents('tr')
     .contains('.pf-v5-c-dropdown__menu-item', 'Sync from registry')
     .click();
-  cy.contains(
-    '.pf-v5-c-alert__title',
-    `Sync started for container "${name}".`,
-  );
+  cy.contains('.pf-v5-c-alert__title', `Sync started for container "${name}".`);
   // wait for finish
   cy.contains('a', 'detail page').click();
   cy.contains('[data-cy="title-box"] h1', 'Completed', { timeout: 30000 });

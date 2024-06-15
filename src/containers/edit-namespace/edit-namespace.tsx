@@ -7,6 +7,7 @@ import {
   type NamespaceLinkType,
   type NamespaceType,
 } from 'src/api';
+import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -21,7 +22,6 @@ import {
   validateName,
   validateURL,
 } from 'src/components';
-import { AppContext, type IAppContextType } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import {
   type ErrorMessagesType,

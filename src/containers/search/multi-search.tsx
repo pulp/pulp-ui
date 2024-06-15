@@ -7,6 +7,7 @@ import {
   ExecutionEnvironmentAPI,
   NamespaceAPI,
 } from 'src/api';
+import { useAppContext } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -20,7 +21,6 @@ import {
   Tooltip,
   closeAlert,
 } from 'src/components';
-import { useHubContext } from 'src/loaders/app-context';
 import { Paths, formatEEPath, formatPath } from 'src/paths';
 import {
   ParamHelper,
@@ -60,7 +60,7 @@ const Section = ({
 const loading = [];
 
 const MultiSearch = (props: RouteProps) => {
-  const { featureFlags } = useHubContext();
+  const { featureFlags } = useAppContext();
   const [alerts, setAlerts] = useState<AlertType[]>([]);
   const [params, setParams] = useState({});
 

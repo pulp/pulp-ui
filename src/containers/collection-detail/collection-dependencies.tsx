@@ -6,6 +6,7 @@ import {
   type CollectionVersion,
   CollectionVersionAPI,
 } from 'src/api';
+import { AppContext } from 'src/app-context';
 import {
   AlertList,
   CollectionDependenciesList,
@@ -16,7 +17,6 @@ import {
   Main,
   closeAlert,
 } from 'src/components';
-import { AppContext } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import {
   ParamHelper,

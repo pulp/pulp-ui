@@ -2,8 +2,8 @@ import { t } from '@lingui/macro';
 import { Flex, FlexItem } from '@patternfly/react-core';
 import React from 'react';
 import { type ModelPermissionsType } from 'src/api';
+import { useAppContext } from 'src/app-context';
 import { PermissionChipSelector } from 'src/components';
-import { useHubContext } from 'src/loaders/app-context';
 
 interface IProps {
   permissions: string[];
@@ -39,7 +39,7 @@ export const PermissionCategories = ({
   showCustom,
   showEmpty,
 }: IProps) => {
-  const { featureFlags, user } = useHubContext();
+  const { featureFlags, user } = useAppContext();
   const { model_permissions } = user;
   const showUserManagement = !featureFlags.external_authentication;
 

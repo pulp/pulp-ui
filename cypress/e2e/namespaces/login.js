@@ -1,7 +1,6 @@
 const apiPrefix = Cypress.env('apiPrefix');
 const uiPrefix = Cypress.env('uiPrefix');
 
-// integrated standalone-mode login screen
 const manualLogin = (username, password) => {
   cy.intercept('POST', `${apiPrefix}_ui/v1/auth/login/`).as('login');
   cy.intercept('GET', `${apiPrefix}_ui/v1/feature-flags/`).as('feature-flags');

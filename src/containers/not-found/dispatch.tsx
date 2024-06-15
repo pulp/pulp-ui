@@ -3,6 +3,7 @@ import { Bullseye, DataList } from '@patternfly/react-core';
 import React, { type ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CollectionVersionAPI } from 'src/api';
+import { useAppContext } from 'src/app-context';
 import {
   BaseHeader,
   CollectionListItem,
@@ -10,7 +11,6 @@ import {
   LoadingSpinner,
   Main,
 } from 'src/components';
-import { useHubContext } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import { ParamHelper, type RouteProps, withRouter } from 'src/utilities';
 import NotFoundImage from 'static/images/not_found.svg';
@@ -28,7 +28,7 @@ const SectionTitle = ({ children }: { children: ReactNode }) => (
 );
 
 const Dispatch = ({ location, navigate }: RouteProps) => {
-  const { featureFlags } = useHubContext();
+  const { featureFlags } = useAppContext();
 
   const { pathname } = ParamHelper.parseParamString(location.search) as {
     pathname: string;

@@ -1,13 +1,13 @@
 import { t } from '@lingui/macro';
 import React, { Component } from 'react';
 import { ImportAPI, type ImportDetailType, type ImportListType } from 'src/api';
+import { AppContext } from 'src/app-context';
 import {
   CollectionHeader,
   ImportConsole,
   LoadingPage,
   Main,
 } from 'src/components';
-import { AppContext } from 'src/loaders/app-context';
 import { Paths, formatPath } from 'src/paths';
 import { ParamHelper, type RouteProps, withRouter } from 'src/utilities';
 import { type IBaseCollectionState, loadCollection } from './base';

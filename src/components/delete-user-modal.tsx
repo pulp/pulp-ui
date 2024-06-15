@@ -1,8 +1,8 @@
 import { Trans, t } from '@lingui/macro';
 import React, { useState } from 'react';
 import { UserAPI, type UserType } from 'src/api';
+import { useAppContext } from 'src/app-context';
 import { DeleteModal } from 'src/components';
-import { useHubContext } from 'src/loaders/app-context';
 import { jsxErrorMessage, mapErrorMessages } from 'src/utilities';
 
 interface IProps {
@@ -19,7 +19,7 @@ export const DeleteUserModal = ({
   user,
 }: IProps) => {
   const [waiting, setWaiting] = useState(false);
-  const { user: currentUser } = useHubContext();
+  const { user: currentUser } = useAppContext();
 
   if (!user || !isOpen) {
     return null;

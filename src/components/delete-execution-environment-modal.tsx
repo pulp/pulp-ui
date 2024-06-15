@@ -67,8 +67,7 @@ function deleteContainer(
         closeAction();
         addAlert(
           <Trans>
-            Container &quot;{selectedItem}&quot; has been
-            successfully deleted.
+            Container &quot;{selectedItem}&quot; has been successfully deleted.
           </Trans>,
           'success',
         );

@@ -138,9 +138,7 @@ export class RepositoryForm extends Component<IProps, IState> {
         variant='large'
         onClose={onCancel}
         isOpen
-        title={
-          isNew ? t`Add container` : t`Edit container`
-        }
+        title={isNew ? t`Add container` : t`Edit container`}
         actions={[
           <Button
             key='save'

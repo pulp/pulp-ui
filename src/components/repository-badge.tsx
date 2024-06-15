@@ -9,7 +9,7 @@ import {
 } from '@patternfly/react-core';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useHubContext } from 'src/loaders/app-context';
+import { useAppContext } from 'src/app-context';
 import { Paths, formatPath } from 'src/paths';
 
 interface IProps {
@@ -25,7 +25,7 @@ export const RepositoryBadge = ({
   isTextContent,
   name,
 }: IProps) => {
-  const { featureFlags } = useHubContext();
+  const { featureFlags } = useAppContext();
 
   if (!featureFlags.display_repositories) {
     return null;

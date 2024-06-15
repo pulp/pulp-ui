@@ -9,6 +9,7 @@ import {
 } from '@patternfly/react-core';
 import React, { useEffect, useState } from 'react';
 import { GroupAPI, type UserType } from 'src/api';
+import { useAppContext } from 'src/app-context';
 import {
   Alert,
   type AlertType,
@@ -17,7 +18,6 @@ import {
   HelpButton,
   Typeahead,
 } from 'src/components';
-import { useHubContext } from 'src/loaders/app-context';
 import { type ErrorMessagesType, jsxErrorMessage } from 'src/utilities';
 
 interface IProps {
@@ -41,7 +41,7 @@ export const UserForm = ({
   updateUser,
   user,
 }: IProps) => {
-  const { settings, user: currentUser } = useHubContext();
+  const { settings, user: currentUser } = useAppContext();
 
   const [formErrors, setFormErrors] = useState<{ groups: AlertType }>({
     groups: null,

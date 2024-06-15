@@ -44,9 +44,6 @@ describe('screenshots', () => {
     screenshot('/containers');
     screenshot('/registries');
 
-    screenshot('/standalone/roles');
-    screenshot('/standalone/namespaces');
-
     screenshot('/tasks', { blackout: ['time'] });
     screenshot('/signature-keys', {
       blackout: ['time', '[data-cy=hub-signature-list-fingerprint]'],
