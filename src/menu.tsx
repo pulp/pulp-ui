@@ -40,7 +40,7 @@ function standaloneMenu() {
         settings.GALAXY_ENABLE_UNAUTHENTICATED_COLLECTION_ACCESS ||
         !user.is_anonymous,
     }),
-    menuSection(t`Collections`, {}, [
+    menuSection('pulp_ansible', {}, [
       menuItem(t`Collections`, {
         url: formatPath(Paths.collections),
         condition: ({ settings, user }) =>
@@ -74,7 +74,7 @@ function standaloneMenu() {
       }),
     ]),
     menuSection(
-      t`Containers`,
+      'pulp_container',
       {
         condition: ({ featureFlags, user }) =>
           featureFlags.execution_environments && !user.is_anonymous,
