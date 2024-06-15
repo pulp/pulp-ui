@@ -84,7 +84,7 @@ export const CollectionUsedbyDependenciesList = ({
                         <Td>
                           <Link
                             to={formatPath(
-                              Paths.collectionByRepo,
+                              Paths.collection,
                               {
                                 collection: name,
                                 namespace,

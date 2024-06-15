@@ -51,7 +51,7 @@ export const ApprovalRow = ({
       <Td>
         <Link
           to={formatPath(
-            Paths.collectionByRepo,
+            Paths.collection,
             {
               namespace: version.namespace,
               collection: version.name,

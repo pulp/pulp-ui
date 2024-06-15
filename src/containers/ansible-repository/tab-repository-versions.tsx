@@ -63,7 +63,7 @@ const VersionContent = ({
       <Td>
         <Link
           to={formatPath(
-            Paths.collectionByRepo,
+            Paths.collection,
             {
               repo: repositoryName,
               namespace,

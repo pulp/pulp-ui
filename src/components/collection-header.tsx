@@ -532,44 +532,32 @@ export const CollectionHeader = ({
       {
         active: active === 'install',
         title: t`Install`,
-        link: formatPath(Paths.collectionByRepo, pathParams, reduced),
+        link: formatPath(Paths.collection, pathParams, reduced),
       },
       {
         active: active === 'documentation',
         title: t`Documentation`,
-        link: formatPath(Paths.collectionDocsIndexByRepo, pathParams, reduced),
+        link: formatPath(Paths.collectionDocsIndex, pathParams, reduced),
       },
       {
         active: active === 'contents',
         title: t`Contents`,
-        link: formatPath(
-          Paths.collectionContentListByRepo,
-          pathParams,
-          reduced,
-        ),
+        link: formatPath(Paths.collectionContentList, pathParams, reduced),
       },
       {
         active: active === 'import-log',
         title: t`Import log`,
-        link: formatPath(Paths.collectionImportLogByRepo, pathParams, reduced),
+        link: formatPath(Paths.collectionImportLog, pathParams, reduced),
       },
       {
         active: active === 'dependencies',
         title: t`Dependencies`,
-        link: formatPath(
-          Paths.collectionDependenciesByRepo,
-          pathParams,
-          reduced,
-        ),
+        link: formatPath(Paths.collectionDependencies, pathParams, reduced),
       },
       {
         active: active === 'distributions',
         title: t`Distributions`,
-        link: formatPath(
-          Paths.collectionDistributionsByRepo,
-          pathParams,
-          reduced,
-        ),
+        link: formatPath(Paths.collectionDistributions, pathParams, reduced),
       },
     ];
 

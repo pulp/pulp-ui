@@ -104,7 +104,7 @@ class CollectionDependencies extends Component<RouteProps, IState> {
         name: version.namespace,
       },
       {
-        url: formatPath(Paths.collectionByRepo, {
+        url: formatPath(Paths.collection, {
           namespace: version.namespace,
           collection: version.name,
           repo: repository.name,
@@ -226,7 +226,7 @@ class CollectionDependencies extends Component<RouteProps, IState> {
         const [collection] = result.data.data;
 
         dependency_repo.repo = collection.repository.name;
-        dependency_repo.path = formatPath(Paths.collectionByRepo, {
+        dependency_repo.path = formatPath(Paths.collection, {
           collection: dependency_repo.name,
           namespace: dependency_repo.namespace,
           repo: dependency_repo.repo,

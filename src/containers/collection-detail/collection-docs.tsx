@@ -114,7 +114,7 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
         name: collection_version.namespace,
       },
       {
-        url: formatPath(Paths.collectionByRepo, {
+        url: formatPath(Paths.collection, {
           namespace: collection_version.namespace,
           collection: collection_version.name,
           repo: repository.name,
@@ -224,7 +224,7 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
       return (
         <Link
           to={formatPath(
-            Paths.collectionDocsPageByRepo,
+            Paths.collectionDocsPage,
             {
               namespace: collection_version.namespace,
               collection: collection_version.name,
@@ -258,7 +258,7 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
       return (
         <Link
           to={formatPath(
-            Paths.collectionContentDocsByRepo,
+            Paths.collectionContentDocs,
             {
               namespace: collection.collection_version.namespace,
               collection: collection.collection_version.name,

@@ -58,18 +58,21 @@ export const Paths = {
   ansibleRepositoryDetail: '/ansible/repositories/:name',
   ansibleRepositoryEdit: '/ansible/repositories/:name/edit',
   approvalDashboard: '/approval-dashboard',
-  collectionByRepo: '/repo/:repo/:namespace/:collection',
-  collectionContentDocsByRepo:
-    '/repo/:repo/:namespace/:collection/content/:type/:name',
-  collectionContentListByRepo: '/repo/:repo/:namespace/:collection/content',
-  collectionDependenciesByRepo:
-    '/repo/:repo/:namespace/:collection/dependencies',
-  collectionDistributionsByRepo:
-    '/repo/:repo/:namespace/:collection/distributions',
-  collectionDocsIndexByRepo: '/repo/:repo/:namespace/:collection/docs',
-  collectionDocsPageByRepo: '/repo/:repo/:namespace/:collection/docs/:page',
-  collectionImportLogByRepo: '/repo/:repo/:namespace/:collection/import-log',
-  collections: '/collections',
+  collection: '/ansible/collections/:repo/:namespace/:collection',
+  collectionContentDocs:
+    '/ansible/collections/:repo/:namespace/:collection/content/:type/:name',
+  collectionContentList:
+    '/ansible/collections/:repo/:namespace/:collection/content',
+  collectionDependencies:
+    '/ansible/collections/:repo/:namespace/:collection/dependencies',
+  collectionDistributions:
+    '/ansible/collections/:repo/:namespace/:collection/distributions',
+  collectionDocsIndex: '/ansible/collections/:repo/:namespace/:collection/docs',
+  collectionDocsPage:
+    '/ansible/collections/:repo/:namespace/:collection/docs/:page',
+  collectionImportLog:
+    '/ansible/collections/:repo/:namespace/:collection/import-log',
+  collections: '/ansible/collections',
   createRole: '/roles/create',
   createUser: '/users/create',
   editNamespace: '/my-namespaces/edit/:namespace',
@@ -89,14 +92,15 @@ export const Paths = {
   groupList: '/group-list',
   login: '/login',
   myImports: '/my-imports',
-  myNamespaces: '/my-namespaces',
-  namespaceDetail: '/namespaces/:namespace',
-  namespaces: '/namespaces',
-  notFound: '/not-found', // FIXME don't redirect
+  myNamespaces: '/ansible/my-namespaces',
+  namespaceDetail: '/ansible/namespaces/:namespace',
+  namespaces: '/ansible/namespaces',
+  notFound: '/not-found', // FIXME: don't redirect
   roleEdit: '/role/:role',
   roleList: '/roles',
-  search: '/',
+  search: '/search',
   signatureKeys: '/signature-keys',
+  status: '/status',
   taskDetail: '/task/:task',
   taskList: '/tasks',
   token: '/token',

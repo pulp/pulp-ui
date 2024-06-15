@@ -21,6 +21,7 @@ export { ImportAPI } from './import';
 export { MyNamespaceAPI } from './my-namespace';
 export { NamespaceAPI } from './namespace';
 export { PulpAPI } from './pulp';
+export { PulpStatusAPI } from './pulp-status';
 export { AnsibleRemoteType } from './response-types/ansible-remote';
 export {
   AnsibleRepositoryType,

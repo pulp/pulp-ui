@@ -107,7 +107,7 @@ export const CollectionContentList = ({
               <Td>
                 <Link
                   to={formatPath(
-                    Paths.collectionContentDocsByRepo,
+                    Paths.collectionContentDocs,
                     {
                       collection: collection_version.name,
                       namespace: collection_version.namespace,

@@ -91,7 +91,7 @@ export const CollectionCard = ({
           title={`${collection_version.namespace}.${collection_version.name}`}
         >
           <Link
-            to={formatPath(Paths.collectionByRepo, {
+            to={formatPath(Paths.collection, {
               collection: collection_version.name,
               namespace: collection_version.namespace,
               repo: repository.name,

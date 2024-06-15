@@ -181,7 +181,7 @@ class MyImports extends Component<RouteProps, IState> {
                     ) : (
                       <Link
                         to={formatPath(
-                          Paths.collectionByRepo,
+                          Paths.collection,
                           {
                             namespace: selectedImport.namespace,
                             collection: selectedImport.name,

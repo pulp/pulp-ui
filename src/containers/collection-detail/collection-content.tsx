@@ -59,7 +59,7 @@ class CollectionContent extends Component<RouteProps, IBaseCollectionState> {
         name: collection_version.namespace,
       },
       {
-        url: formatPath(Paths.collectionByRepo, {
+        url: formatPath(Paths.collection, {
           namespace: collection_version.namespace,
           collection: collection_version.name,
           repo: repository.name,

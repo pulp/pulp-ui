@@ -73,7 +73,7 @@ export const CollectionListItem = ({
     <DataListCell key='content'>
       <div>
         <Link
-          to={formatPath(Paths.collectionByRepo, {
+          to={formatPath(Paths.collection, {
             collection: collection_version.name,
             namespace: collection_version.namespace,
             repo: repository.name,

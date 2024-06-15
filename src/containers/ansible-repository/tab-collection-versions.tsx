@@ -73,7 +73,7 @@ export const CollectionVersionsTab = ({
         <Td>
           <Link
             to={formatPath(
-              Paths.collectionByRepo,
+              Paths.collection,
               {
                 repo: repository.name,
                 namespace,
