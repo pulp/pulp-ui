@@ -144,7 +144,7 @@ export const HubAboutModal = ({ isOpen, onClose, user, userName }: IProps) => {
           <Label>{t`UI Version`}</Label>
           <Value>
             <ExternalLink
-              href={`https://github.com/ansible/ansible-hub-ui/commit/${ui_sha}`}
+              href={`https://github.com/himdel/pulp-ui/commit/${ui_sha}`}
             >
               {ui_sha}
             </ExternalLink>

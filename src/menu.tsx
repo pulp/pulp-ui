@@ -36,7 +36,6 @@ function standaloneMenu() {
   return [
     menuItem(t`Status`, {
       url: formatPath(Paths.status),
-      condition: isLoggedIn,
     }),
     menuItem(t`Search`, {
       url: formatPath(Paths.search),

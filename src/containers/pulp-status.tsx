@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro';
-import { Card, CardBody, CardTitle } from '@patternfly/react-core';
+import { Card, CardBody, CardTitle, Progress } from '@patternfly/react-core';
 import React, { Component } from 'react';
 import { PulpStatusAPI } from 'src/api';
 import {
@@ -10,10 +10,16 @@ import {
   Main,
   closeAlert,
 } from 'src/components';
-import { type RouteProps, jsxErrorMessage, withRouter } from 'src/utilities';
+import {
+  type RouteProps,
+  getHumanSize,
+  jsxErrorMessage,
+  withRouter,
+} from 'src/utilities';
 
 interface IState {
   alerts: AlertType[];
+  status?;
 }
 
 class PulpStatus extends Component<RouteProps, IState> {
@@ -22,6 +28,7 @@ class PulpStatus extends Component<RouteProps, IState> {
 
     this.state = {
       alerts: [],
+      status: null,
     };
   }
 
@@ -30,7 +37,12 @@ class PulpStatus extends Component<RouteProps, IState> {
   }
 
   render() {
-    const { alerts } = this.state;
+    const { alerts, status } = this.state;
+
+    const value = status
+      ? (100 / status.storage.total) * status.storage.used
+      : 0;
+    const free = status ? getHumanSize(status.storage.free) : 0;
 
     return (
       <>
@@ -51,7 +63,31 @@ class PulpStatus extends Component<RouteProps, IState> {
                 <h2>{t`TODO`}</h2>
               </CardTitle>
               <CardBody>
-                <LoadingSpinner />
+                {!status ? (
+                  <LoadingSpinner />
+                ) : (
+                  <>
+                    <Progress
+                      value={value}
+                      title={t`Storage`}
+                      variant={
+                        value > 88
+                          ? 'danger'
+                          : value > 66
+                            ? 'warning'
+                            : value > 33
+                              ? null
+                              : 'success'
+                      }
+                    />
+                    <br />
+                    {t`Free`} {free}
+                    <br />
+                    TODO versions, workers.. .. and enable/disable menu based on
+                    .versions
+                    <pre>{JSON.stringify(status, null, 2)}</pre>
+                  </>
+                )}
               </CardBody>
             </section>
           </Card>
@@ -63,8 +99,7 @@ class PulpStatus extends Component<RouteProps, IState> {
   private query() {
     PulpStatusAPI.get()
       .then(({ data }) => {
-        // TODO
-        console.log(data);
+        this.setState({ status: data });
       })
       .catch((e) => {
         const { status, statusText } = e.response;
