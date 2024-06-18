@@ -70,13 +70,13 @@ jobs:
     - name: "Set variables for screenshots"
       if: matrix.test == 'screenshots'
       run: |
-        UI_COMMIT_BASE=`curl -s https://api.github.com/repos/ansible/ansible-hub-ui/branches/${SHORT_BRANCH} | jq -r .commit.sha`
+        UI_COMMIT_BASE=`curl -s https://api.github.com/repos/himdel/pulp-ui/branches/${SHORT_BRANCH} | jq -r .commit.sha`
         echo "UI_COMMIT_BASE=${UI_COMMIT_BASE}" >> $GITHUB_ENV
 
-    - name: "Checkout ansible-hub-ui (${{ github.ref }})"
+    - name: "Checkout pulp-ui (${{ github.ref }})"
       uses: actions/checkout@v4
       with:
-        path: 'ansible-hub-ui'
+        path: 'pulp-ui'
 
     - name: "Checkout galaxy_ng (${{ env.SHORT_BRANCH }})"
       uses: actions/checkout@v4
@@ -96,9 +96,9 @@ jobs:
       run: |
         pip install --editable ./client/
         # merge common, profile-specific and test matrix specific config
-        cat ../ansible-hub-ui/.github/workflows/cypress/compose.env.common \
-          ../ansible-hub-ui/.github/workflows/cypress/compose.env."$BACKEND_FLAVOR" \
-          ../ansible-hub-ui/test/cypress/e2e/"${{ matrix.test }}"/compose.env \
+        cat ../pulp-ui/.github/workflows/cypress/compose.env.common \
+          ../pulp-ui/.github/workflows/cypress/compose.env."$BACKEND_FLAVOR" \
+          ../pulp-ui/test/cypress/e2e/"${{ matrix.test }}"/compose.env \
           | sed 's/^\s\+//' | tee compose.env || [ -s compose.env ]
 
     - name: "oci-env compose build"
@@ -120,17 +120,17 @@ jobs:
         path: |
           ~/.npm
           ~/.cache/Cypress
-        key: npm-${{ env.SHORT_BRANCH }}-${{ hashFiles('ansible-hub-ui/**/package-lock.json') }}
+        key: npm-${{ env.SHORT_BRANCH }}-${{ hashFiles('pulp-ui/**/package-lock.json') }}
         restore-keys: |
           npm-${{ env.SHORT_BRANCH }}-
           npm-
 
     - name: 'npm install'
-      working-directory: 'ansible-hub-ui'
+      working-directory: 'pulp-ui'
       run: 'npm install'
 
     - name: 'gettext extract & compile'
-      working-directory: 'ansible-hub-ui'
+      working-directory: 'pulp-ui'
       run: |
         # production displays unknown translations literally, make sure it's up to date
         npm run gettext:extract
@@ -138,7 +138,7 @@ jobs:
 
     - name: "Build standalone UI"
       if: ${{ env.BACKEND_FLAVOR == 'standalone' }}
-      working-directory: 'ansible-hub-ui'
+      working-directory: 'pulp-ui'
       run: |
         npm run build-standalone
 
@@ -148,7 +148,7 @@ jobs:
 
     - name: "Build community UI"
       if: ${{ env.BACKEND_FLAVOR == 'community' }}
-      working-directory: 'ansible-hub-ui'
+      working-directory: 'pulp-ui'
       run: |
         npm run build-community
 
@@ -160,7 +160,7 @@ jobs:
       if: ${{ env.BACKEND_FLAVOR == 'standalone' }}
       run: |
         mkdir -p www/static/
-        mv ansible-hub-ui/dist www/static/galaxy_ng
+        mv pulp-ui/dist www/static/galaxy_ng
         cd www
         echo '{}' > package.json
         npm install local-web-server
@@ -174,7 +174,7 @@ jobs:
       if: ${{ env.BACKEND_FLAVOR == 'community' }}
       run: |
         mkdir -p www/
-        mv ansible-hub-ui/dist/* www/
+        mv pulp-ui/dist/* www/
         cd www
         echo '{}' > package.json
         npm install local-web-server
@@ -185,7 +185,7 @@ jobs:
           --rewrite '/extensions/v2/(.*) -> http://localhost:5001/extensions/v2/$1' &
 
     - name: "Install Cypress & test dependencies"
-      working-directory: 'ansible-hub-ui/test'
+      working-directory: 'pulp-ui/test'
       run: |
         npm install
 
@@ -195,7 +195,7 @@ jobs:
         sudo apt install imagemagick
 
     - name: "Configure Cypress"
-      working-directory: 'ansible-hub-ui/test'
+      working-directory: 'pulp-ui/test'
       run: |
         cp -aiv ../.github/workflows/cypress/cypress.env.json."$BACKEND_FLAVOR" cypress.env.json
 
@@ -226,7 +226,7 @@ jobs:
         curl -s -H "Authorization: Token $HUB_TOKEN" http://localhost:5001/"$API"/_ui/v1/settings/ | jq
 
     - name: "Check if e2e contains only dirs in matrix test array"
-      working-directory: 'ansible-hub-ui'
+      working-directory: 'pulp-ui'
       run: |
         diff -Naur <(ls test/cypress/e2e | sort) <(yq '.jobs.cypress.strategy.matrix.test[]' .github/workflows/cypress.yml | sort)
 
@@ -234,7 +234,7 @@ jobs:
       if: matrix.test == 'screenshots'
       uses: actions/cache@v4
       with:
-        path: ansible-hub-ui/test/screenshots-base/
+        path: pulp-ui/test/screenshots-base/
         key: screenshots-${{env.SHORT_BRANCH}}-${{ env.UI_COMMIT_BASE }}
         restore-keys: |
           screenshots-${{env.SHORT_BRANCH}}-
@@ -242,10 +242,10 @@ jobs:
     - name: "List cached screenshots"
       if: ${{ matrix.test == 'screenshots' && github.event_name == 'pull_request' }}
       run: |
-        ls ansible-hub-ui/test/screenshots-base/
+        ls pulp-ui/test/screenshots-base/
 
     - name: "Run cypress"
-      working-directory: 'ansible-hub-ui/test'
+      working-directory: 'pulp-ui/test'
       env:
         CONSOLE_LOG_TO_TERMINAL: true
       run: |
@@ -259,11 +259,11 @@ jobs:
       if: matrix.test == 'screenshots'
       continue-on-error: true
       run: |
-        ls ansible-hub-ui/test/cypress/screenshots/screenshots/screenshots.js/
+        ls pulp-ui/test/cypress/screenshots/screenshots/screenshots.js/
 
     - name: "Compare screenshots"
       if: ${{ matrix.test == 'screenshots' && github.event_name == 'pull_request' }}
-      working-directory: 'ansible-hub-ui/test'
+      working-directory: 'pulp-ui/test'
       run: |
         changed=false
 
@@ -288,7 +288,7 @@ jobs:
 
     - name: "Move screenshots to cache"
       if: ${{ matrix.test == 'screenshots' && github.event_name != 'pull_request' }}
-      working-directory: 'ansible-hub-ui/test'
+      working-directory: 'pulp-ui/test'
       run: |
         rm -rf screenshots-base/
         mv cypress/screenshots/screenshots/screenshots.js ./screenshots-base
@@ -298,8 +298,8 @@ jobs:
       with:
         name: screenshots_and_videos-${{matrix.test}}
         path: |
-          ansible-hub-ui/test/cypress/screenshots
-          ansible-hub-ui/test/cypress/videos
+          pulp-ui/test/cypress/screenshots
+          pulp-ui/test/cypress/videos
 
     - name: "Kill container, show debug info"
       if: always()

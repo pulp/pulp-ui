@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: "Checkout ansible-hub-ui (${{ github.ref }})"
+    - name: "Checkout pulp-ui (${{ github.ref }})"
       uses: actions/checkout@v4
 
     - name: "Install node 20"
