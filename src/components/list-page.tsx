@@ -25,7 +25,6 @@ import {
   SortTable,
   closeAlert,
 } from 'src/components';
-import { type PermissionContextType } from 'src/permissions';
 import {
   ParamHelper,
   type RouteProps,
@@ -86,7 +85,7 @@ export type LocalizedSortHeaders = {
 }[];
 
 interface ListPageParams<T> {
-  condition: PermissionContextType;
+  condition?: (context) => boolean;
   defaultPageSize: number;
   defaultSort?: string;
   displayName: string;
@@ -187,7 +186,7 @@ export const ListPage = function <T>({
 
     componentDidMount() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (!condition(this.context as any)) {
+      if (condition && !condition(this.context as any)) {
         this.setState({ loading: false, unauthorized: true });
       } else {
         this.query();

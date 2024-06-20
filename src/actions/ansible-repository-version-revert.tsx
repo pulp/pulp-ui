@@ -3,7 +3,6 @@ import { Button, Modal } from '@patternfly/react-core';
 import React, { useState } from 'react';
 import { AnsibleRepositoryAPI } from 'src/api';
 import { Spinner } from 'src/components';
-import { canRevertAnsibleRepositoryVersion } from 'src/permissions';
 import { handleHttpError, parsePulpIDFromURL, taskAlert } from 'src/utilities';
 import { Action } from './action';
 
@@ -83,7 +82,6 @@ function revert(
 }
 
 export const ansibleRepositoryVersionRevertAction = Action({
-  condition: canRevertAnsibleRepositoryVersion,
   title: msg`Revert to this version`,
   modal: ({ addAlert, state, setState, query }) =>
     state.revertModal ? (

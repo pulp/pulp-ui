@@ -16,7 +16,6 @@ import {
 } from 'src/api';
 import { PageWithTabs } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
-import { canViewAnsibleRepositories } from 'src/permissions';
 import {
   lastSyncStatus,
   lastSynced,
@@ -53,7 +52,6 @@ const AnsibleRepositoryDetail = PageWithTabs<
         ? { name: t`Versions` }
         : null,
     ].filter(Boolean),
-  condition: canViewAnsibleRepositories,
   displayName: 'AnsibleRepositoryDetail',
   errorTitle: msg`Repository could not be displayed.`,
   headerActions: [

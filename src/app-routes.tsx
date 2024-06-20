@@ -1,16 +1,7 @@
 import React, { Component, type ElementType, useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import {
-  type FeatureFlagsType,
-  type SettingsType,
-  type UserType,
-} from 'src/api';
-import {
-  AppContext,
-  type IAppContextType,
-  useAppContext,
-} from 'src/app-context';
-import { type AlertType } from 'src/components';
+import { ActiveUserAPI } from 'src/api';
+import { AppContext, useAppContext } from 'src/app-context';
 import {
   AnsibleRemoteDetail,
   AnsibleRemoteEdit,
@@ -57,62 +48,45 @@ import {
   UserList,
   UserProfile,
 } from 'src/containers';
-import { loadContext } from 'src/load-context';
 import { Paths, formatPath } from 'src/paths';
-import { loginURL } from 'src/utilities';
-
-type UpdateInitialData = (
-  data: {
-    user?: UserType;
-    featureFlags?: FeatureFlagsType;
-    settings?: SettingsType;
-    alerts?: AlertType[];
-  },
-  callback?: () => void,
-) => void;
 
 interface IRoutesProps {
-  updateInitialData: UpdateInitialData;
+  setUser: (user) => void;
 }
 
 interface IAuthHandlerProps {
   component: ElementType;
-  isDisabled?: boolean;
   noAuth: boolean;
-  updateInitialData: UpdateInitialData;
   path: string;
+  setUser: (user) => void;
 }
 
 interface IRouteConfig {
   component: ElementType;
   path: string;
   noAuth?: boolean;
-  isDisabled?: boolean;
 }
 
 const AuthHandler = ({
   component: Component,
-  isDisabled,
   noAuth,
   path,
-  updateInitialData,
+  setUser,
 }: IAuthHandlerProps) => {
-  const { user, settings, featureFlags } = useAppContext();
-  const [isLoading, setLoading] = useState<boolean>(
-    !user || !settings || !featureFlags,
-  );
+  const { user } = useAppContext();
+  const [isLoading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // This component is mounted on every route change, so it's a good place
-    // to check for an active user.
-    if (user && settings && featureFlags) {
+    // This component is mounted on every route change
+    if (user) {
       return;
     }
 
-    loadContext()
-      .then((data) => updateInitialData(data))
-      .then(() => setLoading(false));
+    ActiveUserAPI.getUser()
+      .catch(() => null)
+      .then((user) => setUser(user))
+      .finally(() => setLoading(false));
   }, []);
 
   if (isLoading) {
@@ -120,74 +94,52 @@ const AuthHandler = ({
   }
 
   if (!user && !noAuth) {
-    const isExternalAuth = featureFlags.external_authentication;
+    //const isExternalAuth = featureFlags.external_authentication;
     // NOTE: also update LoginLink when changing this
-    if (isExternalAuth && UI_EXTERNAL_LOGIN_URI) {
-      window.location.replace(loginURL(pathname));
-      return null;
-    }
+    //if (isExternalAuth && UI_EXTERNAL_LOGIN_URI) {
+    //  window.location.replace(loginURL(pathname));
+    //  return null;
+    //}
 
     return <Navigate to={formatPath(Paths.login, {}, { next: pathname })} />;
-  }
-
-  // only enforce this if feature flags are set. Otherwise the container
-  // registry will always return a 404 on the first load.
-  if (isDisabled) {
-    return <NotFound path={path} />;
   }
 
   return <Component path={path} />;
 };
 
-export class StandaloneRoutes extends Component<IRoutesProps> {
+export class AppRoutes extends Component<IRoutesProps> {
   static contextType = AppContext;
 
   // Note: must be ordered from most specific to least specific
   getRoutes(): IRouteConfig[] {
-    const { featureFlags, user } = this.context as IAppContextType;
-
-    let isContainerDisabled = true;
-    let isUserMgmtDisabled = false;
-    if (featureFlags) {
-      isContainerDisabled = !featureFlags.execution_environments;
-      isUserMgmtDisabled = featureFlags.external_authentication;
-    }
-
     return [
       {
         component: ExecutionEnvironmentDetailActivities,
         path: Paths.executionEnvironmentDetailActivities,
-        isDisabled: isContainerDisabled,
       },
       {
         component: ExecutionEnvironmentDetailAccess,
         path: Paths.executionEnvironmentDetailAccess,
-        isDisabled: isContainerDisabled,
       },
       {
         component: ExecutionEnvironmentManifest,
         path: Paths.executionEnvironmentManifest,
-        isDisabled: isContainerDisabled,
       },
       {
         component: ExecutionEnvironmentDetailImages,
         path: Paths.executionEnvironmentDetailImages,
-        isDisabled: isContainerDisabled,
       },
       {
         component: ExecutionEnvironmentDetail,
         path: Paths.executionEnvironmentDetail,
-        isDisabled: isContainerDisabled,
       },
       {
         component: ExecutionEnvironmentList,
         path: Paths.executionEnvironments,
-        isDisabled: isContainerDisabled,
       },
       {
         component: ExecutionEnvironmentRegistryList,
         path: Paths.executionEnvironmentsRegistries,
-        isDisabled: isContainerDisabled,
       },
       {
         component: TaskListView,
@@ -200,7 +152,6 @@ export class StandaloneRoutes extends Component<IRoutesProps> {
       {
         component: RoleCreate,
         path: Paths.createRole,
-        isDisabled: !user?.is_superuser,
       },
       { component: RoleList, path: Paths.roleList },
       { component: AnsibleRemoteDetail, path: Paths.ansibleRemoteDetail },
@@ -219,13 +170,11 @@ export class StandaloneRoutes extends Component<IRoutesProps> {
       {
         component: UserCreate,
         path: Paths.createUser,
-        isDisabled: isUserMgmtDisabled,
       },
       { component: SignatureKeysList, path: Paths.signatureKeys },
       {
         component: EditUser,
         path: Paths.editUser,
-        isDisabled: isUserMgmtDisabled,
       },
       { component: UserDetail, path: Paths.userDetail },
       { component: UserList, path: Paths.userList },
@@ -260,27 +209,24 @@ export class StandaloneRoutes extends Component<IRoutesProps> {
   }
 
   render() {
-    const { updateInitialData } = this.props;
+    const { setUser } = this.props;
 
     return (
       <Routes>
-        {this.getRoutes().map(
-          ({ component, isDisabled, noAuth, path }, index) => (
-            <Route
-              element={
-                <AuthHandler
-                  component={component}
-                  isDisabled={isDisabled}
-                  noAuth={noAuth}
-                  path={path}
-                  updateInitialData={updateInitialData}
-                />
-              }
-              key={index}
-              path={path}
-            />
-          ),
-        )}
+        {this.getRoutes().map(({ component, noAuth, path }, index) => (
+          <Route
+            element={
+              <AuthHandler
+                component={component}
+                noAuth={noAuth}
+                setUser={setUser}
+                path={path}
+              />
+            }
+            key={index}
+            path={path}
+          />
+        ))}
         <Route
           path='*'
           element={
@@ -288,7 +234,7 @@ export class StandaloneRoutes extends Component<IRoutesProps> {
               component={NotFound}
               noAuth
               path={null}
-              updateInitialData={updateInitialData}
+              setUser={setUser}
             />
           }
         />

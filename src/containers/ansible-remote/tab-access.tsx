@@ -10,7 +10,6 @@ import {
 } from 'src/api';
 import { AccessTab } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
-import { canEditAnsibleRemoteAccess } from 'src/permissions';
 import {
   assignRoles,
   jsxErrorMessage,
@@ -37,17 +36,14 @@ export const RemoteAccessTab = ({
   item,
   actionContext: {
     addAlert,
-    featureFlags,
-    hasPermission,
     state: { params },
-    user,
   },
 }: TabProps) => {
   const id = item?.pulp_href && parsePulpIDFromURL(item.pulp_href);
   const [name, setName] = useState<string>(item?.name);
   const [groups, setGroups] = useState<GroupType[]>(null); // loading
   const [users, setUsers] = useState<UserType[]>(null); // loading
-  const [canEditOwners, setCanEditOwners] = useState<boolean>(false);
+  const canEditOwners = true; // FIXME: permissions
   const [selectedGroup, setSelectedGroup] = useState<GroupType>(null);
   const [selectedUser, setSelectedUser] = useState<UserType>(null);
   const [showUserRemoveModal, setShowUserRemoveModal] =
@@ -71,35 +67,18 @@ export const RemoteAccessTab = ({
     setUsers(null);
     setGroups(null);
 
-    AnsibleRemoteAPI.myPermissions(id)
-      .then(({ data: { permissions } }) => {
-        setCanEditOwners(
-          canEditAnsibleRemoteAccess({
-            hasPermission,
-            hasObjectPermission: (p: string): boolean =>
-              permissions.includes(p),
-            user,
-            featureFlags,
-          }),
-        );
-        // TODO handle pagination
-        AnsibleRemoteAPI.listRoles(id, { page_size: 100 })
-          .then(({ data: { roles } }) => {
-            const { users, groups } = assignRoles(roles);
+    // TODO handle pagination
+    AnsibleRemoteAPI.listRoles(id, { page_size: 100 })
+      .then(({ data: { roles } }) => {
+        const { users, groups } = assignRoles(roles);
 
-            setName(name);
-            setUsers(users as UserType[]);
-            setGroups(groups as GroupType[]);
-          })
-          .catch(() => {
-            setUsers([]);
-            setGroups([]);
-          });
+        setName(name);
+        setUsers(users as UserType[]);
+        setGroups(groups as GroupType[]);
       })
       .catch(() => {
         setUsers([]);
         setGroups([]);
-        setCanEditOwners(false);
       });
   };
 

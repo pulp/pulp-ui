@@ -41,7 +41,7 @@ export const UserForm = ({
   updateUser,
   user,
 }: IProps) => {
-  const { settings, user: currentUser } = useAppContext();
+  const { user: currentUser } = useAppContext();
 
   const [formErrors, setFormErrors] = useState<{ groups: AlertType }>({
     groups: null,
@@ -53,7 +53,7 @@ export const UserForm = ({
 
   useEffect(() => loadGroups(''), []);
 
-  const minLength = settings.GALAXY_MINIMUM_PASSWORD_LENGTH || 9; // actually counts codepoints, close enough
+  const minLength = 9; // actually counts codepoints, close enough
 
   const formFields = [
     { id: 'username', title: t`Username` },

@@ -18,7 +18,6 @@ import {
   Main,
   closeAlert,
 } from 'src/components';
-import { type PermissionContextType } from 'src/permissions';
 import { type RouteProps, jsxErrorMessage, withRouter } from 'src/utilities';
 
 interface IState<T> {
@@ -35,7 +34,7 @@ interface IState<T> {
 
 interface PageParams<T> {
   breadcrumbs: ({ name }) => { url?: string; name: string }[];
-  condition: PermissionContextType;
+  condition?: (context) => boolean;
   displayName: string;
   errorTitle: MessageDescriptor;
   headerActions?: ActionType[];
@@ -99,7 +98,7 @@ export const Page = function <
             item?.my_permissions?.includes?.(permission),
         };
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        if (!condition(actionContext as any)) {
+        if (condition && !condition(actionContext as any)) {
           this.setState({ loading: false, unauthorized: true });
         }
 

@@ -18,12 +18,7 @@ import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import QuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/question-circle-icon';
 import React, { type ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  ActiveUserAPI,
-  type FeatureFlagsType,
-  type SettingsType,
-  type UserType,
-} from 'src/api';
+import { ActiveUserAPI, type UserType } from 'src/api';
 import {
   ExternalLink,
   HubAboutModal,
@@ -37,21 +32,11 @@ import { StandaloneMenu } from './menu';
 
 interface IProps {
   children: ReactNode;
-  featureFlags: FeatureFlagsType;
-  hasPermission: (string) => boolean;
   setUser: (user) => void;
-  settings: SettingsType;
   user: UserType;
 }
 
-export const StandaloneLayout = ({
-  children,
-  featureFlags,
-  hasPermission,
-  setUser,
-  settings,
-  user,
-}: IProps) => {
+export const StandaloneLayout = ({ children, setUser, user }: IProps) => {
   const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
 
   let aboutModal = null;
@@ -160,9 +145,7 @@ export const StandaloneLayout = ({
   const Sidebar = (
     <PageSidebar>
       <PageSidebarBody>
-        <StandaloneMenu
-          context={{ user, settings, featureFlags, hasPermission }}
-        />
+        <StandaloneMenu context={{ user }} />
       </PageSidebarBody>
     </PageSidebar>
   );

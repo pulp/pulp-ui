@@ -6,12 +6,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ExternalLink, NavList } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
-import {
-  canViewAnsibleRemotes,
-  canViewAnsibleRepositories,
-  isLoggedIn,
-} from 'src/permissions';
-import { hasPermission } from 'src/utilities';
 
 const menuItem = (name, options = {}) => ({
   active: false,
@@ -39,81 +33,57 @@ function standaloneMenu() {
     }),
     menuItem(t`Search`, {
       url: formatPath(Paths.search),
-      condition: ({ settings, user }) =>
-        settings.GALAXY_ENABLE_UNAUTHENTICATED_COLLECTION_ACCESS ||
-        !user.is_anonymous,
+      condition: ({ user }) => !!user,
     }),
-    menuSection('pulp_ansible', {}, [
+    menuSection('pulp_ansible', { condition: ({ user }) => !!user }, [
       menuItem(t`Collections`, {
         url: formatPath(Paths.collections),
-        condition: ({ settings, user }) =>
-          settings.GALAXY_ENABLE_UNAUTHENTICATED_COLLECTION_ACCESS ||
-          !user.is_anonymous,
         alternativeUrls: [altPath('/repo/:repo')],
       }),
       menuItem(t`Namespaces`, {
         url: formatPath(Paths.namespaces),
-        condition: ({ settings, user }) =>
-          settings.GALAXY_ENABLE_UNAUTHENTICATED_COLLECTION_ACCESS ||
-          !user.is_anonymous,
         alternativeUrls: [altPath(Paths.myNamespaces)],
       }),
       menuItem(t`Repositories`, {
-        condition: canViewAnsibleRepositories,
         url: formatPath(Paths.ansibleRepositories),
       }),
       menuItem(t`Remotes`, {
-        condition: canViewAnsibleRemotes,
         url: formatPath(Paths.ansibleRemotes),
       }),
       menuItem(t`Approval`, {
-        condition: (context) =>
-          hasPermission(context, 'ansible.modify_ansible_repo_content'),
         url: formatPath(Paths.approvalDashboard),
       }),
     ]),
-    menuSection(
-      'pulp_container',
-      {
-        condition: ({ featureFlags, user }) =>
-          featureFlags.execution_environments && !user.is_anonymous,
-      },
-      [
-        menuItem(t`Containers`, {
-          url: formatPath(Paths.executionEnvironments),
-        }),
-        menuItem(t`Remote Registries`, {
-          url: formatPath(Paths.executionEnvironmentsRegistries),
-        }),
-      ],
-    ),
+    menuSection('pulp_container', { condition: ({ user }) => !!user }, [
+      menuItem(t`Containers`, {
+        url: formatPath(Paths.executionEnvironments),
+      }),
+      menuItem(t`Remote Registries`, {
+        url: formatPath(Paths.executionEnvironmentsRegistries),
+      }),
+    ]),
     menuItem(t`Task Management`, {
       url: formatPath(Paths.taskList),
-      condition: isLoggedIn,
       alternativeUrls: [altPath(Paths.taskDetail)],
+      condition: ({ user }) => !!user,
     }),
     menuItem(t`API token`, {
       url: formatPath(Paths.token),
-      condition: isLoggedIn,
+      condition: ({ user }) => !!user,
     }),
     menuItem(t`Signature Keys`, {
       url: formatPath(Paths.signatureKeys),
-      condition: ({ featureFlags, user }) =>
-        (featureFlags.collection_signing || featureFlags.container_signing) &&
-        !user.is_anonymous,
+      condition: ({ user }) => !!user,
     }),
-    menuSection(t`User Access`, {}, [
+    menuSection(t`User Access`, { condition: ({ user }) => !!user }, [
       menuItem(t`Users`, {
-        condition: (context) => hasPermission(context, 'galaxy.view_user'),
         url: formatPath(Paths.userList),
       }),
       menuItem(t`Groups`, {
-        condition: (context) => hasPermission(context, 'galaxy.view_group'),
         url: formatPath(Paths.groupList),
         alternativeUrls: [altPath(Paths.groupDetail)],
       }),
       menuItem(t`Roles`, {
-        condition: (context) => hasPermission(context, 'galaxy.view_group'),
         url: formatPath(Paths.roleList),
         alternativeUrls: [altPath(Paths.roleEdit)],
       }),
@@ -166,14 +136,14 @@ function MenuItem({ item, context }) {
     >
       {item.url && item.external ? (
         <ExternalLink
-          data-cy={`hub-menu-item-${item.name}`}
+          data-cy={`pulp-menu-item-${item.name}`}
           href={item.url}
           variant='nav'
         >
           {item.name}
         </ExternalLink>
       ) : item.url ? (
-        <Link to={item.url} data-cy={`hub-menu-item-${item.name}`}>
+        <Link to={item.url} data-cy={`pulp-menu-item-${item.name}`}>
           {item.name}
         </Link>
       ) : (
@@ -190,7 +160,7 @@ function MenuSection({ section, context, expandedSections }) {
       groupId={section.name}
       isActive={section.active}
       isExpanded={expandedSections.includes(section.name)}
-      data-cy={`hub-menu-section-${section.name}`}
+      data-cy={`pulp-menu-section-${section.name}`}
     >
       <Menu
         items={section.items}
@@ -225,6 +195,7 @@ export const StandaloneMenu = ({ context }) => {
   useEffect(() => {
     setMenu(standaloneMenu());
   }, []);
+
   useEffect(() => {
     activateMenu(menu, location.pathname);
     setExpandedSections(
@@ -240,26 +211,16 @@ export const StandaloneMenu = ({ context }) => {
     );
   };
 
-  const StandaloneNav = ({ children = null }) => (
+  return (
     <Nav onToggle={(_event, data) => onToggle(data)}>
       <NavList>
-        <NavGroup className={'hub-nav-title'} title={APPLICATION_NAME} />
-        {children}
+        <NavGroup className={'pulp-nav-title'} title={APPLICATION_NAME} />
+        <Menu
+          items={menu}
+          context={context}
+          expandedSections={expandedSections}
+        />
       </NavList>
     </Nav>
-  );
-
-  if (!context.user || !context.settings || !context.featureFlags) {
-    return <StandaloneNav />;
-  }
-
-  return (
-    <StandaloneNav>
-      <Menu
-        items={menu}
-        context={context}
-        expandedSections={expandedSections}
-      />
-    </StandaloneNav>
   );
 };

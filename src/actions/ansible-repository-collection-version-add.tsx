@@ -14,7 +14,6 @@ import {
   DetailList,
   closeAlert,
 } from 'src/components';
-import { canEditAnsibleRepository } from 'src/permissions';
 import { handleHttpError, parsePulpIDFromURL, taskAlert } from 'src/utilities';
 import { Action } from './action';
 
@@ -237,7 +236,6 @@ const AddCollectionVersionModal = ({
 };
 
 export const ansibleRepositoryCollectionVersionAddAction = Action({
-  condition: canEditAnsibleRepository,
   title: msg`Add collection`,
   modal: ({ addAlert, state, setState, query }) =>
     state.addCollectionVersionModal ? (

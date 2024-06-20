@@ -7,9 +7,7 @@ export { errorMessage, handleHttpError, jsxErrorMessage } from './fail-alerts';
 export { filterIsSet } from './filter-is-set';
 export { getHumanSize } from './get-human-size';
 export { controllerURL, getContainersURL, getRepoURL } from './get-repo-url';
-export { hasPermission } from './has-permission';
 export { lastSyncStatus, lastSynced } from './last-sync-task';
-export { loginURL } from './login-url';
 export {
   ErrorMessagesType,
   alertErrorsWithoutFields,

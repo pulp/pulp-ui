@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { AnsibleRepositoryAPI } from 'src/api';
 import { HelpButton, Spinner } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
-import { canSyncAnsibleRepository } from 'src/permissions';
 import { handleHttpError, parsePulpIDFromURL, taskAlert } from 'src/utilities';
 import { Action } from './action';
 
@@ -102,7 +101,6 @@ const SyncModal = ({
 };
 
 export const ansibleRepositorySyncAction = Action({
-  condition: canSyncAnsibleRepository,
   title: msg`Sync`,
   modal: ({ addAlert, query, setState, state }) =>
     state.syncModalOpen ? (

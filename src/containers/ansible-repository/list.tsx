@@ -21,7 +21,6 @@ import {
   PulpLabels,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
-import { canViewAnsibleRepositories } from 'src/permissions';
 import { lastSyncStatus, lastSynced, parsePulpIDFromURL } from 'src/utilities';
 
 const listItemActions = [
@@ -48,7 +47,6 @@ const typeaheadQuery = ({ inputText, selectedFilter, setState }) => {
 };
 
 const AnsibleRepositoryList = ListPage<AnsibleRepositoryType>({
-  condition: canViewAnsibleRepositories,
   defaultPageSize: 10,
   defaultSort: '-pulp_created',
   displayName: 'AnsibleRepositoryList',

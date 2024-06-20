@@ -21,7 +21,6 @@ import {
   closeAlert,
 } from 'src/components';
 import { NotFound } from 'src/containers/not-found/not-found';
-import { type PermissionContextType } from 'src/permissions';
 import {
   ParamHelper,
   type RouteProps,
@@ -46,7 +45,7 @@ interface IState<T> {
 
 interface PageWithTabsParams<T> {
   breadcrumbs: ({ name, tab, params }) => { url?: string; name: string }[];
-  condition: PermissionContextType;
+  condition?: (context) => boolean;
   displayName: string;
   errorTitle: MessageDescriptor;
   headerActions?: ActionType[];
@@ -111,7 +110,7 @@ export const PageWithTabs = function <
 
     componentDidMount() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (!condition(this.context as any)) {
+      if (condition && !condition(this.context as any)) {
         this.setState({ loading: false, unauthorized: true });
       } else {
         this.query();

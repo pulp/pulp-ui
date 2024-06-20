@@ -3,13 +3,12 @@ import { Button } from '@patternfly/react-core';
 import { DropdownItem } from '@patternfly/react-core/deprecated';
 import React, { type ReactNode } from 'react';
 import { Tooltip } from 'src/components';
-import { type PermissionContextType } from 'src/permissions';
 
 type ModalType = ({ addAlert, listQuery, query, setState, state }) => ReactNode;
 
 interface ActionParams {
   buttonVariant?: 'primary' | 'secondary';
-  condition?: PermissionContextType;
+  condition?: (item, actionContext) => boolean;
   disabled?: (item, actionContext) => string | ReactNode | null;
   modal?: ModalType;
   onClick: (item, actionContext) => void;

@@ -13,7 +13,6 @@ import {
 import { AnsibleRemoteAPI, type AnsibleRemoteType } from 'src/api';
 import { CopyURL, ListItemActions, ListPage } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
-import { canViewAnsibleRemotes } from 'src/permissions';
 import { parsePulpIDFromURL } from 'src/utilities';
 
 const listItemActions = [
@@ -30,7 +29,6 @@ const listItemActions = [
 ];
 
 const AnsibleRemoteList = ListPage<AnsibleRemoteType>({
-  condition: canViewAnsibleRemotes,
   defaultPageSize: 10,
   defaultSort: '-pulp_created',
   displayName: 'AnsibleRemoteList',

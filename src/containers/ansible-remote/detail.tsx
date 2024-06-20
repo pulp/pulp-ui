@@ -10,7 +10,6 @@ import {
 import { AnsibleRemoteAPI, type AnsibleRemoteType } from 'src/api';
 import { PageWithTabs } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
-import { canViewAnsibleRemotes } from 'src/permissions';
 import { parsePulpIDFromURL } from 'src/utilities';
 import { RemoteAccessTab } from './tab-access';
 import { DetailsTab } from './tab-details';
@@ -30,7 +29,6 @@ const AnsibleRemoteDetail = PageWithTabs<AnsibleRemoteType>({
       tab === 'access' && user ? { name: t`User ${user}` } : null,
       tab === 'access' && !user && !group ? { name: t`Access` } : null,
     ].filter(Boolean),
-  condition: canViewAnsibleRemotes,
   displayName: 'AnsibleRemoteDetail',
   errorTitle: msg`Remote could not be displayed.`,
   headerActions: [

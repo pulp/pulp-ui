@@ -3,7 +3,6 @@ import { Text } from '@patternfly/react-core';
 import React, { useState } from 'react';
 import { AnsibleRepositoryAPI } from 'src/api';
 import { DeleteModal } from 'src/components';
-import { canEditAnsibleRepository } from 'src/permissions';
 import { handleHttpError, parsePulpIDFromURL, taskAlert } from 'src/utilities';
 import { Action } from './action';
 
@@ -87,7 +86,6 @@ const RemoveCollectionVersionModal = ({
 };
 
 export const ansibleRepositoryCollectionVersionRemoveAction = Action({
-  condition: canEditAnsibleRepository,
   title: msg`Remove`,
   modal: ({ addAlert, state, setState, query }) =>
     state.removeCollectionVersionModal ? (

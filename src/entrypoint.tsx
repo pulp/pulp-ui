@@ -2,9 +2,10 @@ import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import 'src/l10n';
-import App from './app';
+import { App } from './app';
+import { AppContextProvider } from './app-context';
 
 // App entrypoint
 
@@ -27,10 +28,12 @@ if (!window.location.pathname.startsWith(UI_BASE_PATH)) {
 const root = createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
-    <Router basename={UI_BASE_PATH}>
+    <BrowserRouter basename={UI_BASE_PATH}>
       <I18nProvider i18n={i18n}>
-        <App />
+        <AppContextProvider>
+          <App />
+        </AppContextProvider>
       </I18nProvider>
-    </Router>
+    </BrowserRouter>
   </StrictMode>,
 );
