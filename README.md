@@ -29,8 +29,30 @@ podman run --publish 8080:80 \
            --volume "$(pwd)/pulp_storage":/var/lib/pulp \
            --volume "$(pwd)/pgsql":/var/lib/pgsql \
            --volume "$(pwd)/containers":/var/lib/containers \
-           --device /dev/fuse \
            docker.io/pulp/pulp
+```
+
+check:
+
+```
+curl localhost:8080/pulp/api/v3/status/ | jq
+```
+
+change password:
+
+```
+container_id=`podman ps | grep pulp | cut -d' ' -f1`
+podman exec -it "$container_id" pulpcore-manager reset-admin-password --password admin
+```
+
+configure pulp-cli:
+
+```
+pip install pulp-cli[pygments]
+pulp config create --username admin --base-url http://localhost:8080 --password admin
+
+pulp --help
+pulp user list
 ```
 
 ### frontend
