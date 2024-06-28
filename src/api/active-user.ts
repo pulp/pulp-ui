@@ -5,7 +5,14 @@ class API extends HubAPI {
   apiPath = '_ui/v1/me/';
 
   getUser(): Promise<UserType> {
-    return this.http.get(this.apiPath).then((result) => result.data);
+    // FIXME: return this.http.get(this.apiPath).then((result) => result.data);
+    return Promise.resolve({
+      username: 'admin',
+      groups: [],
+      is_superuser: true,
+      is_anonymous: false,
+      model_permissions: {},
+    });
   }
 
   saveUser(data) {

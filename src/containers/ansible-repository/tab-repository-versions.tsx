@@ -31,7 +31,7 @@ interface TabProps {
 
 const AnyAPI = (href) =>
   new (class extends PulpAPI {
-    apiPath = href.replace(PULP_API_BASE_PATH, '');
+    apiPath = href.replace(API_BASE_PATH, '');
   })();
 
 const VersionContent = ({

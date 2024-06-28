@@ -20,6 +20,8 @@ export class BaseAPI {
       paramsSerializer: {
         serialize: (params) => ParamHelper.getQueryString(params),
       },
+      // TODO fix, more methods
+      auth: { username: 'admin', password: 'admin' },
     });
 
     this.http.interceptors.request.use((request) => this.authHandler(request));

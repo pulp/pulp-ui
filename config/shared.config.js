@@ -53,11 +53,6 @@ module.exports = (inputConfigs) => {
       globals[item.name] = JSON.stringify(customConfigs[item.name]);
     });
 
-  // 4.6+: pulp APIs live under API_BASE_PATH now, ignore previous overrides
-  globals.PULP_API_BASE_PATH = JSON.stringify(
-    customConfigs.API_BASE_PATH + 'pulp/api/v3/',
-  );
-
   return {
     devtool: 'source-map',
 

@@ -5,6 +5,6 @@ export class PulpAPI extends BaseAPI {
   sortParam = 'ordering';
 
   constructor() {
-    super(PULP_API_BASE_PATH);
+    super(API_BASE_PATH);
   }
 }

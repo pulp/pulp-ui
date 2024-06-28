@@ -463,7 +463,7 @@ class TaskDetail extends Component<RouteProps, IState> {
         }
         if (result.data.reserved_resources_record.length) {
           result.data.reserved_resources_record.forEach((resource) => {
-            const url = resource.replace(PULP_API_BASE_PATH, '');
+            const url = resource.replace(API_BASE_PATH, '');
             const id = parsePulpIDFromURL(url);
             const urlParts = url.split('/');
             let resourceType = '';

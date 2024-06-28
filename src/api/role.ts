@@ -15,7 +15,7 @@ export class API extends PulpAPI {
     if (for_object_type) {
       // ?for_object_type=/api/automation-hub/pulp/api/v3/.../
       // list visible in http://localhost:8002/api/automation-hub/pulp/api/v3/
-      newParams.for_object_type = PULP_API_BASE_PATH + for_object_type + '/';
+      newParams.for_object_type = API_BASE_PATH + for_object_type + '/';
     }
     return super.list(newParams);
   }
