@@ -25,12 +25,6 @@ jobs:
         npm install
         git diff --exit-code package-lock.json
 
-        # same in test/
-        pushd test/
-        npm install
-        git diff --exit-code package-lock.json
-        popd
-
         # dependencies
         npm run lint-setup
 
