@@ -110,7 +110,9 @@ jobs:
           mkdir ~/webpack-config/$version/
           pushd $version/config/
 
-          for file in *.webpack.config.js; do
+          for file in *.config.js; do
+            grep -q shared <<< "$file" && continue || true
+
             export NODE_ENV=`grep -q '\.prod\.' <<< "$file" && echo production || echo development`
 
             node -e 'console.log(JSON.stringify(require("./'"$file"'"), null, 2))' |
