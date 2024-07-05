@@ -217,7 +217,6 @@ export const StandaloneMenu = ({ context }) => {
   return (
     <Nav onToggle={(_event, data) => onToggle(data)}>
       <NavList>
-        <NavGroup className={'pulp-nav-title'} title={APPLICATION_NAME} />
         <Menu
           items={menu}
           context={context}
