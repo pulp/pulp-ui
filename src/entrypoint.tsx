@@ -3,6 +3,7 @@ import { I18nProvider } from '@lingui/react';
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import 'src/darkmode';
 import 'src/l10n';
 import { App } from './app';
 import { AppContextProvider } from './app-context';

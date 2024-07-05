@@ -36,7 +36,7 @@ export function LanguageSwitcher(_props) {
         )),
         <DropdownSeparator key='separator2' />,
         <DropdownItem
-          key='current'
+          key='unset'
           href='?lang='
           isDisabled={!window.localStorage.override_l10n}
         >

@@ -20,6 +20,7 @@ import React, { type ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ActiveUserAPI, type UserType } from 'src/api';
 import {
+  DarkmodeSwitcher,
   ExternalLink,
   LanguageSwitcher,
   LoginLink,
@@ -124,6 +125,7 @@ export const StandaloneLayout = ({ children, setUser, user }: IProps) => {
       </MastheadMain>
       <MastheadContent>
         <span style={{ flexGrow: 1 }} />
+        <DarkmodeSwitcher />
         <LanguageSwitcher />
         {user ? (
           <StatefulDropdown

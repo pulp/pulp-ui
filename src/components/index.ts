@@ -21,6 +21,7 @@ export { CompoundFilter, type FilterOption } from './compound-filter';
 export { ConfirmModal } from './confirm-modal';
 export { CopyCollectionToRepositoryModal } from './copy-collection-to-repository-modal';
 export { CopyURL } from './copy-url';
+export { DarkmodeSwitcher } from './darkmode-switcher';
 export { DataForm } from './data-form';
 export { DateComponent } from './date-component';
 export { DeleteAnsibleRemoteModal } from './delete-ansible-remote-modal';

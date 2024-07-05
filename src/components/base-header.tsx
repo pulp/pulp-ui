@@ -36,7 +36,10 @@ export const BaseHeader = ({
   return (
     <div
       className={className}
-      style={{ backgroundColor: 'white', padding: '0 24px' }}
+      style={{
+        backgroundColor: 'var(--pf-v5-global--BackgroundColor--100)',
+        padding: '0 24px',
+      }}
     >
       {contextSelector || null}
       {breadcrumbs && (
