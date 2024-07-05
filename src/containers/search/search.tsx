@@ -20,10 +20,10 @@ import {
   DeleteCollectionModal,
   EmptyStateFilter,
   EmptyStateNoData,
-  HubListToolbar,
-  HubPagination,
   ImportModal,
   LoadingSpinner,
+  PulpListToolbar,
+  PulpPagination,
   closeAlert,
   collectionFilter,
 } from 'src/components';
@@ -161,7 +161,7 @@ class Search extends Component<RouteProps, IState> {
 
     return (
       <>
-        <div className='hub-search-page'>
+        <div className='pulp-search-page'>
           <AlertList
             alerts={alerts}
             closeAlert={(i) =>
@@ -215,9 +215,9 @@ class Search extends Component<RouteProps, IState> {
               namespace={updateCollection.collection_version.namespace}
             />
           )}
-          <BaseHeader className='hub-header-bordered' title={t`Collections`} />
+          <BaseHeader className='pulp-header-bordered' title={t`Collections`} />
           {!noData && (
-            <HubListToolbar
+            <PulpListToolbar
               count={count}
               ignoredParams={ignoredParams}
               params={params}
@@ -246,7 +246,7 @@ class Search extends Component<RouteProps, IState> {
                 })}
               </section>
               <section className='footer'>
-                <HubPagination
+                <PulpPagination
                   params={params}
                   updateParams={updateParams}
                   count={count}
@@ -296,7 +296,7 @@ class Search extends Component<RouteProps, IState> {
 
   private renderCards(collections, { count, params, updateParams }) {
     return (
-      <div className='hub-cards'>
+      <div className='pulp-cards'>
         {collections.map((c, i) => {
           return (
             <CollectionCard
@@ -452,7 +452,7 @@ class Search extends Component<RouteProps, IState> {
   private renderList(collections) {
     return (
       <div className='list-container'>
-        <div className='hub-list'>
+        <div className='pulp-list'>
           <DataList className='data-list' aria-label={t`List of Collections`}>
             {collections.map((c, i) => (
               <CollectionListItem

@@ -23,10 +23,10 @@ import {
   EmptyStateFilter,
   EmptyStateNoData,
   EmptyStateUnauthorized,
-  HubPagination,
   ListItemActions,
   LoadingSpinner,
   Main,
+  PulpPagination,
   RemoteForm,
   SortTable,
   Tooltip,
@@ -244,8 +244,8 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
             {loading ? (
               <LoadingSpinner />
             ) : (
-              <section className='body'>
-                <div className='hub-toolbar'>
+              <section className='pulp-section'>
+                <div className='pulp-toolbar'>
                   <Toolbar>
                     <ToolbarContent>
                       <ToolbarGroup>
@@ -272,7 +272,7 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
                     </ToolbarContent>
                   </Toolbar>
 
-                  <HubPagination
+                  <PulpPagination
                     params={params}
                     updateParams={(p) =>
                       this.updateParams(p, () => this.queryRegistries())
@@ -295,7 +295,7 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
                   />
                 </div>
                 {this.renderTable(params)}
-                <HubPagination
+                <PulpPagination
                   params={params}
                   updateParams={(p) =>
                     this.updateParams(p, () => this.queryRegistries())

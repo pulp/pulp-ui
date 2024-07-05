@@ -76,25 +76,25 @@ describe('Collection detail', () => {
       // better synchronization, wait for the rest of the page to load
 
       if (tab.name == 'Documentation') {
-        cy.contains('.hub-docs-container', 'Documentation');
+        cy.contains('.pulp-docs-container', 'Documentation');
       }
 
       if (tab.name == 'Import log') {
-        cy.contains('.body', 'Approval status', {
+        cy.contains('.pulp-section', 'Approval status', {
           timeout: 10000,
         });
       }
 
       if (tab.name == 'Contents') {
-        cy.contains('.body', 'Description');
+        cy.contains('.pulp-section', 'Description');
       }
 
       if (tab.name == 'Dependencies') {
-        cy.contains('.body', 'No dependencies');
+        cy.contains('.pulp-section', 'No dependencies');
       }
 
       if (tab.name == 'Install') {
-        cy.contains('.body', 'License');
+        cy.contains('.pulp-section', 'License');
       }
     });
   });
@@ -102,11 +102,11 @@ describe('Collection detail', () => {
   it('should have working UI on install tab', () => {
     cy.visit(baseURL);
     // should have Install, License and Installation strings, and correct docs link
-    cy.get('.body').contains('Install');
-    cy.get('.body').contains('License');
-    cy.get('.body').contains('Installation');
+    cy.get('.pulp-section').contains('Install');
+    cy.get('.pulp-section').contains('License');
+    cy.get('.pulp-section').contains('Installation');
 
-    cy.get('.body').contains(
+    cy.get('.pulp-section').contains(
       `a[href="${uiPrefix}repo/published/collection_detail_test_namespace/collection_detail_test_collection/docs/"]`,
       'Go to documentation',
     );
@@ -131,37 +131,37 @@ describe('Collection detail', () => {
   it('should have working UI on docs tab', () => {
     cy.visit(`${baseURL}/docs`);
     // should have the search field
-    cy.get('.body').get('input[aria-label="find-content"');
+    cy.get('.pulp-section').get('input[aria-label="find-content"');
 
     // should have Readme menu item
-    cy.get('.hub-docs-sidebar').contains('Readme');
+    cy.get('.pulp-docs-sidebar').contains('Readme');
 
     // should still show the readme when searching readme
     cy.get('input[aria-label="find-content"').type('readme');
-    cy.get('.hub-docs-sidebar').contains('Readme');
+    cy.get('.pulp-docs-sidebar').contains('Readme');
 
     // should not display readme if searching for no entry
     cy.get('input[aria-label="find-content"').type('no entry');
-    cy.get('.hub-docs-sidebar').not(':contains("Readme")');
+    cy.get('.pulp-docs-sidebar').not(':contains("Readme")');
   });
 
   it('should have a search field and the table headers on contents tab', () => {
     cy.visit(`${baseURL}/content`);
-    cy.get('.body').get('input[aria-label="find-content"');
-    cy.get('.body').contains('th', 'Name');
-    cy.get('.body').contains('th', 'Type');
-    cy.get('.body').contains('th', 'Description');
+    cy.get('.pulp-section').get('input[aria-label="find-content"');
+    cy.get('.pulp-section').contains('th', 'Name');
+    cy.get('.pulp-section').contains('th', 'Type');
+    cy.get('.pulp-section').contains('th', 'Description');
   });
 
   it('should display import log tab', () => {
     cy.visit(`${baseURL}/import-log`);
-    cy.get('.body').get('.title-bar');
-    cy.get('.body').get('.message-list');
+    cy.get('.pulp-section').get('.title-bar');
+    cy.get('.pulp-section').get('.message-list');
   });
 
   it('should display "No Dependencies" when opening the tab', () => {
     cy.visit(`${baseURL}/dependencies`);
-    cy.get('.body').contains('Dependencies');
-    cy.get('.body').contains('No dependencies');
+    cy.get('.pulp-section').contains('Dependencies');
+    cy.get('.pulp-section').contains('No dependencies');
   });
 });

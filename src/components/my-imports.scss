@@ -4,11 +4,11 @@ $red: #ff5850;
 $warning: #f90;
 $white: #fff;
 
-.hub-c-toolbar__item-selected-item {
+.pulp-c-toolbar__item-selected-item {
   background-color: #edf8ff;
 }
 
-.hub-import-loading {
+.pulp-import-loading {
   height: 500px;
   display: flex;
   align-items: center;
@@ -60,7 +60,7 @@ $white: #fff;
   }
 }
 
-.hub-import-console {
+.pulp-import-console {
   .title-bar {
     position: relative;
     margin-top: 15px;

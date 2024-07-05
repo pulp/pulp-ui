@@ -25,11 +25,10 @@ import {
   DeleteModal,
   EmptyStateFilter,
   EmptyStateNoData,
-  ExternalLink,
-  HubPagination,
   LabelGroup,
   ListItemActions,
   LoadingSpinner,
+  PulpPagination,
   ShaLabel,
   SortTable,
   TagLabel,
@@ -38,7 +37,6 @@ import {
 import { Paths, formatEEPath } from 'src/paths';
 import {
   ParamHelper,
-  controllerURL,
   filterIsSet,
   getContainersURL,
   getHumanSize,
@@ -194,7 +192,7 @@ class ExecutionEnvironmentDetailImages extends Component<
     const { digest } = selectedImage || {};
 
     return (
-      <section className='body'>
+      <section className='pulp-section'>
         {deleteModalVisible && (
           <DeleteModal
             spinner={isDeletionPending}
@@ -240,7 +238,7 @@ class ExecutionEnvironmentDetailImages extends Component<
           containerRepository={this.props.containerRepository}
         />
 
-        <div className='hub-toolbar'>
+        <div className='pulp-toolbar'>
           <Toolbar>
             <ToolbarContent>
               <ToolbarGroup>
@@ -269,7 +267,7 @@ class ExecutionEnvironmentDetailImages extends Component<
               </ToolbarGroup>
             </ToolbarContent>
           </Toolbar>
-          <HubPagination
+          <PulpPagination
             params={params}
             updateParams={(p) =>
               this.updateParams(p, () =>
@@ -318,7 +316,7 @@ class ExecutionEnvironmentDetailImages extends Component<
           </Table>
         )}
 
-        <HubPagination
+        <PulpPagination
           params={params}
           updateParams={(p) =>
             this.updateParams(p, () =>
@@ -379,21 +377,6 @@ class ExecutionEnvironmentDetailImages extends Component<
           {t`Manage tags`}
         </DropdownItem>
       ),
-      <DropdownItem
-        key='use-in-controller'
-        component={
-          <ExternalLink
-            href={controllerURL({
-              digest: image.digest,
-              image: this.props.containerRepository.name,
-              tag: image.tags[0],
-            })}
-            variant='menu'
-          >
-            {t`Use in Controller`}
-          </ExternalLink>
-        }
-      />,
       hasPermission('container.delete_containerrepository') && (
         <DropdownItem
           key='delete-image'
@@ -428,7 +411,7 @@ class ExecutionEnvironmentDetailImages extends Component<
             ) : null}
           </Td>
           <Td>
-            <LabelGroup className={'hub-c-label-group-tags-column'}>
+            <LabelGroup className={'pulp-c-label-group-tags-column'}>
               {image.tags
                 .sort()
                 .map((tag) =>

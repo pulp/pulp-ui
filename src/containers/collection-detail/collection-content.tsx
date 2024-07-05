@@ -86,7 +86,7 @@ class CollectionContent extends Component<RouteProps, IBaseCollectionState> {
           }
         />
         <Main>
-          <section className='body'>
+          <section className='pulp-section'>
             <CollectionContentList
               contents={content.contents}
               collection={collection}

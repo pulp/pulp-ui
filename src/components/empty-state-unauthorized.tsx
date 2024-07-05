@@ -7,7 +7,7 @@ export const EmptyStateUnauthorized = () => {
   return (
     <EmptyStateCustom
       icon={LockIcon}
-      title={t`You do not have access to Automation Hub`}
+      title={t`You do not have access to Pulp UI`}
       description={
         <>
           {t`Contact your organization administrator for more information.`}

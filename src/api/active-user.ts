@@ -19,9 +19,6 @@ class API extends HubAPI {
     return this.http.put(this.apiPath, data);
   }
 
-  // insights has some asinine way of loading tokens that involves forcing the
-  // page to refresh before loading the token that can't be done witha single
-  // API request.
   getToken(): Promise<{ data: { token: string } }> {
     return this.http.post('v3/auth/token/', {});
   }

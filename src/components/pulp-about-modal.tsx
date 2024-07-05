@@ -40,7 +40,7 @@ interface IApplicationInfo {
   server_version?: string;
 }
 
-export const HubAboutModal = ({ isOpen, onClose, user, userName }: IProps) => {
+export const PulpAboutModal = ({ isOpen, onClose, user, userName }: IProps) => {
   const [applicationInfo, setApplicationInfo] = useState<IApplicationInfo>({});
 
   useEffect(() => {

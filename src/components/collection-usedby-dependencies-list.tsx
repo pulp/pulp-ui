@@ -6,9 +6,9 @@ import { type CollectionUsedByDependencies } from 'src/api';
 import {
   EmptyStateFilter,
   EmptyStateNoData,
-  HubListToolbar,
-  HubPagination,
   LoadingSpinner,
+  PulpListToolbar,
+  PulpPagination,
 } from 'src/components';
 import 'src/containers/collection-detail/collection-dependencies.scss';
 import { Paths, formatPath } from 'src/paths';
@@ -59,7 +59,7 @@ export const CollectionUsedbyDependenciesList = ({
 
   return (
     <>
-      <HubListToolbar
+      <PulpListToolbar
         count={itemCount}
         filterConfig={filterConfig}
         ignoredParams={ignoredParams}
@@ -104,7 +104,7 @@ export const CollectionUsedbyDependenciesList = ({
                   )}
                 </Tbody>
               </Table>
-              <HubPagination
+              <PulpPagination
                 params={params}
                 updateParams={(params) => updateParams(params)}
                 count={itemCount}

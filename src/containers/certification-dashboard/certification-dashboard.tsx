@@ -26,10 +26,10 @@ import {
   EmptyStateFilter,
   EmptyStateNoData,
   EmptyStateUnauthorized,
-  HubPagination,
   LoadingPage,
   LoadingSpinner,
   Main,
+  PulpPagination,
   SortTable,
   UploadSignatureModal,
   closeAlert,
@@ -182,9 +182,9 @@ class CertificationDashboard extends Component<RouteProps, IState> {
         {unauthorized ? (
           <EmptyStateUnauthorized />
         ) : (
-          <Main className='hub-certification-dashboard'>
-            <section className='body' data-cy='body'>
-              <div className='hub-toolbar'>
+          <Main className='pulp-certification-dashboard'>
+            <section className='pulp-section' data-cy='body'>
+              <div className='pulp-toolbar'>
                 <Toolbar>
                   <ToolbarContent>
                     <ToolbarGroup>
@@ -235,7 +235,7 @@ class CertificationDashboard extends Component<RouteProps, IState> {
                   </ToolbarContent>
                 </Toolbar>
 
-                <HubPagination
+                <PulpPagination
                   params={params}
                   updateParams={(p) =>
                     this.updateParams(p, () => this.queryCollections(true))
@@ -273,7 +273,7 @@ class CertificationDashboard extends Component<RouteProps, IState> {
               )}
 
               <div className='footer'>
-                <HubPagination
+                <PulpPagination
                   params={params}
                   updateParams={(p) =>
                     this.updateParams(p, () => this.queryCollections(true))

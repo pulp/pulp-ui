@@ -96,7 +96,7 @@ export const Sort = ({
       ) : null}
 
       <Icon
-        className='clickable'
+        className='pulp-clickable'
         onClick={() => update(selectedOption, !isDescending)}
         style={{ margin: showSelect ? '6px 0 6px 5px' : '10px 0 6px 5px' }}
       >

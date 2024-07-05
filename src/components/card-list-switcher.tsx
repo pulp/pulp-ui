@@ -23,7 +23,7 @@ export const CardListSwitcher: FunctionComponent<IProps> = ({
     <div style={{ paddingTop: '6px' }}>
       <span data-cy='view_type_card'>
         <Icon
-          className={cx('hub-switcher-icon', { selected: disp === 'card' })}
+          className={cx('pulp-switcher-icon', { selected: disp === 'card' })}
           onClick={() =>
             updateParams(ParamHelper.setParam(params, 'view_type', 'card'))
           }
@@ -33,7 +33,7 @@ export const CardListSwitcher: FunctionComponent<IProps> = ({
       </span>
       <span data-cy='view_type_list'>
         <Icon
-          className={cx('hub-switcher-icon', { selected: disp === 'list' })}
+          className={cx('pulp-switcher-icon', { selected: disp === 'list' })}
           onClick={() =>
             updateParams(ParamHelper.setParam(params, 'view_type', 'list'))
           }

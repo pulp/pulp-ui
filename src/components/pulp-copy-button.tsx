@@ -2,7 +2,7 @@ import { t } from '@lingui/macro';
 import React, { useState } from 'react';
 import { ClipboardCopyButton } from 'src/components';
 
-export const HubCopyButton = ({
+export const PulpCopyButton = ({
   text,
   textId,
 }: {
@@ -18,7 +18,7 @@ export const HubCopyButton = ({
         navigator.clipboard.writeText(text);
       }}
       variant='plain'
-      id='hub-copy-button'
+      id='pulp-copy-button'
       exitDelay={copied ? 1500 : 600}
       maxWidth='110px'
       onTooltipHidden={() => setCopied(false)}

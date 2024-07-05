@@ -81,11 +81,11 @@ describe('Approval Dashboard process with multiple repos', () => {
 
   it('should test paging', () => {
     openModal();
-    cy.contains('.modal-body .hub-toolbar', '1 - 10 of 11');
+    cy.contains('.modal-body .pulp-toolbar', '1 - 10 of 11');
     cy.contains('.modal-body', 'repo1');
     cy.contains('.modal-body', 'published');
-    cy.get('.modal-body .hub-toolbar [data-action="next"]').click();
-    cy.contains('.modal-body .hub-toolbar', '11 - 11 of 11');
+    cy.get('.modal-body .pulp-toolbar [data-action="next"]').click();
+    cy.contains('.modal-body .pulp-toolbar', '11 - 11 of 11');
     cy.contains('.modal-body', 'repo9');
   });
 
@@ -117,7 +117,7 @@ describe('Approval Dashboard process with multiple repos', () => {
     openModal();
 
     // deselect all
-    cy.get('.hub-toolbar [aria-label="Select"] svg').click();
+    cy.get('.pulp-toolbar [aria-label="Select"] svg').click();
     cy.contains('a', 'Deselect all (0 items)').click();
     reposList.forEach((repo) => {
       cy.contains('[aria-label="Label group category"]', repo).should(
@@ -126,7 +126,7 @@ describe('Approval Dashboard process with multiple repos', () => {
     });
 
     // select page
-    cy.get('.hub-toolbar [aria-label="Select"] svg').click();
+    cy.get('.pulp-toolbar [aria-label="Select"] svg').click();
     cy.contains('a', 'Select page (10 items)').click();
     cy.contains('.pf-v5-c-label.pf-m-overflow', 'more').click();
 
@@ -145,7 +145,7 @@ describe('Approval Dashboard process with multiple repos', () => {
     cy.contains('Clear all filters').click();
 
     // deselect page and repo9 should remain here
-    cy.get('.hub-toolbar [aria-label="Select"] svg').click();
+    cy.get('.pulp-toolbar [aria-label="Select"] svg').click();
     cy.contains('a', 'Deselect page (10 items)').click();
 
     reposList.forEach((repo) => {

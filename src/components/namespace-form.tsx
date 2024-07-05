@@ -63,7 +63,7 @@ export const NamespaceForm = ({
 
   return (
     <Form>
-      <div className='hub-card-row'>
+      <div className='pulp-card-row'>
         <div className='fields'>
           <FormGroup fieldId='name' label={t`Name`} isRequired>
             <TextInput
@@ -92,7 +92,7 @@ export const NamespaceForm = ({
             </FormFieldHelper>
           </FormGroup>
         </div>
-        <div className='hub-namespace-form-card'>
+        <div className='pulp-namespace-form-card'>
           <NamespaceCard namespace={namespace} />
         </div>
       </div>
@@ -134,7 +134,7 @@ export const NamespaceForm = ({
         {namespace.links.map((link, index) => renderLinkGroup(link, index))}
 
         {namespace.links.length === 0 && (
-          <Icon className='clickable' onClick={() => addLink()}>
+          <Icon className='pulp-clickable' onClick={() => addLink()}>
             <PlusCircleIcon />
           </Icon>
         )}
@@ -225,14 +225,14 @@ export const NamespaceForm = ({
         </div>
         <div className='link-button'>
           <div className='link-container'>
-            <Icon className='clickable' onClick={() => removeLink(index)}>
+            <Icon className='pulp-clickable' onClick={() => removeLink(index)}>
               <TrashIcon />
             </Icon>
           </div>
 
           <div className='link-container'>
             {last && (
-              <Icon className='clickable' onClick={() => addLink()}>
+              <Icon className='pulp-clickable' onClick={() => addLink()}>
                 <PlusCircleIcon />
               </Icon>
             )}

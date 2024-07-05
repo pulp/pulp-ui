@@ -1,31 +1,16 @@
-.body {
+// Patternfly expects the root Page component to be the height of the browser window
+body,
+#root {
+  height: 100%;
+}
+
+.pulp-section {
   background-color: white;
   padding: 16px;
 }
 
-.clickable {
+.pulp-clickable {
   cursor: pointer;
-}
-
-#page-sidebar > div {
-  padding-top: 0;
-}
-
-#page-sidebar {
-  border-top: solid var(--pf-v5-global--BorderWidth--sm)
-    var(--pf-v5-global--palette--black-800);
-}
-
-.hub-nav-title {
-  &.pf-v5-c-nav__section:first-child {
-    padding-top: 0;
-  }
-
-  & > .pf-v5-c-nav__section-title {
-    font-size: var(--pf-v5-c-nav__link--FontSize);
-    height: 50px;
-    margin-bottom: 0;
-  }
 }
 
 // this was getting applied globally when it was in the collection-info.scss file
@@ -45,31 +30,16 @@ pre {
   }
 }
 
-// Patternfly expects the root Page component to be the height of the browser window
-body,
-#root {
-  height: 100%;
-}
-
-// insights mode Sidenav/Navigation overrides this for all navitems, restoring in main
-.pf-v5-c-page__main {
-  .pf-v5-c-nav__list > .pf-v5-c-nav__item:not(:first-child) {
-    border-top: 0;
-  }
-}
-
 // list screen toolbars
-.hub-toolbar {
+.pulp-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-// inline alert inside pf-v5-c-content has big title and extra margin
-.hub-content-alert-fix {
-  .pf-v5-c-alert__title {
-    margin: 0;
-    font-size: var(--pf-v5-c-alert__title--FontSize);
-    font-weight: var(--pf-v5-c-alert__title--FontWeight);
-  }
+// inline alert inside pf-v5-c-content has big title and extra margin otherwise
+.pf-v5-c-content .pf-v5-c-alert__title {
+  margin: 0;
+  font-size: var(--pf-v5-c-alert__title--FontSize);
+  font-weight: var(--pf-v5-c-alert__title--FontWeight);
 }

@@ -63,7 +63,7 @@ const AnsibleRepositoryDetail = PageWithTabs<
   headerDetails: (item) => (
     <>
       {item?.last_sync_task && (
-        <p className='hub-m-truncated'>
+        <p className='pulp-m-truncated'>
           <Trans>Last updated from registry {lastSynced(item)}</Trans>{' '}
           {lastSyncStatus(item)}
         </p>

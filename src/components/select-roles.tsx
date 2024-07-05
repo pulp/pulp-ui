@@ -9,8 +9,8 @@ import {
   CompoundFilter,
   EmptyStateFilter,
   EmptyStateNoData,
-  HubPagination,
   LoadingSpinner,
+  PulpPagination,
   RoleListTable,
 } from 'src/components';
 import { filterIsSet, translateLockedRole } from 'src/utilities';
@@ -59,7 +59,7 @@ export const SelectRoles: FunctionComponent<SelectRolesProps> = ({
 
   if (loading) {
     return (
-      <div className='hub-custom-wizard-layout hub-loading-wizard'>
+      <div className='pulp-custom-wizard-layout pulp-loading-wizard'>
         <LoadingSpinner />
       </div>
     );
@@ -72,7 +72,7 @@ export const SelectRoles: FunctionComponent<SelectRolesProps> = ({
 
   if (noData && !filterIsSet(localParams, ['name__icontains'])) {
     return (
-      <div className='hub-custom-wizard-layout hub-no-data'>
+      <div className='pulp-custom-wizard-layout pulp-no-data'>
         <EmptyStateNoData
           title={t`No assignable roles.`}
           description={t`There are currently no roles that can be assigned to this group.`}
@@ -104,7 +104,7 @@ export const SelectRoles: FunctionComponent<SelectRolesProps> = ({
   };
 
   return (
-    <div className='hub-custom-wizard-layout'>
+    <div className='pulp-custom-wizard-layout'>
       <Flex
         justifyContent={{
           default: noData
@@ -113,7 +113,7 @@ export const SelectRoles: FunctionComponent<SelectRolesProps> = ({
         }}
         direction={{ default: 'column' }}
       >
-        <FlexItem className='hub-select-roles-content'>
+        <FlexItem className='pulp-select-roles-content'>
           <Flex
             justifyContent={{
               default: noData
@@ -144,8 +144,8 @@ export const SelectRoles: FunctionComponent<SelectRolesProps> = ({
                       {selectedRoles.map((role) => (
                         <FlexItem
                           key={role.name}
-                          className='hub-permission'
-                          data-cy={`HubPermission-${role.name}`}
+                          className='pulp-permission'
+                          data-cy={`PulpPermission-${role.name}`}
                         >
                           <Label
                             onClose={() =>
@@ -167,7 +167,7 @@ export const SelectRoles: FunctionComponent<SelectRolesProps> = ({
             )}
 
             <FlexItem>
-              <div className='hub-filter'>
+              <div className='pulp-filter'>
                 <CompoundFilter
                   inputText={inputText}
                   onChange={(inputText) => setInputText(inputText)}
@@ -196,11 +196,11 @@ export const SelectRoles: FunctionComponent<SelectRolesProps> = ({
 
             <FlexItem style={{ flexGrow: 1 }}>
               {noData && filterIsSet(localParams, ['name__icontains']) ? (
-                <div className='hub-no-filter-data'>
+                <div className='pulp-no-filter-data'>
                   <EmptyStateFilter />
                 </div>
               ) : (
-                <div className='hub-selected-roles-list'>
+                <div className='pulp-selected-roles-list'>
                   <RoleListTable
                     isStickyHeader
                     params={localParams}
@@ -243,7 +243,7 @@ export const SelectRoles: FunctionComponent<SelectRolesProps> = ({
 
         {!noData && (
           <FlexItem>
-            <HubPagination
+            <PulpPagination
               params={localParams}
               updateParams={(p) => setLocalParams(p)}
               count={rolesItemCount}

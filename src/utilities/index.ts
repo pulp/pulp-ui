@@ -6,7 +6,7 @@ export { downloadString } from './download-data';
 export { errorMessage, handleHttpError, jsxErrorMessage } from './fail-alerts';
 export { filterIsSet } from './filter-is-set';
 export { getHumanSize } from './get-human-size';
-export { controllerURL, getContainersURL, getRepoURL } from './get-repo-url';
+export { getContainersURL, getRepoURL } from './get-repo-url';
 export { lastSyncStatus, lastSynced } from './last-sync-task';
 export {
   ErrorMessagesType,

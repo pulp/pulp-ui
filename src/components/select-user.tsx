@@ -8,8 +8,8 @@ import {
   CompoundFilter,
   EmptyStateFilter,
   EmptyStateNoData,
-  HubPagination,
   LoadingSpinner,
+  PulpPagination,
   RadioRow,
   RoleListTable,
 } from 'src/components';
@@ -55,7 +55,7 @@ export const SelectUser: FunctionComponent<IProps> = ({
 
   if (loading) {
     return (
-      <div className='hub-custom-wizard-layout hub-loading-wizard'>
+      <div className='pulp-custom-wizard-layout pulp-loading-wizard'>
         <LoadingSpinner />
       </div>
     );
@@ -67,7 +67,7 @@ export const SelectUser: FunctionComponent<IProps> = ({
 
   if (noData && !filterIsSet(localParams, ['username__contains'])) {
     return (
-      <div className='hub-custom-wizard-layout hub-no-data'>
+      <div className='pulp-custom-wizard-layout pulp-no-data'>
         <EmptyStateNoData
           title={t`No assignable users.`}
           description={t`There are currently no users that can be assigned ownership.`}
@@ -95,7 +95,7 @@ export const SelectUser: FunctionComponent<IProps> = ({
   };
 
   return (
-    <div className='hub-custom-wizard-layout'>
+    <div className='pulp-custom-wizard-layout'>
       <Flex
         justifyContent={{
           default: noData
@@ -104,7 +104,7 @@ export const SelectUser: FunctionComponent<IProps> = ({
         }}
         direction={{ default: 'column' }}
       >
-        <FlexItem className='hub-select-roles-content'>
+        <FlexItem className='pulp-select-roles-content'>
           <Flex
             justifyContent={{
               default: noData
@@ -126,7 +126,7 @@ export const SelectUser: FunctionComponent<IProps> = ({
                     <Flex>
                       <FlexItem
                         key={selectedUser.username}
-                        className='hub-permission'
+                        className='pulp-permission'
                       >
                         <Label>{selectedUser.username}</Label>
                       </FlexItem>
@@ -137,7 +137,7 @@ export const SelectUser: FunctionComponent<IProps> = ({
             ) : null}
 
             <FlexItem>
-              <div className='hub-filter'>
+              <div className='pulp-filter'>
                 <CompoundFilter
                   inputText={inputText}
                   onChange={(inputText) => setInputText(inputText)}
@@ -166,11 +166,11 @@ export const SelectUser: FunctionComponent<IProps> = ({
 
             <FlexItem style={{ flexGrow: 1 }}>
               {noData && filterIsSet(localParams, ['username__contains']) ? (
-                <div className='hub-no-filter-data'>
+                <div className='pulp-no-filter-data'>
                   <EmptyStateFilter />
                 </div>
               ) : (
-                <div className='hub-selected-roles-list'>
+                <div className='pulp-selected-roles-list'>
                   <RoleListTable
                     isStickyHeader
                     params={localParams}
@@ -200,7 +200,7 @@ export const SelectUser: FunctionComponent<IProps> = ({
 
         {!noData && (
           <FlexItem>
-            <HubPagination
+            <PulpPagination
               params={localParams}
               updateParams={(p) => setLocalParams(p)}
               count={usersCount}

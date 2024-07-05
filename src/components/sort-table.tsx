@@ -57,7 +57,7 @@ export const SortTable = ({ options, params, updateParams }: IProps) => {
         data-cy={'sort_' + id}
         size='sm'
         onClick={() => sort(id, isMinus)}
-        className={'clickable ' + (activeIcon ? 'active' : 'inactive')}
+        className={'pulp-clickable ' + (activeIcon ? 'active' : 'inactive')}
       />
     );
   }
@@ -70,7 +70,7 @@ export const SortTable = ({ options, params, updateParams }: IProps) => {
 
   return (
     <Thead>
-      <Tr className='hub-SortTable-headers' data-cy='SortTable-headers'>
+      <Tr className='pulp-SortTable-headers' data-cy='SortTable-headers'>
         {options.headers.map((element) => getHeaderItem(element))}
       </Tr>
     </Thead>

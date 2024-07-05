@@ -19,9 +19,9 @@ import {
   EmptyStateNoData,
   EmptyStateUnauthorized,
   type FilterOption,
-  HubPagination,
   LoadingSpinner,
   Main,
+  PulpPagination,
   SortTable,
   closeAlert,
 } from 'src/components';
@@ -265,8 +265,11 @@ export const ListPage = function <T>({
               {loading ? (
                 <LoadingSpinner />
               ) : (
-                <section className='body' data-cy={`ListPage-${displayName}`}>
-                  <div className='hub-toolbar'>
+                <section
+                  className='pulp-section'
+                  data-cy={`ListPage-${displayName}`}
+                >
+                  <div className='pulp-toolbar'>
                     <Toolbar>
                       <ToolbarContent>
                         <ToolbarGroup>
@@ -313,7 +316,7 @@ export const ListPage = function <T>({
                       </ToolbarContent>
                     </Toolbar>
 
-                    <HubPagination
+                    <PulpPagination
                       params={params}
                       updateParams={updateParams}
                       count={itemCount}
@@ -338,7 +341,7 @@ export const ListPage = function <T>({
                     this.renderTable(params, updateParams, actionContext)
                   )}
 
-                  <HubPagination
+                  <PulpPagination
                     params={params}
                     updateParams={updateParams}
                     count={itemCount}

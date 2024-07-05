@@ -30,7 +30,7 @@ export const PreviewRoles = ({ user, group, selectedRoles }: IProps) => {
   const { model_permissions } = useAppContext().user;
 
   return (
-    <div className='hub-custom-wizard-layout'>
+    <div className='pulp-custom-wizard-layout'>
       <p>
         {user ? (
           <Trans>
@@ -45,19 +45,19 @@ export const PreviewRoles = ({ user, group, selectedRoles }: IProps) => {
           </Trans>
         ) : null}
       </p>
-      <Flex direction={{ default: 'column' }} className='hub-preview-roles'>
+      <Flex direction={{ default: 'column' }} className='pulp-preview-roles'>
         {selectedRoles.map((role) => (
           <Fragment key={role.name}>
             <FlexItem>
               <strong>{role.name}</strong>{' '}
               {role.description &&
                 `- ${translateLockedRole(role.name, role.description)}`}
-              <Flex className='hub-permissions'>
+              <Flex className='pulp-permissions'>
                 {role.permissions.map((permission) => (
                   <FlexItem
                     key={permission}
-                    className='hub-permission'
-                    data-cy={`HubPermission-${permission}`}
+                    className='pulp-permission'
+                    data-cy={`PulpPermission-${permission}`}
                   >
                     <Tooltip
                       content={

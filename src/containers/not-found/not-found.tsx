@@ -10,13 +10,13 @@ export const NotFound = (_props) => (
   <>
     <BaseHeader title={t`404 - Page not found`} />
     <Main>
-      <section className='body'>
-        <Bullseye className='hub-c-bullseye'>
-          <div className='hub-c-bullseye__center'>
+      <section className='pulp-section'>
+        <Bullseye className='pulp-c-bullseye'>
+          <div className='pulp-c-bullseye__center'>
             <img src={NotFoundImage} alt={t`Not found image`} />
             <div>{t`We couldn't find the page you're looking for!`}</div>
             <div className='pf-v5-c-content'>
-              <span className='hub-c-bullseye__404'>404</span>
+              <span className='pulp-c-bullseye__404'>404</span>
             </div>
           </div>
         </Bullseye>

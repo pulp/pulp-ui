@@ -40,12 +40,12 @@ export const ansibleRepositoryDeleteAction = Action({
   disabled: ({ name }) => {
     if (
       [
-        'rh-certified',
-        'validated',
+        'certified',
         'community',
         'published',
-        'staging',
         'rejected',
+        'staging',
+        'validated',
       ].includes(name)
     ) {
       return t`Protected repositories cannot be deleted.`;

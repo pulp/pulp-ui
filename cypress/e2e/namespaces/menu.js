@@ -1,4 +1,4 @@
-describe('Hub Menu Tests', () => {
+describe('Pulp Menu Tests', () => {
   const username = 'nopermission';
   const password = 'n0permissi0n';
 

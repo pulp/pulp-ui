@@ -71,7 +71,7 @@ class RoleCreate extends Component<RouteProps, IState> {
           <EmptyStateUnauthorized />
         ) : (
           <Main>
-            <section className='body'>
+            <section className='pulp-section'>
               <RoleForm
                 nameValidated={errorMessages['name'] ? 'error' : null}
                 nameHelperText={errorMessages['name']}

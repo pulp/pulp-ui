@@ -140,10 +140,10 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
             this.updateParams(p, () => this.loadCollection(true))
           }
         />
-        <Main className='hub-docs-main'>
-          <section className='hub-docs-container'>
+        <Main className='pulp-docs-main'>
+          <section className='pulp-docs-container'>
             <TableOfContents
-              className='hub-docs-sidebar'
+              className='pulp-docs-sidebar'
               namespace={collection.collection_version.namespace}
               collection={collection.collection_version.name}
               repository={collection.repository.name}
@@ -156,7 +156,7 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
             />
 
             <div
-              className='body hub-docs-content pf-v5-c-content hub-content-alert-fix'
+              className='pulp-section pulp-docs-content pf-v5-c-content pulp-content-alert-fix'
               ref={this.docsRef}
             >
               {displayHTML || pluginData ? (

@@ -97,7 +97,7 @@ export const CollectionInfo = ({
             {user.is_anonymous &&
             !settings.GALAXY_ENABLE_UNAUTHENTICATED_COLLECTION_DOWNLOAD ? (
               <Alert
-                className={'hub-collection-download-alert'}
+                className={'pulp-collection-download-alert'}
                 isInline
                 variant='warning'
                 title={
@@ -172,14 +172,14 @@ export const CollectionInfo = ({
 
         {content?.docs_blob?.collection_readme ? (
           <GridItem>
-            <div className='hub-readme-container'>
+            <div className='pulp-readme-container'>
               <div
                 className='pf-v5-c-content'
                 dangerouslySetInnerHTML={{
                   __html: content?.docs_blob?.collection_readme.html,
                 }}
               />
-              <div className='hub-fade-out' />
+              <div className='pulp-fade-out' />
             </div>
             <Link
               to={formatPath(

@@ -24,11 +24,11 @@ import {
   EmptyStateNoData,
   EmptyStateUnauthorized,
   ExpandableRow,
-  HubPagination,
   ListItemActions,
   LoadingSpinner,
   Main,
   PermissionCategories,
+  PulpPagination,
   RoleListTable,
   Tooltip,
   closeAlert,
@@ -223,8 +223,8 @@ export class RoleList extends Component<RouteProps, IState> {
             {loading ? (
               <LoadingSpinner />
             ) : (
-              <section className='body'>
-                <div className='hub-toolbar'>
+              <section className='pulp-section'>
+                <div className='pulp-toolbar'>
                   <Toolbar>
                     <ToolbarContent>
                       <ToolbarGroup>
@@ -266,7 +266,7 @@ export class RoleList extends Component<RouteProps, IState> {
                       </ToolbarGroup>
                     </ToolbarContent>
                   </Toolbar>
-                  <HubPagination
+                  <PulpPagination
                     params={params}
                     updateParams={(p) =>
                       this.updateParams(p, () => this.queryRoles())
@@ -349,7 +349,7 @@ export class RoleList extends Component<RouteProps, IState> {
                   ) : (
                     <EmptyStateFilter />
                   )}
-                  <HubPagination
+                  <PulpPagination
                     params={params}
                     updateParams={(p) =>
                       this.updateParams(p, () => this.queryRoles())

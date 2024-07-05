@@ -21,10 +21,10 @@ import {
   EmptyStateFilter,
   EmptyStateNoData,
   EmptyStateUnauthorized,
-  HubPagination,
   ListItemActions,
   LoadingSpinner,
   Main,
+  PulpPagination,
   SortTable,
   closeAlert,
 } from 'src/components';
@@ -116,8 +116,8 @@ export class SignatureKeysList extends Component<RouteProps, IState> {
             {loading ? (
               <LoadingSpinner />
             ) : (
-              <section className='body'>
-                <div className='hub-toolbar'>
+              <section className='pulp-section'>
+                <div className='pulp-toolbar'>
                   <Toolbar>
                     <ToolbarContent>
                       <ToolbarGroup>
@@ -143,7 +143,7 @@ export class SignatureKeysList extends Component<RouteProps, IState> {
                       </ToolbarGroup>
                     </ToolbarContent>
                   </Toolbar>
-                  <HubPagination
+                  <PulpPagination
                     params={params}
                     updateParams={(p) =>
                       this.updateParams(p, () => this.query())
@@ -167,7 +167,7 @@ export class SignatureKeysList extends Component<RouteProps, IState> {
                 </div>
                 {loading ? <LoadingSpinner /> : this.renderTable(params)}
 
-                <HubPagination
+                <PulpPagination
                   params={params}
                   updateParams={(p) => this.updateParams(p, () => this.query())}
                   count={itemCount}
@@ -249,7 +249,7 @@ export class SignatureKeysList extends Component<RouteProps, IState> {
     return (
       <Tr key={index}>
         <Td>{name}</Td>
-        <Td data-cy='hub-signature-list-fingerprint'>{pubkey_fingerprint}</Td>
+        <Td data-cy='pulp-signature-list-fingerprint'>{pubkey_fingerprint}</Td>
         <Td>
           <DateComponent date={pulp_created} />
         </Td>

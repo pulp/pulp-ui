@@ -33,7 +33,7 @@ export const RepositoryBadge = ({
 
   const repoName =
     {
-      'rh-certified': t`Red Hat Certified`,
+      certified: t`Certified`,
       community: t`Community`,
       published: t`Published`,
       rejected: t`Rejected`,

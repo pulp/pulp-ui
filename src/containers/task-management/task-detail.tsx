@@ -143,7 +143,7 @@ class TaskDetail extends Component<RouteProps, IState> {
           }
           status={
             <StatusIndicator
-              className={'hub-c-task-status'}
+              className={'pulp-c-task-status'}
               status={task.state}
             />
           }
@@ -155,7 +155,7 @@ class TaskDetail extends Component<RouteProps, IState> {
               flex={{ default: 'flex_1' }}
             >
               <FlexItem>
-                <section className='body card-area'>
+                <section className='pulp-section card-area'>
                   <Title headingLevel='h2' size='lg'>
                     {t`Task detail`}
                   </Title>
@@ -191,7 +191,7 @@ class TaskDetail extends Component<RouteProps, IState> {
                 </section>
               </FlexItem>
               <FlexItem>
-                <section className='body card-area'>
+                <section className='pulp-section card-area'>
                   <Title headingLevel='h2' size='lg'>
                     {t`Task groups`}
                   </Title>
@@ -247,7 +247,7 @@ class TaskDetail extends Component<RouteProps, IState> {
                 </section>
               </FlexItem>
               <FlexItem>
-                <section className='body card-area'>
+                <section className='pulp-section card-area'>
                   <Title headingLevel='h2' size='lg'>
                     {t`Reserve resources`}
                   </Title>
@@ -296,7 +296,7 @@ class TaskDetail extends Component<RouteProps, IState> {
             >
               <FlexItem>
                 {!task.error && (
-                  <section className='body card-area'>
+                  <section className='pulp-section card-area'>
                     <Title headingLevel='h2' size='lg'>
                       {t`Progress messages`}
                     </Title>
@@ -342,7 +342,7 @@ class TaskDetail extends Component<RouteProps, IState> {
                   </section>
                 )}
                 {!!task.error && (
-                  <section className='body card-area'>
+                  <section className='pulp-section card-area'>
                     <Title headingLevel='h2' size='lg'>
                       {t`Error message`}
                     </Title>
@@ -351,7 +351,7 @@ class TaskDetail extends Component<RouteProps, IState> {
                       <Title headingLevel='h3'>{t`Description`}</Title>
                       <CodeBlock>{task.error.description}</CodeBlock>
                       <Title headingLevel='h3'>{t`Traceback`}</Title>
-                      <CodeBlock className={'hub-code-block'}>
+                      <CodeBlock className={'pulp-code-block'}>
                         {task.error.traceback}
                       </CodeBlock>
                     </>

@@ -1,4 +1,4 @@
-describe('Hub User Management Tests', () => {
+describe('Pulp User Management Tests', () => {
   describe('prevents super-user and self deletion', () => {
     it("the super-user can't delete themselves", () => {
       cy.login();

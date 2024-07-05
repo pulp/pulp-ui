@@ -68,7 +68,7 @@ class Token extends Component<RouteProps, IState> {
             <EmptyStateUnauthorized />
           ) : (
             <Card>
-              <section className='body pf-v5-c-content'>
+              <section className='pulp-section pf-v5-c-content'>
                 <CardTitle>
                   <h2>{t`API token`}</h2>
                 </CardTitle>

@@ -1,12 +1,12 @@
 $breakpoint-md: 1000px;
 
-.hub-docs-main {
+.pulp-docs-main {
   margin: 0;
   padding: 0;
   border-top: 1px solid #d8d8d8;
 }
 
-.hub-docs-container {
+.pulp-docs-container {
   padding-top: 24px;
   background-color: white;
 
@@ -19,7 +19,7 @@ $breakpoint-md: 1000px;
   }
 }
 
-.hub-docs-content {
+.pulp-docs-content {
   flex-grow: 1;
   padding: 24px;
   padding-top: 0;
@@ -41,7 +41,7 @@ $breakpoint-md: 1000px;
   }
 }
 
-.hub-docs-sidebar {
+.pulp-docs-sidebar {
   // This width lines up the border nicely with the tabs
   min-width: 294px;
   max-width: 294px;

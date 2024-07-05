@@ -87,7 +87,7 @@ function versionCheck(version) {
       if (withRemote) {
         // add remote
         cy.get('[data-cy="remote"] button').click();
-        cy.contains('[data-cy="remote"]', 'rh-certified');
+        cy.contains('[data-cy="remote"]', 'certified');
         cy.contains('[data-cy="remote"]', 'community');
         cy.contains(
           '[data-cy="remote"] button',

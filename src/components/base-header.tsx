@@ -68,7 +68,7 @@ export const BaseHeader = ({
       {versionControl || null}
 
       {children ? (
-        <div className='hub-header-bottom'>{children}</div>
+        <div className='pulp-header-bottom'>{children}</div>
       ) : (
         <div style={{ height: '24px' }} />
       )}

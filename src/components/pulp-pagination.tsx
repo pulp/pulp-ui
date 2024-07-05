@@ -23,7 +23,7 @@ interface IProps {
   isCompact?: boolean;
 }
 
-export const HubPagination = ({
+export const PulpPagination = ({
   count,
   params,
   updateParams,

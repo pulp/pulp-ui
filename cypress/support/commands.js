@@ -19,9 +19,9 @@ const name2element = (name) => {
   const [first, last] = name.split(' > ');
   return last
     ? cy.get(
-        `#page-sidebar [data-cy="hub-menu-section-${first}"] [data-cy="hub-menu-item-${last}"]`,
+        `#page-sidebar [data-cy="pulp-menu-section-${first}"] [data-cy="pulp-menu-item-${last}"]`,
       )
-    : cy.get(`#page-sidebar [data-cy="hub-menu-item-${first}"]`);
+    : cy.get(`#page-sidebar [data-cy="pulp-menu-item-${first}"]`);
 };
 
 Cypress.Commands.add('menuPresent', {}, (name) => {
@@ -194,7 +194,7 @@ Cypress.Commands.add(
     cy.get('input[id="upstreamName"]').type(upstream_name);
 
     cy.get(
-      '.hub-formgroup-registry .pf-v5-c-form-control.pf-v5-c-select__toggle-typeahead input',
+      '.pulp-formgroup-registry .pf-v5-c-form-control.pf-v5-c-select__toggle-typeahead input',
     )
       .click()
       .type(registry);
@@ -318,7 +318,7 @@ Cypress.Commands.add('deleteContainers', {}, () => {
 Cypress.Commands.add('deleteRepositories', {}, () => {
   const initRepos = [
     'validated',
-    'rh-certified',
+    'certified',
     'community',
     'published',
     'rejected',

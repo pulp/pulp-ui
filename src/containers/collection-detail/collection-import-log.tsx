@@ -101,7 +101,7 @@ class CollectionImportLog extends Component<RouteProps, IState> {
           }
         />
         <Main>
-          <section className='body'>
+          <section className='pulp-section'>
             <ImportConsole
               apiError={apiError}
               loading={loadingImports}

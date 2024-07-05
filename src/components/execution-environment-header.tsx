@@ -101,7 +101,7 @@ export const ExecutionEnvironmentHeader = ({
         />
       )}
       {last_sync_task && (
-        <p className='hub-m-truncated'>
+        <p className='pulp-m-truncated'>
           <Trans>
             Last updated from registry {lastSynced({ last_sync_task })}
           </Trans>{' '}
@@ -110,13 +110,13 @@ export const ExecutionEnvironmentHeader = ({
       )}
       <div style={{ height: '10px' }}>&nbsp;</div>
       <Tooltip content={container.description}>
-        <p data-cy='description' className={'hub-m-truncated'}>
+        <p data-cy='description' className={'pulp-m-truncated'}>
           {container.description}
         </p>
       </Tooltip>
 
       <span />
-      <div className='hub-tab-link-container'>
+      <div className='pulp-tab-link-container'>
         <div className='tabs'>
           <LinkTabs tabs={tabs} />
         </div>

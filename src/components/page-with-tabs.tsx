@@ -189,7 +189,7 @@ export const PageWithTabs = function <
             }
             pageControls={
               loading ? null : (
-                <div className='hub-toolbar'>
+                <div className='pulp-toolbar'>
                   <Toolbar>
                     <ToolbarContent>
                       <ToolbarGroup>
@@ -209,7 +209,7 @@ export const PageWithTabs = function <
             }
           >
             {headerDetails?.(item)}
-            <div className='hub-tab-link-container'>
+            <div className='pulp-tab-link-container'>
               <div className='tabs'>
                 <LinkTabs tabs={tabs(tab, name)} />
               </div>
@@ -224,7 +224,7 @@ export const PageWithTabs = function <
                 <LoadingSpinner />
               ) : (
                 <section
-                  className='body'
+                  className='pulp-section'
                   data-cy={`PageWithTabs-${displayName}-${tab}`}
                 >
                   {this.renderTab(tab, actionContext)}

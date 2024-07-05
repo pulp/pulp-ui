@@ -40,10 +40,10 @@ import {
   DeleteCollectionModal,
   DownloadCount,
   ExternalLink,
-  HubPagination,
   ImportModal,
   LinkTabs,
   Logo,
+  PulpPagination,
   RepositoryBadge,
   SignAllCertificatesModal,
   SignSingleCertificateModal,
@@ -246,7 +246,7 @@ export const CollectionHeader = ({
             }}
           >
             <Text>{t`${collectionName}'s versions.`}</Text>
-            <HubPagination
+            <PulpPagination
               isTop
               params={modalPagination}
               updateParams={updatePaginationParams}
@@ -279,7 +279,7 @@ export const CollectionHeader = ({
             <Spinner />
           )}
         </List>
-        <HubPagination
+        <PulpPagination
           params={modalPagination}
           updateParams={updatePaginationParams}
           count={collectionsCount}
@@ -333,7 +333,7 @@ export const CollectionHeader = ({
           namespace_metadata?.avatar_url && (
             <Logo
               alt={t`${nsTitle} logo`}
-              className='hub-header-image'
+              className='pulp-header-image'
               fallbackToDefault
               image={namespace_metadata.avatar_url}
               size='40px'
@@ -473,7 +473,7 @@ export const CollectionHeader = ({
             })
           }
         />
-        <div className='hub-tab-link-container'>
+        <div className='pulp-tab-link-container'>
           <div className='tabs'>{renderTabs(activeTab)}</div>
           <div className='links'>
             {urlKeys.map((link) => {

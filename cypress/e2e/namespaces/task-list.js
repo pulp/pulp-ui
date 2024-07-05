@@ -8,9 +8,7 @@ describe('Task table contains correct headers and filter', () => {
 
     cy.contains('Repositories');
 
-    cy.intercept('POST', `${apiPrefix}content/rh-certified/v3/sync/`).as(
-      'sync',
-    );
+    cy.intercept('POST', `${apiPrefix}content/certified/v3/sync/`).as('sync');
 
     cy.intercept('GET', `${apiPrefix}_ui/v1/remotes/?*`).as('remotes');
 

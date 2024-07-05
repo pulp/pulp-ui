@@ -60,7 +60,7 @@ class ExecutionEnvironmentDetailActivities extends Component<
       <Flex>
         <Flex direction={{ default: 'column' }} flex={{ default: 'flex_1' }}>
           <FlexItem>
-            <section className='body'>
+            <section className='pulp-section'>
               <Table aria-label={t`Activities`}>
                 <SortTable
                   options={{

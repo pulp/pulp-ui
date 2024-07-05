@@ -30,7 +30,7 @@ describe('Namespace detail screen', () => {
     cy.get(
       '[data-cy="CollectionListItem"]:first button[aria-label="Actions"]',
     ).click();
-    cy.contains('.body ul a', 'Deprecate').click();
+    cy.contains('.pulp-section ul a', 'Deprecate').click();
 
     // Reload the page
     cy.visit(`${uiPrefix}namespaces/namespace_detail_test`);

@@ -79,9 +79,9 @@ export const CollectionContentList = ({
               <ToolbarItem
                 key={key}
                 className={cx({
-                  clickable: true,
-                  'hub-c-toolbar__item-selected-item': key === showing,
-                  'hub-c-toolbar__item-type-selector': true,
+                  'pulp-clickable': true,
+                  'pulp-c-toolbar__item-selected-item': key === showing,
+                  'pulp-c-toolbar__item-type-selector': true,
                 })}
                 onClick={() =>
                   updateParams(ParamHelper.setParam(params, 'showing', key))

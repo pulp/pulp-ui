@@ -21,8 +21,8 @@ import {
   AppliedFilters,
   CheckboxRow,
   CompoundFilter,
-  HubPagination,
   LabelGroup,
+  PulpPagination,
   RadioRow,
   SortTable,
   Spinner,
@@ -284,7 +284,7 @@ export const MultipleRepoSelector = (props: IProps) => {
   return (
     <>
       {renderLabels()}
-      <div className='hub-toolbar'>
+      <div className='pulp-toolbar'>
         <Toolbar>
           <ToolbarGroup>
             {!props.singleSelectionOnly && (
@@ -309,7 +309,7 @@ export const MultipleRepoSelector = (props: IProps) => {
           </ToolbarGroup>
         </Toolbar>
 
-        <HubPagination
+        <PulpPagination
           params={params}
           updateParams={(p) => setParams(p)}
           count={itemsCount}
@@ -333,7 +333,7 @@ export const MultipleRepoSelector = (props: IProps) => {
       {loading ? <Spinner size='lg' /> : renderTable()}
 
       <div className='footer'>
-        <HubPagination
+        <PulpPagination
           params={params}
           updateParams={(p) => setParams(p)}
           count={itemsCount}

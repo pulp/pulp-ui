@@ -226,7 +226,7 @@ export class RepositoryForm extends Component<IProps, IState> {
                 key='registry'
                 fieldId='registry'
                 label={t`Registry`}
-                className='hub-formgroup-registry'
+                className='pulp-formgroup-registry'
                 isRequired
               >
                 {!formErrors?.registries && (

@@ -46,7 +46,7 @@ describe('screenshots', () => {
 
     screenshot('/tasks', { blackout: ['time'] });
     screenshot('/signature-keys', {
-      blackout: ['time', '[data-cy=hub-signature-list-fingerprint]'],
+      blackout: ['time', '[data-cy=pulp-signature-list-fingerprint]'],
     });
 
     screenshot('/users', { blackout: ['time'] });

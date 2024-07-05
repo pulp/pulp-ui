@@ -10,7 +10,7 @@ import {
   CardListSwitcher,
   CompoundFilter,
   type FilterOption,
-  HubPagination,
+  PulpPagination,
   Sort,
   type SortFieldType,
 } from 'src/components';
@@ -52,7 +52,7 @@ function useTypeaheads(typeaheads, { inputText, selectedFilter }) {
   return options;
 }
 
-export function HubListToolbar({
+export function PulpListToolbar({
   buttons,
   count,
   filterConfig,
@@ -89,7 +89,7 @@ export function HubListToolbar({
     : null;
 
   return (
-    <Toolbar style={{ paddingLeft: '8px' }} data-cy='hub-list-toolbar'>
+    <Toolbar style={{ paddingLeft: '8px' }} data-cy='pulp-list-toolbar'>
       <ToolbarContent>
         <ToolbarGroup
           style={{
@@ -148,7 +148,7 @@ export function HubListToolbar({
             </ToolbarItem>
           ) : null}
           <ToolbarItem>
-            <HubPagination
+            <PulpPagination
               params={params}
               updateParams={updateParams}
               count={count}

@@ -135,7 +135,7 @@ class MyImports extends Component<RouteProps, IState> {
           }
         />
         <Main>
-          <section className='body'>
+          <section className='pulp-section'>
             <div style={{ display: 'flex' }} data-cy='MyImports'>
               <div style={{ width: '400px' }}>
                 <ImportList

@@ -1,48 +1,48 @@
-.hub-empty-state-box {
+.pulp-empty-state-box {
   min-height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.hub-custom-wizard-layout {
-  .hub-select-roles-content {
+.pulp-custom-wizard-layout {
+  .pulp-select-roles-content {
     overflow: auto;
   }
 
-  .hub-permission {
+  .pulp-permission {
     margin: 3px;
   }
 
-  .hub-preview-roles {
+  .pulp-preview-roles {
     margin-top: 20px;
   }
 
-  .hub-permissions {
+  .pulp-permissions {
     margin: 10px 0;
   }
 
-  .hub-filter {
+  .pulp-filter {
     width: 250px;
   }
 
-  .hub-selected-roles-list {
+  .pulp-selected-roles-list {
     overflow-x: auto;
   }
 
-  .hub-no-filter-data {
+  .pulp-no-filter-data {
     display: flex;
     justify-content: center;
     height: 400px;
   }
 
-  &.hub-no-data {
+  &.pulp-no-data {
     display: flex;
     justify-content: center;
     min-height: 590px;
   }
 
-  &.hub-loading-wizard {
+  &.pulp-loading-wizard {
     display: flex;
     align-items: center;
   }

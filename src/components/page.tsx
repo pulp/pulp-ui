@@ -150,7 +150,7 @@ export const Page = function <
               />
             }
             pageControls={
-              <div className='hub-toolbar'>
+              <div className='pulp-toolbar'>
                 <Toolbar>
                   <ToolbarContent>
                     <ToolbarGroup>
@@ -174,7 +174,10 @@ export const Page = function <
               {loading ? (
                 <LoadingSpinner />
               ) : (
-                <section className='body' data-cy={`Page-${displayName}`}>
+                <section
+                  className='pulp-section'
+                  data-cy={`Page-${displayName}`}
+                >
                   {render(item, actionContext)}
                 </section>
               )}

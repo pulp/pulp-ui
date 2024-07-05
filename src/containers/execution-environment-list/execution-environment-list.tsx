@@ -31,10 +31,10 @@ import {
   EmptyStateUnauthorized,
   ExternalLink,
   HelpButton,
-  HubPagination,
   ListItemActions,
   LoadingSpinner,
   Main,
+  PulpPagination,
   RepositoryForm,
   SortTable,
   Tooltip,
@@ -44,7 +44,6 @@ import { Paths, formatEEPath } from 'src/paths';
 import {
   ParamHelper,
   type RouteProps,
-  controllerURL,
   filterIsSet,
   getContainersURL,
   taskAlert,
@@ -232,8 +231,8 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
             {loading ? (
               <LoadingSpinner />
             ) : (
-              <section className='body'>
-                <div className='hub-toolbar'>
+              <section className='pulp-section'>
+                <div className='pulp-toolbar'>
                   <Toolbar>
                     <ToolbarContent>
                       <ToolbarGroup>
@@ -267,7 +266,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
                     </ToolbarContent>
                   </Toolbar>
 
-                  <HubPagination
+                  <PulpPagination
                     params={params}
                     updateParams={(p) =>
                       this.updateParams(p, () => this.queryEnvironments())
@@ -291,7 +290,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
                 </div>
                 {this.renderTable(params)}
 
-                <HubPagination
+                <PulpPagination
                   params={params}
                   updateParams={(p) =>
                     this.updateParams(p, () => this.queryEnvironments())
@@ -391,17 +390,6 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
           {t`Sync from registry`}
         </DropdownItem>
       ),
-      <DropdownItem
-        key='use-in-controller'
-        component={
-          <ExternalLink
-            href={controllerURL({ image: item.name })}
-            variant='menu'
-          >
-            {t`Use in Controller`}
-          </ExternalLink>
-        }
-      />,
       hasPermission('container.delete_containerrepository') && (
         <DropdownItem
           key='delete'

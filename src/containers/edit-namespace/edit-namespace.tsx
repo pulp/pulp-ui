@@ -168,7 +168,7 @@ class EditNamespace extends Component<RouteProps, IState> {
           <EmptyStateUnauthorized />
         ) : (
           <Main>
-            <section className='body'>
+            <section className='pulp-section'>
               {params.tab === 'edit-details' ? (
                 <NamespaceForm
                   errorMessages={errorMessages}

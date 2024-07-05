@@ -145,15 +145,15 @@ export class RenderPluginDoc extends Component<IProps, IState> {
           <p>
             <Trans>
               The documentation object for this plugin seems to contain invalid
-              syntax that makes it impossible for Automation Hub to parse. You
-              can still look at the unformatted documentation object bellow if
-              you need to.
+              syntax that makes it impossible for Pulp UI to parse. You can
+              still look at the unformatted documentation object bellow if you
+              need to.
             </Trans>
           </p>
 
           <h2>{t`Unformatted Documentation`}</h2>
 
-          <pre className='hub-doc-plugin-raw'>
+          <pre className='pulp-doc-plugin-raw'>
             {JSON.stringify(plugin, null, 2)}
           </pre>
         </div>
@@ -266,7 +266,7 @@ export class RenderPluginDoc extends Component<IProps, IState> {
   }
 
   private formatPartCode(part: dom.CodePart): ReactNode {
-    return <span className='hub-doc-inline-code'>{part.text}</span>;
+    return <span className='pulp-doc-inline-code'>{part.text}</span>;
   }
 
   private formatPartHorizontalLine(_part: dom.HorizontalLinePart): ReactNode {
@@ -298,7 +298,7 @@ export class RenderPluginDoc extends Component<IProps, IState> {
   }
 
   private formatPartEnvVariable(part: dom.EnvVariablePart): ReactNode {
-    return <span className='hub-doc-inline-code'>{part.name}</span>;
+    return <span className='pulp-doc-inline-code'>{part.name}</span>;
   }
 
   private formatPartOptionNameReturnValue(
@@ -306,11 +306,11 @@ export class RenderPluginDoc extends Component<IProps, IState> {
   ): ReactNode {
     const content =
       part.value === undefined ? (
-        <span className='hub-doc-inline-code'>
+        <span className='pulp-doc-inline-code'>
           <b>{part.name}</b>
         </span>
       ) : (
-        <span className='hub-doc-inline-code'>
+        <span className='pulp-doc-inline-code'>
           {part.name}={part.value}
         </span>
       );
@@ -325,7 +325,7 @@ export class RenderPluginDoc extends Component<IProps, IState> {
   }
 
   private formatPartOptionValue(part: dom.OptionValuePart): ReactNode {
-    return <span className='hub-doc-inline-code'>{part.value}</span>;
+    return <span className='pulp-doc-inline-code'>{part.value}</span>;
   }
 
   private formatPartPlugin(part: dom.PluginPart): ReactNode {
@@ -518,13 +518,13 @@ export class RenderPluginDoc extends Component<IProps, IState> {
     return (
       <>
         <h2 id='parameters'>{t`Parameters`}</h2>
-        <Table className='hub-doc-options-table'>
+        <Table className='pulp-doc-options-table'>
           <Tbody>
             <Tr>
               <Th colSpan={maxDepth + 1}>{t`Parameter`}</Th>
               <Th>
                 {t`Choices`} /{' '}
-                <span className='hub-doc-blue'>{t`Defaults`}</span>
+                <span className='pulp-doc-blue'>{t`Defaults`}</span>
               </Th>
               {content_type !== 'module' ? <Th>{t`Configuration`}</Th> : null}
               <Th>{t`Comments`}</Th>
@@ -566,7 +566,7 @@ export class RenderPluginDoc extends Component<IProps, IState> {
             colSpan={maxDepth + 1 - depth}
             className={option.suboptions ? 'parent' : ''}
           >
-            <span className='hub-doc-option-name'>{option.name}</span>
+            <span className='pulp-doc-option-name'>{option.name}</span>
             <small>
               {this.documentedType(option['type'])}
               {option['elements'] ? (
@@ -578,7 +578,7 @@ export class RenderPluginDoc extends Component<IProps, IState> {
               {option['required'] ? (
                 <span>
                   {' '}
-                  / <span className='hub-doc-red'>{t`required`}</span>
+                  / <span className='pulp-doc-red'>{t`required`}</span>
                 </span>
               ) : null}
             </small>
@@ -603,7 +603,7 @@ export class RenderPluginDoc extends Component<IProps, IState> {
 
             {option['aliases'] ? (
               <small>
-                <span className='hub-doc-green'>
+                <span className='pulp-doc-green'>
                   {t`aliases`}: {option['aliases'].join(', ')}
                 </span>
               </small>
@@ -633,7 +633,7 @@ export class RenderPluginDoc extends Component<IProps, IState> {
     return (
       <>
         {option['ini'] ? (
-          <div className='hub-doc-plugin-config'>
+          <div className='pulp-doc-plugin-config'>
             {t`ini entries:`}
             {option['ini'].map((v, i) => (
               <p key={i}>
@@ -645,7 +645,7 @@ export class RenderPluginDoc extends Component<IProps, IState> {
         ) : null}
 
         {option['env'] ? (
-          <div className='hub-doc-plugin-config'>
+          <div className='pulp-doc-plugin-config'>
             {option['env'].map((v, i) => (
               <div key={i}>
                 {t`env`}: {v.name}
@@ -655,7 +655,7 @@ export class RenderPluginDoc extends Component<IProps, IState> {
         ) : null}
 
         {option['vars'] ? (
-          <div className='hub-doc-plugin-config'>
+          <div className='pulp-doc-plugin-config'>
             {option['vars'].map((v, i) => (
               <div key={i}>
                 {t`var`}: {v.name}
@@ -723,12 +723,12 @@ export class RenderPluginDoc extends Component<IProps, IState> {
       <>
         {choices && Array.isArray(choices) && choices.length !== 0 ? (
           <div>
-            <span className='hub-doc-option-name'>{t`Choices:`}</span>{' '}
+            <span className='pulp-doc-option-name'>{t`Choices:`}</span>{' '}
             <ul>
               {choices.map((c, i) => (
                 <li key={i}>
                   {c === defaultChoice ? (
-                    <span className='hub-doc-blue' title={t`default`}>
+                    <span className='pulp-doc-blue' title={t`default`}>
                       <Choice c={c} /> &nbsp;&larr;
                     </span>
                   ) : (
@@ -743,8 +743,8 @@ export class RenderPluginDoc extends Component<IProps, IState> {
 
         {defaultChoice !== undefined && !choices.includes(defaultChoice) ? (
           <span>
-            <span className='hub-doc-option-name'>{t`Default:`}</span>{' '}
-            <span className='hub-doc-blue'>{defaultChoice}</span>
+            <span className='pulp-doc-option-name'>{t`Default:`}</span>{' '}
+            <span className='pulp-doc-blue'>{defaultChoice}</span>
           </span>
         ) : null}
       </>
@@ -807,7 +807,7 @@ export class RenderPluginDoc extends Component<IProps, IState> {
     return (
       <>
         <h2 id='return-values'>{t`Return Values`}</h2>
-        <Table className='hub-doc-options-table'>
+        <Table className='pulp-doc-options-table'>
           <Tbody>
             <Tr>
               <Th colSpan={maxDepth + 1}>{t`Key`}</Th>

@@ -33,7 +33,7 @@ export const CollectionNextPageCard = ({
   onClick: () => void;
 }) => {
   return (
-    <Card className='hub-c-card-collection-container'>
+    <Card className='pulp-c-card-collection-container'>
       <div
         style={{
           display: 'flex',
@@ -64,7 +64,7 @@ export const CollectionCard = ({
   const contentSummary = convertContentSummaryCounts(collection_version);
 
   return (
-    <Card className='hub-c-card-collection-container'>
+    <Card className='pulp-c-card-collection-container'>
       <CardHeader className='logo-row'>
         <Logo
           alt={t`${nsTitle} logo`}
@@ -133,7 +133,7 @@ export const CollectionCard = ({
   );
 };
 
-// FIXME: pf-m-truncate / hub-m-truncated
+// FIXME: pf-m-truncate / pulp-m-truncated
 function getDescription(d: string, MAX_DESCRIPTION_LENGTH = 60) {
   if (!d) {
     return '';

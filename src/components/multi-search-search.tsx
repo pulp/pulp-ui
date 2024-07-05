@@ -9,7 +9,7 @@ import React, { type ReactNode, useState } from 'react';
 import { AppliedFilters, CompoundFilter } from 'src/components';
 
 const PageSection = ({ children, style }: { children: ReactNode; style }) => (
-  <section className='body' style={style}>
+  <section className='pulp-section' style={style}>
     {children}
   </section>
 );
@@ -27,7 +27,7 @@ export const MultiSearchSearch = ({
 
   return (
     <PageSection style={style}>
-      <div className='hub-toolbar'>
+      <div className='pulp-toolbar'>
         <Toolbar>
           <ToolbarContent>
             <ToolbarGroup>

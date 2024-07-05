@@ -43,7 +43,7 @@ export const UserFormPage = ({
       title={title}
     />
     <Main>
-      <section className='body'>
+      <section className='pulp-section'>
         <UserForm
           isMe={isMe}
           isReadonly={isReadonly}

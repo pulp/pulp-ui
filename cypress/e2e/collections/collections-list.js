@@ -5,9 +5,9 @@ const uiPrefix = Cypress.env('uiPrefix');
 
 describe('Collections list Tests', () => {
   function deprecate(list) {
-    const container = list ? '.hub-list' : '.hub-cards';
+    const container = list ? '.pulp-list' : '.pulp-cards';
 
-    cy.get('[data-cy=hub-list-toolbar]')
+    cy.get('[data-cy=pulp-list-toolbar]')
       .get('[aria-label="keywords"]:first')
       .type('my_collection0{enter}');
     cy.get(container).contains('my_collection2').should('not.exist');
@@ -92,31 +92,31 @@ describe('Collections list Tests', () => {
   it('paging', () => {
     // there should be 11 items in db, 10 per page + 1 view more
     cy.get('.collection-container')
-      .get('.hub-c-card-collection-container')
+      .get('.pulp-c-card-collection-container')
       .should('have.length', 11);
 
-    cy.get('.hub-cards').get('[aria-label="Go to next page"]:first').click();
+    cy.get('.pulp-cards').get('[aria-label="Go to next page"]:first').click();
     cy.get('.collection-container')
-      .get('.hub-c-card-collection-container')
+      .get('.pulp-c-card-collection-container')
       .should('have.length', 1);
   });
 
   it('filter', () => {
-    cy.get('.hub-cards')
+    cy.get('.pulp-cards')
       .get('[aria-label="keywords"]:first')
       .type('my_collection0{enter}');
-    cy.get('.hub-cards').contains('my_collection0');
-    cy.get('.hub-cards').contains('my_collection1').should('not.exist');
+    cy.get('.pulp-cards').contains('my_collection0');
+    cy.get('.pulp-cards').contains('my_collection1').should('not.exist');
   });
 
   it('set page size', () => {
-    cy.get('.hub-cards')
+    cy.get('.pulp-cards')
       .get('[data-ouia-component-type="PF5/Pagination"] button:first')
       .click();
-    cy.get('.hub-cards').get('[data-action="per-page-20"]').click();
+    cy.get('.pulp-cards').get('[data-action="per-page-20"]').click();
 
     cy.get('.collection-container')
-      .get('.hub-c-card-collection-container')
+      .get('.pulp-c-card-collection-container')
       .should('have.length', 11);
   });
 
@@ -128,11 +128,11 @@ describe('Collections list Tests', () => {
 
   it('Can delete collection in collection list', () => {
     cy.get('[data-cy="view_type_list"] svg').click();
-    cy.get('[data-cy=hub-list-toolbar]')
+    cy.get('[data-cy=pulp-list-toolbar]')
       .get('[aria-label="keywords"]:first')
       .type('my_collection0{enter}');
-    cy.get('.hub-list').contains('my_collection2').should('not.exist');
-    cy.get('.hub-list').contains('my_collection0');
+    cy.get('.pulp-list').contains('my_collection2').should('not.exist');
+    cy.get('.pulp-list').contains('my_collection0');
 
     cy.get('.collection-container [aria-label="Actions"]').click();
     cy.contains('Delete collection from system').click();
@@ -146,12 +146,12 @@ describe('Collections list Tests', () => {
 
   it('Can delete collection in namespace collection list', () => {
     cy.visit(`${uiPrefix}namespaces/my_namespace`);
-    cy.get('[data-cy=hub-list-toolbar]')
+    cy.get('[data-cy=pulp-list-toolbar]')
       .get('[aria-label="keywords"]:first')
       .type('my_collection1{enter}');
 
-    cy.get('.body').contains('my_collection1');
-    cy.get('.body [aria-label="Actions"]').click();
+    cy.get('.pulp-section').contains('my_collection1');
+    cy.get('.pulp-section [aria-label="Actions"]').click();
     cy.contains('Delete collection from system').click();
     cy.get('[data-cy=modal_checkbox] input').click();
     cy.get('[data-cy=delete-button] button').click();

@@ -25,7 +25,7 @@ describe('Approval Dashboard process', () => {
     cy.visit(`${uiPrefix}approval-dashboard`);
     cy.contains('[data-cy^="ApprovalRow"]', 'Needs review');
     cy.contains('[data-cy^="ApprovalRow"] button', 'Sign and approve').click();
-    cy.contains('.body', 'No results found', { timeout: 8000 });
+    cy.contains('.pulp-section', 'No results found', { timeout: 8000 });
     cy.visit(`${uiPrefix}approval-dashboard`);
     cy.contains('button', 'Clear all filters').click();
     cy.contains('[data-cy^="ApprovalRow"]', 'Signed and approved');

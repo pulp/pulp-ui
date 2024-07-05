@@ -29,7 +29,7 @@ export const CollectionDependenciesList = ({
   }
 
   return (
-    <List className='hub-c-list-dependencies'>
+    <List className='pulp-c-list-dependencies'>
       {dependencies_repos.map((dependency, i) =>
         listDep(dependency, i, dependencies),
       )}

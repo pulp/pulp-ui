@@ -1,4 +1,4 @@
-.hub-doc-options-table {
+.pulp-doc-options-table {
   td,
   th {
     border: 1px solid black;
@@ -31,31 +31,31 @@
   }
 }
 
-.hub-doc-blue {
+.pulp-doc-blue {
   color: var(--pf-v5-global--info-color--100);
 }
 
-.hub-doc-red {
+.pulp-doc-red {
   color: var(--pf-v5-global--danger-color--100);
 }
 
-.hub-doc-green {
+.pulp-doc-green {
   color: var(--pf-v5-global--success-color--200);
 }
 
-.hub-doc-option-name {
+.pulp-doc-option-name {
   font-weight: bold;
 }
 
-.hub-doc-plugin-config {
+.pulp-doc-plugin-config {
   margin-bottom: 16px;
 }
 
-.hub-doc-plugin-raw {
+.pulp-doc-plugin-raw {
   white-space: pre-wrap;
 }
 
-.hub-doc-inline-code {
+.pulp-doc-inline-code {
   background-color: #e6e9e9;
   font-family: var(--pf-v5-global--FontFamily--monospace);
   display: inline-block;

@@ -19,10 +19,10 @@ import { ExecutionEnvironmentAPI } from 'src/api';
 import {
   BaseHeader,
   Breadcrumbs,
-  HubCopyButton,
   LabelGroup,
   LoadingPage,
   Main,
+  PulpCopyButton,
   ShaLabel,
   TagLabel,
 } from 'src/components';
@@ -124,7 +124,7 @@ class ExecutionEnvironmentManifest extends Component<RouteProps, IState> {
         >
           <div className='copy-sha'>
             <ShaLabel digest={digest} long />
-            <HubCopyButton text={digest} />
+            <PulpCopyButton text={digest} />
           </div>
 
           <LabelGroup numLabels={6}>

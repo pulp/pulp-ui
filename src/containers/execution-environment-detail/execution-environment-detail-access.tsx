@@ -133,7 +133,7 @@ class ExecutionEnvironmentDetailAccess extends Component<
       this.state;
 
     return (
-      <section className='body'>
+      <section className='pulp-section'>
         <AccessTab
           canEditOwners={canEditOwners}
           group={selectedGroup}

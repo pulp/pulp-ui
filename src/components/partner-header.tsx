@@ -33,7 +33,7 @@ export const PartnerHeader = ({
         namespace.avatar_url && (
           <Logo
             alt={t`${namespace.name} logo`}
-            className='hub-header-image'
+            className='pulp-header-image'
             fallbackToDefault
             image={namespace.avatar_url}
             size='40px'
@@ -43,7 +43,7 @@ export const PartnerHeader = ({
       }
       breadcrumbs={<Breadcrumbs links={breadcrumbs} />}
       pageControls={pageControls}
-      className='hub-header-bordered'
+      className='pulp-header-bordered'
     >
       {namespace.description ? (
         <div>
@@ -58,7 +58,7 @@ export const PartnerHeader = ({
         </div>
       ) : null}
 
-      <div className='hub-tab-link-container'>
+      <div className='pulp-tab-link-container'>
         <div className='tabs'>
           <LinkTabs tabs={tabs} />
         </div>

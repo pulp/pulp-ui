@@ -60,7 +60,7 @@ describe('Group Roles Tests', () => {
     cy.get('[data-cy=add-roles]').click();
 
     cy.get(
-      '.hub-custom-wizard-layout [data-ouia-component-type="PF5/Pagination"] button:first',
+      '.pulp-custom-wizard-layout [data-ouia-component-type="PF5/Pagination"] button:first',
     ).click();
     cy.contains('100 per page').click();
 
@@ -118,9 +118,9 @@ describe('Group Roles Tests', () => {
     cy.get('[data-cy=add-roles]').click();
 
     cy.get(
-      '.hub-custom-wizard-layout [data-ouia-component-type="PF5/Pagination"] button:first',
+      '.pulp-custom-wizard-layout [data-ouia-component-type="PF5/Pagination"] button:first',
     ).click();
-    cy.get('.hub-custom-wizard-layout').contains('100 per page').click();
+    cy.get('.pulp-custom-wizard-layout').contains('100 per page').click();
 
     cy.get(
       `[data-cy="RoleListTable"] [data-cy="RoleListTable-CheckboxRow-row-${testRole.name}"] [type="checkbox"]`,
@@ -137,12 +137,12 @@ describe('Group Roles Tests', () => {
       .click();
 
     cy.get('.pf-v5-c-wizard').contains('Selected roles');
-    cy.get(`[data-cy="HubPermission-${testContainerRole.name}"]`);
+    cy.get(`[data-cy="PulpPermission-${testContainerRole.name}"]`);
 
     cy.contains('Next').click();
 
-    cy.get('.hub-custom-wizard-layout').contains(groupName);
-    cy.get('.hub-custom-wizard-layout').contains(testContainerRole.name);
+    cy.get('.pulp-custom-wizard-layout').contains(groupName);
+    cy.get('.pulp-custom-wizard-layout').contains(testContainerRole.name);
 
     cy.get('.pf-v5-c-wizard__footer > button')
       .contains('Add')

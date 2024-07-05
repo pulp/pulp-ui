@@ -14,8 +14,8 @@ import {
   DateComponent,
   EmptyStateFilter,
   EmptyStateNoData,
-  HubPagination,
   LoadingSpinner,
+  PulpPagination,
   Typeahead,
 } from 'src/components';
 import { ParamHelper, filterIsSet, jsxErrorMessage } from 'src/utilities';
@@ -110,7 +110,7 @@ export const ImportList = ({
         {renderList(selectImport, importList, selectedImport, loading)}
       </div>
       {params.namespace && (
-        <HubPagination
+        <PulpPagination
           count={numberOfResults}
           isCompact
           params={params}
@@ -157,9 +157,9 @@ export const ImportList = ({
               onClick={() => selectImport(item)}
               key={item.id}
               className={cx({
-                clickable: true,
+                'pulp-clickable': true,
                 'list-container': true,
-                'hub-c-toolbar__item-selected-item':
+                'pulp-c-toolbar__item-selected-item':
                   item.type === selectedImport.type &&
                   item.id === selectedImport.id,
               })}

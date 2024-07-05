@@ -11,10 +11,10 @@ import {
   DateComponent,
   EmptyStateFilter,
   EmptyStateNoData,
-  HubPagination,
   LoadingPage,
   LoadingSpinner,
   Main,
+  PulpPagination,
   SortTable,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
@@ -218,8 +218,8 @@ const CollectionDistributions = (props: RouteProps) => {
         }
       />
       <Main>
-        <section className='body'>
-          <div className='hub-toolbar'>
+        <section className='pulp-section'>
+          <div className='pulp-toolbar'>
             <Toolbar>
               <ToolbarGroup>
                 <ToolbarItem>
@@ -245,7 +245,7 @@ const CollectionDistributions = (props: RouteProps) => {
               </ToolbarGroup>
             </Toolbar>
 
-            <HubPagination
+            <PulpPagination
               params={params}
               updateParams={updateParams}
               count={count}
@@ -266,7 +266,7 @@ const CollectionDistributions = (props: RouteProps) => {
             }}
           />
           {loading ? <LoadingSpinner /> : renderTable(distributions, params)}
-          <HubPagination
+          <PulpPagination
             params={params}
             updateParams={updateParams}
             count={count}

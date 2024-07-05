@@ -27,11 +27,11 @@ import {
   DeleteModal,
   EmptyStateNoData,
   ExternalLink,
-  HubListToolbar,
   ImportModal,
   LoadingPage,
   Main,
   PartnerHeader,
+  PulpListToolbar,
   SignAllCertificatesModal,
   StatefulDropdown,
   closeAlert,
@@ -442,7 +442,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
           pageControls={this.renderPageControls()}
         />
         {tab === 'collections' ? (
-          <HubListToolbar
+          <PulpListToolbar
             count={filteredCount}
             ignoredParams={ignoredParams}
             params={params}
@@ -468,7 +468,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
                 }
               />
             ) : (
-              <section className='body'>
+              <section className='pulp-section'>
                 <CollectionList
                   updateParams={updateParams}
                   params={params}
@@ -484,7 +484,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
             )
           ) : null}
           {tab === 'cli-configuration' ? (
-            <section className='body'>
+            <section className='pulp-section'>
               <div>
                 <div>
                   <Trans>
@@ -503,7 +503,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
           ) : null}
           {tab === 'resources' ? this.renderResources(namespace) : null}
           {tab === 'access' ? (
-            <section className='body'>
+            <section className='pulp-section'>
               <AccessTab
                 showUserRemoveModal={this.state.showUserRemoveModal}
                 showUserSelectWizard={this.state.showUserSelectWizard}

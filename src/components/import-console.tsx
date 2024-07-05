@@ -104,9 +104,9 @@ export function ImportConsole({
 
   if (loading || apiError) {
     return (
-      <div className='hub-import-console'>
+      <div className='pulp-import-console'>
         {title}
-        <div className='hub-import-loading message-list'>
+        <div className='pulp-import-loading message-list'>
           {apiError ? <div className='message'>{apiError}</div> : <Spinner />}
         </div>
       </div>
@@ -122,7 +122,7 @@ export function ImportConsole({
   const messages = task ? task.messages : [];
 
   return (
-    <div className='hub-import-console' data-cy={'ImportConsole'}>
+    <div className='pulp-import-console' data-cy={'ImportConsole'}>
       {title}
       <div className='message-list'>
         <div
@@ -135,7 +135,7 @@ export function ImportConsole({
           >
             <span
               onClick={inProgress ? startToFollow : scrollToBottom}
-              className='fa fa-arrow-circle-down clickable'
+              className='fa fa-arrow-circle-down pulp-clickable'
             />
           </Tooltip>
         </div>

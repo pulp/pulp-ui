@@ -72,12 +72,12 @@ describe('RBAC test for user without permissions', () => {
     // cannot View user
     cy.menuMissing('User Access > Users');
     cy.visit(`${uiPrefix}users`);
-    cy.contains('You do not have access to Automation Hub');
+    cy.contains('You do not have access to Pulp UI');
 
     // cannot Add user
     cy.contains('Create').should('not.exist');
     cy.visit(`${uiPrefix}users/create`);
-    cy.contains('You do not have access to Automation Hub');
+    cy.contains('You do not have access to Pulp UI');
 
     // cannot Change and Delete user
     cy.visit(`${uiPrefix}users`);
@@ -90,7 +90,7 @@ describe('RBAC test for user without permissions', () => {
     // cannot View group
     cy.menuMissing('User Access > Groups');
     cy.visit(`${uiPrefix}group-list`);
-    cy.contains('You do not have access to Automation Hub');
+    cy.contains('You do not have access to Pulp UI');
 
     // cannot Add group
     cy.contains('Create').should('not.exist');

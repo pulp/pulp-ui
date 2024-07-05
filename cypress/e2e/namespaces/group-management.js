@@ -63,7 +63,7 @@ function removeUserFromGroupManually(groupName, userName) {
   cy.contains('[data-cy=main-tabs]', userName).should('not.exist');
 }
 
-describe('Hub Group Management Tests', () => {
+describe('Pulp Group Management Tests', () => {
   before(() => {
     cy.deleteTestGroups();
     cy.deleteTestGroups();

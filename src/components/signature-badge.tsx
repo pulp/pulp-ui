@@ -26,7 +26,7 @@ export const SignatureBadge: FunctionComponent<IProps> = ({
     <Label
       data-cy='signature-badge'
       variant='outline'
-      className='hub-signature-badge'
+      className='pulp-signature-badge'
       color={signState === 'signed' ? 'green' : 'orange'}
       icon={
         signState === 'signed' ? (

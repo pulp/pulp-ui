@@ -13,9 +13,9 @@ import {
   EmptyStateFilter,
   EmptyStateNoData,
   type FilterOption,
-  HubPagination,
   LoadingSpinner,
   type LocalizedSortHeaders,
+  PulpPagination,
   type Query,
   type RenderTableRow,
   SortTable,
@@ -114,7 +114,7 @@ export function DetailList<T>({
         <LoadingSpinner />
       ) : (
         <>
-          <div className='hub-toolbar' data-cy={`DetailList`}>
+          <div className='pulp-toolbar' data-cy={`DetailList`}>
             <Toolbar>
               <ToolbarContent>
                 <ToolbarGroup>
@@ -137,7 +137,7 @@ export function DetailList<T>({
               </ToolbarContent>
             </Toolbar>
 
-            <HubPagination
+            <PulpPagination
               params={params}
               updateParams={setParams}
               count={itemCount}
@@ -173,7 +173,7 @@ export function DetailList<T>({
               </Tbody>
             </Table>
           )}
-          <HubPagination
+          <PulpPagination
             params={params}
             updateParams={setParams}
             count={itemCount}

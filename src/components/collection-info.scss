@@ -4,14 +4,14 @@
   display: table-cell;
 }
 
-.hub-readme-container {
+.pulp-readme-container {
   position: relative;
   max-height: 300px;
   min-height: 50px;
   overflow: hidden;
 }
 
-.hub-fade-out {
+.pulp-fade-out {
   position: absolute;
   z-index: 1;
   bottom: 0;
@@ -30,10 +30,10 @@
   padding: 8px;
 }
 
-.hub-collection-download-alert {
+.pulp-collection-download-alert {
   width: 100%;
 }
 
-.hub-collection-download-alert > h4 {
+.pulp-collection-download-alert > h4 {
   margin-top: 0;
 }

@@ -101,7 +101,7 @@ class CollectionDetail extends Component<RouteProps, IBaseCollectionState> {
           }
         />
         <Main>
-          <section className='body'>
+          <section className='pulp-section'>
             <CollectionInfo
               {...collection}
               content={content}

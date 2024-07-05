@@ -22,11 +22,11 @@ import {
   EmptyStateFilter,
   EmptyStateNoData,
   ExpandableRow,
-  HubPagination,
   ListItemActions,
   LoadingPage,
   PermissionCategories,
   PreviewRoles,
+  PulpPagination,
   RoleListTable,
   SelectRoles,
   WizardModal,
@@ -162,7 +162,7 @@ const GroupDetailRoleManagement: FunctionComponent<IProps> = ({
 
   if (loading) {
     return (
-      <section className='body'>
+      <section className='pulp-section'>
         <LoadingPage />
       </section>
     );
@@ -269,7 +269,7 @@ const GroupDetailRoleManagement: FunctionComponent<IProps> = ({
         />
       )}
       {noData ? (
-        <section className='body hub-empty-state-box'>
+        <section className='pulp-section pulp-empty-state-box'>
           <EmptyStateNoData
             title={t`There are currently no roles assigned to this group.`}
             description={t`Please add a role by using the button below.`}
@@ -277,8 +277,8 @@ const GroupDetailRoleManagement: FunctionComponent<IProps> = ({
           />
         </section>
       ) : (
-        <section className='body'>
-          <div className='hub-toolbar'>
+        <section className='pulp-section'>
+          <div className='pulp-toolbar'>
             <Toolbar>
               <ToolbarContent>
                 <ToolbarGroup>
@@ -301,7 +301,7 @@ const GroupDetailRoleManagement: FunctionComponent<IProps> = ({
               </ToolbarContent>
             </Toolbar>
 
-            <HubPagination
+            <PulpPagination
               count={rolesItemCount}
               params={params}
               updateParams={updateParams}
@@ -364,7 +364,7 @@ const GroupDetailRoleManagement: FunctionComponent<IProps> = ({
               </RoleListTable>
 
               <div style={{ paddingTop: '24px', paddingBottom: '8px' }}>
-                <HubPagination
+                <PulpPagination
                   params={params}
                   updateParams={updateParams}
                   count={rolesItemCount}

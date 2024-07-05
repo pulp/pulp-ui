@@ -172,7 +172,7 @@ class EditRole extends Component<RouteProps, IState> {
           <EmptyStateUnauthorized />
         ) : (
           <Main>
-            <section className='body'>
+            <section className='pulp-section'>
               <RoleForm
                 {...this.state}
                 name={name}

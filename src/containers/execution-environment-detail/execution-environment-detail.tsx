@@ -65,7 +65,7 @@ class ExecutionEnvironmentDetail extends Component<IDetailSharedProps, IState> {
     return (
       <Flex direction={{ default: 'column' }}>
         <FlexItem>
-          <section className='body card-area'>
+          <section className='pulp-section card-area'>
             {' '}
             <Title headingLevel='h2' size='lg'>
               {t`Instructions`}
@@ -77,7 +77,7 @@ class ExecutionEnvironmentDetail extends Component<IDetailSharedProps, IState> {
           </section>
         </FlexItem>
         <FlexItem>
-          <section className='body pf-v5-c-content'>
+          <section className='pulp-section pf-v5-c-content'>
             <Card>
               <CardBody>
                 <Title headingLevel='h2' size='lg'>
@@ -85,7 +85,7 @@ class ExecutionEnvironmentDetail extends Component<IDetailSharedProps, IState> {
                     this.state.readme &&
                     canEdit && (
                       <Button
-                        className={'hub-c-button-edit'}
+                        className={'pulp-c-button-edit'}
                         variant={'primary'}
                         onClick={() => {
                           this.setState({ markdownEditing: true });

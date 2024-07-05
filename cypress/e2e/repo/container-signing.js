@@ -52,7 +52,7 @@ describe('Container Signing', () => {
     cy.login();
     cy.visit(`${uiPrefix}containers/remote1`);
     cy.contains('[data-cy="column-section"]', 'remote1');
-    cy.contains('.hub-header-bottom', 'Unsigned', {
+    cy.contains('.pulp-header-bottom', 'Unsigned', {
       timeout: 10000,
     });
 
@@ -61,7 +61,7 @@ describe('Container Signing', () => {
     cy.get('button[aria-label="Actions"]').click();
     cy.contains('.pf-v5-c-dropdown ul li a', 'Sign').click();
     cy.contains('Signing started for container "remote1');
-    cy.contains('.hub-header-bottom', 'Signed', {
+    cy.contains('.pulp-header-bottom', 'Signed', {
       timeout: 30000,
     });
   });
@@ -70,7 +70,7 @@ describe('Container Signing', () => {
     cy.login();
     cy.visit(`${uiPrefix}containers/remote2`);
     cy.contains('[data-cy="column-section"]', 'remote2');
-    cy.contains('.hub-header-bottom', 'Unsigned', {
+    cy.contains('.pulp-header-bottom', 'Unsigned', {
       timeout: 10000,
     });
 
@@ -83,14 +83,14 @@ describe('Container Signing', () => {
     cy.login();
     cy.visit(`${uiPrefix}containers/local1`);
     cy.contains('[data-cy="column-section"]', 'local1');
-    cy.contains('.hub-header-bottom', 'Unsigned', {
+    cy.contains('.pulp-header-bottom', 'Unsigned', {
       timeout: 10000,
     });
 
     cy.get('button[aria-label="Actions"]').click();
     cy.contains('.pf-v5-c-dropdown ul li a', 'Sign').click();
     cy.contains('Signing started for container "local1');
-    cy.contains('.hub-header-bottom', 'Signed', {
+    cy.contains('.pulp-header-bottom', 'Signed', {
       timeout: 30000,
     });
   });
@@ -100,9 +100,6 @@ describe('Container Signing', () => {
     cy.visit(`${uiPrefix}containers/local1`);
     // this is now covered by alert that should not be here in the future
     cy.get('button[aria-label="Actions"]').click({ force: true });
-    cy.contains('[role=menu] li a', 'Use in Controller')
-      .should('have.attr', 'href')
-      .and('match', /^http.*\/execution-environments\/add.*local1%3Alatest$/);
     cy.contains('[role=menu] li', 'Sign').should('not.exist');
   });
 });

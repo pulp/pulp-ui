@@ -35,7 +35,7 @@ describe('Repository', () => {
     ).click();
 
     cy.contains('repoListTest1');
-    cy.contains('rh-certified');
+    cy.contains('certified');
     cy.contains('validated');
     cy.contains('repoListTest3');
     cy.contains('community').should('not.exist');
@@ -46,7 +46,7 @@ describe('Repository', () => {
     cy.contains('[data-cy="ListPage-AnsibleRepositoryList"]', '11 of 11');
 
     cy.contains('repoListTest1').should('not.exist');
-    cy.contains('rh-certified').should('not.exist');
+    cy.contains('certified').should('not.exist');
     cy.contains('validated').should('not.exist');
     cy.contains('repoListTest3').should('not.exist');
     cy.contains('community');
@@ -60,7 +60,7 @@ describe('Repository', () => {
     ).click();
 
     cy.contains('repoListTest1');
-    cy.contains('rh-certified');
+    cy.contains('certified');
     cy.contains('validated').should('not.exist');
     cy.contains('repoListTest3');
     cy.contains('community');
@@ -70,7 +70,7 @@ describe('Repository', () => {
     ).click();
 
     cy.contains('repoListTest1').should('not.exist');
-    cy.contains('rh-certified').should('not.exist');
+    cy.contains('certified').should('not.exist');
     cy.contains('validated');
     cy.contains('repoListTest3').should('not.exist');
     cy.contains('community').should('not.exist');
@@ -88,7 +88,7 @@ describe('Repository', () => {
     });
     cy.contains('community').should('not.exist');
     cy.contains('validated').should('not.exist');
-    cy.contains('rh-certified').should('not.exist');
+    cy.contains('certified').should('not.exist');
 
     cy.get('[data-cy="compound_filter"] input')
       .clear()
@@ -98,7 +98,7 @@ describe('Repository', () => {
     cy.contains('repoListTest1').should('not.exist');
     cy.contains('community').should('not.exist');
     cy.contains('validated').should('not.exist');
-    cy.contains('rh-certified').should('not.exist');
+    cy.contains('certified').should('not.exist');
 
     cy.contains('Clear all filters').click();
 
@@ -107,7 +107,7 @@ describe('Repository', () => {
     cy.contains('repoListTest1');
     cy.contains('community').should('not.exist');
     cy.contains('validated');
-    cy.contains('rh-certified');
+    cy.contains('certified');
 
     cy.get('[data-cy="compound_filter"] input').clear().type('test{enter}');
 
@@ -117,7 +117,7 @@ describe('Repository', () => {
 
     cy.contains('community').should('not.exist');
     cy.contains('validated').should('not.exist');
-    cy.contains('rh-certified').should('not.exist');
+    cy.contains('certified').should('not.exist');
   });
 
   it('tests deletion', () => {

@@ -25,11 +25,11 @@ import {
   EmptyStateFilter,
   EmptyStateNoData,
   EmptyStateUnauthorized,
-  HubPagination,
   LabelGroup,
   ListItemActions,
   LoadingSpinner,
   Main,
+  PulpPagination,
   SortTable,
   Tooltip,
   closeAlert,
@@ -146,8 +146,8 @@ class UserList extends Component<RouteProps, IState> {
           <EmptyStateUnauthorized />
         ) : (
           <Main>
-            <section className='body'>
-              <div className='hub-toolbar'>
+            <section className='pulp-section'>
+              <div className='pulp-toolbar'>
                 <Toolbar>
                   <ToolbarContent>
                     <ToolbarGroup>
@@ -194,7 +194,7 @@ class UserList extends Component<RouteProps, IState> {
                   </ToolbarContent>
                 </Toolbar>
 
-                <HubPagination
+                <PulpPagination
                   params={params}
                   updateParams={(p) =>
                     this.updateParams(p, () => this.queryUsers())
@@ -221,7 +221,7 @@ class UserList extends Component<RouteProps, IState> {
               </div>
               {loading ? <LoadingSpinner /> : this.renderTable(params)}
 
-              <HubPagination
+              <PulpPagination
                 params={params}
                 updateParams={(p) =>
                   this.updateParams(p, () => this.queryUsers())

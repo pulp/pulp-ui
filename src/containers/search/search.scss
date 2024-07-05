@@ -1,4 +1,4 @@
-.hub-search-page {
+.pulp-search-page {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -7,12 +7,12 @@
     padding-top: 24px;
     flex-grow: 1;
 
-    .hub-cards {
+    .pulp-cards {
       display: flex;
       flex-wrap: wrap;
       align-content: flex-start;
 
-      .hub-c-card-collection-container {
+      .pulp-c-card-collection-container {
         margin-left: 24px;
         margin-bottom: 24px;
       }
@@ -22,7 +22,7 @@
       width: 100%;
     }
 
-    .hub-list {
+    .pulp-list {
       margin-bottom: 24px;
       margin-left: 24px;
       margin-right: 24px;

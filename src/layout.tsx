@@ -21,9 +21,9 @@ import { Link } from 'react-router-dom';
 import { ActiveUserAPI, type UserType } from 'src/api';
 import {
   ExternalLink,
-  HubAboutModal,
   LanguageSwitcher,
   LoginLink,
+  PulpAboutModal,
   SmallLogo,
   StatefulDropdown,
 } from 'src/components';
@@ -92,7 +92,7 @@ export const StandaloneLayout = ({ children, setUser, user }: IProps) => {
     ].filter(Boolean);
 
     aboutModal = (
-      <HubAboutModal
+      <PulpAboutModal
         isOpen={aboutModalVisible}
         onClose={() => setAboutModalVisible(false)}
         user={user}

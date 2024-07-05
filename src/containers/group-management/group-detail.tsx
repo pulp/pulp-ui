@@ -31,11 +31,11 @@ import {
   EmptyStateFilter,
   EmptyStateNoData,
   EmptyStateUnauthorized,
-  HubPagination,
   LinkTabs,
   ListItemActions,
   LoadingPage,
   Main,
+  PulpPagination,
   SortTable,
   Typeahead,
   closeAlert,
@@ -237,7 +237,7 @@ class GroupDetail extends Component<RouteProps, IState> {
           }
           pageControls={this.renderControls()}
         >
-          <div className='hub-tab-link-container'>
+          <div className='pulp-tab-link-container'>
             <div className='tabs'>
               <LinkTabs tabs={tabs} />
             </div>
@@ -556,8 +556,8 @@ class GroupDetail extends Component<RouteProps, IState> {
     }
 
     return (
-      <section className='body'>
-        <div className='hub-toolbar'>
+      <section className='pulp-section'>
+        <div className='pulp-toolbar'>
           <Toolbar>
             <ToolbarContent>
               <ToolbarGroup>
@@ -604,7 +604,7 @@ class GroupDetail extends Component<RouteProps, IState> {
             </ToolbarContent>
           </Toolbar>
 
-          <HubPagination
+          <PulpPagination
             params={params}
             updateParams={(p) => this.updateParams(p, () => this.queryUsers())}
             count={itemCount}
@@ -630,7 +630,7 @@ class GroupDetail extends Component<RouteProps, IState> {
         </div>
         {this.renderUsersTable(users)}
         <div style={{ paddingTop: '24px', paddingBottom: '8px' }}>
-          <HubPagination
+          <PulpPagination
             params={params}
             updateParams={(p) => this.updateParams(p, () => this.queryUsers())}
             count={itemCount}

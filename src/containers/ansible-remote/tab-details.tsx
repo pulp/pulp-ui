@@ -9,8 +9,8 @@ import { type AnsibleRemoteType } from 'src/api';
 import {
   CopyURL,
   Details,
-  HubCopyButton,
   LazyRepositories,
+  PulpCopyButton,
 } from 'src/components';
 
 interface TabProps {
@@ -21,7 +21,7 @@ interface TabProps {
 const PFCodeBlock = ({ code }: { code: string }) => {
   const actions = (
     <CodeBlockAction>
-      <HubCopyButton text={code} textId='code-content' />
+      <PulpCopyButton text={code} textId='code-content' />
     </CodeBlockAction>
   );
 

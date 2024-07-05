@@ -58,7 +58,7 @@ class PulpStatus extends Component<RouteProps, IState> {
         <BaseHeader title={t`Status`} />
         <Main>
           <Card>
-            <section className='body pf-v5-c-content'>
+            <section className='pulp-section pf-v5-c-content'>
               <CardTitle>
                 <h2>{t`TODO`}</h2>
               </CardTitle>

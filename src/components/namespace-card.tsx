@@ -26,7 +26,7 @@ interface IProps {
 
 export const NamespaceNextPageCard = ({ onClick }: { onClick: () => void }) => {
   return (
-    <Card className='hub-c-card-ns-container'>
+    <Card className='pulp-c-card-ns-container'>
       <div
         style={{
           display: 'flex',
@@ -49,7 +49,7 @@ export const NamespaceCard = ({ namespace, showDetailLink }: IProps) => {
   const { avatar_url, name } = namespace;
 
   return (
-    <Card className='hub-c-card-ns-container'>
+    <Card className='pulp-c-card-ns-container'>
       <CardHeader>
         <div style={{ display: 'flex', justifyContent: 'start' }}>
           <Logo
@@ -78,7 +78,7 @@ export const NamespaceCard = ({ namespace, showDetailLink }: IProps) => {
   );
 };
 
-// FIXME: pf-m-truncate / hub-m-truncated
+// FIXME: pf-m-truncate / pulp-m-truncated
 function getDescription(d: string, MAX_DESCRIPTION_LENGTH = 26) {
   if (!d) {
     return '';

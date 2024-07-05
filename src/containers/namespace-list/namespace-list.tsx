@@ -10,14 +10,14 @@ import {
   BaseHeader,
   EmptyStateFilter,
   EmptyStateNoData,
-  HubListToolbar,
-  HubPagination,
   LinkTabs,
   LoadingPage,
   LoadingSpinner,
   NamespaceCard,
   NamespaceModal,
   NamespaceNextPageCard,
+  PulpListToolbar,
+  PulpPagination,
   closeAlert,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
@@ -176,7 +176,7 @@ export class NamespaceList extends Component<IProps, IState> {
     ];
 
     return (
-      <div className='hub-namespace-page'>
+      <div className='pulp-namespace-page'>
         <NamespaceModal
           isOpen={this.state.isModalOpen}
           toggleModal={this.handleModalToggle}
@@ -203,7 +203,7 @@ export class NamespaceList extends Component<IProps, IState> {
         />
         <BaseHeader title={t`Namespaces`}>
           {!(this.context as IAppContextType).user.is_anonymous && (
-            <div className='hub-tab-link-container'>
+            <div className='pulp-tab-link-container'>
               <div className='tabs'>
                 <LinkTabs tabs={tabs} />
               </div>
@@ -211,7 +211,7 @@ export class NamespaceList extends Component<IProps, IState> {
           )}
         </BaseHeader>
         {noData ? null : (
-          <HubListToolbar
+          <PulpListToolbar
             buttons={buttons}
             count={itemCount}
             filterConfig={filterConfig}
@@ -226,7 +226,7 @@ export class NamespaceList extends Component<IProps, IState> {
         </section>
         {noData || loading ? null : (
           <section className='footer'>
-            <HubPagination
+            <PulpPagination
               params={params}
               updateParams={updateParams}
               count={itemCount}
@@ -278,7 +278,7 @@ export class NamespaceList extends Component<IProps, IState> {
     }
 
     return (
-      <section className='hub-card-layout'>
+      <section className='pulp-card-layout'>
         {namespaces.map((ns, i) => (
           <div key={i} className='card-wrapper'>
             <NamespaceCard showDetailLink key={i} namespace={ns} />

@@ -12,9 +12,9 @@ const webpack = require('webpack');
 
 const isBuild = process.env.NODE_ENV === 'production';
 
-// only run git when HUB_UI_VERSION is NOT provided
+// only run git when PULP_UI_VERSION is NOT provided
 const gitCommit =
-  process.env.HUB_UI_VERSION ||
+  process.env.PULP_UI_VERSION ||
   execSync('git rev-parse HEAD', { encoding: 'utf-8' }).trim();
 
 const docsURL = 'https://docs.pulpproject.org/';

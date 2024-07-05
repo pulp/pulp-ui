@@ -30,7 +30,7 @@ import {
 } from 'src/utilities';
 
 const PageSection = ({ children, ...rest }: { children: ReactNode }) => (
-  <section className='body' {...rest}>
+  <section className='pulp-section' {...rest}>
     {children}
   </section>
 );
@@ -267,7 +267,7 @@ const MultiSearch = (props: RouteProps) => {
           >
             <DataList
               aria-label={t`Available matching containers`}
-              className='hub-card-layout'
+              className='pulp-card-layout'
               style={{ paddingTop: '8px' }}
             >
               {containers.map((item, index) => (

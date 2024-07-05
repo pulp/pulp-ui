@@ -92,7 +92,7 @@ function testAccessTab({
   ).click();
 
   cy.get('strong').contains('Selected group');
-  cy.get('.hub-permission').contains('access_group');
+  cy.get('.pulp-permission').contains('access_group');
 
   cy.get('footer button').contains('Next').click();
 
@@ -105,7 +105,7 @@ function testAccessTab({
   ).click();
 
   cy.get('strong').contains('Selected roles');
-  cy.get('.hub-permission').contains(role);
+  cy.get('.pulp-permission').contains(role);
 
   cy.get('footer button').contains('Next').click();
 
@@ -113,8 +113,8 @@ function testAccessTab({
   cy.get('strong').contains('access_group');
   cy.get('strong').contains(role);
 
-  cy.get('.hub-permission strong').contains(permissionGroup);
-  cy.get('.hub-permission').contains(permission);
+  cy.get('.pulp-permission strong').contains(permissionGroup);
+  cy.get('.pulp-permission').contains(permission);
 
   cy.get('footer button').contains('Add').click();
   cy.get('.pf-v5-c-alert__title')

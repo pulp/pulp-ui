@@ -31,7 +31,7 @@ describe('My Profile Tests', () => {
       'password',
       'password-confirm',
     ];
-    cy.get('.body').within(() => {
+    cy.get('.pulp-section').within(() => {
       // restricted to text input types because there's a checkbox now for the
       // 'super user' option, but it's disabled.
       cy.get('input[type="text"]').each(($el) => {

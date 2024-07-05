@@ -45,39 +45,39 @@ describe('User list tests for sorting, paging and filtering', () => {
   });
 
   it('paging', () => {
-    cy.get('.body').contains(items[0]);
+    cy.get('.pulp-section').contains(items[0]);
 
-    cy.get('.body').get('[aria-label="Go to next page"]:first').click();
-    cy.get('.body').contains(items[10]);
+    cy.get('.pulp-section').get('[aria-label="Go to next page"]:first').click();
+    cy.get('.pulp-section').contains(items[10]);
 
-    cy.get('.body').get('[aria-label="Go to next page"]:first').click();
-    cy.get('.body').contains(items[20]);
+    cy.get('.pulp-section').get('[aria-label="Go to next page"]:first').click();
+    cy.get('.pulp-section').contains(items[20]);
   });
 
   it('sorting', () => {
-    cy.get('.body').get('[data-cy="sort_username"]').click();
-    cy.get('.body tbody tr:first td:first').contains(items[20]);
-    cy.get('.body').contains(items[0]).should('not.exist');
+    cy.get('.pulp-section').get('[data-cy="sort_username"]').click();
+    cy.get('.pulp-section tbody tr:first td:first').contains(items[20]);
+    cy.get('.pulp-section').contains(items[0]).should('not.exist');
   });
 
   it('filter', () => {
-    cy.get('.body')
+    cy.get('.pulp-section')
       .get('[aria-label="username__contains"]:first')
       .type('user_test0{enter}');
-    cy.get('.body').contains('user_test0');
-    cy.get('.body').contains('user_test1').should('not.exist');
+    cy.get('.pulp-section').contains('user_test0');
+    cy.get('.pulp-section').contains('user_test1').should('not.exist');
   });
 
   it('set page size', () => {
-    cy.get('.body')
+    cy.get('.pulp-section')
       .get('[data-ouia-component-type="PF5/Pagination"] button:first')
       .click();
-    cy.get('.body').contains('20 per page').click();
+    cy.get('.pulp-section').contains('20 per page').click();
 
     range(20).forEach((i) => {
-      cy.get('.body').contains(items[i]);
+      cy.get('.pulp-section').contains(items[i]);
     });
 
-    cy.get('.body').contains(items[20]).should('not.exist');
+    cy.get('.pulp-section').contains(items[20]).should('not.exist');
   });
 });
