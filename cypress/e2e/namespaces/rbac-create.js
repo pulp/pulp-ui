@@ -31,11 +31,6 @@ describe('add and delete roles', () => {
     cy.contains('Save').should('be.disabled');
 
     cy.get('#role_name').clear().type('test');
-    helperText('role_name').should(
-      'have.text',
-      `This field must start with 'galaxy.'.`,
-    );
-
     cy.get('#role_name').clear();
     helperText('role_name').should('have.text', 'This field may not be blank.');
     cy.contains('Save').should('be.disabled');

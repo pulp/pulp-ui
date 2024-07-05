@@ -81,10 +81,6 @@ export class RoleList extends Component<RouteProps, IState> {
       params['sort'] = 'name';
     }
 
-    if (!params['name__startswith']) {
-      params['name__startswith'] = 'galaxy.';
-    }
-
     this.state = {
       redirect: null,
       roles: [],
@@ -285,12 +281,10 @@ export class RoleList extends Component<RouteProps, IState> {
                     ignoredParams={['page_size', 'page', 'sort', 'ordering']}
                     niceValues={{
                       locked: { true: t`Built-in`, false: t`Editable` },
-                      name__startswith: { 'galaxy.': t`true` },
                     }}
                     niceNames={{
                       locked: t`Editable`,
                       name__icontains: t`Role name`,
-                      name__startswith: t`Galaxy only`,
                     }}
                   />
                 </div>

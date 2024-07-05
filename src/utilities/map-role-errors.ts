@@ -16,8 +16,6 @@ export function validateInput(input, field, currentErrors) {
     errors[field] = t`This field can only contain letters and numbers`;
   } else if (input.length <= 2) {
     errors[field] = t`This field must be longer than 2 characters`;
-  } else if (field === 'name' && !input.startsWith('galaxy.')) {
-    errors[field] = t`This field must start with 'galaxy.'.`;
   } else {
     delete errors[field];
   }

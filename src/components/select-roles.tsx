@@ -47,10 +47,7 @@ export const SelectRoles: FunctionComponent<SelectRolesProps> = ({
 
   const queryRoles = () => {
     setLoading(true);
-    RoleAPI.list(
-      { name__startswith: 'galaxy.', ...localParams },
-      pulpObjectType,
-    ).then(({ data }) => {
+    RoleAPI.list(localParams, pulpObjectType).then(({ data }) => {
       setRoles(data.results);
       setRolesItemCount(data.count);
       setLoading(false);
