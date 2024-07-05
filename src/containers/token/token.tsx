@@ -45,11 +45,6 @@ class Token extends Component<RouteProps, IState> {
     const expirationDate = expiration
       ? new Date(Date.now() + 1000 * 60 * expiration)
       : null;
-    const isSSO =
-      !(this.context as IAppContextType).user.auth_provider.includes(
-        'django',
-      ) &&
-      !(this.context as IAppContextType).user.auth_provider.includes('github');
 
     return (
       <>
@@ -79,25 +74,6 @@ class Token extends Component<RouteProps, IState> {
                       <code>ansible-galaxy</code> client.
                     </Trans>
                   </p>
-                  {isSSO && (
-                    <div>
-                      <h2>{t`Expiration`}</h2>
-                      <p>
-                        <Trans>You are an SSO user.</Trans>{' '}
-                        {expirationDate ? (
-                          <Trans>
-                            Your token will expire{' '}
-                            <DateComponent
-                              date={expirationDate.toISOString()}
-                            />
-                            .
-                          </Trans>
-                        ) : (
-                          <Trans>Your token will not expire.</Trans>
-                        )}
-                      </p>
-                    </div>
-                  )}
                   {token ? (
                     <>
                       <div className='pf-v5-c-content'>
