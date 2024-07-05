@@ -113,6 +113,13 @@ export const StandaloneLayout = ({ children, setUser, user }: IProps) => {
           <Link to={formatPath(Paths.search)}>
             <SmallLogo alt={APPLICATION_NAME} />
           </Link>
+          <span
+            style={{
+              padding: '9px 0 0 4px',
+            }}
+          >
+            Pulp UI
+          </span>
         </MastheadBrand>
       </MastheadMain>
       <MastheadContent>
