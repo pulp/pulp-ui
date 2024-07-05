@@ -25,6 +25,7 @@ run:
 ```
 cd ~/pulp-backend-oci/
 podman run --publish 8080:80 \
+           --replace --name pulp \
            --volume "$(pwd)/settings":/etc/pulp \
            --volume "$(pwd)/pulp_storage":/var/lib/pulp \
            --volume "$(pwd)/pgsql":/var/lib/pgsql \
@@ -41,8 +42,7 @@ curl localhost:8080/pulp/api/v3/status/ | jq
 change password:
 
 ```
-container_id=`podman ps | grep pulp | cut -d' ' -f1`
-podman exec -it "$container_id" pulpcore-manager reset-admin-password --password admin
+podman exec -it pulp pulpcore-manager reset-admin-password --password admin
 ```
 
 configure pulp-cli:
