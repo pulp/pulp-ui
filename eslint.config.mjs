@@ -87,11 +87,6 @@ export default config(
               message: 'Import from src/components instead.',
               name: '@patternfly/react-core',
             },
-            {
-              importNames: ['CodeEditor'],
-              message: 'Import from src/components instead.',
-              name: '@patternfly/react-code-editor',
-            },
           ],
         },
       ],

@@ -1,9 +1,5 @@
 import { Trans, t } from '@lingui/macro';
 import {
-  type CodeEditorProps,
-  CodeEditor as PFCodeEditor,
-} from '@patternfly/react-code-editor';
-import {
   type AlertProps,
   type BreadcrumbProps,
   type ChipGroupProps,
@@ -86,42 +82,6 @@ export const ClipboardCopy = (props: Omit<ClipboardCopyProps, 'ref'>) => (
 
 export const ClipboardCopyButton = (props: ClipboardCopyButtonProps) => (
   <PFCopyButton aria-label={t`Copyable input`} {...props} />
-);
-
-export const CodeEditor = (
-  props: Omit<
-    CodeEditorProps,
-    | 'ref'
-    | 'shortcutsPopoverButtonText'
-    | 'toolTipCopyExitDelay'
-    | 'toolTipDelay'
-    | 'toolTipMaxWidth'
-  > & {
-    shortcutsPopoverButtonText?: string;
-    toolTipCopyExitDelay?: number;
-    toolTipDelay?: number;
-    toolTipMaxWidth?: string;
-  },
-) => (
-  <PFCodeEditor
-    copyButtonAriaLabel={t`Copy code to clipboard`}
-    copyButtonSuccessTooltipText={t`Content added to clipboard`}
-    copyButtonToolTipText={t`Copy to clipboard`}
-    downloadButtonAriaLabel={t`Download code`}
-    downloadButtonToolTipText={t`Download`}
-    emptyStateBody={t`Drag and drop a file or upload one.`}
-    emptyStateButton={t`Browse`}
-    emptyStateLink={t`Start from scratch`}
-    emptyStateTitle={t`Start editing`}
-    shortcutsPopoverButtonText={t`View Shortcuts`}
-    uploadButtonAriaLabel={t`Upload code`}
-    uploadButtonToolTipText={t`Upload`}
-    {...props}
-    shortcutsPopoverProps={{
-      'aria-label': t`Keyboard Shortcuts`,
-      ...props.shortcutsPopoverProps,
-    }}
-  />
 );
 
 export const FileUpload = (props: FileUploadProps) => (

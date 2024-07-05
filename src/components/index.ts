@@ -88,7 +88,6 @@ export {
   ChipGroup,
   ClipboardCopy,
   ClipboardCopyButton,
-  CodeEditor,
   FileUpload,
   Icon,
   LabelGroup,

@@ -1,5 +1,4 @@
 import { Trans, t } from '@lingui/macro';
-import { Language } from '@patternfly/react-code-editor';
 import {
   ActionGroup,
   Button,
@@ -20,7 +19,6 @@ import { type RemoteType, type WriteOnlyFieldType } from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   Alert,
-  CodeEditor,
   ExternalLink,
   FileUpload,
   FormFieldHelper,
@@ -437,37 +435,29 @@ export class RemoteForm extends Component<IProps, IState> {
                 <FlexItem grow={{ default: 'grow' }}>
                   <ExclamationTriangleIcon />{' '}
                   {t`If you populate this requirements file, this remote will only sync collections from this file, otherwise all collections will be synchronized.`}
-                  <CodeEditor
-                    code={this.props.remote.requirements_file}
-                    isCopyEnabled
-                    isDarkTheme
-                    isDownloadEnabled
-                    isLanguageLabelVisible
-                    isUploadEnabled
-                    emptyState={
-                      <>
-                        <pre>{yamlTemplate}</pre>
-                        <Button
-                          variant='plain'
-                          onClick={() =>
-                            this.updateRemote(yamlTemplate, 'requirements_file')
-                          }
-                        >{t`Use template`}</Button>
-                        <Button
-                          variant='plain'
-                          onClick={() =>
-                            this.updateRemote('\n', 'requirements_file')
-                          }
-                        >{t`Start from scratch`}</Button>
-                      </>
-                    }
-                    height='20rem'
-                    language={Language.yaml}
+                  <textarea
+                    value={this.props.remote.requirements_file}
                     onChange={(value) =>
                       this.updateRemote(value, 'requirements_file')
                     }
-                    onEditorDidMount={(editor) => editor.focus()}
                   />
+                  {this.props.remote.requirements_file == null ? (
+                    <>
+                      <pre>{yamlTemplate}</pre>
+                      <Button
+                        variant='plain'
+                        onClick={() =>
+                          this.updateRemote(yamlTemplate, 'requirements_file')
+                        }
+                      >{t`Use template`}</Button>
+                      <Button
+                        variant='plain'
+                        onClick={() =>
+                          this.updateRemote('\n', 'requirements_file')
+                        }
+                      >{t`Start from scratch`}</Button>
+                    </>
+                  ) : null}
                 </FlexItem>
               </Flex>
             </ExpandableSection>
