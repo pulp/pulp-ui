@@ -39,7 +39,7 @@ jobs:
 
     - name: "buildah build"
       working-directory: 'pulp-ui/.github/workflows/cypress'
-      run: 'buildah build -t pulp -f ./Containerfile'
+      run: 'buildah build -t localhost/pulp:latest -f ./Containerfile'
 
     - name: "podman run"
       run: 'podman run --replace --name pulp --publish 8080:80 --detach localhost/pulp:latest'
