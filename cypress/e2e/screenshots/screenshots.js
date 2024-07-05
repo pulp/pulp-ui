@@ -38,7 +38,7 @@ describe('screenshots', () => {
     screenshot('/ansible/repositories', { blackout: ['time'] });
     screenshot('/ansible/remotes');
     screenshot('/token');
-    screenshot('/approval-dashboard');
+    screenshot('/approval');
     screenshot('/my-imports');
 
     screenshot('/containers');

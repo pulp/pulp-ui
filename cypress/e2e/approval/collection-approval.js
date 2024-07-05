@@ -7,7 +7,7 @@ describe('tests the approval list screen ', () => {
     cy.deleteNamespacesAndCollections();
     cy.galaxykit('-i namespace create', 'ansible');
     cy.galaxykit('collection upload ansible network');
-    cy.visit(`${uiPrefix}approval-dashboard`);
+    cy.visit(`${uiPrefix}approval`);
   });
 
   it('has a default Needs Review filter', () => {

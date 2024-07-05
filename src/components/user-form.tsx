@@ -111,7 +111,7 @@ export const UserForm = ({
       key='readonlyAuth'
       label={t`Authentication provider`}
     >
-      {user.auth_provider.map((provider) => (
+      {user?.auth_provider?.map((provider) => (
         <Label key={provider}>{provider}</Label>
       ))}
     </FormGroup>

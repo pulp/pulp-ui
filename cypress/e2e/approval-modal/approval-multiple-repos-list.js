@@ -5,7 +5,7 @@ const pulpPrefix = `${apiPrefix}pulp/api/v3/`;
 const uiPrefix = Cypress.env('uiPrefix');
 
 function openModal(menu) {
-  cy.visit(`${uiPrefix}approval-dashboard`);
+  cy.visit(`${uiPrefix}approval`);
   cy.contains('Clear all filters').click();
 
   if (menu) {

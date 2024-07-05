@@ -25,7 +25,7 @@ describe('signing versions - auto sign on approval', () => {
   });
 
   it('signs when the Sign and Approve button is pressed', () => {
-    cy.visit(`${uiPrefix}approval-dashboard`);
+    cy.visit(`${uiPrefix}approval`);
 
     // Check if the button is correctly worded
     cy.get('[data-cy="approve-button"]').should('contain', 'Sign and approve');

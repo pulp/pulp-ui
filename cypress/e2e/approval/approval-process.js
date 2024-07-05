@@ -22,11 +22,11 @@ describe('Approval Dashboard process', () => {
     cy.contains('No collections yet');
 
     // should approve
-    cy.visit(`${uiPrefix}approval-dashboard`);
+    cy.visit(`${uiPrefix}approval`);
     cy.contains('[data-cy^="ApprovalRow"]', 'Needs review');
     cy.contains('[data-cy^="ApprovalRow"] button', 'Sign and approve').click();
     cy.contains('.pulp-section', 'No results found', { timeout: 8000 });
-    cy.visit(`${uiPrefix}approval-dashboard`);
+    cy.visit(`${uiPrefix}approval`);
     cy.contains('button', 'Clear all filters').click();
     cy.contains('[data-cy^="ApprovalRow"]', 'Signed and approved');
 
@@ -35,7 +35,7 @@ describe('Approval Dashboard process', () => {
     cy.contains('.collection-container', 'appp_c_test1');
 
     // should reject
-    cy.visit(`${uiPrefix}approval-dashboard`);
+    cy.visit(`${uiPrefix}approval`);
     cy.contains('button', 'Clear all filters').click();
     cy.get('[data-cy="kebab-toggle"]:first button[aria-label="Actions"]').click(
       { force: true },

@@ -7,24 +7,24 @@ describe('Approval Dashboard list tests for sorting, paging and filtering', () =
   const items = [];
 
   function createData() {
-    cy.galaxykit('-i namespace create approval_dashboard_namespace_test');
+    cy.galaxykit('-i namespace create approval_namespace_test');
     range(9).forEach((i) => {
       cy.galaxykit(
         'collection upload',
-        'approval_dashboard_namespace_test',
-        'approval_dashboard_collection_test' + i,
+        'approval_namespace_test',
+        'approval_collection_test' + i,
       );
     });
 
     cy.galaxykit(
       'collection upload',
-      'approval_dashboard_namespace_test_additional_data',
-      'approval_dashboard_collection_test_additional1',
+      'approval_namespace_test_additional_data',
+      'approval_collection_test_additional1',
     );
     cy.galaxykit(
       'collection upload',
-      'approval_dashboard_namespace_test_additional_data',
-      'approval_dashboard_collection_test_additional2',
+      'approval_namespace_test_additional_data',
+      'approval_collection_test_additional2',
     );
   }
 
@@ -33,7 +33,7 @@ describe('Approval Dashboard list tests for sorting, paging and filtering', () =
     // it cant be deleted. So we must load the data, that are right now in the table
     const intercept_url = `${apiPrefix}v3/plugin/ansible/search/collection-versions/?order_by=-pulp_created&offset=0&limit=100`;
 
-    cy.visit(`${uiPrefix}approval-dashboard?page_size=100`);
+    cy.visit(`${uiPrefix}approval?page_size=100`);
     cy.intercept('GET', intercept_url).as('data');
     cy.contains('button', 'Clear all filters').click();
 
@@ -58,7 +58,7 @@ describe('Approval Dashboard list tests for sorting, paging and filtering', () =
 
   beforeEach(() => {
     cy.login();
-    cy.visit(`${uiPrefix}approval-dashboard`);
+    cy.visit(`${uiPrefix}approval`);
     cy.contains('button', 'Clear all filters').click();
   });
 
@@ -105,11 +105,11 @@ describe('Approval Dashboard list tests for sorting, paging and filtering', () =
     cy.get('[data-cy="sort_name"]').click();
 
     cy.get('[data-cy="body"] [data-cy="compound_filter"] input').type(
-      'approval_dashboard_collection_test0{enter}',
+      'approval_collection_test0{enter}',
     );
-    cy.get('[data-cy="body"]').contains('approval_dashboard_collection_test0');
+    cy.get('[data-cy="body"]').contains('approval_collection_test0');
     cy.get('[data-cy="body"]')
-      .contains('approval_dashboard_collection_test1')
+      .contains('approval_collection_test1')
       .should('not.exist');
   });
 
@@ -120,7 +120,7 @@ describe('Approval Dashboard list tests for sorting, paging and filtering', () =
       'Collection name',
     ).click();
     cy.get('[data-cy="body"] .pulp-toolbar input').type(
-      'approval_dashboard_collection_test0{enter}',
+      'approval_collection_test0{enter}',
     );
 
     cy.get('[data-cy="body"] .pulp-toolbar button:first').click();
@@ -129,18 +129,18 @@ describe('Approval Dashboard list tests for sorting, paging and filtering', () =
       'Namespace',
     ).click();
     cy.get('[data-cy="body"] [data-cy="compound_filter"] input').type(
-      'approval_dashboard_namespace_test{enter}',
+      'approval_namespace_test{enter}',
     );
 
     cy.get('[data-cy="sort_name"]').click();
     cy.get('[data-cy="sort_name"]').click();
 
-    cy.get('[data-cy="body"]').contains('approval_dashboard_collection_test0');
+    cy.get('[data-cy="body"]').contains('approval_collection_test0');
     cy.get('[data-cy="body"]')
-      .contains('approval_dashboard_collection_test1')
+      .contains('approval_collection_test1')
       .should('not.exist');
     cy.get('[data-cy="body"]')
-      .contains('approval_dashboard_namespace_test_additional_data')
+      .contains('approval_namespace_test_additional_data')
       .should('not.exist');
   });
 

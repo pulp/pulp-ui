@@ -8,7 +8,6 @@ import {
   type AlertType,
   BaseHeader,
   CopyURL,
-  DateComponent,
   EmptyStateUnauthorized,
   LoadingSpinner,
   Main,
@@ -40,11 +39,6 @@ class Token extends Component<RouteProps, IState> {
     const unauthorized =
       !(this.context as IAppContextType).user ||
       (this.context as IAppContextType).user.is_anonymous;
-    const expiration = (this.context as IAppContextType).settings
-      .GALAXY_TOKEN_EXPIRATION;
-    const expirationDate = expiration
-      ? new Date(Date.now() + 1000 * 60 * expiration)
-      : null;
 
     return (
       <>

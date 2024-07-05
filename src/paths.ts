@@ -57,7 +57,7 @@ export const Paths = {
   ansibleRepositories: '/ansible/repositories',
   ansibleRepositoryDetail: '/ansible/repositories/:name',
   ansibleRepositoryEdit: '/ansible/repositories/:name/edit',
-  approvalDashboard: '/approval-dashboard',
+  approvals: '/approvals',
   collection: '/ansible/collections/:repo/:namespace/:collection',
   collectionContentDocs:
     '/ansible/collections/:repo/:namespace/:collection/content/:type/:name',

@@ -4,7 +4,7 @@ export { default as AnsibleRemoteList } from './ansible-remote/list';
 export { default as AnsibleRepositoryDetail } from './ansible-repository/detail';
 export { default as AnsibleRepositoryEdit } from './ansible-repository/edit';
 export { default as AnsibleRepositoryList } from './ansible-repository/list';
-export { default as CertificationDashboard } from './certification-dashboard/certification-dashboard';
+export { default as Approvals } from './approvals/approvals';
 export { default as CollectionContent } from './collection-detail/collection-content';
 export { default as CollectionDependencies } from './collection-detail/collection-dependencies';
 export { default as CollectionDetail } from './collection-detail/collection-detail';

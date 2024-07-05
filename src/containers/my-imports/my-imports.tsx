@@ -124,7 +124,7 @@ class MyImports extends Component<RouteProps, IState> {
     return (
       <>
         <div ref={this.topOfPage} />
-        <BaseHeader title={t`My imports`} />
+        <BaseHeader title={t`Imports`} />
         <AlertList
           alerts={alerts}
           closeAlert={(i) =>

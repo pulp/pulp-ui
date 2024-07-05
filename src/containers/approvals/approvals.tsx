@@ -45,7 +45,7 @@ import {
   waitForTaskUrl,
   withRouter,
 } from 'src/utilities';
-import './certification-dashboard.scss';
+import './approvals.scss';
 
 interface IState {
   params: {
@@ -73,7 +73,7 @@ interface IState {
   };
 }
 
-class CertificationDashboard extends Component<RouteProps, IState> {
+class Approvals extends Component<RouteProps, IState> {
   static contextType = AppContext;
 
   constructor(props) {
@@ -169,7 +169,7 @@ class CertificationDashboard extends Component<RouteProps, IState> {
 
     return (
       <>
-        <BaseHeader title={t`Approval dashboard`} />
+        <BaseHeader title={t`Approvals`} />
         <AlertList
           alerts={alerts}
           closeAlert={(i) =>
@@ -636,4 +636,4 @@ class CertificationDashboard extends Component<RouteProps, IState> {
   }
 }
 
-export default withRouter(CertificationDashboard);
+export default withRouter(Approvals);

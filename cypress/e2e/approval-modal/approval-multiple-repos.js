@@ -5,7 +5,7 @@ const pulpPrefix = `${apiPrefix}pulp/api/v3/`;
 const uiPrefix = Cypress.env('uiPrefix');
 
 function openModal(menu) {
-  cy.visit(`${uiPrefix}approval-dashboard`);
+  cy.visit(`${uiPrefix}approval`);
   cy.contains('Clear all filters').click();
 
   if (menu) {
@@ -38,7 +38,7 @@ function rejectItem(repo) {
     'Certification status for collection "namespace collection1 v1.0.0" has been successfully updated.',
     { timeout: 10000 },
   );
-  cy.visit(`${uiPrefix}approval-dashboard`);
+  cy.visit(`${uiPrefix}approval`);
   cy.contains('Clear all filters').click();
   cy.contains(
     `[data-cy="ApprovalRow-rejected-namespace-collection1"]`,
@@ -116,7 +116,7 @@ describe('Approval Dashboard process with multiple repos', () => {
       { timeout: 20000 },
     );
 
-    cy.visit(`${uiPrefix}approval-dashboard`);
+    cy.visit(`${uiPrefix}approval`);
     cy.contains('No results found');
     cy.contains('Clear all filters').click();
     cy.contains('[aria-label="Collection versions"]', 'repo1');
@@ -147,7 +147,7 @@ describe('Approval Dashboard process with multiple repos', () => {
       { timeout: 20000 },
     );
 
-    cy.visit(`${uiPrefix}approval-dashboard`);
+    cy.visit(`${uiPrefix}approval`);
     cy.contains('Clear all filters').click();
     cy.contains('.pulp-toolbar', '1 - 2 of 2');
     cy.get('[data-cy="ApprovalRow-repo2-namespace-collection1"]');
@@ -173,7 +173,7 @@ describe('Approval Dashboard process with multiple repos', () => {
       'staging2',
     );
 
-    cy.visit(`${uiPrefix}approval-dashboard`);
+    cy.visit(`${uiPrefix}approval`);
     cy.get('[data-cy="ApprovalRow-staging2-namespace-collection1"]');
 
     openModal();
@@ -186,7 +186,7 @@ describe('Approval Dashboard process with multiple repos', () => {
       { timeout: 20000 },
     );
 
-    cy.visit(`${uiPrefix}approval-dashboard`);
+    cy.visit(`${uiPrefix}approval`);
     cy.contains('No results found');
     cy.contains('Clear all filters').click();
     cy.contains('[aria-label="Collection versions"]', 'repo1');

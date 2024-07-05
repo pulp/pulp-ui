@@ -50,8 +50,11 @@ function standaloneMenu() {
       menuItem(t`Remotes`, {
         url: formatPath(Paths.ansibleRemotes),
       }),
-      menuItem(t`Approval`, {
-        url: formatPath(Paths.approvalDashboard),
+      menuItem(t`Approvals`, {
+        url: formatPath(Paths.approvals),
+      }),
+      menuItem(t`Imports`, {
+        url: formatPath(Paths.myImports),
       }),
     ]),
     menuSection('pulp_container', { condition: ({ user }) => !!user }, [
