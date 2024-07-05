@@ -3,7 +3,7 @@ const webpackBase = require('./shared.config');
 // Used for getting the correct host when running in a container
 const proxyHost = process.env.API_PROXY_HOST || 'localhost';
 const proxyPort = process.env.API_PROXY_PORT || '8080';
-const apiBasePath = process.env.API_BASE_PATH || '/pulp/api/v3';
+const apiBasePath = process.env.API_BASE_PATH || '/pulp/api/v3/';
 const proxyTarget = `http://${proxyHost}:${proxyPort}`;
 
 module.exports = webpackBase({
