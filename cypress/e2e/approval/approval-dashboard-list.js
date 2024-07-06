@@ -6,31 +6,7 @@ const uiPrefix = Cypress.env('uiPrefix');
 describe('Approval Dashboard list tests for sorting, paging and filtering', () => {
   const items = [];
 
-  function createData() {
-    cy.galaxykit('-i namespace create approval_namespace_test');
-    range(9).forEach((i) => {
-      cy.galaxykit(
-        'collection upload',
-        'approval_namespace_test',
-        'approval_collection_test' + i,
-      );
-    });
-
-    cy.galaxykit(
-      'collection upload',
-      'approval_namespace_test_additional_data',
-      'approval_collection_test_additional1',
-    );
-    cy.galaxykit(
-      'collection upload',
-      'approval_namespace_test_additional_data',
-      'approval_collection_test_additional2',
-    );
-  }
-
   function loadData() {
-    // we cant delete all data using galaxykit right now, because when collection is rejected
-    // it cant be deleted. So we must load the data, that are right now in the table
     const intercept_url = `${apiPrefix}v3/plugin/ansible/search/collection-versions/?order_by=-pulp_created&offset=0&limit=100`;
 
     cy.visit(`${uiPrefix}approval?page_size=100`);
@@ -47,13 +23,7 @@ describe('Approval Dashboard list tests for sorting, paging and filtering', () =
 
   before(() => {
     cy.login();
-    cy.deleteNamespacesAndCollections();
-    createData();
     loadData();
-  });
-
-  after(() => {
-    cy.deleteNamespacesAndCollections();
   });
 
   beforeEach(() => {

@@ -20,27 +20,6 @@ function versionCheck(version) {
     it('creates, edit and sync repository', () => {
       cy.login();
 
-      cy.deleteRepositories();
-
-      if (withRemote) {
-        cy.galaxykit(
-          '-i remote create',
-          'exampleTestRepository',
-          'https://www.example.com/',
-        );
-      }
-
-      cy.deleteNamespacesAndCollections();
-
-      cy.galaxykit('-i namespace create repo_test_namespace');
-      cy.galaxykit(
-        'collection upload repo_test_namespace repo_test_collection',
-      );
-      cy.galaxykit(
-        'collection approve repo_test_namespace repo_test_collection 1.0.0',
-      );
-
-      cy.visit(`${uiPrefix}ansible/repositories/`);
       cy.contains('Repositories');
       cy.contains('button', 'Add repository').click();
       cy.contains('Add new repository');
@@ -143,7 +122,6 @@ function versionCheck(version) {
       cy.contains(
         'Started adding repo_test_namespace.repo_test_collection v1.0.0 from "published" to repository "repo1Test".',
       );
-      cy.galaxykit('task wait all');
       cy.contains('a', 'detail page').click();
       cy.contains('Completed');
     });

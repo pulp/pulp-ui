@@ -5,7 +5,6 @@ describe('Remote Registry Tests', () => {
   before(() => {
     cy.visit(uiPrefix);
     cy.login();
-    cy.deleteRegistries();
   });
 
   beforeEach(() => {
@@ -125,9 +124,5 @@ describe('Remote Registry Tests', () => {
     cy.get('input[id="proxy_url"]').should('have.value', 'https://example.org');
     cy.get('[data-cy="proxy_username"]').children().contains('Clear');
     cy.contains('Save').click();
-  });
-
-  it('admin can delete data', () => {
-    cy.deleteRegistries();
   });
 });

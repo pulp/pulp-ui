@@ -1,5 +1,4 @@
 const apiPrefix = Cypress.env('apiPrefix');
-const pulpPrefix = `${apiPrefix}pulp/api/v3/`;
 
 function createGroupManually(name) {
   cy.intercept('GET', `${apiPrefix}_ui/v1/groups/?*`).as('loadGroups');
@@ -64,17 +63,6 @@ function removeUserFromGroupManually(groupName, userName) {
 }
 
 describe('Pulp Group Management Tests', () => {
-  before(() => {
-    cy.deleteTestGroups();
-    cy.deleteTestGroups();
-    cy.deleteTestGroups();
-    cy.deleteTestGroups();
-    cy.deleteTestUsers();
-    cy.deleteTestUsers();
-    cy.deleteTestUsers();
-    cy.deleteTestUsers();
-  });
-
   beforeEach(() => {
     cy.login();
   });
@@ -97,18 +85,11 @@ describe('Pulp Group Management Tests', () => {
     addUserToGroupManually(groupName, userName);
 
     removeUserFromGroupManually(groupName, userName);
-
-    cy.galaxykit('group delete', groupName);
-    cy.galaxykit('user delete', userName);
   });
 
   it('admin user can add/remove roles to/from a group', () => {
     const groupName = 'testGroup';
     const roleName = 'galaxy.test_role';
-
-    cy.galaxykit('group create', groupName);
-
-    cy.createRole(roleName, 'This role has all galaxy perms', [], true);
 
     // add role to group manually
     cy.intercept('GET', `${apiPrefix}_ui/v1/groups/*`).as('groups');
@@ -129,7 +110,7 @@ describe('Pulp Group Management Tests', () => {
 
     cy.contains(roleName);
 
-    cy.intercept('GET', `${pulpPrefix}roles/*`).as('roles');
+    cy.intercept('GET', `${apiPrefix}roles/*`).as('roles');
 
     cy.get('.pf-v5-c-wizard__footer > button').contains('Add').click();
 
@@ -146,7 +127,5 @@ describe('Pulp Group Management Tests', () => {
     cy.get('[data-cy="delete-button"]').contains('Delete').click();
 
     cy.contains('There are currently no roles assigned to this group.');
-
-    cy.galaxykit('group delete', groupName);
   });
 });

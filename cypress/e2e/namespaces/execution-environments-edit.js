@@ -51,17 +51,6 @@ describe('containers', () => {
     deleteRegistriesManual();
     deleteContainersManual();
 
-    cy.galaxykit(
-      'registry create',
-      `docker${num}`,
-      'https://registry.hub.docker.com/',
-    );
-    cy.galaxykit(
-      'container create',
-      `remotepine${num}`,
-      'library/alpine',
-      `docker${num}`,
-    );
     cy.addLocalContainer(`localpine${num}`, 'alpine');
   });
 

@@ -1,17 +1,6 @@
 const uiPrefix = Cypress.env('uiPrefix');
 
 describe('signing versions - auto sign on approval', () => {
-  before(() => {
-    cy.deleteNamespacesAndCollections();
-
-    cy.galaxykit('-i namespace create', 'autosign_test');
-    cy.galaxykit('collection upload autosign_test test_collection');
-  });
-
-  after(() => {
-    cy.deleteNamespacesAndCollections();
-  });
-
   beforeEach(() => {
     cy.login();
   });

@@ -14,12 +14,8 @@ describe('A namespace form', () => {
     return getInputBox().clear();
   };
   const createNamespace = () => {
-    return cy.galaxykit('-i namespace create', 'testns1');
+    return;
   };
-
-  before(() => {
-    cy.deleteNamespacesAndCollections();
-  });
 
   beforeEach(() => {
     cy.login();

@@ -4,25 +4,10 @@ describe('Container Signing', () => {
   const user = 'EESignTestUser';
   const password = 'MyPassword123';
 
-  function deleteAll() {
-    cy.deleteRegistries();
-    cy.deleteContainers();
-    cy.deleteTestUsers();
-  }
-
   before(() => {
     cy.login();
-    deleteAll();
 
     // user without sign privilleges
-    cy.galaxykit('-i user create', user, password);
-
-    cy.galaxykit(
-      'registry create',
-      `docker`,
-      'https://registry.hub.docker.com/',
-    );
-
     cy.addRemoteContainer({
       name: 'remote1',
       upstream_name: 'pulp/test-fixture-1',
@@ -42,10 +27,6 @@ describe('Container Signing', () => {
     // prepare containers for signing - sync them
     cy.syncRemoteContainer('remote1');
     // remote 2 is not synced intentionaly - we need test that throws error
-  });
-
-  after(() => {
-    deleteAll();
   });
 
   it('can sign remote1', () => {

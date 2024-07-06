@@ -10,11 +10,6 @@ describe('My Profile Tests', () => {
   const username = 'nopermission';
   const password = 'n0permissi0n';
 
-  before(() => {
-    cy.deleteTestUsers();
-    cy.galaxykit('user create', username, password);
-  });
-
   beforeEach(() => {
     cy.login();
     cy.get('[data-cy="user-dropdown"] button').click();

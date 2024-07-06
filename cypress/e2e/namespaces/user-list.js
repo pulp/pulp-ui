@@ -6,15 +6,9 @@ describe('User list tests for sorting, paging and filtering', () => {
   const items = [];
 
   before(() => {
-    cy.deleteTestUsers();
-    cy.deleteTestUsers();
-    cy.deleteTestUsers();
-    cy.deleteTestUsers();
-
     range(20).forEach((i) => {
       const name = 'user_test' + i;
       items.push(name);
-      cy.galaxykit('user create', name, name + 'password');
     });
 
     items.push('admin');

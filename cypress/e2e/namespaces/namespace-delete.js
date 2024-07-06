@@ -2,16 +2,11 @@ const apiPrefix = Cypress.env('apiPrefix');
 const uiPrefix = Cypress.env('uiPrefix');
 
 describe('Delete a namespace', () => {
-  before(() => {
-    cy.deleteNamespacesAndCollections();
-  });
-
   beforeEach(() => {
     cy.login();
   });
 
   it('deletes a namespace', () => {
-    cy.galaxykit('-i namespace create', 'testns1');
     cy.menuGo('Collections > Namespaces');
 
     cy.intercept('GET', `${apiPrefix}_ui/v1/namespaces/?sort=name*`).as(
@@ -31,16 +26,12 @@ describe('Delete a namespace', () => {
     cy.intercept('GET', `${apiPrefix}_ui/v1/namespaces/?sort=name*`).as(
       'reload',
     );
-    cy.galaxykit('-i namespace create', 'ansible');
     cy.menuGo('Collections > Namespaces');
     cy.wait('@reload');
 
     cy.get(`a[href*="${uiPrefix}namespaces/ansible"]`).click();
 
     // upload a collection & approve
-    cy.galaxykit('collection upload ansible network');
-    cy.galaxykit('collection approve ansible network 1.0.0');
-
     // attempt deletion
     cy.intercept(
       'GET',

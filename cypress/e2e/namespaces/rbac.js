@@ -3,44 +3,7 @@ const uiPrefix = Cypress.env('uiPrefix');
 const userName = 'testUser';
 const userPassword = 'I am a complicated passw0rd';
 
-const groupName = 'testgroup';
-
 describe('RBAC test for user without permissions', () => {
-  before(() => {
-    cy.login();
-
-    cy.galaxykit(
-      '-i registry create',
-      'docker',
-      'https://registry.hub.docker.com/',
-    );
-
-    cy.galaxykit(
-      '-i container create',
-      `testcontainer`,
-      'library/alpine',
-      `docker`,
-    );
-
-    cy.galaxykit('-i user create', userName, userPassword);
-    cy.galaxykit('-i group create', groupName);
-    cy.galaxykit('-i user group add', userName, groupName);
-
-    cy.galaxykit('-i namespace create', 'testspace');
-    cy.galaxykit('collection upload testspace testcollection');
-    cy.galaxykit('collection approve testspace testcollection 1.0.0');
-  });
-
-  after(() => {
-    cy.login();
-
-    cy.deleteTestGroups();
-    cy.deleteTestUsers();
-    cy.deleteRegistries();
-    cy.deleteContainers();
-    cy.deleteNamespacesAndCollections();
-  });
-
   beforeEach(() => {
     cy.login(userName, userPassword);
   });
@@ -51,7 +14,6 @@ describe('RBAC test for user without permissions', () => {
     // cannot Add namespace
     cy.contains('Create').should('not.exist');
 
-    cy.galaxykit('-i namespace create', 'testspace');
     cy.visit(`${uiPrefix}namespaces/testspace`);
 
     // cannot Change namespace and Delete namespace
@@ -146,127 +108,24 @@ describe('RBAC test for user without permissions', () => {
 });
 
 describe('RBAC test for user with permissions', () => {
-  const allPerms = [
-    {
-      group: 'namespaces',
-      permissions: [
-        'galaxy.add_namespace',
-        'galaxy.change_namespace',
-        'galaxy.delete_namespace',
-        'galaxy.upload_to_namespace',
-      ],
-    },
-    {
-      group: 'collections',
-      permissions: [
-        'ansible.modify_ansible_repo_content',
-        'ansible.delete_collection',
-      ],
-    },
-    {
-      group: 'users',
-      permissions: [
-        'galaxy.view_user',
-        'galaxy.delete_user',
-        'galaxy.add_user',
-        'galaxy.change_user',
-      ],
-    },
-    {
-      group: 'groups',
-      permissions: [
-        'galaxy.view_group',
-        'galaxy.delete_group',
-        'galaxy.add_group',
-        'galaxy.change_group',
-      ],
-    },
-    {
-      group: 'remotes',
-      permissions: [
-        'ansible.change_collectionremote',
-        'ansible.view_collectionremote',
-      ],
-    },
-    {
-      group: 'containers',
-      permissions: [
-        'container.delete_containerrepository',
-        'container.change_containernamespace',
-        'container.namespace_change_containerdistribution',
-        'container.namespace_modify_content_containerpushrepository',
-        'container.add_containernamespace',
-        'container.namespace_push_containerdistribution',
-      ],
-    },
-    {
-      group: 'registries',
-      permissions: [
-        'galaxy.add_containerregistryremote',
-        'galaxy.change_containerregistryremote',
-        'galaxy.delete_containerregistryremote',
-      ],
-    },
-    {
-      group: 'task_management',
-      permissions: ['core.delete_task', 'core.change_task'],
-    },
-  ];
-
   before(() => {
     cy.login();
 
-    cy.galaxykit(
-      '-i registry create',
-      'docker',
-      'https://registry.hub.docker.com/',
-    );
     cy.addRemoteContainer({
       name: `testcontainer`,
       upstream_name: 'library/alpine',
       registry: `docker`,
       include_tags: 'latest',
     });
-
-    cy.galaxykit('-i user create', userName, userPassword);
-    cy.galaxykit('-i group create', groupName);
-    cy.galaxykit('-i user group add', userName, groupName);
-
-    allPerms.forEach((perm) => {
-      cy.createRole(
-        `galaxy.test_${perm.group}`,
-        `role with ${perm.group} perms`,
-        perm.permissions,
-        true,
-      );
-    });
-  });
-
-  after(() => {
-    cy.login();
-
-    cy.deleteTestGroups();
-    cy.deleteTestUsers();
-    cy.deleteRegistries();
-    cy.deleteContainers();
-    cy.deleteNamespacesAndCollections();
-
-    allPerms.forEach(({ group }) => {
-      cy.galaxykit('-i role delete', group);
-    });
   });
 
   it('should display create, edit and delete buttons in namespace when user has permissions', () => {
-    cy.galaxykit('-i group role add', groupName, 'galaxy.test_namespaces');
     cy.login(userName, userPassword);
 
-    cy.galaxykit('-i namespace create', 'testspace2');
     cy.visit(`${uiPrefix}namespaces`);
 
     // can Add namespace
     cy.contains('Create').should('exist');
-    cy.galaxykit('-i namespace create', 'testspace2');
-
     cy.visit(`${uiPrefix}namespaces/testspace2`);
     cy.get('[data-cy="ns-kebab-toggle"]').should('exist').click();
     cy.contains('Edit namespace');
@@ -277,11 +136,7 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should let delete collection and modify ansible repo content when user has permissions', () => {
-    cy.galaxykit('-i group role add', groupName, 'galaxy.test_collections');
     cy.login(userName, userPassword);
-
-    cy.galaxykit('collection upload testspace2 testcollection2');
-    cy.galaxykit('collection approve testspace2 testcollection2 1.0.0');
 
     cy.visit(`${uiPrefix}repo/published/testspace2/testcollection2`);
     cy.contains('Go to documentation');
@@ -292,7 +147,6 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should let view, add, change and delete users when user has permissions', () => {
-    cy.galaxykit('-i group role add', groupName, 'galaxy.test_users');
     cy.login(userName, userPassword);
 
     // can View user
@@ -315,7 +169,6 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should let view, add, change and delete groups when user has permissions', () => {
-    cy.galaxykit('-i group role add', groupName, 'galaxy.test_groups');
     cy.login(userName, userPassword);
 
     // can View group
@@ -334,7 +187,6 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should let create, edit or delete container when user has permission', () => {
-    cy.galaxykit('-i group role add', groupName, 'galaxy.test_containers');
     cy.login(userName, userPassword);
 
     cy.visit(`${uiPrefix}containers`);
@@ -360,7 +212,6 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should let add, delete and sync remote registries when user has permission', () => {
-    cy.galaxykit('-i group role add', groupName, 'galaxy.test_registries');
     cy.login(userName, userPassword);
 
     // can Add remote registry
@@ -380,7 +231,6 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should let view task when user has permission', () => {
-    cy.galaxykit('-i group role add', groupName, 'galaxy.test_task_management');
     cy.login(userName, userPassword);
 
     cy.visit(`${uiPrefix}tasks`);

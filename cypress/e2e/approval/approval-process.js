@@ -2,22 +2,11 @@ const uiPrefix = Cypress.env('uiPrefix');
 const apiPrefix = Cypress.env('apiPrefix');
 
 describe('Approval Dashboard process', () => {
-  before(() => {
-    cy.deleteNamespacesAndCollections();
-  });
-
-  after(() => {
-    cy.deleteNamespacesAndCollections();
-  });
-
   beforeEach(() => {
     cy.login();
   });
 
   it('should test the whole approval process', () => {
-    cy.galaxykit('-i namespace create', 'appp_n_test');
-    cy.galaxykit('collection upload', 'appp_n_test', 'appp_c_test1');
-    cy.galaxykit('task wait all');
     cy.visit(`${uiPrefix}collections`);
     cy.contains('No collections yet');
 
@@ -49,15 +38,11 @@ describe('Approval Dashboard process', () => {
   });
 
   it('collection should be uploaded into different repo', () => {
-    cy.deleteNamespacesAndCollections();
-    cy.galaxykit('-i repository create staging2 --pipeline staging');
-    cy.galaxykit('-i distribution create staging2');
     cy.login();
     cy.intercept(
       'GET',
       `${apiPrefix}v3/plugin/ansible/search/collection-versions/?namespace=*`,
     ).as('upload');
-    cy.galaxykit('-i namespace create', 'ansible');
     cy.menuGo('Collections > Namespaces');
 
     cy.get(`a[href="${uiPrefix}namespaces/ansible/"]`).click();

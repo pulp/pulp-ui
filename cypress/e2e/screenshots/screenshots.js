@@ -1,24 +1,8 @@
-const { range } = require('lodash');
-
 const uiPrefix = Cypress.env('uiPrefix');
 
 describe('screenshots', () => {
-  before(() => {
-    cy.deleteNamespacesAndCollections();
-
-    // insert test data
-    cy.galaxykit('namespace create my_namespace');
-    range(5).forEach((i) => {
-      cy.galaxykit('collection upload my_namespace my_collection' + i);
-    });
-  });
-
   beforeEach(() => {
     cy.login();
-  });
-
-  after(() => {
-    cy.deleteNamespacesAndCollections();
   });
 
   it('takes screenshots', () => {

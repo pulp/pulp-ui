@@ -6,15 +6,9 @@ describe('Group list tests for sorting, paging and filtering', () => {
   const items = [];
 
   before(() => {
-    cy.deleteTestGroups();
-    cy.deleteTestGroups();
-    cy.deleteTestGroups();
-    cy.deleteTestGroups();
-
     range(21).forEach((i) => {
       const name = 'group_test' + i;
       items.push(name);
-      cy.galaxykit('-i group create', name);
     });
 
     items.sort();

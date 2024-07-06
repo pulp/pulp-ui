@@ -28,29 +28,9 @@ describe('Group Roles Tests', () => {
     },
   };
 
-  const cleanup = () => {
-    cy.galaxykit('-i group delete', 'empty_group');
-    cy.galaxykit('-i group delete', groupName);
-    cy.galaxykit('-i role delete', testContainerRole.name);
-    cy.galaxykit('-i role delete', testRole.name);
-  };
-
-  const createRole = ({ name, description, permissions }) =>
-    cy.createRole(name, description, Object.keys(permissions), true);
-
   beforeEach(() => {
     cy.login();
   });
-
-  before(() => {
-    cleanup();
-
-    cy.galaxykit('-i group create', groupName);
-    createRole(testContainerRole);
-    createRole(testRole);
-  });
-
-  after(() => cleanup());
 
   it('should add a new role to group', () => {
     cy.intercept('GET', `${apiPrefix}_ui/v1/groups/*`).as('groups');
@@ -162,9 +142,6 @@ describe('Group Roles Tests', () => {
   });
 
   it('should not display deleted role in group detail', () => {
-    cy.galaxykit('group role add', groupName, testContainerRole.name);
-    cy.galaxykit('role delete', testContainerRole.name);
-
     cy.menuGo('User Access > Groups');
     cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
     cy.get('[data-cy="EmptyState"]')
@@ -173,7 +150,6 @@ describe('Group Roles Tests', () => {
   });
 
   it('should show group empty state', () => {
-    cy.galaxykit('-i group create', 'empty_group');
     cy.menuGo('User Access > Groups');
     cy.get(`[data-cy="GroupList-row-empty_group"] a`).click();
     cy.contains('There are currently no roles assigned to this group.');

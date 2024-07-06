@@ -18,12 +18,6 @@ describe('Pulp Menu Tests', () => {
     'User Access > Roles',
   ];
 
-  before(() => {
-    cy.deleteTestUsers();
-
-    cy.galaxykit('user create', username, password);
-  });
-
   it('admin user sees complete menu', () => {
     cy.login();
 

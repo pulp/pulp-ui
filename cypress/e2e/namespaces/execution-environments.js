@@ -1,25 +1,6 @@
 describe('containers', () => {
   const num = (~~(Math.random() * 1000000)).toString();
 
-  before(() => {
-    cy.login();
-
-    cy.deleteRegistries();
-    cy.deleteContainers();
-
-    cy.galaxykit(
-      'registry create',
-      `docker${num}`,
-      'https://registry.hub.docker.com/',
-    );
-    cy.galaxykit(
-      'container create',
-      `remotepine${num}`,
-      'library/alpine',
-      `docker${num}`,
-    );
-  });
-
   beforeEach(() => {
     cy.login();
     cy.menuGo('Containers > Containers');

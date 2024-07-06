@@ -3,14 +3,6 @@ const uiPrefix = Cypress.env('uiPrefix');
 describe('Namespace Access tab', () => {
   const num = (~~(Math.random() * 1000000)).toString();
 
-  before(() => {
-    cy.deleteNamespacesAndCollections();
-    cy.deleteTestGroups();
-
-    cy.galaxykit(`-i namespace create rbac_access_${num}`);
-    cy.galaxykit('-i group create', `access_group`);
-  });
-
   beforeEach(() => {
     cy.login();
     cy.visit(`${uiPrefix}namespaces/rbac_access_${num}`);
@@ -31,26 +23,6 @@ describe('Namespace Access tab', () => {
 
 describe('Container Access tab', () => {
   const num = (~~(Math.random() * 1000000)).toString();
-
-  before(() => {
-    cy.login();
-    cy.deleteRegistries();
-    cy.deleteContainers();
-    cy.deleteTestGroups();
-
-    cy.galaxykit(
-      'registry create',
-      `rbac_access_${num}_registry`,
-      'https://registry.hub.docker.com/',
-    );
-    cy.galaxykit(
-      'container create',
-      `rbac_access_${num}`,
-      'library/alpine',
-      `rbac_access_${num}_registry`,
-    );
-    cy.galaxykit('-i group create', `access_group`);
-  });
 
   beforeEach(() => {
     cy.login();

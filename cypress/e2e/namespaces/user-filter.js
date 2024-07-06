@@ -1,8 +1,4 @@
 describe('Search for users', () => {
-  before(() => {
-    cy.deleteTestUsers();
-  });
-
   beforeEach(() => {
     cy.login();
     cy.menuGo('User Access > Users');

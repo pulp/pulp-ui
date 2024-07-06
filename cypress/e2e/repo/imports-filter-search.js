@@ -2,28 +2,6 @@ const apiPrefix = Cypress.env('apiPrefix');
 const uiPrefix = Cypress.env('uiPrefix');
 
 describe('Imports filter test', () => {
-  const testCollection = `test_collection_${Math.random()
-    .toString(36)
-    .replace(/[^a-z]+/g, '')}`;
-
-  before(() => {
-    cy.login();
-    cy.deleteNamespacesAndCollections();
-
-    // insert test data
-    cy.galaxykit('namespace create', 'test_namespace');
-    cy.galaxykit('collection upload', 'test_namespace', testCollection);
-
-    cy.galaxykit('namespace create filter_test_namespace');
-    cy.galaxykit('collection upload filter_test_namespace my_collection1');
-    cy.galaxykit('collection upload filter_test_namespace my_collection2');
-    cy.galaxykit('collection upload filter_test_namespace different_name');
-  });
-
-  after(() => {
-    cy.deleteNamespacesAndCollections();
-  });
-
   beforeEach(() => {
     cy.login();
     cy.visit(`${uiPrefix}my-imports?namespace=filter_test_namespace`);

@@ -1,5 +1,3 @@
-import { range } from 'lodash';
-
 const apiPrefix = Cypress.env('apiPrefix');
 const uiPrefix = Cypress.env('uiPrefix');
 
@@ -41,23 +39,6 @@ describe('Collections list Tests', () => {
       }
     });
   }
-
-  before(() => {
-    cy.deleteNamespacesAndCollections();
-
-    // insert test data
-    cy.galaxykit('namespace create my_namespace');
-    range(11).forEach((i) =>
-      cy.galaxykit(`collection upload my_namespace my_collection${i}`),
-    );
-    range(11).forEach((i) =>
-      cy.galaxykit(`collection approve my_namespace my_collection${i} 1.0.0`),
-    );
-  });
-
-  after(() => {
-    cy.deleteNamespacesAndCollections();
-  });
 
   beforeEach(() => {
     cy.login();

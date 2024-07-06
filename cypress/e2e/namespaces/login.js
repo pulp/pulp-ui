@@ -30,12 +30,6 @@ describe('Login helpers', () => {
   const username = 'nopermission';
   const password = 'n0permissi0n';
 
-  before(() => {
-    cy.deleteTestUsers();
-
-    cy.galaxykit('user create', username, password);
-  });
-
   it('can login manually and logout as admin or different user', () => {
     manualLogin(username, password);
     cy.contains(username);

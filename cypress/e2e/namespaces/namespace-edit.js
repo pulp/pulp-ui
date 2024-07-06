@@ -43,14 +43,8 @@ describe('Edit a namespace', () => {
       .parents('.pf-v5-c-form__group')
       .find('.pf-v5-c-helper-text__item-text');
 
-  before(() => {
-    cy.deleteTestGroups();
-    cy.galaxykit('-i group create', 'namespace-owner-autocomplete');
-  });
-
   beforeEach(() => {
     cy.login();
-    cy.galaxykit('-i namespace create', 'testns1');
     cy.menuGo('Collections > Namespaces');
     cy.get(`a[href*="${uiPrefix}namespaces/testns1"]`).click();
     cy.contains('No collections yet');

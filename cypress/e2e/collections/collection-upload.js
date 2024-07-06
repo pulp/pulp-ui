@@ -5,16 +5,6 @@ describe('Collection Upload Tests', () => {
   const userName = 'testUser';
   const userPassword = 'I am a complicated passw0rd';
 
-  before(() => {
-    cy.deleteNamespacesAndCollections();
-    cy.deleteTestGroups();
-    cy.deleteTestUsers();
-
-    cy.galaxykit('collection upload testspace testcollection');
-    cy.galaxykit('collection approve testspace testcollection 1.0.0');
-    cy.galaxykit('user create', userName, userPassword);
-  });
-
   it('should not upload new collection version in collection list when user does not have permissions', () => {
     cy.login(userName, userPassword);
     cy.visit(
@@ -74,7 +64,6 @@ describe('Collection Upload Tests', () => {
       'GET',
       `${apiPrefix}v3/plugin/ansible/search/collection-versions/?namespace=*`,
     ).as('upload');
-    cy.galaxykit('-i namespace create', 'ansible');
     cy.menuGo('Collections > Namespaces');
 
     cy.get(`a[href="${uiPrefix}namespaces/ansible/"]`).click();
@@ -87,7 +76,6 @@ describe('Collection Upload Tests', () => {
       'GET',
       `${apiPrefix}v3/plugin/ansible/search/collection-versions/?namespace=*`,
     ).as('upload');
-    cy.galaxykit('-i namespace create', 'ansible');
     cy.menuGo('Collections > Namespaces');
 
     cy.get(`a[href="${uiPrefix}namespaces/ansible/"]`).click();
