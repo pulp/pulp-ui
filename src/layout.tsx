@@ -111,7 +111,7 @@ export const StandaloneLayout = ({ children, setUser, user }: IProps) => {
       </MastheadToggle>
       <MastheadMain>
         <MastheadBrand>
-          <Link to={formatPath(Paths.search)}>
+          <Link to={formatPath(Paths.status)}>
             <SmallLogo alt={APPLICATION_NAME} />
           </Link>
           <span

@@ -1,6 +1,6 @@
 import { plural } from '@lingui/macro';
 
-const units = [null, 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+const units = [null, 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 
 export function getHumanSize(x) {
   let l = 0,

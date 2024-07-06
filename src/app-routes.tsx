@@ -203,7 +203,7 @@ export class AppRoutes extends Component<IRoutesProps> {
       { component: MyImports, path: Paths.myImports },
       { component: NamespaceDetail, path: Paths.namespaceDetail },
       { component: Search, path: Paths.collections },
-      { component: PulpStatus, path: Paths.status },
+      { component: PulpStatus, path: Paths.status, noAuth: true },
       { component: MultiSearch, path: Paths.search },
     ];
   }
@@ -227,6 +227,10 @@ export class AppRoutes extends Component<IRoutesProps> {
             path={path}
           />
         ))}
+        <Route
+          path={'/'}
+          element={<Navigate to={formatPath(Paths.status)} />}
+        />
         <Route
           path='*'
           element={

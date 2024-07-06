@@ -1,4 +1,3 @@
-/* eslint react/prop-types: 0 */
 import { t } from '@lingui/macro';
 import { Nav, NavExpandable, NavItem } from '@patternfly/react-core';
 import { reject, some } from 'lodash';
@@ -116,7 +115,15 @@ function activateMenu(items, pathname) {
   return some(items, 'active');
 }
 
-function ItemOrSection({ item, context, expandedSections }) {
+function ItemOrSection({
+  item,
+  context,
+  expandedSections,
+}: {
+  item;
+  context;
+  expandedSections;
+}) {
   return item.type === 'section' ? (
     <MenuSection
       section={item}
@@ -128,7 +135,7 @@ function ItemOrSection({ item, context, expandedSections }) {
   );
 }
 
-function MenuItem({ item, context }) {
+function MenuItem({ item, context }: { item; context }) {
   return item.condition(context) ? (
     <NavItem
       isActive={item.active}
@@ -156,7 +163,15 @@ function MenuItem({ item, context }) {
   ) : null;
 }
 
-function MenuSection({ section, context, expandedSections }) {
+function MenuSection({
+  section,
+  context,
+  expandedSections,
+}: {
+  section;
+  context;
+  expandedSections;
+}) {
   return section.condition(context) ? (
     <NavExpandable
       title={section.name}
@@ -174,7 +189,15 @@ function MenuSection({ section, context, expandedSections }) {
   ) : null;
 }
 
-function Menu({ items, context, expandedSections }) {
+function Menu({
+  items,
+  context,
+  expandedSections,
+}: {
+  items;
+  context;
+  expandedSections;
+}) {
   return (
     <>
       {items.map((item) => (
@@ -189,7 +212,7 @@ function Menu({ items, context, expandedSections }) {
   );
 }
 
-export const StandaloneMenu = ({ context }) => {
+export const StandaloneMenu = ({ context }: { context }) => {
   const [expandedSections, setExpandedSections] = useState([]);
 
   const location = useLocation();
