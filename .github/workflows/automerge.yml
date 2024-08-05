@@ -18,13 +18,6 @@ jobs:
       with:
         node-version: '20'
 
-    - name: "Wait for other tests"
-      working-directory: ".github/workflows"
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        node automerge-wait.js
-
     - name: "Automerge the PR"
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
