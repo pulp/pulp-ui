@@ -507,8 +507,12 @@ export class AccessTab extends Component<IProps> {
           this.props.updateProps({ showRoleRemoveModal: null })
         }
         deleteAction={() => {
-          group && this.props.removeRole(role, group);
-          user && this.props.removeUserRole(role, user);
+          if (group) {
+            this.props.removeRole(role, group);
+          }
+          if (user) {
+            this.props.removeUserRole(role, user);
+          }
         }}
         title={t`Remove role ${role}?`}
       >
@@ -713,8 +717,12 @@ export class AccessTab extends Component<IProps> {
           })
         }
         onSave={() => {
-          group && this.props.addRole(group, roles);
-          user && this.props.addUserRole(user, roles);
+          if (group) {
+            this.props.addRole(group, roles);
+          }
+          if (user) {
+            this.props.addUserRole(user, roles);
+          }
         }}
       />
     );

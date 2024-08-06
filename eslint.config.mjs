@@ -55,7 +55,7 @@ export default config(
       'eol-last': ['error', 'always'],
       '@typescript-eslint/no-unused-vars': [
         'error',
-        { argsIgnorePattern: '^_' },
+        { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
       ],
       '@typescript-eslint/consistent-type-imports': [
         'error',
@@ -100,6 +100,7 @@ export default config(
       },
     },
     rules: {
+      '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/no-var-requires': 'off',
     },
   },
@@ -125,6 +126,7 @@ export default config(
       },
     },
     rules: {
+      '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/no-var-requires': 'off',
     },
   },
