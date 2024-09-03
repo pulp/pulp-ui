@@ -1,10 +1,10 @@
 import React from 'react';
-import SmallLogoImage from 'static/images/logo_small.svg';
+import PulpLogo from 'static/images/pulp_logo.png';
 
 interface IProps {
   alt: string;
 }
 
 export const SmallLogo = ({ alt }: IProps) => (
-  <img style={{ height: '35px' }} src={SmallLogoImage} alt={alt} />
+  <img style={{ height: '35px' }} src={PulpLogo} alt={alt} />
 );

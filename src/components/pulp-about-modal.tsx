@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { ApplicationInfoAPI, type UserType } from 'src/api';
 import { ExternalLink, MaybeLink } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
-import Logo from 'static/images/logo_large.svg';
+import PulpLogo from 'static/images/pulp_logo.png';
 
 const Label = ({ children }: { children: ReactNode }) => (
   <TextListItem component={TextListItemVariants.dt}>{children}</TextListItem>
@@ -62,7 +62,7 @@ export const PulpAboutModal = ({ isOpen, onClose, user, userName }: IProps) => {
   return (
     <AboutModal
       brandImageAlt={t`Galaxy Logo`}
-      brandImageSrc={Logo}
+      brandImageSrc={PulpLogo}
       isOpen={isOpen}
       onClose={onClose}
       productName={APPLICATION_NAME}

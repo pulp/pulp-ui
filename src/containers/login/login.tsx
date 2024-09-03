@@ -8,7 +8,7 @@ import { AppContext, type IAppContextType } from 'src/app-context';
 import { LoginForm } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import { ParamHelper, type RouteProps, withRouter } from 'src/utilities';
-import Logo from 'static/images/logo_large.svg';
+import PulpLogo from 'static/images/pulp_logo.png';
 
 interface IState {
   usernameValue: string;
@@ -53,7 +53,7 @@ class LoginPage extends Component<RouteProps, IState> {
           backgroundColor: 'var(--pf-v5-global--BackgroundColor--dark-100)',
         }}
         loginTitle={t`Log in to your account`}
-        brandImgSrc={Logo}
+        brandImgSrc={PulpLogo}
       >
         <LoginForm
           helperText={helperText}

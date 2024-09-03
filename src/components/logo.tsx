@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DefaultLogo from 'static/images/default-logo.svg';
+import PulpLogo from 'static/images/pulp_logo.png';
 
 interface IProps {
   alt: string;
@@ -48,7 +48,7 @@ export const Logo = ({
     <div className={className} style={style}>
       <img
         style={{ objectFit: 'contain', maxHeight: size }}
-        src={failed ? DefaultLogo : image || DefaultLogo}
+        src={failed ? PulpLogo : image || PulpLogo}
         alt={alt}
         onError={fallbackToDefault ? () => setFailed(true) : () => null}
       />
