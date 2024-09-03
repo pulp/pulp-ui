@@ -7,7 +7,6 @@ import {
   TextListItemVariants,
   TextListVariants,
 } from '@patternfly/react-core';
-import { detect } from 'detect-browser';
 import React, { type ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ApplicationInfoAPI, type UserType } from 'src/api';
@@ -46,8 +45,6 @@ export const PulpAboutModal = ({ isOpen, onClose, user, userName }: IProps) => {
   useEffect(() => {
     ApplicationInfoAPI.get().then(({ data }) => setApplicationInfo(data));
   }, []);
-
-  const browser = detect();
 
   const {
     server_version, // 4.8.0dev
@@ -178,12 +175,6 @@ export const PulpAboutModal = ({ isOpen, onClose, user, userName }: IProps) => {
               </>
             ))}
           </Value>
-
-          <Label>{t`Browser Version`}</Label>
-          <Value>{browser.name + ' ' + browser.version}</Value>
-
-          <Label>{t`Browser OS`}</Label>
-          <Value>{browser.os}</Value>
         </TextList>
       </TextContent>
     </AboutModal>
