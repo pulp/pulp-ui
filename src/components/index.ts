@@ -106,7 +106,6 @@ export { PulpLabels } from './pulp-labels';
 export { PulpListToolbar } from './pulp-list-toolbar';
 export { PulpPagination } from './pulp-pagination';
 export { RemoteForm } from './remote-form';
-export { RenderPluginDoc } from './render-plugin-doc';
 export { RepositoryBadge } from './repository-badge';
 export { RepositoryForm } from './repository-form';
 export { ResourcesForm } from './resources-form';

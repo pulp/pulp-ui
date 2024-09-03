@@ -3,17 +3,14 @@ import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclam
 import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import React, { Component, type RefObject, createRef } from 'react';
 import { Link } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
 import { type CollectionVersionSearch } from 'src/api';
 import { AppContext } from 'src/app-context';
 import {
-  Alert,
   CollectionHeader,
   EmptyStateCustom,
   ExternalLink,
   LoadingPage,
   Main,
-  RenderPluginDoc,
   TableOfContents,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
@@ -170,28 +167,7 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
                   />
                 ) : (
                   // if plugin data is set render it
-                  <RenderPluginDoc
-                    plugin={pluginData}
-                    renderPluginLink={(pluginName, pluginType, text) =>
-                      this.renderPluginLink(
-                        pluginName,
-                        pluginType,
-                        text ?? pluginName,
-                        collection,
-                        params,
-                        content.contents,
-                      )
-                    }
-                    renderDocLink={(name, href) =>
-                      this.renderDocLink(name, href, collection, params)
-                    }
-                    renderTableOfContentsLink={(title, section) => (
-                      <HashLink to={'#' + section}>{title}</HashLink>
-                    )}
-                    renderWarning={(text) => (
-                      <Alert isInline variant='warning' title={text} />
-                    )}
-                  />
+                  'FIXME'
                 )
               ) : collection.repository.name === 'community' &&
                 !content.docs_blob.contents ? (
@@ -239,41 +215,6 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
       );
     } else {
       return null;
-    }
-  }
-
-  private renderPluginLink(
-    pluginName,
-    pluginType,
-    text,
-    collection,
-    params,
-    allContent,
-  ) {
-    const module = allContent.find(
-      (x) => x.content_type === pluginType && x.name === pluginName,
-    );
-
-    if (module) {
-      return (
-        <Link
-          to={formatPath(
-            Paths.collectionContentDocs,
-            {
-              namespace: collection.collection_version.namespace,
-              collection: collection.collection_version.name,
-              type: pluginType,
-              name: pluginName,
-              repo: this.props.routeParams.repo,
-            },
-            params,
-          )}
-        >
-          {text}
-        </Link>
-      );
-    } else {
-      return text;
     }
   }
 
