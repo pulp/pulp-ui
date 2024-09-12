@@ -1,4 +1,0 @@
-FROM ghcr.io/pulp/pulp
-RUN mkdir -p /etc/pulp/certs
-COPY settings.py /etc/pulp/settings.py
-WORKDIR /
