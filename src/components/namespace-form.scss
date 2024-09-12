@@ -1,11 +1,11 @@
 $breakpoint-md: 1000px;
 
 .pulp-card-row {
+  display: flex;
+
   @media (max-width: $breakpoint-md) {
     flex-direction: column-reverse;
   }
-
-  display: flex;
 
   .fields {
     flex-grow: 1;

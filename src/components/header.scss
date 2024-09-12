@@ -30,6 +30,11 @@ $breakpoint-md: 1000px;
   }
 
   .links {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
     @media (min-width: $breakpoint-md) {
       justify-content: flex-end;
     }
@@ -37,11 +42,6 @@ $breakpoint-md: 1000px;
     @media (max-width: $breakpoint-md) {
       margin-bottom: 10px;
     }
-
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
 
     div {
       @media (min-width: $breakpoint-md) {
