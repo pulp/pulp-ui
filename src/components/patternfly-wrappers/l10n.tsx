@@ -19,6 +19,8 @@ import {
   ClipboardCopyButton as PFCopyButton,
   FileUpload as PFFileUpload,
   Icon as PFIcon,
+  LabelGroup as PFLabelGroup,
+  LoginForm as PFLoginForm,
   NavList as PFNavList,
   Pagination as PFPagination,
   Popover as PFPopover,
@@ -30,8 +32,6 @@ import {
   type SpinnerProps,
 } from '@patternfly/react-core';
 import React from 'react';
-import { LabelGroup as PFLabelGroup } from './label-group';
-import { LoginForm as PFLoginForm } from './login-form';
 
 const count = '${remaining}'; // pf templating
 
