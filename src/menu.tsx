@@ -34,36 +34,36 @@ function standaloneMenu() {
       url: formatPath(Paths.search),
       condition: ({ user }) => !!user,
     }),
-    menuSection('pulp_ansible', { condition: ({ user }) => !!user }, [
-      menuItem(t`Collections`, {
+    menuSection('Pulp Ansible', { condition: ({ user }) => !!user }, [
+     /* menuItem(t`Collections`, {
         url: formatPath(Paths.collections),
         alternativeUrls: [altPath('/repo/:repo')],
-      }),
-      menuItem(t`Namespaces`, {
+      }),*/
+     /* menuItem(t`Namespaces`, {
         url: formatPath(Paths.namespaces),
         alternativeUrls: [altPath(Paths.myNamespaces)],
-      }),
+      }), */
       menuItem(t`Repositories`, {
         url: formatPath(Paths.ansibleRepositories),
       }),
       menuItem(t`Remotes`, {
         url: formatPath(Paths.ansibleRemotes),
       }),
-      menuItem(t`Approvals`, {
+      /*menuItem(t`Approvals`, {
         url: formatPath(Paths.approvals),
-      }),
-      menuItem(t`Imports`, {
+      }),*/
+      /*menuItem(t`Imports`, {
         url: formatPath(Paths.myImports),
-      }),
+      }),*/
     ]),
-    menuSection('pulp_container', { condition: ({ user }) => !!user }, [
+   /* menuSection('Pulp Container', { condition: ({ user }) => !!user }, [
       menuItem(t`Containers`, {
         url: formatPath(Paths.executionEnvironments),
       }),
       menuItem(t`Remote Registries`, {
         url: formatPath(Paths.executionEnvironmentsRegistries),
       }),
-    ]),
+    ]),*/
     menuItem(t`Task Management`, {
       url: formatPath(Paths.taskList),
       alternativeUrls: [altPath(Paths.taskDetail)],
@@ -78,13 +78,13 @@ function standaloneMenu() {
       condition: ({ user }) => !!user,
     }),
     menuSection(t`User Access`, { condition: ({ user }) => !!user }, [
-      menuItem(t`Users`, {
+      /*menuItem(t`Users`, {
         url: formatPath(Paths.userList),
-      }),
-      menuItem(t`Groups`, {
+      }),*/
+      /*menuItem(t`Groups`, {
         url: formatPath(Paths.groupList),
         alternativeUrls: [altPath(Paths.groupDetail)],
-      }),
+      }),*/
       menuItem(t`Roles`, {
         url: formatPath(Paths.roleList),
         alternativeUrls: [altPath(Paths.roleEdit)],

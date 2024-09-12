@@ -25,6 +25,7 @@ import {
   EmptyStateFilter,
   EmptyStateNoData,
   EmptyStateUnauthorized,
+  EmptyStateNotImplemented,
   LabelGroup,
   ListItemActions,
   LoadingSpinner,
@@ -117,6 +118,8 @@ class UserList extends Component<RouteProps, IState> {
     if (redirect) {
       return <Navigate to={redirect} />;
     }
+    // TODO redo this page with Pulp API
+    return (<><BaseHeader title={t`Users`} /><EmptyStateNotImplemented /></>);
 
     return (
       <>

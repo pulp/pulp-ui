@@ -33,7 +33,7 @@ import {
   Main,
   PulpPagination,
   SortTable,
-  closeAlert,
+  closeAlert, EmptyStateNotImplemented,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import {
@@ -132,6 +132,9 @@ class GroupList extends Component<RouteProps, IState> {
     if (redirect) {
       return <Navigate to={redirect} />;
     }
+
+    // TODO redo this page with Pulp API
+    return (<><BaseHeader title={t`Groups`} /><EmptyStateNotImplemented /></>);
 
     return (
       <>

@@ -9,7 +9,7 @@ import {
 import { Table, Tbody, Td, Tr } from '@patternfly/react-table';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { TaskManagementAPI, type TaskType } from 'src/api';
+import {TaskManagementAPI, type TaskType} from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
@@ -40,6 +40,7 @@ import {
   withRouter,
 } from 'src/utilities';
 import './task.scss';
+import { OrphanCleanupAPI } from 'src/api/orphan-cleanup';
 
 interface IState {
   params: {
@@ -110,6 +111,10 @@ export class TaskListView extends Component<RouteProps, IState> {
 
     const noData =
       items.length === 0 && !filterIsSet(params, ['name__contains', 'state']);
+
+    const runTask = (
+        <Button variant={'primary'} onClick={() => this.orphanCleanup()}>{t`Orphan cleanup`}</Button>
+    );
 
     return (
       <>
@@ -182,6 +187,7 @@ export class TaskListView extends Component<RouteProps, IState> {
                             ]}
                           />
                         </ToolbarItem>
+                        <ToolbarItem>{runTask}</ToolbarItem>
                       </ToolbarGroup>
                     </ToolbarContent>
                   </Toolbar>
@@ -440,6 +446,20 @@ export class TaskListView extends Component<RouteProps, IState> {
         },
       ],
     });
+  }
+
+  private orphanCleanup(){
+    OrphanCleanupAPI.create({})
+      .then(() => {
+        this.addAlert(
+          t`Orphan cleanup started`,
+        'success',
+        );
+        this.queryTasks();
+    }).catch(() => this.addAlert(
+      t`Orphan cleanup could not be started`,
+      'danger',
+    ));
   }
 
   private updateParams(params, callback = null) {
