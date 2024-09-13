@@ -10,7 +10,7 @@ import {
 import { DropdownItem } from '@patternfly/react-core/deprecated';
 import { Table, Tbody, Td, Tr } from '@patternfly/react-table';
 import React, { Component } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import {
   GroupAPI,
   type GroupObjectPermissionType,
@@ -25,7 +25,6 @@ import {
   BaseHeader,
   Breadcrumbs,
   CompoundFilter,
-  DateComponent,
   DeleteGroupModal,
   DeleteModal,
   EmptyStateFilter,
@@ -290,6 +289,8 @@ class GroupDetail extends Component<RouteProps, IState> {
   }
 
   private renderAddModal() {
+    console.log('HERE');
+    console.log(this.state.options);
     if (this.state.options === undefined) {
       this.loadOptions();
       return null;
@@ -462,13 +463,11 @@ class GroupDetail extends Component<RouteProps, IState> {
   }
 
   private addUserToGroup(selectedUsers, group) {
+    console.log('addUserToGroup');
     return Promise.all(
       selectedUsers.map(({ id }) => {
         const user = this.state.allUsers.find((x) => x.id === id);
-        return UserAPI.update(id.toString(), {
-          ...user,
-          groups: [...user.groups, group],
-        });
+        return GroupAPI.addUserToGroup(group.id, user.username);
       }),
     )
       .then(() => {
@@ -491,10 +490,10 @@ class GroupDetail extends Component<RouteProps, IState> {
   private loadOptions() {
     UserAPI.list({ page_size: 1000 })
       .then((result) => {
-        const options = result.data.data
+        const options = result.data.results
           .filter((user) => !this.state.users.find((u) => u.id === user.id))
           .map((option) => ({ id: option.id, name: option.username }));
-        this.setState({ options, allUsers: result.data.data });
+        this.setState({ options, allUsers: result.data.results });
       })
       .catch((e) => {
         const { status, statusText } = e.response;
@@ -524,14 +523,7 @@ class GroupDetail extends Component<RouteProps, IState> {
     const { user, featureFlags, hasPermission } = this
       .context as IAppContextType;
     const noData =
-      itemCount === 0 &&
-      !filterIsSet(this.state.params, [
-        'username',
-        'first_name',
-        'last_name',
-        'email',
-        'role__icontains',
-      ]);
+      itemCount === 0 && !filterIsSet(this.state.params, ['username']);
     const isUserMgmtDisabled = featureFlags.external_authentication;
 
     if (noData) {
@@ -545,7 +537,10 @@ class GroupDetail extends Component<RouteProps, IState> {
             !isUserMgmtDisabled && (
               <Button
                 variant='primary'
-                onClick={() => this.setState({ addModalVisible: true })}
+                onClick={() => {
+                  this.setState({ addModalVisible: true });
+                  console.log(this.state.addModalVisible);
+                }}
               >
                 {t`Add`}
               </Button>
@@ -574,18 +569,6 @@ class GroupDetail extends Component<RouteProps, IState> {
                         id: 'username',
                         title: t`Username`,
                       },
-                      {
-                        id: 'first_name',
-                        title: t`First name`,
-                      },
-                      {
-                        id: 'last_name',
-                        title: t`Last name`,
-                      },
-                      {
-                        id: 'email',
-                        title: t`Email`,
-                      },
                     ]}
                   />
                 </ToolbarItem>
@@ -596,7 +579,10 @@ class GroupDetail extends Component<RouteProps, IState> {
                   <ToolbarGroup>
                     <ToolbarItem>
                       <Button
-                        onClick={() => this.setState({ addModalVisible: true })}
+                        onClick={() => {
+                          this.setState({ addModalVisible: true });
+                          console.log(this.state.addModalVisible);
+                        }}
                       >{t`Add`}</Button>
                     </ToolbarItem>
                   </ToolbarGroup>
@@ -653,31 +639,6 @@ class GroupDetail extends Component<RouteProps, IState> {
           type: 'alpha',
           id: 'username',
         },
-        {
-          title: t`Email`,
-          type: 'alpha',
-          id: 'email',
-        },
-        {
-          title: t`Last name`,
-          type: 'alpha',
-          id: 'last_name',
-        },
-        {
-          title: t`First name`,
-          type: 'alpha',
-          id: 'first_name',
-        },
-        {
-          title: t`Created`,
-          type: 'numeric',
-          id: 'date_joined',
-        },
-        {
-          title: '',
-          type: 'none',
-          id: 'kebab',
-        },
       ],
     };
 
@@ -711,40 +672,18 @@ class GroupDetail extends Component<RouteProps, IState> {
     ];
     return (
       <Tr data-cy={`GroupDetail-users-${user.username}`} key={index}>
-        <Td>
-          <Link to={formatPath(Paths.userDetail, { userID: user.id })}>
-            {user.username}
-          </Link>
-        </Td>
-        <Td>{user.email}</Td>
-        <Td>{user.last_name}</Td>
-        <Td>{user.first_name}</Td>
-        <Td>
-          <DateComponent date={user.date_joined} />
-        </Td>
+        <Td>{user.username}</Td>
         <ListItemActions kebabItems={dropdownItems} />
       </Tr>
     );
   }
 
   private queryUsers() {
-    const params = {
-      ...ParamHelper.getReduced(this.state.params, ['role__icontains']),
-      sort: ParamHelper.validSortParams(
-        this.state.params['sort'],
-        this.userQueryStringParams,
-        'username',
-      ),
-      groups__name: this.state.group.name,
-    };
-
-    UserAPI.list({
-      ...params,
-    })
+    GroupAPI.getUsers(this.state.group.id)
       .then((result) =>
         this.setState({
-          users: result.data.data,
-          itemCount: result.data.meta.count,
+          users: result.data.results,
+          itemCount: result.data.count,
         }),
       )
       .catch((e) => {

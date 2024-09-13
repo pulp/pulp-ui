@@ -10,6 +10,9 @@ import { Table, Tbody, Td, Tr } from '@patternfly/react-table';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { TaskManagementAPI, type TaskType } from 'src/api';
+import { OrphanCleanupAPI } from 'src/api/orphan-cleanup';
+import { RepairAPI } from 'src/api/repair';
+import { TaskPurgeAPI } from 'src/api/task-purge';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
@@ -111,6 +114,26 @@ export class TaskListView extends Component<RouteProps, IState> {
     const noData =
       items.length === 0 && !filterIsSet(params, ['name__contains', 'state']);
 
+    const orphansCleanup = (
+      <Button
+        variant={'primary'}
+        onClick={() => this.orphanCleanup()}
+      >{t`Orphan cleanup`}</Button>
+    );
+    const repair = (
+      <Button
+        variant={'primary'}
+        onClick={() => this.repair()}
+      >{t`Repair`}</Button>
+    );
+
+    const purgeTasks = (
+      <Button
+        variant={'primary'}
+        onClick={() => this.purge()}
+      >{t`Purge tasks`}</Button>
+    );
+
     return (
       <>
         <AlertList
@@ -182,6 +205,9 @@ export class TaskListView extends Component<RouteProps, IState> {
                             ]}
                           />
                         </ToolbarItem>
+                        <ToolbarItem>{orphansCleanup}</ToolbarItem>
+                        <ToolbarItem>{repair}</ToolbarItem>
+                        <ToolbarItem>{purgeTasks}</ToolbarItem>
                       </ToolbarGroup>
                     </ToolbarContent>
                   </Toolbar>
@@ -440,6 +466,49 @@ export class TaskListView extends Component<RouteProps, IState> {
         },
       ],
     });
+  }
+
+  // TODO add possibility to set optional params
+  private orphanCleanup() {
+    OrphanCleanupAPI.create({})
+      .then(() => {
+        this.addAlert(t`Orphan cleanup started`, 'success');
+        this.queryTasks();
+      })
+      .catch(() =>
+        this.addAlert(t`Orphan cleanup could not be started`, 'danger'),
+      );
+  }
+
+  // TODO add possibility to set optional params
+  private repair() {
+    RepairAPI.create({})
+      .then(() => {
+        this.addAlert(t`Repair Artifact Storage started`, 'success');
+        this.queryTasks();
+      })
+      .catch(() =>
+        this.addAlert(
+          t`Repair Artifact Storage could not be started`,
+          'danger',
+        ),
+      );
+  }
+
+  // TODO add possibility to set optional params
+  private purge() {
+    TaskPurgeAPI.create({
+      finished_before: '2024-09-13',
+      // enum "skipped" "completed" "failed" "canceled"
+      states: ['completed'],
+    })
+      .then(() => {
+        this.addAlert(t`Purge Tasks started`, 'success');
+        this.queryTasks();
+      })
+      .catch(() =>
+        this.addAlert(t`Purge Tasks could not be started`, 'danger'),
+      );
   }
 
   private updateParams(params, callback = null) {

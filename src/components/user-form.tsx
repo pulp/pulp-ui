@@ -271,7 +271,7 @@ export const UserForm = ({
 
   function loadGroups(name) {
     GroupAPI.list({ name__contains: name, page_size: 5 })
-      .then((result) => setSearchGroups(result.data.data))
+      .then((result) => setSearchGroups(result.data.results))
       .catch((e) => {
         const { status, statusText } = e.response;
         setFormErrors({

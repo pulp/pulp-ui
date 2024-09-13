@@ -402,13 +402,13 @@ class UserList extends Component<RouteProps, IState> {
   private queryUsers() {
     this.setState({ loading: true }, () =>
       UserAPI.list(this.state.params)
-        .then((result) =>
+        .then((result) => {
           this.setState({
-            users: result.data.data,
-            itemCount: result.data.meta.count,
+            users: result.data.results,
+            itemCount: result.data.count,
             loading: false,
-          }),
-        )
+          });
+        })
         .catch((e) => {
           const { status, statusText } = e.response;
           this.setState({

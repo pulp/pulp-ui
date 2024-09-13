@@ -103,8 +103,10 @@ export const Paths = {
   status: '/status',
   taskDetail: '/task/:task',
   taskList: '/tasks',
+  runTask: '',
   token: '/token',
   userDetail: '/users/:userID',
   userList: '/users',
   userProfileSettings: '/settings/user-profile',
+  aboutProject: '/about-project',
 };

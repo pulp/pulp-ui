@@ -258,7 +258,7 @@ export class RoleList extends Component<RouteProps, IState> {
                             ]}
                           />
                         </ToolbarItem>
-                        <ToolbarItem>{addRoles}</ToolbarItem>
+                        {/* TODO fix with Pulp API  <ToolbarItem>{addRoles}</ToolbarItem> */}
                       </ToolbarGroup>
                     </ToolbarContent>
                   </Toolbar>
@@ -332,11 +332,12 @@ export class RoleList extends Component<RouteProps, IState> {
                               t`Editable`
                             )}
                           </Td>
-                          {isSuperuser && (
-                            <ListItemActions
-                              kebabItems={this.renderDropdownItems(role)}
-                            />
-                          )}
+                          {isSuperuser &&
+                            false /* TODO fix to work with Pulp API */ && (
+                              <ListItemActions
+                                kebabItems={this.renderDropdownItems(role)}
+                              />
+                            )}
                         </ExpandableRow>
                       ))}
                     </RoleListTable>

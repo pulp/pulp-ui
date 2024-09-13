@@ -1,6 +1,7 @@
 import React, { Component, type ElementType } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import {
+  AboutProject,
   AnsibleRemoteDetail,
   AnsibleRemoteEdit,
   AnsibleRemoteList,
@@ -179,6 +180,7 @@ export class AppRoutes extends Component {
       { component: Search, path: Paths.collections },
       { component: PulpStatus, path: Paths.status, noAuth: true },
       { component: MultiSearch, path: Paths.search },
+      { component: AboutProject, path: Paths.aboutProject, noAuth: true },
     ];
   }
 
