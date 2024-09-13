@@ -1,7 +1,5 @@
-import React, { Component, type ElementType, useEffect, useState } from 'react';
+import React, { Component, type ElementType } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { ActiveUserAPI } from 'src/api';
-import { AppContext, useAppContext } from 'src/app-context';
 import {
   AnsibleRemoteDetail,
   AnsibleRemoteEdit,
@@ -49,16 +47,12 @@ import {
   UserProfile,
 } from 'src/containers';
 import { Paths, formatPath } from 'src/paths';
-
-interface IRoutesProps {
-  setUser: (user) => void;
-}
+import { useUserContext } from './user-context';
 
 interface IAuthHandlerProps {
   component: ElementType;
   noAuth: boolean;
   path: string;
-  setUser: (user) => void;
 }
 
 interface IRouteConfig {
@@ -71,29 +65,11 @@ const AuthHandler = ({
   component: Component,
   noAuth,
   path,
-  setUser,
 }: IAuthHandlerProps) => {
-  const { user } = useAppContext();
-  const [isLoading, setLoading] = useState<boolean>(true);
+  const { credentials } = useUserContext();
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    // This component is mounted on every route change
-    if (user) {
-      return;
-    }
-
-    ActiveUserAPI.getUser()
-      .catch(() => null)
-      .then((user) => setUser(user))
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (isLoading) {
-    return null;
-  }
-
-  if (!user && !noAuth) {
+  if (!credentials && !noAuth) {
     //const isExternalAuth = featureFlags.external_authentication;
     // NOTE: also update LoginLink when changing this
     //if (isExternalAuth && UI_EXTERNAL_LOGIN_URI) {
@@ -107,9 +83,7 @@ const AuthHandler = ({
   return <Component path={path} />;
 };
 
-export class AppRoutes extends Component<IRoutesProps> {
-  static contextType = AppContext;
-
+export class AppRoutes extends Component {
   // Note: must be ordered from most specific to least specific
   getRoutes(): IRouteConfig[] {
     return [
@@ -209,19 +183,12 @@ export class AppRoutes extends Component<IRoutesProps> {
   }
 
   render() {
-    const { setUser } = this.props;
-
     return (
       <Routes>
         {this.getRoutes().map(({ component, noAuth, path }, index) => (
           <Route
             element={
-              <AuthHandler
-                component={component}
-                noAuth={noAuth}
-                setUser={setUser}
-                path={path}
-              />
+              <AuthHandler component={component} noAuth={noAuth} path={path} />
             }
             key={index}
             path={path}
@@ -233,14 +200,7 @@ export class AppRoutes extends Component<IRoutesProps> {
         />
         <Route
           path='*'
-          element={
-            <AuthHandler
-              component={NotFound}
-              noAuth
-              path={null}
-              setUser={setUser}
-            />
-          }
+          element={<AuthHandler component={NotFound} noAuth path={null} />}
         />
       </Routes>
     );

@@ -16,12 +16,14 @@ export class BaseAPI {
   // any extra id or params added by custom methods
   constructor(apiBaseUrl) {
     this.http = axios.create({
+      // adapter + withCredentials ensures no popup on http basic auth fail
+      adapter: 'fetch',
+      withCredentials: false,
+
       baseURL: API_HOST + apiBaseUrl,
       paramsSerializer: {
         serialize: (params) => ParamHelper.getQueryString(params),
       },
-      // TODO fix, more methods
-      auth: { username: 'admin', password: 'admin' },
     });
 
     this.http.interceptors.request.use((request) => this.authHandler(request));
@@ -87,6 +89,9 @@ export class BaseAPI {
 
   private async authHandler(request) {
     request.headers['X-CSRFToken'] = Cookies.get('csrftoken');
+    if (!request.auth) {
+      request.auth = JSON.parse(window.sessionStorage.credentials || '{}');
+    }
     return request;
   }
 }

@@ -4,7 +4,8 @@ import { reject, some } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ExternalLink, NavList } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
+import { Paths, formatPath } from './paths';
+import { useUserContext } from './user-context';
 
 const menuItem = (name, options = {}) => ({
   active: false,
@@ -29,6 +30,10 @@ function standaloneMenu() {
   return [
     menuItem(t`Status`, {
       url: formatPath(Paths.status),
+    }),
+    menuItem(t`Login`, {
+      url: formatPath(Paths.login),
+      condition: ({ user }) => !user,
     }),
     menuItem(t`Search`, {
       url: formatPath(Paths.search),
@@ -214,11 +219,13 @@ function Menu({
   );
 }
 
-export const StandaloneMenu = ({ context }: { context }) => {
+export const StandaloneMenu = () => {
   const [expandedSections, setExpandedSections] = useState([]);
 
   const location = useLocation();
   const [menu, setMenu] = useState([]);
+
+  const { credentials } = useUserContext();
 
   useEffect(() => {
     setMenu(standaloneMenu());
@@ -244,7 +251,7 @@ export const StandaloneMenu = ({ context }: { context }) => {
       <NavList>
         <Menu
           items={menu}
-          context={context}
+          context={{ user: credentials }}
           expandedSections={expandedSections}
         />
       </NavList>
