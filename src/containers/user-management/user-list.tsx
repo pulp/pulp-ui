@@ -25,7 +25,6 @@ import {
   EmptyStateFilter,
   EmptyStateNoData,
   EmptyStateUnauthorized,
-  EmptyStateNotImplemented,
   LabelGroup,
   ListItemActions,
   LoadingSpinner,
@@ -118,8 +117,6 @@ class UserList extends Component<RouteProps, IState> {
     if (redirect) {
       return <Navigate to={redirect} />;
     }
-    // TODO redo this page with Pulp API
-    return (<><BaseHeader title={t`Users`} /><EmptyStateNotImplemented /></>);
 
     return (
       <>
@@ -405,13 +402,13 @@ class UserList extends Component<RouteProps, IState> {
   private queryUsers() {
     this.setState({ loading: true }, () =>
       UserAPI.list(this.state.params)
-        .then((result) =>
+        .then((result) => {
           this.setState({
-            users: result.data.data,
-            itemCount: result.data.meta.count,
+            users: result.data.results,
+            itemCount: result.data.count,
             loading: false,
-          }),
-        )
+          });
+        })
         .catch((e) => {
           const { status, statusText } = e.response;
           this.setState({

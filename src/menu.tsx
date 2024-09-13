@@ -35,11 +35,11 @@ function standaloneMenu() {
       condition: ({ user }) => !!user,
     }),
     menuSection('Pulp Ansible', { condition: ({ user }) => !!user }, [
-     /* menuItem(t`Collections`, {
+      /* menuItem(t`Collections`, {
         url: formatPath(Paths.collections),
         alternativeUrls: [altPath('/repo/:repo')],
       }),*/
-     /* menuItem(t`Namespaces`, {
+      /* menuItem(t`Namespaces`, {
         url: formatPath(Paths.namespaces),
         alternativeUrls: [altPath(Paths.myNamespaces)],
       }), */
@@ -56,7 +56,7 @@ function standaloneMenu() {
         url: formatPath(Paths.myImports),
       }),*/
     ]),
-   /* menuSection('Pulp Container', { condition: ({ user }) => !!user }, [
+    /* menuSection('Pulp Container', { condition: ({ user }) => !!user }, [
       menuItem(t`Containers`, {
         url: formatPath(Paths.executionEnvironments),
       }),
@@ -78,18 +78,21 @@ function standaloneMenu() {
       condition: ({ user }) => !!user,
     }),
     menuSection(t`User Access`, { condition: ({ user }) => !!user }, [
-      /*menuItem(t`Users`, {
+      menuItem(t`Users`, {
         url: formatPath(Paths.userList),
-      }),*/
-      /*menuItem(t`Groups`, {
+      }),
+      menuItem(t`Groups`, {
         url: formatPath(Paths.groupList),
         alternativeUrls: [altPath(Paths.groupDetail)],
-      }),*/
+      }),
       menuItem(t`Roles`, {
         url: formatPath(Paths.roleList),
         alternativeUrls: [altPath(Paths.roleEdit)],
       }),
     ]),
+    menuItem(t`About project`, {
+      url: formatPath(Paths.aboutProject),
+    }),
   ];
 }
 

@@ -108,4 +108,5 @@ export const Paths = {
   userDetail: '/users/:userID',
   userList: '/users',
   userProfileSettings: '/settings/user-profile',
+  aboutProject: '/about-project',
 };

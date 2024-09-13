@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { ActiveUserAPI } from 'src/api';
 import { AppContext, useAppContext } from 'src/app-context';
 import {
+  AboutProject,
   AnsibleRemoteDetail,
   AnsibleRemoteEdit,
   AnsibleRemoteList,
@@ -205,6 +206,7 @@ export class AppRoutes extends Component<IRoutesProps> {
       { component: Search, path: Paths.collections },
       { component: PulpStatus, path: Paths.status, noAuth: true },
       { component: MultiSearch, path: Paths.search },
+      { component: AboutProject, path: Paths.aboutProject, noAuth: true },
     ];
   }
 

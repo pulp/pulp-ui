@@ -33,7 +33,7 @@ import {
   Main,
   PulpPagination,
   SortTable,
-  closeAlert, EmptyStateNotImplemented,
+  closeAlert,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import {
@@ -132,9 +132,6 @@ class GroupList extends Component<RouteProps, IState> {
     if (redirect) {
       return <Navigate to={redirect} />;
     }
-
-    // TODO redo this page with Pulp API
-    return (<><BaseHeader title={t`Groups`} /><EmptyStateNotImplemented /></>);
 
     return (
       <>
@@ -486,13 +483,14 @@ class GroupList extends Component<RouteProps, IState> {
   private queryGroups() {
     this.setState({ loading: true }, () =>
       GroupAPI.list(this.state.params)
-        .then((result) =>
+        .then((result) => {
+          console.log(result);
           this.setState({
-            groups: result.data.data,
-            itemCount: result.data.meta.count,
+            groups: result.data.results,
+            itemCount: result.data.count,
             loading: false,
-          }),
-        )
+          });
+        })
         .catch((e) => {
           const { status, statusText } = e.response;
           this.setState({
