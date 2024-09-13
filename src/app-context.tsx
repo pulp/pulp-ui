@@ -74,7 +74,15 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         settings,
         updateTitle,
         // FIXME: hack
-        user: credentials,
+        user: credentials
+          ? {
+              username: credentials.username,
+              groups: [],
+              is_superuser: true,
+              is_anonymous: false,
+              model_permissions: {},
+            }
+          : null,
       }}
     >
       {children}
