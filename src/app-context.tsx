@@ -4,12 +4,9 @@ import React, {
   useContext,
   useState,
 } from 'react';
-import {
-  type FeatureFlagsType,
-  type SettingsType,
-  type UserType,
-} from 'src/api';
+import { type FeatureFlagsType, type SettingsType } from 'src/api';
 import { type AlertType } from 'src/components';
+import { useUserContext } from './user-context';
 
 export interface IAppContextType {
   alerts: AlertType[];
@@ -18,10 +15,9 @@ export interface IAppContextType {
   queueAlert: (alert: AlertType) => void;
   selectedRepo?: string; // deprecated
   setAlerts: (alerts: AlertType[]) => void;
-  setUser: (user: UserType) => void;
   settings: SettingsType; // deprecated
   updateTitle: (title: string) => void; // deprecated
-  user?: UserType;
+  user; // deprecated
 }
 
 export const AppContext = createContext<IAppContextType>(undefined);
@@ -29,7 +25,7 @@ export const useAppContext = () => useContext(AppContext);
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [alerts, setAlerts] = useState<AlertType[]>([]);
-  const [user, setUser] = useState<UserType>(null);
+  const { credentials } = useUserContext();
 
   // hub compat for now
   const featureFlags = {
@@ -75,10 +71,10 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         hasPermission,
         queueAlert,
         setAlerts,
-        setUser,
         settings,
         updateTitle,
-        user,
+        // FIXME: hack
+        user: credentials,
       }}
     >
       {children}

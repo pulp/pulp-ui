@@ -9,7 +9,7 @@ import {
 } from '@patternfly/react-core';
 import React, { type ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ApplicationInfoAPI, type UserType } from 'src/api';
+import { ApplicationInfoAPI } from 'src/api';
 import { ExternalLink, MaybeLink } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import PulpLogo from 'static/images/pulp_logo.png';
@@ -25,7 +25,6 @@ const Value = ({ children }: { children: ReactNode }) => (
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
-  user: UserType;
   userName: string;
 }
 
@@ -39,7 +38,7 @@ interface IApplicationInfo {
   server_version?: string;
 }
 
-export const PulpAboutModal = ({ isOpen, onClose, user, userName }: IProps) => {
+export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
   const [applicationInfo, setApplicationInfo] = useState<IApplicationInfo>({});
 
   useEffect(() => {
@@ -58,6 +57,9 @@ export const PulpAboutModal = ({ isOpen, onClose, user, userName }: IProps) => {
 
   const galaxy_ng_sha = galaxy_ng_commit?.split(':')[1];
   const ui_sha = UI_COMMIT_HASH?.slice(0, 7);
+
+  // FIXME
+  const user = { username: userName, id: null, groups: [] };
 
   return (
     <AboutModal
@@ -155,7 +157,7 @@ export const PulpAboutModal = ({ isOpen, onClose, user, userName }: IProps) => {
                   ? formatPath(Paths.userDetail, { userID: user.id })
                   : null
               }
-              title={user.username}
+              title={userName}
             >
               {userName}
               {user?.username && user.username !== userName ? (

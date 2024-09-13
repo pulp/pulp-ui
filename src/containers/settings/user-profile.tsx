@@ -1,4 +1,4 @@
-import { Trans, t } from '@lingui/macro';
+import { t } from '@lingui/macro';
 import { Button } from '@patternfly/react-core';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -15,7 +15,6 @@ import { Paths, formatPath } from 'src/paths';
 import {
   type ErrorMessagesType,
   type RouteProps,
-  mapErrorMessages,
   withRouter,
 } from 'src/utilities';
 
@@ -112,6 +111,7 @@ class UserProfile extends Component<RouteProps, IState> {
   }
 
   private saveUser = () => {
+    /* FIXME
     const {
       user,
       user: { username },
@@ -131,6 +131,7 @@ class UserProfile extends Component<RouteProps, IState> {
               },
             ]),
           },
+          // FIXME creds
           () => (this.context as IAppContextType).setUser(result.data),
         );
         // redirect to login page when password is changed
@@ -142,6 +143,7 @@ class UserProfile extends Component<RouteProps, IState> {
       .catch((err) => {
         this.setState({ errorMessages: mapErrorMessages(err) });
       });
+      */
   };
 }
 

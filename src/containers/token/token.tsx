@@ -1,7 +1,6 @@
 import { Trans, t } from '@lingui/macro';
 import { Button, Card, CardBody, CardTitle } from '@patternfly/react-core';
 import React, { Component } from 'react';
-import { ActiveUserAPI } from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
@@ -13,7 +12,7 @@ import {
   Main,
   closeAlert,
 } from 'src/components';
-import { type RouteProps, jsxErrorMessage, withRouter } from 'src/utilities';
+import { type RouteProps, withRouter } from 'src/utilities';
 
 interface IState {
   token: string;
@@ -116,6 +115,7 @@ class Token extends Component<RouteProps, IState> {
 
   private loadToken() {
     this.setState({ loadingToken: true }, () => {
+      /* FIXME
       ActiveUserAPI.getToken()
         .then((result) =>
           this.setState({ token: result.data.token, loadingToken: false }),
@@ -134,6 +134,7 @@ class Token extends Component<RouteProps, IState> {
             loadingToken: false,
           });
         });
+        */
     });
   }
 }

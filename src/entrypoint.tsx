@@ -1,12 +1,17 @@
+import './app.scss';
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
+import '@patternfly/patternfly/patternfly.scss';
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import 'src/darkmode';
-import 'src/l10n';
-import { App } from './app';
+import { UIVersion } from 'src/components';
 import { AppContextProvider } from './app-context';
+import { AppRoutes } from './app-routes';
+import './darkmode';
+import './l10n';
+import { StandaloneLayout } from './layout';
+import { UserContextProvider } from './user-context';
 
 // App entrypoint
 
@@ -31,9 +36,14 @@ root.render(
   <StrictMode>
     <BrowserRouter basename={UI_BASE_PATH}>
       <I18nProvider i18n={i18n}>
-        <AppContextProvider>
-          <App />
-        </AppContextProvider>
+        <UserContextProvider>
+          <AppContextProvider>
+            <StandaloneLayout>
+              <AppRoutes />
+            </StandaloneLayout>
+            <UIVersion />
+          </AppContextProvider>
+        </UserContextProvider>
       </I18nProvider>
     </BrowserRouter>
   </StrictMode>,

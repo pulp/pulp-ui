@@ -27,7 +27,7 @@ export { translateTask } from './translate-task';
 export { truncateSha } from './truncate-sha';
 export { validateURLHelper } from './validate-url-helper';
 export { waitForTask, waitForTaskUrl } from './wait-for-task';
-export { RouteProps, withRouter } from './with-router';
+export { useQueryParams, RouteProps, withRouter } from './with-router';
 export {
   clearSetFieldsFromRequest,
   isFieldSet,

@@ -18,7 +18,6 @@ import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import QuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/question-circle-icon';
 import React, { type ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ActiveUserAPI, type UserType } from 'src/api';
 import {
   DarkmodeSwitcher,
   ExternalLink,
@@ -28,31 +27,25 @@ import {
   SmallLogo,
   StatefulDropdown,
 } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
 import { StandaloneMenu } from './menu';
+import { Paths, formatPath } from './paths';
+import { useUserContext } from './user-context';
 
-interface IProps {
-  children: ReactNode;
-  setUser: (user) => void;
-  user: UserType;
-}
-
-export const StandaloneLayout = ({ children, setUser, user }: IProps) => {
+export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
   const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
+  const { credentials, clearCredentials } = useUserContext();
 
   let aboutModal = null;
   let docsDropdownItems = [];
   let userDropdownItems = [];
   let userName: string;
 
-  if (user) {
-    userName =
-      [user.first_name, user.last_name].filter(Boolean).join(' ') ||
-      user.username;
+  if (credentials) {
+    userName = credentials.username;
 
     userDropdownItems = [
       <DropdownItem isDisabled key='username'>
-        <Trans>Username: {user.username}</Trans>
+        <Trans>Username: {userName}</Trans>
       </DropdownItem>,
       <DropdownSeparator key='separator' />,
       <DropdownItem
@@ -67,11 +60,7 @@ export const StandaloneLayout = ({ children, setUser, user }: IProps) => {
       <DropdownItem
         key='logout'
         aria-label={'logout'}
-        onClick={() =>
-          ActiveUserAPI.logout()
-            .then(() => ActiveUserAPI.getUser().catch(() => null))
-            .then((user) => setUser(user))
-        }
+        onClick={() => clearCredentials()}
       >
         {t`Logout`}
       </DropdownItem>,
@@ -96,7 +85,6 @@ export const StandaloneLayout = ({ children, setUser, user }: IProps) => {
       <PulpAboutModal
         isOpen={aboutModalVisible}
         onClose={() => setAboutModalVisible(false)}
-        user={user}
         userName={userName}
       />
     );
@@ -127,7 +115,7 @@ export const StandaloneLayout = ({ children, setUser, user }: IProps) => {
         <span style={{ flexGrow: 1 }} />
         <DarkmodeSwitcher />
         <LanguageSwitcher />
-        {user ? (
+        {credentials ? (
           <StatefulDropdown
             ariaLabel={t`Docs dropdown`}
             data-cy='docs-dropdown'
@@ -136,7 +124,7 @@ export const StandaloneLayout = ({ children, setUser, user }: IProps) => {
             toggleType='icon'
           />
         ) : null}
-        {!user || user.is_anonymous ? (
+        {!credentials ? (
           <LoginLink />
         ) : (
           <StatefulDropdown
@@ -154,7 +142,7 @@ export const StandaloneLayout = ({ children, setUser, user }: IProps) => {
   const Sidebar = (
     <PageSidebar>
       <PageSidebarBody>
-        <StandaloneMenu context={{ user }} />
+        <StandaloneMenu />
       </PageSidebarBody>
     </PageSidebar>
   );
