@@ -90,7 +90,11 @@ export class BaseAPI {
   private async authHandler(request) {
     request.headers['X-CSRFToken'] = Cookies.get('csrftoken');
     if (!request.auth) {
-      request.auth = JSON.parse(window.sessionStorage.credentials || '{}');
+      request.auth = JSON.parse(
+        window.sessionStorage.credentials ||
+          window.localStorage.credentials ||
+          '{}',
+      );
     }
     return request;
   }

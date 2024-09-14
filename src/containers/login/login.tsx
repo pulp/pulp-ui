@@ -18,6 +18,7 @@ function PulpLoginPage(_props) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [redirect, setRedirect] = useState('');
+  const [remember, setRemember] = useState(false);
 
   useEffect(() => {
     clearCredentials();
@@ -27,29 +28,26 @@ function PulpLoginPage(_props) {
     PulpLoginAPI.try(username, password)
       .then(() => {
         // verified, save
-        setCredentials(username, password);
-        setRedirect(next || formatPath(Paths.status));
+        setCredentials(username, password, remember);
+        setRedirect(
+          next && next !== '/login/' ? next : formatPath(Paths.status),
+        );
       })
-      .catch(() => {
-        // didn't work, TODO
-        setError('nope');
-        /*
       .catch((result) => {
+        // didn't work
         if (result.response.status.toString().startsWith('5')) {
           setError(t`Server error. Please come back later.`);
-          });
         } else {
-          setError(t`Invalid login credentials.`);
+          setError(
+            result.response.data?.detail || t`Invalid login credentials.`,
+          );
         }
-      });
-*/
       });
 
     e.preventDefault();
   };
 
   if (redirect) {
-    // TODO: ensure this triggers browser save, otherwise window.location UI_BASE_PATH/${redirect}
     return <Navigate to={redirect} />;
   }
 
@@ -73,6 +71,9 @@ function PulpLoginPage(_props) {
         passwordValue={password}
         showHelperText={!!error}
         usernameValue={username}
+        rememberMeLabel='Keep credentials in localStorage.'
+        isRememberMeChecked={remember}
+        onChangeRememberMe={(_e, value) => setRemember(value)}
       />
     </LoginPage>
   );
