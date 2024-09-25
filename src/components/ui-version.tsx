@@ -9,5 +9,8 @@ const HTMLComment = ({ text, ...props }: IProps) => (
 );
 
 export const UIVersion = () => (
-  <HTMLComment id='pulp-ui-version' text={`pulp-ui ${UI_COMMIT_HASH}`} />
+  <HTMLComment
+    id='pulp-ui-version'
+    text={`pulp-ui ${JSON.stringify(UI_BUILD_INFO, null, 2)}`}
+  />
 );
