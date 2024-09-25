@@ -67,6 +67,8 @@ export {
 } from './response-types/user';
 export { WriteOnlyFieldType } from './response-types/write-only-field';
 export { RoleAPI } from './role';
+export { RPMPackageAPI } from './rpm-package';
+export { RPMRepositoryAPI } from './rpm-repository';
 export { SettingsAPI } from './settings';
 export { SignCollectionAPI } from './sign-collections';
 export { SignContainersAPI } from './sign-containers';

@@ -35,6 +35,7 @@ import {
   NotFound,
   Partners,
   PulpStatus,
+  RPMPackageList,
   RoleCreate,
   RoleList,
   Search,
@@ -195,6 +196,7 @@ export class AppRoutes extends Component {
       { component: PulpStatus, path: Paths.core.status, noAuth: true },
       { component: MultiSearch, path: Paths.meta.search },
       { component: AboutProject, path: Paths.meta.about, noAuth: true },
+      { component: RPMPackageList, path: Paths.rpm.package.list },
     ];
   }
 
