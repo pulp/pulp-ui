@@ -90,7 +90,7 @@ jobs:
 
       - name: "Release"
         run: |
-          gh release create -p v"$NPM_VERSION" --title "pulp-ui $NPM_VERSION $(date --iso=d)" || true # may already exist
+          gh release create v"$NPM_VERSION" --title "pulp-ui $NPM_VERSION $(date --iso=d)" --generate-notes
           gh release upload v"$NPM_VERSION" "$TARBALL" --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
