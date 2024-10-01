@@ -20,7 +20,11 @@ jobs:
       - name: 'Skip if no real changes since last npm version update'
         run: |
           LAST=`git blame package.json | grep '"version":' | awk '{ print $1 }'`
-          git diff --exit-code "$LAST" -- src/ package.json
+          if git diff --exit-code "$LAST" -- src/ package.json; then
+            false
+          else
+            true
+          fi
 
       - name: 'Install node 20'
         uses: actions/setup-node@v4
