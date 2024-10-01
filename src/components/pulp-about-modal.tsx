@@ -10,7 +10,7 @@ import {
 import React, { type ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ApplicationInfoAPI } from 'src/api';
-import { ExternalLink, MaybeLink } from 'src/components';
+import { DateComponent, ExternalLink, MaybeLink } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import PulpLogo from 'static/images/pulp_logo.png';
 
@@ -56,7 +56,9 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
   } = applicationInfo;
 
   const galaxy_ng_sha = galaxy_ng_commit?.split(':')[1];
-  const ui_sha = UI_COMMIT_HASH?.slice(0, 7);
+  const ui_sha = UI_BUILD_INFO?.hash?.slice(0, 7);
+  const ui_date = UI_BUILD_INFO?.date;
+  const ui_version = UI_BUILD_INFO?.version;
 
   // FIXME
   const user = { username: userName, id: null, groups: [] };
@@ -143,10 +145,20 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
           <Label>{t`UI Version`}</Label>
           <Value>
             <ExternalLink
-              href={`https://github.com/himdel/pulp-ui/commit/${ui_sha}`}
+              href={`https://github.com/pulp/pulp-ui/commit/${ui_sha}`}
             >
               {ui_sha}
-            </ExternalLink>
+            </ExternalLink>{' '}
+            {ui_version ? (
+              <>
+                <ExternalLink
+                  href={`https://github.com/pulp/pulp-ui/releases/tag/v${ui_version}`}
+                >
+                  {ui_version}
+                </ExternalLink>{' '}
+              </>
+            ) : null}
+            <DateComponent date={ui_date} />
           </Value>
 
           <Label>{t`Username`}</Label>

@@ -12,10 +12,14 @@ const webpack = require('webpack');
 
 const isBuild = process.env.NODE_ENV === 'production';
 
-// only run git when PULP_UI_VERSION is NOT provided
-const gitCommit =
-  process.env.PULP_UI_VERSION ||
-  execSync('git rev-parse HEAD', { encoding: 'utf-8' }).trim();
+// only run git when PULP_UI_COMMIT is NOT provided
+const buildInfo = {
+  hash:
+    process.env.PULP_UI_COMMIT ||
+    execSync('git rev-parse HEAD', { encoding: 'utf-8' }).trim(),
+  date: execSync('date --iso=d', { encoding: 'utf-8' }).trim(),
+  version: require('../package.json').version,
+};
 
 const docsURL = 'https://docs.pulpproject.org/';
 
@@ -27,7 +31,7 @@ const defaultConfigs = [
   { name: 'API_HOST', default: '', scope: 'global' },
   { name: 'APPLICATION_NAME', default: 'Pulp UI', scope: 'global' },
   { name: 'UI_BASE_PATH', default: '', scope: 'global' },
-  { name: 'UI_COMMIT_HASH', default: gitCommit, scope: 'global' },
+  { name: 'UI_BUILD_INFO', default: buildInfo, scope: 'global' },
   { name: 'UI_DOCS_URL', default: docsURL, scope: 'global' },
   { name: 'UI_EXTERNAL_LOGIN_URI', default: '/login', scope: 'global' },
 
