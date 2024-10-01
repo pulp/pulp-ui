@@ -332,12 +332,11 @@ export class RoleList extends Component<RouteProps, IState> {
                               t`Editable`
                             )}
                           </Td>
-                          {isSuperuser &&
-                            false /* TODO fix to work with Pulp API */ && (
-                              <ListItemActions
-                                kebabItems={this.renderDropdownItems(role)}
-                              />
-                            )}
+                          {isSuperuser && (
+                            <ListItemActions
+                              kebabItems={this.renderDropdownItems(role)}
+                            />
+                          )}
                         </ExpandableRow>
                       ))}
                     </RoleListTable>
@@ -384,6 +383,9 @@ export class RoleList extends Component<RouteProps, IState> {
   }
 
   private renderDropdownItems = (role) => {
+    // TODO: fix to work with Pulp API
+    return [];
+
     const { pulp_href, locked } = role;
     const roleID = parsePulpIDFromURL(pulp_href);
 

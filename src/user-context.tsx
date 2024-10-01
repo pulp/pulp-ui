@@ -28,7 +28,7 @@ function cachedCredentials() {
     return JSON.parse(
       window.sessionStorage.credentials || window.localStorage.credentials,
     );
-  } catch (e) {
+  } catch (_e) {
     return null;
   }
 }
