@@ -12,6 +12,18 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/darkmode-switcher.tsx
+msgid "(current, default)"
+msgstr ""
+
+#: src/components/darkmode-switcher.tsx
+msgid "(current)"
+msgstr ""
+
+#: src/components/darkmode-switcher.tsx
+msgid "(default)"
+msgstr ""
+
 #: src/components/collection-header.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "(latest)"
@@ -33,8 +45,7 @@ msgstr "（上传）"
 msgid "{0, plural, one {Failed to add collection to repository \"{repositoryName}\".} other {Failed to add collections to repository \"{repositoryName}\".}}"
 msgstr "{0, plural, one {Failed to add collection to repository \"{repositoryName}\".} other {Failed to add collections to repository \"{repositoryName}\".}}"
 
-#: src/components/role-item.tsx
-#: src/containers/ansible-role/role-detail.tsx
+#: src/components/partner-header.tsx
 msgid "{0} logo"
 msgstr "{0} 标志"
 
@@ -116,9 +127,12 @@ msgid "{n, plural, one {# byte} other {# bytes}}"
 msgstr "{n, plural, one {# byte} other {# bytes}}"
 
 #: src/components/collection-filter.ts
-#: src/containers/ansible-role/namespace-detail.tsx
-#: src/containers/ansible-role/role-list.tsx
 msgid "{name} ({count})"
+msgstr ""
+
+#: src/components/namespace-card.tsx
+#: src/components/namespace-list-item.tsx
+msgid "{name} logo"
 msgstr ""
 
 #: src/containers/task-management/task-list-view.tsx
@@ -146,8 +160,8 @@ msgstr "{subTitle}"
 #: src/components/namespace-card.tsx
 #: src/components/namespace-list-item.tsx
 #: src/components/partner-header.tsx
-msgid "{title} logo"
-msgstr ""
+#~ msgid "{title} logo"
+#~ msgstr ""
 
 #: src/components/wizard-modal.tsx
 msgid "{title} steps"
@@ -182,8 +196,8 @@ msgid "<0>{0}</0> will be permanently deleted."
 msgstr "<0>{0}</0> 将被永久删除。"
 
 #: src/components/role-import-form.tsx
-msgid "<0>{0}</0>, provided by <1>{1}</1>"
-msgstr ""
+#~ msgid "<0>{0}</0>, provided by <1>{1}</1>"
+#~ msgstr ""
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "<0>{firstIndex} - {lastIndex}</0> of <1>{itemCount}</1>"
@@ -226,34 +240,33 @@ msgstr "<0>Note:</0> Use this URL to configure ansible-galaxy to upload collecti
 #~ msgstr "<0>红帽正在 <1>Ansible Lightspeed</1> <2/> 中开发新的 Ansible 内容开发功能，以帮助其他自动器构建 Ansible 内容。</0>"
 
 #: src/components/lightspeed-modal.tsx
-msgid "<0>Red Hat is working on exciting new Ansible content development capabilities within the context of <1>Ansible Lightspeed</1> to help other automators build Ansible content.</0>"
-msgstr ""
+#~ msgid "<0>Red Hat is working on exciting new Ansible content development capabilities within the context of <1>Ansible Lightspeed</1> to help other automators build Ansible content.</0>"
+#~ msgstr ""
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "<0>Red Hat is working on exciting new Ansible content development capabilities within the context of <1>Project Wisdom</1> <2/> to help other automators build Ansible content.</0><3>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</3><4>If you have concerns, please contact the Ansible team at <5>ansible-content-ai@redhat.com</5>.</4>"
 #~ msgstr "<0>Red Hat is working on exciting new Ansible content development capabilities within the context of <1>Project Wisdom</1> <2/> to help other automators build Ansible content.</0><3>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</3><4>If you have concerns, please contact the Ansible team at <5>ansible-content-ai@redhat.com</5>.</4>"
 
 #: src/components/render-plugin-doc.tsx
-msgid "<0>Removed in version</0> {0}"
-msgstr ""
+#~ msgid "<0>Removed in version</0> {0}"
+#~ msgstr ""
 
 #: src/containers/role-management/role-list.tsx
 msgid "<0>Role <1>{0}</1> will be permanently deleted.</0><2>This will also remove all associated permissions under this role.</2>"
 msgstr "<0>角色 <1>{0}</1> 将被永久删除。</0><2>这也会删除此角色下的所有相关权限。</2>"
 
-#: src/containers/token/token-standalone.tsx
+#: src/containers/token/token.tsx
 msgid "<0>WARNING</0> copy this token now. This is the only time you will ever see it."
 msgstr "<0>警告</0> 复制此令牌。此时是您可能看到它的唯一时间。"
 
-#: src/containers/token/token-standalone.tsx
+#: src/containers/token/token.tsx
 msgid "<0>WARNING</0> loading a new token will delete your old token."
 msgstr "<0>警告</0> 加载新令牌将删除您的旧令牌。"
 
 #: src/components/lightspeed-modal.tsx
-msgid "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
-msgstr "<0>您的角色和集合可用作机器学习模型的培训数据，提供 Ansible 自动化内容建议。</0><1>如果有疑问，请联系 Ansible 团队 <2>ansible-content-ai@redhat.com</2>。</1>"
+#~ msgid "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
+#~ msgstr "<0>您的角色和集合可用作机器学习模型的培训数据，提供 Ansible 自动化内容建议。</0><1>如果有疑问，请联系 Ansible 团队 <2>ansible-content-ai@redhat.com</2>。</1>"
 
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/not-found/not-found.tsx
 msgid "404 - Page not found"
 msgstr "404 - 页未找到"
@@ -275,13 +288,17 @@ msgstr "标签可以包含小写和大写 ASCII 字母字符、数字、下划�
 #~ msgid "A tech preview of the new Automation Hub user interface can be found <0>here</0>."
 #~ msgstr ""
 
-#: src/loaders/standalone/layout.tsx
+#: src/layout.tsx
 msgid "About"
 msgstr "关于"
 
+#: src/containers/about-project.tsx
+#: src/menu.tsx
+msgid "About project"
+msgstr ""
+
 #: src/components/execution-environment-header.tsx
 #: src/components/execution-environment-header.tsx
-#: src/components/role-namespace-edit-modal.tsx
 #: src/containers/ansible-remote/detail.tsx
 #: src/containers/ansible-remote/detail.tsx
 #: src/containers/ansible-remote/detail.tsx
@@ -346,6 +363,11 @@ msgstr "添加集合"
 #~ msgid "Add collection remote"
 #~ msgstr "Add collection remote"
 
+#: src/components/repository-form.tsx
+#: src/containers/execution-environment-list/execution-environment-list.tsx
+msgid "Add container"
+msgstr ""
+
 #: src/constants.tsx
 #~ msgid "Add container distribution"
 #~ msgstr "Add container distribution"
@@ -356,8 +378,8 @@ msgstr "添加集合"
 
 #: src/components/repository-form.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-msgid "Add execution environment"
-msgstr "添加执行环境"
+#~ msgid "Add execution environment"
+#~ msgstr "添加执行环境"
 
 #: src/constants.tsx
 #~ msgid "Add group"
@@ -440,12 +462,12 @@ msgstr "add-user-modal"
 #~ "\"{namespace}\" container namespace."
 
 #: src/components/lightspeed-modal.tsx
-msgid "Additional details"
-msgstr "其它详情"
+#~ msgid "Additional details"
+#~ msgstr "其它详情"
 
 #: src/components/render-plugin-doc.tsx
-msgid "aliases"
-msgstr ""
+#~ msgid "aliases"
+#~ msgstr ""
 
 #: src/containers/ansible-repository/tab-details.tsx
 #: src/containers/namespace-list/namespace-list.tsx
@@ -457,8 +479,8 @@ msgid "All associated permissions under this role were removed."
 msgstr "此角色下的所有关联权限都将被删除。"
 
 #: src/containers/landing/landing-page.tsx
-msgid "All policies and guidelines"
-msgstr ""
+#~ msgid "All policies and guidelines"
+#~ msgstr ""
 
 #: src/components/import-modal.tsx
 msgid "All Repos"
@@ -481,27 +503,27 @@ msgid "Already the current version"
 msgstr "已经是当前版本"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Alternative:"
-msgstr ""
+#~ msgid "Alternative:"
+#~ msgstr ""
 
 #: src/components/hub-about-modal.tsx
-msgid "Ansible Automation Platform"
-msgstr "Ansible Automation Platform"
+#~ msgid "Ansible Automation Platform"
+#~ msgstr "Ansible Automation Platform"
 
 #: src/loaders/standalone/layout.tsx
-msgid "Ansible Community Forum"
-msgstr ""
+#~ msgid "Ansible Community Forum"
+#~ msgstr ""
 
 #: src/containers/landing/landing-page.tsx
-msgid "Ansible Lightspeed"
-msgstr ""
+#~ msgid "Ansible Lightspeed"
+#~ msgstr ""
 
 #: src/components/lightspeed-modal.tsx
 #: src/components/role-namespace-item.tsx
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
-msgid "Ansible Lightspeed settings"
-msgstr "Ansible Lightspeed 设置"
+#~ msgid "Ansible Lightspeed settings"
+#~ msgstr "Ansible Lightspeed 设置"
 
 #: src/containers/landing/landing-page.tsx
 #~ msgid "AnsibleFest"
@@ -535,9 +557,9 @@ msgstr "API 错误：无法设置弃用。"
 msgid "API error. Status code: {0}"
 msgstr "API 错误。状态代码：{0}"
 
-#: src/containers/token/token-standalone.tsx
-#: src/containers/token/token-standalone.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/containers/token/token.tsx
+#: src/containers/token/token.tsx
+#: src/menu.tsx
 msgid "API token"
 msgstr "API 令牌"
 
@@ -551,12 +573,12 @@ msgstr "API 令牌"
 #~ msgstr "API token management"
 
 #: src/loaders/standalone/menu.tsx
-msgid "Approval"
-msgstr "批准"
+#~ msgid "Approval"
+#~ msgstr "批准"
 
 #: src/containers/certification-dashboard/certification-dashboard.tsx
-msgid "Approval dashboard"
-msgstr "批准仪表板"
+#~ msgid "Approval dashboard"
+#~ msgstr "批准仪表板"
 
 #: src/containers/certification-dashboard/certification-dashboard.tsx
 #: src/containers/certification-dashboard/certification-dashboard.tsx
@@ -566,6 +588,10 @@ msgstr "批准仪表板"
 #: src/components/import-console.tsx
 msgid "Approval status:"
 msgstr "批准状态："
+
+#: src/containers/approvals/approvals.tsx
+msgid "Approvals"
+msgstr ""
 
 #: src/components/approval-row.tsx
 #: src/components/approval-row.tsx
@@ -583,8 +609,8 @@ msgstr "已批准"
 #: src/components/ansible-repository-form.tsx
 #: src/components/approval-row.tsx
 #: src/containers/ansible-repository/list.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Approved"
 msgstr "批准"
 
@@ -601,8 +627,8 @@ msgstr "您确定要删除软件仓库 <0>{name}</0> <1/>？<2>注意：</2>这�
 #~ msgstr "Are you sure you want to opt the following legacy namespace in to Wisdom?"
 
 #: src/components/lightspeed-modal.tsx
-msgid "Are you sure you want to opt the following legacy namespace out of Ansible Lightspeed?"
-msgstr "您确定要从 Ansible Lightspeed 中取消以下传统命名空间吗？"
+#~ msgid "Are you sure you want to opt the following legacy namespace out of Ansible Lightspeed?"
+#~ msgstr "您确定要从 Ansible Lightspeed 中取消以下传统命名空间吗？"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Are you sure you want to opt the following legacy namespace out of Wisdom?"
@@ -613,8 +639,8 @@ msgstr "您确定要从 Ansible Lightspeed 中取消以下传统命名空间吗�
 #~ msgstr "Are you sure you want to opt the following namespace in to Wisdom?"
 
 #: src/components/lightspeed-modal.tsx
-msgid "Are you sure you want to opt the following namespace out of Ansible Lightspeed?"
-msgstr "您确定要从 Ansible Lightspeed 中取消以下命名空间吗？"
+#~ msgid "Are you sure you want to opt the following namespace out of Ansible Lightspeed?"
+#~ msgstr "您确定要从 Ansible Lightspeed 中取消以下命名空间吗？"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Are you sure you want to opt the following namespace out of Wisdom?"
@@ -633,17 +659,20 @@ msgid "Authentication provider"
 msgstr "身份验证供应商"
 
 #: src/components/role-import-form.tsx
-msgid "Automatic"
-msgstr ""
+#~ msgid "Automatic"
+#~ msgstr ""
 
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
 msgid "Available matching collections"
 msgstr ""
 
 #: src/containers/search/multi-search.tsx
-msgid "Available matching execution environments"
+msgid "Available matching containers"
 msgstr ""
+
+#: src/containers/search/multi-search.tsx
+#~ msgid "Available matching execution environments"
+#~ msgstr ""
 
 #: src/containers/not-found/dispatch.tsx
 #~ msgid "Available matching legacy roles"
@@ -654,13 +683,13 @@ msgid "Available matching namespaces"
 msgstr ""
 
 #: src/containers/search/multi-search.tsx
-msgid "Available matching role namespaces"
-msgstr ""
+#~ msgid "Available matching role namespaces"
+#~ msgstr ""
 
 #: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
-msgid "Available matching roles"
-msgstr ""
+#~ msgid "Available matching roles"
+#~ msgstr ""
 
 #: src/components/wizard-modal.tsx
 msgid "Back"
@@ -679,28 +708,28 @@ msgid "Base version"
 msgstr "基本版本"
 
 #: src/components/ratings.tsx
-msgid "Based on {0} surveys."
-msgstr ""
+#~ msgid "Based on {0} surveys."
+#~ msgstr ""
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Breadcrumb"
 msgstr ""
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Browse"
-msgstr ""
+#~ msgid "Browse"
+#~ msgstr ""
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Browse..."
 msgstr "浏览......"
 
 #: src/components/hub-about-modal.tsx
-msgid "Browser OS"
-msgstr "浏览器 OS"
+#~ msgid "Browser OS"
+#~ msgstr "浏览器 OS"
 
 #: src/components/hub-about-modal.tsx
-msgid "Browser Version"
-msgstr "浏览器版本"
+#~ msgid "Browser Version"
+#~ msgstr "浏览器版本"
 
 #: src/utilities/translate-task.ts
 msgid "Build image from Containerfile"
@@ -740,16 +769,11 @@ msgstr "CA 证书"
 #: src/components/delete-modal.tsx
 #: src/components/group-modal.tsx
 #: src/components/import-modal.tsx
-#: src/components/lightspeed-modal.tsx
 #: src/components/multi-repo-modal.tsx
 #: src/components/namespace-modal.tsx
 #: src/components/remote-form.tsx
 #: src/components/repository-form.tsx
 #: src/components/role-form.tsx
-#: src/components/role-import-form.tsx
-#: src/components/role-namespace-edit-modal.tsx
-#: src/components/role-namespace-modal.tsx
-#: src/components/role-sync-form.tsx
 #: src/components/sign-all-certificates-modal.tsx
 #: src/components/sign-single-certificate-modal.tsx
 #: src/components/tag-manifest-modal.tsx
@@ -788,12 +812,12 @@ msgstr ""
 msgid "Certificate for collection \"{0} {1} v{2}\" has been successfully uploaded."
 msgstr "集合 \"{0} {1} v{2}\" 证书已被成功上传。"
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Certificate for collection \"{namespace} {name} v{version}\" has been successfully uploaded."
 msgstr "集合 \"{namespace} {name} v{version}\" 证书已被成功上传。"
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Certification status for collection \"{0} {1} v{2}\" has been successfully updated."
 msgstr "集合 \"{0} {1} v{2}\" 的认证状态已被成功更新。"
 
@@ -805,7 +829,6 @@ msgstr ""
 msgid "Certified"
 msgstr "已认证"
 
-#: src/components/role-import-form.tsx
 #: src/containers/execution-environment-detail/execution-environment-detail-activities.tsx
 msgid "Change"
 msgstr "更改"
@@ -844,8 +867,12 @@ msgstr "更改并上传集合到命名空间。"
 #~ msgstr "Change distribution"
 
 #: src/utilities/translate-locked-role.ts
-msgid "Change existing execution environments."
-msgstr "更改现存的执行环境。"
+msgid "Change existing containers."
+msgstr ""
+
+#: src/utilities/translate-locked-role.ts
+#~ msgid "Change existing execution environments."
+#~ msgstr "更改现存的执行环境。"
 
 #: src/constants.tsx
 #~ msgid "Change group"
@@ -865,8 +892,8 @@ msgstr "更改现存的执行环境。"
 #: src/components/role-namespace-edit-modal.tsx
 #: src/components/role-namespace-item.tsx
 #: src/containers/ansible-role/namespace-detail.tsx
-msgid "Change provider namespace"
-msgstr ""
+#~ msgid "Change provider namespace"
+#~ msgstr ""
 
 #: src/constants.tsx
 #~ msgid "Change remote registry"
@@ -884,9 +911,9 @@ msgstr ""
 #~ msgid "Change user"
 #~ msgstr "Change user"
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Changes to certification status for collection \"{0} {1} v{2}\" could not be saved."
 msgstr "无法保存集合\"{0} {1} v{2}\"认证状态的更改 。"
 
@@ -903,8 +930,8 @@ msgid "Changes to role \"{name}\" could not be saved."
 msgstr "无法保存对角色 \"{name}\" 的更改。"
 
 #: src/components/role-import-form.tsx
-msgid "Checking ..."
-msgstr ""
+#~ msgid "Checking ..."
+#~ msgstr ""
 
 #: src/components/delete-group-modal.tsx
 msgid "Checking for affected users... <0/>"
@@ -915,12 +942,12 @@ msgid "Child tasks"
 msgstr "子任务"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Choices"
-msgstr ""
+#~ msgid "Choices"
+#~ msgstr ""
 
 #: src/components/render-plugin-doc.tsx
-msgid "Choices:"
-msgstr ""
+#~ msgid "Choices:"
+#~ msgstr ""
 
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/write-only-field.tsx
@@ -977,7 +1004,7 @@ msgstr "代码"
 #: src/components/collection-usedby-dependencies-list.tsx
 #: src/containers/ansible-repository/tab-collection-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Collection"
 msgstr "集合"
 
@@ -1090,8 +1117,8 @@ msgstr "集合没有分配任何发行版。"
 msgid "Collection is not being used by any collection."
 msgstr "集合没有被任何集合使用。"
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Collection name"
 msgstr ""
 
@@ -1128,7 +1155,7 @@ msgstr "集合上传已取消"
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/ansible-repository/tab-collection-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Collection versions"
 msgstr "集合版本"
 
@@ -1160,12 +1187,9 @@ msgstr "修改集合后会出现集合版本。"
 
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/search.tsx
-#: src/loaders/standalone/menu.tsx
-#: src/loaders/standalone/menu.tsx
 msgid "Collections"
 msgstr "集合"
 
@@ -1174,7 +1198,7 @@ msgstr "集合"
 msgid "Collections sync"
 msgstr ""
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
 #: src/containers/search/search.tsx
 msgid "Collections will appear once uploaded"
@@ -1185,12 +1209,12 @@ msgid "Command"
 msgstr "命令"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Comments"
-msgstr ""
+#~ msgid "Comments"
+#~ msgstr ""
 
 #: src/loaders/standalone/layout.tsx
-msgid "Communicating with the Ansible community"
-msgstr ""
+#~ msgid "Communicating with the Ansible community"
+#~ msgstr ""
 
 #: src/components/repository-badge.tsx
 msgid "Community"
@@ -1210,44 +1234,47 @@ msgid "Community content will never be synced if this setting is enabled"
 msgstr ""
 
 #: src/components/ratings.tsx
-msgid "Community score"
-msgstr ""
+#~ msgid "Community score"
+#~ msgstr ""
 
 #: src/loaders/standalone/layout.tsx
-msgid "Community User Guide"
-msgstr ""
+#~ msgid "Community User Guide"
+#~ msgstr ""
 
 #: src/components/namespace-form.tsx
 msgid "Company name"
 msgstr "公司名称"
 
 #: src/components/import-list.tsx
-#: src/components/role-import-list.tsx
-#: src/components/role-import-list.tsx
 #: src/components/status-indicator.tsx
 #: src/containers/task-management/task-list-view.tsx
 msgid "Completed"
 msgstr "完成"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Configuration"
-msgstr ""
+#~ msgid "Configuration"
+#~ msgstr ""
 
 #: src/components/repositories/remote-repository-table.tsx
 #~ msgid "Configure"
 #~ msgstr "Configure"
 
 #: src/containers/token/token-insights.tsx
-msgid "Connect Private Automation Hub"
-msgstr "Connect Private Automation Hub"
+#~ msgid "Connect Private Automation Hub"
+#~ msgstr "Connect Private Automation Hub"
 
 #: src/containers/token/token-insights.tsx
-msgid "Connect the ansible-galaxy client"
-msgstr "Connect the ansible-galaxy client"
+#~ msgid "Connect the ansible-galaxy client"
+#~ msgstr "Connect the ansible-galaxy client"
 
 #: src/containers/token/token-insights.tsx
-msgid "Connect to Hub"
-msgstr "Connect to Hub"
+#~ msgid "Connect to Hub"
+#~ msgstr "Connect to Hub"
+
+#: src/containers/pulp-status.tsx
+#: src/containers/pulp-status.tsx
+msgid "Connected"
+msgstr ""
 
 #: src/utilities/validate-url-helper.ts
 msgid "Consider using a secure URL (https://)."
@@ -1260,6 +1287,22 @@ msgstr "考虑使用一个安全 URL(https://)。"
 #: src/components/empty-state-unauthorized.tsx
 msgid "Contact your organization administrator for more information."
 msgstr "如需更多信息，请联系您的机构管理员。"
+
+#: src/containers/execution-environment-list/execution-environment-list.tsx
+msgid "Container \"{0}\" has been added successfully."
+msgstr ""
+
+#: src/containers/execution-environment/registry-list.tsx
+msgid "Container \"{name}\" could not be indexed."
+msgstr ""
+
+#: src/components/delete-execution-environment-modal.tsx
+msgid "Container \"{selectedItem}\" could not be deleted."
+msgstr ""
+
+#: src/components/delete-execution-environment-modal.tsx
+msgid "Container \"{selectedItem}\" has been successfully deleted."
+msgstr ""
 
 #: src/utilities/repo-signing.ts
 msgid "Container must be synchronized with remote repository first."
@@ -1293,9 +1336,13 @@ msgstr "容器注册表类型"
 msgid "Container repository name"
 msgstr "容器仓库名称"
 
-#: src/constants.tsx
-#~ msgid "Containers"
-#~ msgstr "Containers"
+#: src/components/execution-environment-header.tsx
+#: src/containers/execution-environment-list/execution-environment-list.tsx
+#: src/containers/execution-environment-manifest/execution-environment-manifest.tsx
+#: src/containers/search/multi-search.tsx
+#: src/containers/search/multi-search.tsx
+msgid "Containers"
+msgstr "Containers"
 
 #: src/containers/collection-detail/collection-content.tsx
 msgid "Content"
@@ -1306,16 +1353,16 @@ msgid "Content added"
 msgstr "内容添加"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Content added to clipboard"
-msgstr ""
+#~ msgid "Content added to clipboard"
+#~ msgstr ""
 
 #: src/components/repositories/local-repository-table.tsx
 #~ msgid "Content count"
 #~ msgstr "Content count"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Content from roles and collections can be referenced in Ansible playbooks and immediately put to work. You'll find content for provisioning infrastructure, deploying applications, and all of the tasks you do everyday."
-msgstr ""
+#~ msgid "Content from roles and collections can be referenced in Ansible playbooks and immediately put to work. You'll find content for provisioning infrastructure, deploying applications, and all of the tasks you do everyday."
+#~ msgstr ""
 
 #: src/containers/landing/landing-page.tsx
 #~ msgid "Content from roles and collections can be referenced in Ansible PlayBooks and immediately put to work. You'll find content for provisioning infrastructure, deploying applications, and all of the tasks you do everyday."
@@ -1333,6 +1380,10 @@ msgstr ""
 msgid "Content removed"
 msgstr "删除内容"
 
+#: src/containers/pulp-status.tsx
+msgid "Content settings"
+msgstr ""
+
 #: src/components/collection-header.tsx
 msgid "Contents"
 msgstr "内容"
@@ -1347,8 +1398,8 @@ msgstr "内容"
 #~ msgstr "无法显示控制器列表。"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Cookie preferences"
-msgstr ""
+#~ msgid "Cookie preferences"
+#~ msgstr ""
 
 #: src/components/patternfly-wrappers/copy-url.tsx
 #~ msgid "Copied"
@@ -1363,16 +1414,15 @@ msgid "Copy CLI configuration"
 msgstr "复制 CLI 配置"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Copy code to clipboard"
-msgstr ""
+#~ msgid "Copy code to clipboard"
+#~ msgstr ""
 
 #: src/utilities/translate-task.ts
 msgid "Copy content"
 msgstr ""
 
-#: src/components/hub-copy-button.tsx
 #: src/components/patternfly-wrappers/l10n.tsx
-#: src/components/patternfly-wrappers/l10n.tsx
+#: src/components/pulp-copy-button.tsx
 msgid "Copy to clipboard"
 msgstr "复制到剪贴板"
 
@@ -1403,14 +1453,11 @@ msgid "Count"
 msgstr "数量"
 
 #: src/containers/token/token-insights.tsx
-msgid "CRC public key"
-msgstr "CRC public key"
+#~ msgid "CRC public key"
+#~ msgstr "CRC public key"
 
 #: src/components/group-modal.tsx
 #: src/components/namespace-modal.tsx
-#: src/components/role-import-form.tsx
-#: src/components/role-namespace-modal.tsx
-#: src/containers/ansible-role/namespace-list.tsx
 #: src/containers/group-management/group-list.tsx
 #: src/containers/group-management/group-list.tsx
 #: src/containers/namespace-list/namespace-list.tsx
@@ -1449,16 +1496,20 @@ msgstr "使用至少 {minLength} 个字符创建密码，包括特殊字符，�
 #~ msgstr "Create a password using at least 9 characters, including special characters , ex <!@$%>. Avoid using common names or expressions."
 
 #: src/components/role-namespace-modal.tsx
-msgid "Create a role namespace"
+#~ msgid "Create a role namespace"
+#~ msgstr ""
+
+#: src/utilities/translate-locked-role.ts
+msgid "Create and update containers under existing container namespaces."
 msgstr ""
 
 #: src/utilities/translate-locked-role.ts
-msgid "Create and update execution environments under existing container namespaces."
-msgstr "在现有容器命名空间下创建和更新执行环境。"
+#~ msgid "Create and update execution environments under existing container namespaces."
+#~ msgstr "在现有容器命名空间下创建和更新执行环境。"
 
 #: src/components/collection-header.tsx
-msgid "Create issue"
-msgstr "Create issue"
+#~ msgid "Create issue"
+#~ msgstr "Create issue"
 
 #: src/constants.tsx
 #: src/constants.tsx
@@ -1479,13 +1530,10 @@ msgid "Create, delete and change collection namespaces. Upload and delete collec
 msgstr "创建、删除和更改集合命名空间。上传和删除集合。从远程同步集合。批准和决绝集合。"
 
 #: src/containers/ansible-repository/tab-distributions.tsx
-#: src/containers/ansible-role/namespace-detail.tsx
-#: src/containers/ansible-role/namespace-list.tsx
-#: src/containers/ansible-role/role-list.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
 #: src/containers/execution-environment/registry-list.tsx
-#: src/containers/group-management/group-detail.tsx
+#: src/containers/pulp-status.tsx
 #: src/containers/role-management/role-list.tsx
 #: src/containers/user-management/user-list.tsx
 msgid "Created"
@@ -1512,20 +1560,20 @@ msgid "Creation started for distribution {distributionName}"
 msgstr "为分发 {distributionName} 开始创建"
 
 #: src/utilities/translate-task.ts
-msgid "Curate all synclist repositories"
-msgstr ""
+#~ msgid "Curate all synclist repositories"
+#~ msgstr ""
 
 #: src/constants.tsx
 #~ msgid "Curate all synclist repository"
 #~ msgstr "策展所有同步列表仓库"
 
 #: src/utilities/translate-task.ts
-msgid "Curate synclist repository"
-msgstr "策展同步列表仓库"
+#~ msgid "Curate synclist repository"
+#~ msgstr "策展同步列表仓库"
 
 #: src/utilities/translate-task.ts
-msgid "Curate synclist repository batch"
-msgstr "策展同步列表仓库批量"
+#~ msgid "Curate synclist repository batch"
+#~ msgstr "策展同步列表仓库批量"
 
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Current content"
@@ -1536,12 +1584,16 @@ msgid "Current page"
 msgstr ""
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "Current provider namespace"
-msgstr ""
+#~ msgid "Current provider namespace"
+#~ msgstr ""
 
 #: src/components/tag-manifest-modal.tsx
 msgid "Current tags"
 msgstr "当前标签"
+
+#: src/containers/pulp-status.tsx
+msgid "Current task"
+msgstr ""
 
 #: src/components/repository-form.tsx
 msgid "Currently excluded tags"
@@ -1560,8 +1612,8 @@ msgid "Custom permissions"
 msgstr "自定义权限"
 
 #: src/loaders/standalone/layout.tsx
-msgid "Customer Support"
-msgstr ""
+#~ msgid "Customer Support"
+#~ msgstr ""
 
 #: src/loaders/standalone/layout.tsx
 #~ msgid "Customer Support <0/>"
@@ -1571,25 +1623,33 @@ msgstr ""
 msgid "Danger"
 msgstr ""
 
+#: src/components/darkmode-switcher.tsx
+msgid "Dark"
+msgstr ""
+
+#: src/containers/pulp-status.tsx
+msgid "Database connection"
+msgstr ""
+
 #: src/containers/execution-environment-detail/execution-environment-detail-activities.tsx
 msgid "Date"
 msgstr "日期"
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Date created"
 msgstr "创建日期"
 
 #: src/components/render-plugin-doc.tsx
-msgid "default"
-msgstr ""
+#~ msgid "default"
+#~ msgstr ""
 
 #: src/components/render-plugin-doc.tsx
-msgid "Default:"
-msgstr ""
+#~ msgid "Default:"
+#~ msgstr ""
 
 #: src/components/render-plugin-doc.tsx
-msgid "Defaults"
-msgstr ""
+#~ msgid "Defaults"
+#~ msgstr ""
 
 #: src/actions/ansible-remote-delete.tsx
 #: src/actions/ansible-repository-delete.tsx
@@ -1821,7 +1881,6 @@ msgid "Deprecate"
 msgstr "弃用"
 
 #: src/components/deprecated-tag.tsx
-#: src/components/render-plugin-doc.tsx
 msgid "DEPRECATED"
 msgstr "弃用"
 
@@ -1838,11 +1897,9 @@ msgstr "为集合 \"{name}\" 开始的弃用状态更新。"
 #: src/components/collection-content-list.tsx
 #: src/components/multiple-repo-selector.tsx
 #: src/components/namespace-form.tsx
-#: src/components/render-plugin-doc.tsx
 #: src/components/repository-form.tsx
 #: src/components/role-form.tsx
 #: src/components/role-list-table.tsx
-#: src/components/role-namespace-edit-modal.tsx
 #: src/components/select-roles.tsx
 #: src/containers/ansible-repository/tab-collection-versions.tsx
 #: src/containers/ansible-repository/tab-details.tsx
@@ -1883,8 +1940,8 @@ msgid "Details"
 msgstr "详情"
 
 #: src/components/role-import-form.tsx
-msgid "Did you mean {0}?"
-msgstr ""
+#~ msgid "Did you mean {0}?"
+#~ msgstr ""
 
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
@@ -1893,8 +1950,8 @@ msgid "Digest"
 msgstr "摘要"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Digital accessibility"
-msgstr ""
+#~ msgid "Digital accessibility"
+#~ msgstr ""
 
 #: src/containers/ansible-remote/tab-details.tsx
 msgid "Disabled"
@@ -1924,7 +1981,7 @@ msgstr "分发"
 msgid "Distributions could not be displayed."
 msgstr ""
 
-#: src/loaders/standalone/layout.tsx
+#: src/layout.tsx
 msgid "Docs dropdown"
 msgstr ""
 
@@ -1933,24 +1990,26 @@ msgid "Docs site"
 msgstr "文档站点"
 
 #: src/components/collection-header.tsx
-#: src/containers/ansible-role/role-detail.tsx
 #: src/containers/collection-detail/collection-docs.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-#: src/loaders/standalone/menu.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/layout.tsx
 msgid "Documentation"
 msgstr "文档"
 
 #: src/containers/token/token-insights.tsx
-msgid "Documentation on how to configure the <0>ansible-galaxy</0> client can be found <1>here</1>. Use the following parameters to configure the client."
-msgstr "Documentation on how to configure the <0>ansible-galaxy</0> client can be found <1>here</1>. Use the following parameters to configure the client."
+#~ msgid "Documentation on how to configure the <0>ansible-galaxy</0> client can be found <1>here</1>. Use the following parameters to configure the client."
+#~ msgstr "Documentation on how to configure the <0>ansible-galaxy</0> client can be found <1>here</1>. Use the following parameters to configure the client."
 
 #: src/components/render-plugin-doc.tsx
-msgid "Documentation Syntax Error: cannot parse plugin documention."
-msgstr ""
+#~ msgid "Documentation Syntax Error: cannot parse plugin documention."
+#~ msgstr ""
 
 #: src/components/ratings.tsx
-msgid "Does what it promises"
+#~ msgid "Does what it promises"
+#~ msgstr ""
+
+#: src/containers/pulp-status.tsx
+msgid "Domain enabled"
 msgstr ""
 
 #: src/components/import-console.tsx
@@ -1959,14 +2018,12 @@ msgid "Done"
 msgstr "完成"
 
 #: src/components/collection-info.tsx
-#: src/components/patternfly-wrappers/l10n.tsx
-#: src/containers/landing/landing-page.tsx
 msgid "Download"
 msgstr "下载"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Download {0} tarball"
-msgstr ""
+#~ msgid "Download {0} tarball"
+#~ msgstr ""
 
 #: src/actions/ansible-remote-download-ca.tsx
 msgid "Download CA certificate"
@@ -1985,8 +2042,8 @@ msgid "Download client certification file"
 msgstr "下载客户端认证文件"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Download code"
-msgstr ""
+#~ msgid "Download code"
+#~ msgstr ""
 
 #: src/components/remote-form.tsx
 #: src/containers/ansible-remote/tab-details.tsx
@@ -1995,8 +2052,8 @@ msgstr "下载并发"
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "Download count"
-msgstr ""
+#~ msgid "Download count"
+#~ msgstr ""
 
 #: src/components/download-count.tsx
 msgid "Download count is the sum of all versions' download counts"
@@ -2007,8 +2064,8 @@ msgid "Download key"
 msgstr "下载密钥"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Download latest tarball"
-msgstr ""
+#~ msgid "Download latest tarball"
+#~ msgstr ""
 
 #: src/components/remote-form.tsx
 msgid "Download only signed collections"
@@ -2035,8 +2092,8 @@ msgstr "把文件拖放在这里或浏览以上传"
 #~ msgstr ""
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Drag and drop a file or upload one."
-msgstr "拖放文件或上传文件。"
+#~ msgid "Drag and drop a file or upload one."
+#~ msgstr "拖放文件或上传文件。"
 
 #: src/components/signing/upload-sign-certificate-modal.tsx
 #~ msgid "Drag and drop a file or upload one'"
@@ -2048,8 +2105,8 @@ msgid "Dropdown"
 msgstr "下拉菜单"
 
 #: src/components/ratings.tsx
-msgid "Ease of use"
-msgstr ""
+#~ msgid "Ease of use"
+#~ msgstr ""
 
 #: src/actions/ansible-remote-edit.tsx
 #: src/actions/ansible-repository-edit.tsx
@@ -2068,13 +2125,17 @@ msgstr ""
 msgid "Edit"
 msgstr "编辑"
 
+#: src/components/repository-form.tsx
+msgid "Edit container"
+msgstr ""
+
 #: src/containers/edit-namespace/edit-namespace.tsx
 msgid "Edit details"
 msgstr "编辑详情"
 
 #: src/components/repository-form.tsx
-msgid "Edit execution environment"
-msgstr "编辑执行环境"
+#~ msgid "Edit execution environment"
+#~ msgstr "编辑执行环境"
 
 #: src/containers/group-management/group-detail.tsx
 #~ msgid "Edit group permissions"
@@ -2127,12 +2188,10 @@ msgid "Editable"
 msgstr "可编辑"
 
 #: src/components/render-plugin-doc.tsx
-msgid "elements"
-msgstr ""
+#~ msgid "elements"
+#~ msgstr ""
 
 #: src/components/user-form.tsx
-#: src/containers/group-management/group-detail.tsx
-#: src/containers/group-management/group-detail.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/user-management/user-list.tsx
@@ -2140,12 +2199,13 @@ msgid "Email"
 msgstr "电子邮件"
 
 #: src/containers/ansible-remote/tab-details.tsx
+#: src/containers/pulp-status.tsx
 msgid "Enabled"
 msgstr "启用"
 
 #: src/components/render-plugin-doc.tsx
-msgid "env"
-msgstr ""
+#~ msgid "env"
+#~ msgstr ""
 
 #: src/containers/execution-environment-manifest/execution-environment-manifest.tsx
 msgid "Environment"
@@ -2208,7 +2268,6 @@ msgstr "删除组错误。"
 #~ msgid "Error editing group."
 #~ msgstr "Error editing group."
 
-#: src/containers/ansible-role/imports.tsx
 #: src/containers/my-imports/my-imports.tsx
 msgid "Error fetching import from API"
 msgstr "从 API 获取导入时出错"
@@ -2225,7 +2284,7 @@ msgstr "从 API 获取导入时出错"
 #~ msgid "Error loading collection repositories."
 #~ msgstr "Error loading collection repositories."
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Error loading collections."
 msgstr "加载集合时出错。"
 
@@ -2278,7 +2337,7 @@ msgstr "加载环境时出错。"
 msgid "Error loading repositories."
 msgstr ""
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Error loading repository with label {pipeline}."
 msgstr "加载带有标签 {pipeline} 的存储库时出错。"
 
@@ -2329,8 +2388,8 @@ msgid "Error when saving registry."
 msgstr "保存 registry 时出错。"
 
 #: src/components/render-plugin-doc.tsx
-msgid "ERROR while parsing: {0}"
-msgstr ""
+#~ msgid "ERROR while parsing: {0}"
+#~ msgstr ""
 
 #: src/containers/execution-environment-detail/base.tsx
 #: src/containers/execution-environment-list/execution_environment_list.tsx
@@ -2344,8 +2403,8 @@ msgstr ""
 
 #: src/components/render-plugin-doc.tsx
 #: src/components/render-plugin-doc.tsx
-msgid "Examples"
-msgstr ""
+#~ msgid "Examples"
+#~ msgstr ""
 
 #: src/components/access-tab.tsx
 msgid "Except for members of groups below."
@@ -2356,24 +2415,24 @@ msgstr ""
 #~ msgstr "执行环境"
 
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-msgid "Execution environment \"{0}\" has been added successfully."
-msgstr "执行环境 \"{0}\" 已成功添加。"
+#~ msgid "Execution environment \"{0}\" has been added successfully."
+#~ msgstr "执行环境 \"{0}\" 已成功添加。"
 
 #: src/containers/execution-environment/registry-list.tsx
-msgid "Execution environment \"{name}\" could not be indexed."
-msgstr "执行环境 \"{name}\" 无法被索引。"
+#~ msgid "Execution environment \"{name}\" could not be indexed."
+#~ msgstr "执行环境 \"{name}\" 无法被索引。"
 
 #: src/containers/execution-environment-list/execution_environment_list.tsx
 #~ msgid "Execution environment \"{name}\" has been added successfully."
 #~ msgstr "Execution environment \"{name}\" has been added successfully."
 
 #: src/components/delete-execution-environment-modal.tsx
-msgid "Execution environment \"{selectedItem}\" could not be deleted."
-msgstr "无法删除执行环境 \"{selectedItem}\"。"
+#~ msgid "Execution environment \"{selectedItem}\" could not be deleted."
+#~ msgstr "无法删除执行环境 \"{selectedItem}\"。"
 
 #: src/components/delete-execution-environment-modal.tsx
-msgid "Execution environment \"{selectedItem}\" has been successfully deleted."
-msgstr "执行环境 \"{selectedItem}\" 已成功删除。"
+#~ msgid "Execution environment \"{selectedItem}\" has been successfully deleted."
+#~ msgstr "执行环境 \"{selectedItem}\" 已成功删除。"
 
 #: src/containers/execution-environment-list/execution_environment_list.tsx
 #~ msgid "Execution environment added."
@@ -2386,29 +2445,26 @@ msgstr "执行环境 \"{selectedItem}\" 已成功删除。"
 #: src/containers/execution-environment-list/execution-environment-list.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
-msgid "Execution environments"
-msgstr ""
+#~ msgid "Execution environments"
+#~ msgstr ""
 
 #: src/components/execution-environment-header.tsx
 #: src/containers/execution-environment-manifest/execution-environment-manifest.tsx
 #: src/loaders/standalone/menu.tsx
 #: src/loaders/standalone/menu.tsx
-msgid "Execution Environments"
-msgstr "执行环境"
+#~ msgid "Execution Environments"
+#~ msgstr "执行环境"
 
 #: src/containers/token/token-standalone.tsx
-msgid "Expiration"
-msgstr "过期"
+#~ msgid "Expiration"
+#~ msgstr "过期"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Extend the power of Ansible to your entire team."
-msgstr ""
+#~ msgid "Extend the power of Ansible to your entire team."
+#~ msgstr ""
 
 #: src/components/import-console.tsx
 #: src/components/import-list.tsx
-#: src/components/role-import-form.tsx
-#: src/components/role-import-list.tsx
-#: src/components/role-import-list.tsx
 #: src/components/status-indicator.tsx
 #: src/containers/task-management/task-list-view.tsx
 msgid "Failed"
@@ -2427,8 +2483,8 @@ msgid "Failed to approve collection."
 msgstr "批准集合失败。"
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "Failed to change provider namespace."
-msgstr ""
+#~ msgid "Failed to change provider namespace."
+#~ msgstr ""
 
 #: src/components/copy-collection-to-repository-modal.tsx
 msgid "Failed to copy collection version."
@@ -2436,8 +2492,8 @@ msgstr ""
 
 #: src/components/role-import-form.tsx
 #: src/components/role-namespace-modal.tsx
-msgid "Failed to create role namespace"
-msgstr ""
+#~ msgid "Failed to create role namespace"
+#~ msgstr ""
 
 #: src/containers/execution-environment/registry-list.tsx
 #~ msgid "Failed to delete remote registry {name}"
@@ -2456,28 +2512,28 @@ msgid "Failed to find repository version"
 msgstr "查找仓库版本失败"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Failed to find role"
-msgstr ""
+#~ msgid "Failed to find role"
+#~ msgstr ""
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Failed to get import log"
-msgstr ""
+#~ msgid "Failed to get import log"
+#~ msgstr ""
 
 #: src/components/role-import-form.tsx
-msgid "Failed to import role"
-msgstr ""
+#~ msgid "Failed to import role"
+#~ msgstr ""
 
 #: src/actions/ansible-repository-delete.tsx
 msgid "Failed to list distributions, removing only the repository."
 msgstr "列出发布失败，仅删除仓库。"
 
 #: src/components/role-import-list.tsx
-msgid "Failed to list role imports"
-msgstr ""
+#~ msgid "Failed to list role imports"
+#~ msgstr ""
 
 #: src/components/lightspeed-modal.tsx
-msgid "Failed to load Ansible Lightspeed information."
-msgstr "加载 Ansible Lightspeed 信息失败。"
+#~ msgid "Failed to load Ansible Lightspeed information."
+#~ msgstr "加载 Ansible Lightspeed 信息失败。"
 
 #: src/containers/ansible-repository/tab-collection-versions.tsx
 #~ msgid "Failed to load collection versions"
@@ -2508,24 +2564,28 @@ msgid "Failed to load repositories."
 msgstr "加载软件仓库失败。"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Failed to load role content"
-msgstr ""
+#~ msgid "Failed to load role content"
+#~ msgstr ""
 
 #: src/containers/ansible-role/namespace-detail.tsx
-msgid "Failed to load role namespace"
-msgstr ""
+#~ msgid "Failed to load role namespace"
+#~ msgstr ""
 
 #: src/containers/ansible-role/namespace-list.tsx
-msgid "Failed to load role namespaces"
-msgstr ""
+#~ msgid "Failed to load role namespaces"
+#~ msgstr ""
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Failed to load role versions"
-msgstr ""
+#~ msgid "Failed to load role versions"
+#~ msgstr ""
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "Failed to load roles"
+#~ msgid "Failed to load roles"
+#~ msgstr ""
+
+#: src/containers/pulp-status.tsx
+msgid "Failed to load status"
 msgstr ""
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
@@ -2533,16 +2593,16 @@ msgstr ""
 #~ msgstr "Failed to load Wisdom information."
 
 #: src/components/lightspeed-modal.tsx
-msgid "Failed to opt in to Ansible Lightspeed."
-msgstr "选择使用 Ansible Lightspeed 失败。"
+#~ msgid "Failed to opt in to Ansible Lightspeed."
+#~ msgstr "选择使用 Ansible Lightspeed 失败。"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Failed to opt in to Wisdom."
 #~ msgstr "Failed to opt in to Wisdom."
 
 #: src/components/lightspeed-modal.tsx
-msgid "Failed to opt out of Ansible Lightspeed."
-msgstr "选择不再使用 Ansible Lightspeed 失败。"
+#~ msgid "Failed to opt out of Ansible Lightspeed."
+#~ msgstr "选择不再使用 Ansible Lightspeed 失败。"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Failed to opt out of Wisdom."
@@ -2569,8 +2629,8 @@ msgid "Failed to remove repository {name}"
 msgstr "删除软件仓库 {name} 失败"
 
 #: src/containers/login/login.tsx
-msgid "Failed to retrieve user data."
-msgstr "获取用户数据失败。"
+#~ msgid "Failed to retrieve user data."
+#~ msgstr "获取用户数据失败。"
 
 #: src/actions/ansible-repository-version-revert.tsx
 msgid "Failed to revert repository \"{repositoryName}\" to version \"{number}\""
@@ -2581,20 +2641,24 @@ msgid "Failed to search collections ({keywords})"
 msgstr ""
 
 #: src/containers/search/multi-search.tsx
-msgid "Failed to search execution environments ({keywords})"
+msgid "Failed to search containers ({keywords})"
 msgstr ""
+
+#: src/containers/search/multi-search.tsx
+#~ msgid "Failed to search execution environments ({keywords})"
+#~ msgstr ""
 
 #: src/containers/search/multi-search.tsx
 msgid "Failed to search namespaces ({keywords})"
 msgstr ""
 
 #: src/containers/search/multi-search.tsx
-msgid "Failed to search role namespaces ({keywords})"
-msgstr ""
+#~ msgid "Failed to search role namespaces ({keywords})"
+#~ msgstr ""
 
 #: src/containers/search/multi-search.tsx
-msgid "Failed to search roles ({keywords})"
-msgstr ""
+#~ msgid "Failed to search roles ({keywords})"
+#~ msgstr ""
 
 #: src/containers/namespace-detail/namespace-detail.tsx
 msgid "Failed to sign all collections."
@@ -2618,17 +2682,17 @@ msgid "Failed to sync repository \"{name}\""
 msgstr "同步软件仓库 \"{name}\" 失败"
 
 #: src/components/role-sync-form.tsx
-msgid "Failed to sync role"
-msgstr ""
+#~ msgid "Failed to sync role"
+#~ msgstr ""
 
 #: src/containers/landing/landing-page.tsx
-msgid "Featured"
-msgstr ""
+#~ msgid "Featured"
+#~ msgstr ""
 
 #: src/components/role-import-form.tsx
 #: src/components/role-sync-form.tsx
-msgid "Field is required."
-msgstr ""
+#~ msgid "Field is required."
+#~ msgstr ""
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "File upload"
@@ -2653,14 +2717,18 @@ msgstr "按 {0} 过滤"
 #~ msgid "Find a group"
 #~ msgstr "Find a group"
 
+#: src/containers/execution-environment/registry-list.tsx
+msgid "Find containers in this registry"
+msgstr ""
+
 #: src/components/collection-content-list.tsx
 #: src/components/table-of-contents.tsx
 msgid "Find content"
 msgstr "查找内容"
 
 #: src/containers/execution-environment/registry-list.tsx
-msgid "Find execution environments in this registry"
-msgstr "在此注册表中查找执行环境"
+#~ msgid "Find execution environments in this registry"
+#~ msgstr "在此注册表中查找执行环境"
 
 #: src/components/collection-content-list.tsx
 #: src/components/table-of-contents.tsx
@@ -2673,8 +2741,6 @@ msgid "Finished at"
 msgstr "完成于"
 
 #: src/components/user-form.tsx
-#: src/containers/group-management/group-detail.tsx
-#: src/containers/group-management/group-detail.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/user-management/user-list.tsx
@@ -2690,24 +2756,28 @@ msgid "Force a sync to happen."
 msgstr ""
 
 #: src/components/role-import-form.tsx
-msgid "Found"
-msgstr ""
+#~ msgid "Found"
+#~ msgstr ""
 
 #: src/components/role-import-form.tsx
-msgid "Found a standalone namespace (<0>{0}</0>), but NOT a provider namespace."
+#~ msgid "Found a standalone namespace (<0>{0}</0>), but NOT a provider namespace."
+#~ msgstr ""
+
+#: src/containers/pulp-status.tsx
+msgid "Free"
 msgstr ""
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "Galaxy Importer"
 msgstr ""
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "Galaxy Logo"
 msgstr "Galaxy 徽标"
 
 #: src/containers/role-management/role-list.tsx
-msgid "Galaxy only"
-msgstr "仅限 Galaxy"
+#~ msgid "Galaxy only"
+#~ msgstr "仅限 Galaxy"
 
 #: src/utilities/translate-task.ts
 msgid "General create"
@@ -2726,29 +2796,29 @@ msgid "General update"
 msgstr ""
 
 #: src/containers/landing/landing-page.tsx
-msgid "Get the trial"
-msgstr ""
+#~ msgid "Get the trial"
+#~ msgstr ""
 
 #: src/containers/repositories/repository-list.tsx
 #~ msgid "Get token"
 #~ msgstr "Get token"
 
 #: src/components/role-import-form.tsx
-msgid "GitHub ref (a commit, branch or tag)"
-msgstr ""
+#~ msgid "GitHub ref (a commit, branch or tag)"
+#~ msgstr ""
 
 #: src/components/role-import-form.tsx
-msgid "GitHub repository"
-msgstr ""
+#~ msgid "GitHub repository"
+#~ msgstr ""
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "GitHub Repository"
-msgstr ""
+#~ msgid "GitHub Repository"
+#~ msgstr ""
 
 #: src/components/role-import-form.tsx
 #: src/components/role-sync-form.tsx
-msgid "GitHub user"
-msgstr ""
+#~ msgid "GitHub user"
+#~ msgstr ""
 
 #: src/utilities/wait-for-task.ts
 msgid "Giving up waiting for task after 10 attempts."
@@ -2875,13 +2945,12 @@ msgid "Group name"
 msgstr "组名称"
 
 #: src/components/access-tab.tsx
-#: src/components/role-namespace-edit-modal.tsx
 #: src/components/user-form.tsx
 #: src/components/user-form.tsx
 #: src/containers/group-management/group-detail.tsx
 #: src/containers/group-management/group-list.tsx
 #: src/containers/user-management/user-list.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Groups"
 msgstr "组"
 
@@ -2903,8 +2972,8 @@ msgid "Has words"
 msgstr ""
 
 #: src/containers/landing/landing-page.tsx
-msgid "Help other Ansible users by sharing the awesome roles and collections you create."
-msgstr ""
+#~ msgid "Help other Ansible users by sharing the awesome roles and collections you create."
+#~ msgstr ""
 
 #: src/components/write-only-field.tsx
 msgid "hidden value"
@@ -2973,8 +3042,8 @@ msgid "Images will appear once uploaded"
 msgstr "上传后将显示镜像"
 
 #: src/components/role-import-form.tsx
-msgid "Import"
-msgstr ""
+#~ msgid "Import"
+#~ msgstr ""
 
 #: src/utilities/translate-task.ts
 #: src/utilities/translate-task.ts
@@ -2990,14 +3059,13 @@ msgid "Import collection"
 msgstr ""
 
 #: src/components/collection-header.tsx
-#: src/containers/ansible-role/role-detail.tsx
 #: src/containers/collection-detail/collection-import-log.tsx
 msgid "Import log"
 msgstr "导入日志"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Import new version"
-msgstr ""
+#~ msgid "Import new version"
+#~ msgstr ""
 
 #: src/utilities/translate-task.ts
 msgid "Import repository version"
@@ -3007,13 +3075,14 @@ msgstr ""
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-import.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "Import role"
-msgstr ""
+#~ msgid "Import role"
+#~ msgstr ""
 
 #: src/components/role-import-form.tsx
-msgid "Import started"
-msgstr ""
+#~ msgid "Import started"
+#~ msgstr ""
 
+#: src/containers/my-imports/my-imports.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
 msgid "Imports"
 msgstr "导入"
@@ -3031,36 +3100,47 @@ msgid "Including all tags might transfer a lot of data."
 msgstr ""
 
 #: src/containers/execution-environment/registry-list.tsx
-msgid "Index execution environments"
-msgstr "索引执行环境"
+msgid "Index containers"
+msgstr ""
+
+#: src/containers/execution-environment/registry-list.tsx
+#~ msgid "Index execution environments"
+#~ msgstr "索引执行环境"
+
+#: src/containers/execution-environment/registry-list.tsx
+msgid "Indexing containers is not supported"
+msgstr ""
 
 #: src/containers/execution-environment/registry-list.tsx
 #~ msgid "Indexing execution environments in {name}"
 #~ msgstr "Indexing execution environments in {name}"
 
 #: src/containers/execution-environment/registry-list.tsx
-msgid "Indexing execution environments is only supported on registry.redhat.io"
-msgstr "只有在 registry.redhat.io 上才支持索引执行环境"
+#~ msgid "Indexing execution environments is only supported on registry.redhat.io"
+#~ msgstr "只有在 registry.redhat.io 上才支持索引执行环境"
 
 #: src/containers/execution-environment/registry-list.tsx
 #~ msgid "Indexing failed for {name}"
 #~ msgstr "Indexing failed for {name}"
 
 #: src/containers/execution-environment/registry-list.tsx
-msgid "Indexing started for execution environment \"{name}\"."
-msgstr "为执行环境 \"{name}\" 执行索引已开始。"
+msgid "Indexing started for container \"{name}\"."
+msgstr ""
+
+#: src/containers/execution-environment/registry-list.tsx
+#~ msgid "Indexing started for execution environment \"{name}\"."
+#~ msgstr "为执行环境 \"{name}\" 执行索引已开始。"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Info"
 msgstr ""
 
 #: src/components/render-plugin-doc.tsx
-msgid "ini entries:"
-msgstr ""
+#~ msgid "ini entries:"
+#~ msgstr ""
 
 #: src/components/collection-header.tsx
 #: src/components/collection-info.tsx
-#: src/containers/ansible-role/role-detail.tsx
 msgid "Install"
 msgstr "安装"
 
@@ -3073,8 +3153,8 @@ msgid "Installation"
 msgstr "安装"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Installation:"
-msgstr "安装："
+#~ msgid "Installation:"
+#~ msgstr "安装："
 
 #: src/containers/execution-environment-detail/execution-environment-detail.tsx
 msgid "Instructions"
@@ -3120,23 +3200,26 @@ msgstr "关闭这个窗口是安全的。这些任务将在后台结束。"
 msgid "Items per page"
 msgstr ""
 
-#: src/containers/landing/landing-page.tsx
-msgid "Jump-start your automation project with great content from the Ansible community. Galaxy provides pre-packaged units of work known to Ansible as roles and collections."
+#: src/containers/pulp-status.tsx
+msgid "JSON"
 msgstr ""
 
+#: src/containers/landing/landing-page.tsx
+#~ msgid "Jump-start your automation project with great content from the Ansible community. Galaxy provides pre-packaged units of work known to Ansible as roles and collections."
+#~ msgstr ""
+
 #: src/components/render-plugin-doc.tsx
-msgid "Key"
-msgstr ""
+#~ msgid "Key"
+#~ msgstr ""
 
 #: src/containers/signature-keys/list.tsx
 msgid "Key fingerprint"
 msgstr "密钥指纹"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Keyboard Shortcuts"
-msgstr ""
+#~ msgid "Keyboard Shortcuts"
+#~ msgstr ""
 
-#: src/components/role-namespace-edit-modal.tsx
 #: src/containers/namespace-list/namespace-list.tsx
 msgid "keywords"
 msgstr "关键字"
@@ -3146,9 +3229,6 @@ msgstr "关键字"
 #: src/components/multi-search-search.tsx
 #: src/components/multi-search-search.tsx
 #: src/containers/ansible-repository/tab-collection-versions.tsx
-#: src/containers/ansible-role/namespace-detail.tsx
-#: src/containers/ansible-role/namespace-list.tsx
-#: src/containers/ansible-role/role-list.tsx
 msgid "Keywords"
 msgstr "关键字"
 
@@ -3157,6 +3237,11 @@ msgstr "关键字"
 #: src/containers/ansible-repository/tab-details.tsx
 msgid "Labels"
 msgstr "标签"
+
+#: src/containers/pulp-status.tsx
+#: src/containers/pulp-status.tsx
+msgid "Last heartbeat"
+msgstr ""
 
 #: src/components/collection-filter.ts
 #: src/containers/execution-environment-list/execution-environment-list.tsx
@@ -3168,8 +3253,6 @@ msgstr "最后修改"
 #~ msgstr ""
 
 #: src/components/user-form.tsx
-#: src/containers/group-management/group-detail.tsx
-#: src/containers/group-management/group-detail.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/user-management/user-list.tsx
@@ -3181,6 +3264,7 @@ msgstr "姓"
 #~ msgstr "最后同步"
 
 #: src/containers/execution-environment/registry-list.tsx
+#: src/containers/pulp-status.tsx
 msgid "Last updated"
 msgstr "最后更新"
 
@@ -3210,16 +3294,16 @@ msgstr "层"
 #~ msgstr "传统"
 
 #: src/components/lightspeed-modal.tsx
-msgid "Legacy namespace <0>{name}</0> is opted in to Ansible Lightspeed."
-msgstr "传统命名空间 <0>{name}</0> 被选择使用 Ansible Lightspeed。"
+#~ msgid "Legacy namespace <0>{name}</0> is opted in to Ansible Lightspeed."
+#~ msgstr "传统命名空间 <0>{name}</0> 被选择使用 Ansible Lightspeed。"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Legacy namespace <0>{name}</0> is opted in to Wisdom."
 #~ msgstr "Legacy namespace <0>{name}</0> is opted in to Wisdom."
 
 #: src/components/lightspeed-modal.tsx
-msgid "Legacy namespace <0>{name}</0> is opted out of Ansible Lightspeed."
-msgstr "传统命名空间 <0>{name}</0> 被选择不使用 Ansible Lightspeed。"
+#~ msgid "Legacy namespace <0>{name}</0> is opted out of Ansible Lightspeed."
+#~ msgstr "传统命名空间 <0>{name}</0> 被选择不使用 Ansible Lightspeed。"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Legacy namespace <0>{name}</0> is opted out of Wisdom."
@@ -3242,6 +3326,10 @@ msgstr "传统命名空间 <0>{name}</0> 被选择不使用 Ansible Lightspeed�
 #: src/components/collection-info.tsx
 msgid "License"
 msgstr "许可证"
+
+#: src/components/darkmode-switcher.tsx
+msgid "Light"
+msgstr ""
 
 #: src/components/remote-form.tsx
 msgid "Limits total download rate in requests per second."
@@ -3269,20 +3357,19 @@ msgstr "集合列表"
 #~ msgstr "传统角色列表"
 
 #: src/containers/ansible-role/namespace-list.tsx
-msgid "List of role namespaces"
-msgstr ""
+#~ msgid "List of role namespaces"
+#~ msgstr ""
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "List of roles"
-msgstr ""
+#~ msgid "List of roles"
+#~ msgstr ""
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "List of versions"
-msgstr "版本列表"
+#~ msgid "List of versions"
+#~ msgstr "版本列表"
 
-#: src/containers/token/token-insights.tsx
-#: src/containers/token/token-standalone.tsx
+#: src/containers/token/token.tsx
 msgid "Load token"
 msgstr "加载令牌"
 
@@ -3305,11 +3392,12 @@ msgid "Log In"
 msgstr "登录"
 
 #: src/containers/login/login.tsx
-msgid "Log in to your account"
-msgstr "登录到您的帐户"
+#~ msgid "Log in to your account"
+#~ msgstr "登录到您的帐户"
 
 #: src/components/login-link.tsx
-#: src/components/login-link.tsx
+#: src/containers/login/login.tsx
+#: src/menu.tsx
 msgid "Login"
 msgstr "登录"
 
@@ -3317,7 +3405,7 @@ msgstr "登录"
 msgid "Logo URL"
 msgstr "徽标 URL"
 
-#: src/loaders/standalone/layout.tsx
+#: src/layout.tsx
 msgid "Logout"
 msgstr "退出"
 
@@ -3348,16 +3436,16 @@ msgid "Manage tags"
 msgstr "管理标签"
 
 #: src/containers/token/token-insights.tsx
-msgid "Manage tokens"
-msgstr "Manage tokens"
+#~ msgid "Manage tokens"
+#~ msgstr "Manage tokens"
 
 #: src/containers/execution-environment-manifest/execution-environment-manifest.tsx
 msgid "Manifest lists are not currently supported on this screen, please use the <0>Images</0> tab to see manifest list details."
 msgstr "此屏幕目前不支持清单列表，请使用 <0>Images</0> 标签页来查看清单列表详细信息。"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Maybe you have automation for installing and configuring a popular software package, or for deploying software built by your company. Whatever it is, use Galaxy to share it with the community."
-msgstr ""
+#~ msgid "Maybe you have automation for installing and configuring a popular software package, or for deploying software built by your company. Whatever it is, use Galaxy to share it with the community."
+#~ msgstr ""
 
 #: src/containers/task-management/task-detail.tsx
 msgid "Message"
@@ -3388,8 +3476,8 @@ msgid "Must be an integer."
 msgstr "必须是整数。"
 
 #: src/containers/my-imports/my-imports.tsx
-msgid "My imports"
-msgstr "我的导入"
+#~ msgid "My imports"
+#~ msgstr "我的导入"
 
 #: src/containers/namespace-list/namespace-list.tsx
 msgid "My namespaces"
@@ -3397,7 +3485,7 @@ msgstr "我的命名空间"
 
 #: src/containers/settings/user-profile.tsx
 #: src/containers/settings/user-profile.tsx
-#: src/loaders/standalone/layout.tsx
+#: src/layout.tsx
 msgid "My profile"
 msgstr "我的配置集"
 
@@ -3416,8 +3504,6 @@ msgstr "我的配置集"
 #: src/components/repository-form.tsx
 #: src/components/repository-form.tsx
 #: src/components/role-form.tsx
-#: src/components/role-namespace-edit-modal.tsx
-#: src/components/role-namespace-modal.tsx
 #: src/components/select-group.tsx
 #: src/components/select-group.tsx
 #: src/components/select-roles.tsx
@@ -3426,9 +3512,6 @@ msgstr "我的配置集"
 #: src/components/select-user.tsx
 #: src/containers/ansible-repository/tab-distributions.tsx
 #: src/containers/ansible-repository/tab-distributions.tsx
-#: src/containers/ansible-role/namespace-detail.tsx
-#: src/containers/ansible-role/namespace-list.tsx
-#: src/containers/ansible-role/role-list.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
@@ -3439,6 +3522,8 @@ msgstr "我的配置集"
 #: src/containers/group-management/group-detail-role-management/group-detail-role-management.tsx
 #: src/containers/group-management/group-detail-role-management/group-detail-role-management.tsx
 #: src/containers/namespace-list/namespace-list.tsx
+#: src/containers/pulp-status.tsx
+#: src/containers/pulp-status.tsx
 #: src/containers/signature-keys/list.tsx
 #: src/containers/signature-keys/list.tsx
 #: src/containers/signature-keys/list.tsx
@@ -3475,10 +3560,9 @@ msgstr "名称不能为空。"
 #: src/components/collection-filter.ts
 #: src/components/import-list.tsx
 #: src/containers/ansible-repository/tab-collection-versions.tsx
-#: src/containers/ansible-role/role-list.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Namespace"
 msgstr "命名空间"
 
@@ -3491,16 +3575,16 @@ msgid "Namespace \"{name}\" has been successfully deleted."
 msgstr "命名空间 \"{name}\" 已被成功删除。"
 
 #: src/components/lightspeed-modal.tsx
-msgid "Namespace <0>{name}</0> is opted in to Ansible Lightspeed."
-msgstr "命名空间 <0>{name}</0> 被选择使用 Ansible Lightspeed。"
+#~ msgid "Namespace <0>{name}</0> is opted in to Ansible Lightspeed."
+#~ msgstr "命名空间 <0>{name}</0> 被选择使用 Ansible Lightspeed。"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Namespace <0>{name}</0> is opted in to Wisdom."
 #~ msgstr "Namespace <0>{name}</0> is opted in to Wisdom."
 
 #: src/components/lightspeed-modal.tsx
-msgid "Namespace <0>{name}</0> is opted out of Ansible Lightspeed."
-msgstr "命名空间 <0>{name}</0> 被选择不使用 Ansible Lightspeed。"
+#~ msgid "Namespace <0>{name}</0> is opted out of Ansible Lightspeed."
+#~ msgstr "命名空间 <0>{name}</0> 被选择不使用 Ansible Lightspeed。"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Namespace <0>{name}</0> is opted out of Wisdom."
@@ -3511,11 +3595,10 @@ msgstr "命名空间 <0>{name}</0> 被选择不使用 Ansible Lightspeed。"
 #~ msgstr "命名空间标头"
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "Namespace list"
-msgstr ""
+#~ msgid "Namespace list"
+#~ msgstr ""
 
 #: src/components/namespace-modal.tsx
-#: src/components/role-import-form.tsx
 msgid "Namespace name"
 msgstr "命名空间名称"
 
@@ -3533,11 +3616,17 @@ msgstr "命名空间名称限制为字母数字字符和下划线，长度最少
 #~ msgid "Namespace successfully edited."
 #~ msgstr "Namespace successfully edited."
 
+#: src/containers/collection-detail/collection-content.tsx
+#: src/containers/collection-detail/collection-dependencies.tsx
+#: src/containers/collection-detail/collection-detail.tsx
+#: src/containers/collection-detail/collection-distributions.tsx
+#: src/containers/collection-detail/collection-docs.tsx
+#: src/containers/collection-detail/collection-import-log.tsx
+#: src/containers/edit-namespace/edit-namespace.tsx
+#: src/containers/namespace-detail/namespace-detail.tsx
 #: src/containers/namespace-list/namespace-list.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
-#: src/loaders/standalone/menu.tsx
-#: src/paths.ts
 msgid "Namespaces"
 msgstr "命名空间"
 
@@ -3547,7 +3636,6 @@ msgstr "命名空间"
 msgid "Namespaces list could not be displayed."
 msgstr "无法显示命名空间列表。"
 
-#: src/components/role-namespace-edit-modal.tsx
 #: src/containers/namespace-list/namespace-list.tsx
 msgid "Namespaces will appear once created"
 msgstr "命名空间在创建后会出现"
@@ -3561,8 +3649,8 @@ msgid "Needs review"
 msgstr "需要审核"
 
 #: src/containers/ansible-repository/list.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Needs Review"
 msgstr "需要审核"
 
@@ -3601,8 +3689,8 @@ msgid "No activities yet"
 msgstr "还没有活动"
 
 #: src/components/render-plugin-doc.tsx
-msgid "No alternatives specified."
-msgstr ""
+#~ msgid "No alternatives specified."
+#~ msgstr ""
 
 #: src/components/select-group.tsx
 msgid "No assignable groups."
@@ -3671,15 +3759,14 @@ msgid "No images yet"
 msgstr "还没有镜像"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "No import logs for role id {0}"
-msgstr ""
+#~ msgid "No import logs for role id {0}"
+#~ msgstr ""
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "No import logs were found for the role."
-msgstr ""
+#~ msgid "No import logs were found for the role."
+#~ msgstr ""
 
 #: src/components/import-list.tsx
-#: src/components/role-import-list.tsx
 msgid "No imports"
 msgstr "没有导入"
 
@@ -3687,47 +3774,50 @@ msgstr "没有导入"
 #~ msgid "No local repositories yet"
 #~ msgstr "No local repositories yet"
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "No managed collections yet"
 msgstr "还没有受管集合"
 
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
 msgid "No matching collections found."
 msgstr ""
 
 #: src/containers/search/multi-search.tsx
-msgid "No matching execution environments found."
+msgid "No matching containers found."
 msgstr ""
+
+#: src/containers/search/multi-search.tsx
+#~ msgid "No matching execution environments found."
+#~ msgstr ""
 
 #: src/containers/not-found/dispatch.tsx
 #~ msgid "No matching legacy roles found."
 #~ msgstr ""
 
 #: src/components/role-import-form.tsx
-msgid "No matching namespace found"
-msgstr ""
+#~ msgid "No matching namespace found"
+#~ msgstr ""
 
 #: src/containers/search/multi-search.tsx
 msgid "No matching namespaces found."
 msgstr ""
 
 #: src/containers/search/multi-search.tsx
-msgid "No matching role namespaces found."
-msgstr ""
+#~ msgid "No matching role namespaces found."
+#~ msgstr ""
 
 #: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
-msgid "No matching roles found."
-msgstr ""
+#~ msgid "No matching roles found."
+#~ msgstr ""
 
 #: src/components/import-list.tsx
 msgid "No namespace selected."
 msgstr "没有选择命名空间。"
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "No namespaces found"
-msgstr ""
+#~ msgid "No namespaces found"
+#~ msgstr ""
 
 #: src/containers/namespace-list/namespace-list.tsx
 msgid "No namespaces yet"
@@ -3751,8 +3841,8 @@ msgid "No README"
 msgstr "没有 README"
 
 #: src/components/render-plugin-doc.tsx
-msgid "No reason specified."
-msgstr ""
+#~ msgid "No reason specified."
+#~ msgstr ""
 
 #: src/containers/ansible-repository/list.tsx
 msgid "no remote"
@@ -3787,13 +3877,13 @@ msgid "No results match the filter criteria. Try changing your filter settings."
 msgstr "没有结果与过滤条件匹配。尝试更改过滤器设置。"
 
 #: src/containers/ansible-role/namespace-list.tsx
-msgid "No role namespaces yet"
-msgstr ""
+#~ msgid "No role namespaces yet"
+#~ msgstr ""
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "No roles yet"
-msgstr "还没有角色"
+#~ msgid "No roles yet"
+#~ msgstr "还没有角色"
 
 #: src/containers/signature-keys/list.tsx
 msgid "No signature keys yet"
@@ -3829,8 +3919,8 @@ msgid "No version of {fqn} exists that matches {version_range}."
 msgstr "不存在与 {version_range} 匹配的 {fqn} 版本。"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "No versions"
-msgstr "没有版本"
+#~ msgid "No versions"
+#~ msgstr "没有版本"
 
 #: src/components/ansible-repository-form.tsx
 #: src/components/ansible-repository-form.tsx
@@ -3838,8 +3928,6 @@ msgstr "没有版本"
 #: src/components/pulp-labels.tsx
 #: src/components/repository-form.tsx
 #: src/components/repository-form.tsx
-#: src/components/role-namespace-edit-modal.tsx
-#: src/components/role-namespace-edit-modal.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
@@ -3850,6 +3938,7 @@ msgstr "没有版本"
 #: src/containers/ansible-repository/tab-details.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
+#: src/containers/pulp-status.tsx
 msgid "None"
 msgstr "无"
 
@@ -3858,16 +3947,19 @@ msgstr "无"
 msgid "Not a super user"
 msgstr "不是一个超级用户"
 
+#: src/containers/pulp-status.tsx
+msgid "Not enabled"
+msgstr ""
+
 #: src/components/permission-chip-selector.tsx
 #: src/components/typeahead.tsx
 #: src/containers/collection-detail/collection-docs.tsx
-#: src/containers/not-found/dispatch.tsx
 msgid "Not found"
 msgstr "未找到"
 
 #: src/containers/not-found/not-found.tsx
-msgid "Not found image"
-msgstr "未找到镜像"
+#~ msgid "Not found image"
+#~ msgstr "未找到镜像"
 
 #: src/components/collection-usedby-dependencies-list.tsx
 msgid "Not required for use by other collections"
@@ -3883,8 +3975,8 @@ msgstr "其他集合不需要使用"
 
 #: src/components/render-plugin-doc.tsx
 #: src/components/render-plugin-doc.tsx
-msgid "Notes"
-msgstr ""
+#~ msgid "Notes"
+#~ msgstr ""
 
 #: src/components/remote-form.tsx
 msgid "Number must be greater than 0"
@@ -3895,8 +3987,20 @@ msgid "of"
 msgstr "的"
 
 #: src/containers/token/token-insights.tsx
-msgid "Offline token"
-msgstr "Offline token"
+#~ msgid "Offline token"
+#~ msgstr "Offline token"
+
+#: src/containers/pulp-status.tsx
+msgid "Online api apps"
+msgstr ""
+
+#: src/containers/pulp-status.tsx
+msgid "Online content apps"
+msgstr ""
+
+#: src/containers/pulp-status.tsx
+msgid "Online workers"
+msgstr ""
 
 #: src/actions/ansible-repository-sync.tsx
 msgid "Only perform the sync if changes are reported by the remote server."
@@ -3920,8 +4024,8 @@ msgstr ""
 
 #: src/components/lightspeed-modal.tsx
 #: src/components/lightspeed-modal.tsx
-msgid "Opt in to Ansible Lightspeed"
-msgstr "选择使用 Ansible Lightspeed"
+#~ msgid "Opt in to Ansible Lightspeed"
+#~ msgstr "选择使用 Ansible Lightspeed"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #: src/components/wisdom-modal/wisdom-modal.tsx
@@ -3930,8 +4034,8 @@ msgstr "选择使用 Ansible Lightspeed"
 
 #: src/components/lightspeed-modal.tsx
 #: src/components/lightspeed-modal.tsx
-msgid "Opt out of Ansible Lightspeed"
-msgstr "选择不再使用 Ansible Lightspeed"
+#~ msgid "Opt out of Ansible Lightspeed"
+#~ msgstr "选择不再使用 Ansible Lightspeed"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #: src/components/wisdom-modal/wisdom-modal.tsx
@@ -3942,8 +4046,21 @@ msgstr "选择不再使用 Ansible Lightspeed"
 msgid "Optimize"
 msgstr ""
 
+#: src/containers/pulp-status.tsx
+msgid "Origin"
+msgstr ""
+
+#: src/containers/task-management/task-list-view.tsx
 #: src/utilities/translate-task.ts
 msgid "Orphan cleanup"
+msgstr ""
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Orphan cleanup could not be started"
+msgstr ""
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Orphan cleanup started"
 msgstr ""
 
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
@@ -3951,12 +4068,12 @@ msgid "OS / Arch"
 msgstr "OS/ Arch"
 
 #: src/components/role-import-form.tsx
-msgid "Overrides any galaxy_info.namespace metadata"
-msgstr ""
+#~ msgid "Overrides any galaxy_info.namespace metadata"
+#~ msgstr ""
 
 #: src/components/role-import-form.tsx
-msgid "Overrides any galaxy_info.role_name metadata"
-msgstr ""
+#~ msgid "Overrides any galaxy_info.role_name metadata"
+#~ msgstr ""
 
 #: src/components/execution-environment-header/execution-environment-header.tsx
 #: src/components/execution-environment-header/execution-environment-header.tsx
@@ -3972,13 +4089,13 @@ msgid "Pagination"
 msgstr ""
 
 #: src/components/render-plugin-doc.tsx
-msgid "Parameter"
-msgstr ""
+#~ msgid "Parameter"
+#~ msgstr ""
 
 #: src/components/render-plugin-doc.tsx
 #: src/components/render-plugin-doc.tsx
-msgid "Parameters"
-msgstr ""
+#~ msgid "Parameters"
+#~ msgstr ""
 
 #: src/containers/task-management/task-detail.tsx
 msgid "Parent task"
@@ -3994,8 +4111,8 @@ msgstr "父任务"
 
 #: src/containers/namespace-list/namespace-list.tsx
 #: src/paths.ts
-msgid "Partners"
-msgstr "Partners"
+#~ msgid "Partners"
+#~ msgstr "Partners"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/remote-form.tsx
@@ -4011,9 +4128,13 @@ msgstr "确认密码"
 msgid "Passwords do not match"
 msgstr "密码不匹配"
 
-#: src/containers/not-found/dispatch.tsx
-msgid "Pathname <0>{pathname}</0> could refer to a collection or a role."
+#: src/containers/pulp-status.tsx
+msgid "Path prefix"
 msgstr ""
+
+#: src/containers/not-found/dispatch.tsx
+#~ msgid "Pathname <0>{pathname}</0> could refer to a collection or a role."
+#~ msgstr ""
 
 #: src/components/status-indicator.tsx
 msgid "Pending"
@@ -4134,8 +4255,8 @@ msgid "Please use a jpeg or png; svg images are not supported."
 msgstr ""
 
 #: src/containers/landing/landing-page.tsx
-msgid "Please, check it running the command:"
-msgstr ""
+#~ msgid "Please, check it running the command:"
+#~ msgstr ""
 
 #: src/components/namespace-modal.tsx
 msgid "Please, provide the namespace name"
@@ -4158,8 +4279,8 @@ msgid "Preview"
 msgstr "预览"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Privacy statement"
-msgstr ""
+#~ msgid "Privacy statement"
+#~ msgstr ""
 
 #: src/containers/ansible-repository/list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
@@ -4202,8 +4323,8 @@ msgid "Provided by <0>{nsTitle}</0>"
 msgstr ""
 
 #: src/containers/ansible-role/namespace-list.tsx
-msgid "Provider"
-msgstr ""
+#~ msgid "Provider"
+#~ msgstr ""
 
 #: src/components/remote-form.tsx
 msgid "Proxy password"
@@ -4244,7 +4365,7 @@ msgstr ""
 msgid "Pull this image"
 msgstr "拉取此镜像"
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "Pulp Ansible Version"
 msgstr "Pulp Ansible 版本"
 
@@ -4272,7 +4393,7 @@ msgstr "Pulp Ansible 版本"
 #~ msgid "Pulp ansible: Update collection remote"
 #~ msgstr "Pulp ansible：更新集合远程"
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "Pulp Container Version"
 msgstr ""
 
@@ -4304,7 +4425,7 @@ msgstr ""
 #~ msgid "Pulp container: Untage image"
 #~ msgstr "Pulp 容器：为标签的镜像"
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "Pulp Core Version"
 msgstr ""
 
@@ -4372,9 +4493,25 @@ msgstr "Pulp 类型"
 #~ msgid "Pulpcore: Upload commit"
 #~ msgstr "Pulpcore：上传提交"
 
-#: src/utilities/translate-locked-role.ts
-msgid "Push and change execution environments."
+#: src/containers/task-management/task-list-view.tsx
+msgid "Purge tasks"
 msgstr ""
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Purge Tasks could not be started"
+msgstr ""
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Purge Tasks started"
+msgstr ""
+
+#: src/utilities/translate-locked-role.ts
+msgid "Push and change containers."
+msgstr ""
+
+#: src/utilities/translate-locked-role.ts
+#~ msgid "Push and change execution environments."
+#~ msgstr ""
 
 #: src/containers/execution-environment-list/execution-environment-list.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
@@ -4402,20 +4539,24 @@ msgstr "推容器镜像"
 #~ msgstr "推送和更改执行环境。"
 
 #: src/utilities/translate-locked-role.ts
-msgid "Push, delete and change execution environments. Create, delete and change remote registries."
+msgid "Push, delete and change containers. Create, delete and change remote registries."
 msgstr ""
+
+#: src/utilities/translate-locked-role.ts
+#~ msgid "Push, delete and change execution environments. Create, delete and change remote registries."
+#~ msgstr ""
 
 #: src/constants.tsx
 #~ msgid "Push, delete, and change execution environments. Create, delete and change remote registries."
 #~ msgstr "推送、删除和更改执行环境。创建、删除和更改远程 registry。"
 
 #: src/components/ratings.tsx
-msgid "Quality of docs"
-msgstr ""
+#~ msgid "Quality of docs"
+#~ msgstr ""
 
 #: src/components/ratings.tsx
-msgid "Quality score"
-msgstr ""
+#~ msgid "Quality score"
+#~ msgstr ""
 
 #: src/containers/ansible-remote/tab-details.tsx
 msgid "Rate limit"
@@ -4434,8 +4575,8 @@ msgid "Readme"
 msgstr "Readme"
 
 #: src/components/ratings.tsx
-msgid "Ready for production"
-msgstr ""
+#~ msgid "Ready for production"
+#~ msgstr ""
 
 #: src/components/tag-manifest-modal.tsx
 msgid "Reason: task {0}"
@@ -4450,11 +4591,15 @@ msgid "Recursive remove content"
 msgstr ""
 
 #: src/components/repository-badge.tsx
-msgid "Red Hat Certified"
-msgstr "红帽认证"
+#~ msgid "Red Hat Certified"
+#~ msgstr "红帽认证"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Red Hat is working on exciting new Ansible content development capabilities within the context of <0>Ansible Lightspeed</0> to help other automators build Ansible content. Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations. If you have concerns, please contact the Ansible team at <1>ansible-content-ai@redhat.com</1>"
+#~ msgid "Red Hat is working on exciting new Ansible content development capabilities within the context of <0>Ansible Lightspeed</0> to help other automators build Ansible content. Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations. If you have concerns, please contact the Ansible team at <1>ansible-content-ai@redhat.com</1>"
+#~ msgstr ""
+
+#: src/containers/pulp-status.tsx
+msgid "Redis connection"
 msgstr ""
 
 #: src/components/repository-form.tsx
@@ -4484,8 +4629,8 @@ msgstr "拒绝"
 #: src/components/approval-row.tsx
 #: src/components/repository-badge.tsx
 #: src/containers/ansible-repository/list.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Rejected"
 msgstr "拒绝"
 
@@ -4503,8 +4648,8 @@ msgstr "拒绝"
 #~ msgstr "released {0}"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Released <0/>"
-msgstr "发布的 <0/>"
+#~ msgid "Released <0/>"
+#~ msgstr "发布的 <0/>"
 
 #: src/components/ansible-repository-form.tsx
 #: src/containers/ansible-repository/list.tsx
@@ -4530,8 +4675,8 @@ msgid "Remote registries"
 msgstr ""
 
 #: src/loaders/standalone/menu.tsx
-msgid "Remote Registries"
-msgstr "远程注册表"
+#~ msgid "Remote Registries"
+#~ msgstr "远程注册表"
 
 #: src/containers/execution-environment/registry-list.tsx
 msgid "Remote registry \"{name}\" could not be deleted."
@@ -4552,7 +4697,7 @@ msgstr "远程 \"{name}\" 已被成功删除。"
 #: src/containers/ansible-remote/detail.tsx
 #: src/containers/ansible-remote/edit.tsx
 #: src/containers/ansible-remote/list.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Remotes"
 msgstr "远程"
 
@@ -4631,8 +4776,20 @@ msgstr "从组中删除用户？"
 msgid "Remove version {version} from repository"
 msgstr ""
 
+#: src/containers/task-management/task-list-view.tsx
+msgid "Repair"
+msgstr ""
+
 #: src/utilities/translate-task.ts
 msgid "Repair all artifacts"
+msgstr ""
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Repair Artifact Storage could not be started"
+msgstr ""
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Repair Artifact Storage started"
 msgstr ""
 
 #: src/utilities/translate-task.ts
@@ -4656,7 +4813,7 @@ msgstr "仓库"
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/ansible-repository/edit.tsx
 #: src/containers/ansible-repository/list.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Repositories"
 msgstr "软件仓库"
 
@@ -4678,7 +4835,7 @@ msgstr "仓库在创建后会出现。"
 #: src/components/import-modal.tsx
 #: src/components/multiple-repo-selector.tsx
 #: src/components/repository-badge.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Repository"
 msgstr "仓库"
 
@@ -4726,12 +4883,12 @@ msgid "Repository versions will appear once the repository is modified."
 msgstr "修改仓库后会出现仓库版本。"
 
 #: src/components/render-plugin-doc.tsx
-msgid "required"
-msgstr ""
+#~ msgid "required"
+#~ msgstr ""
 
 #: src/components/render-plugin-doc.tsx
-msgid "Requirements"
-msgstr ""
+#~ msgid "Requirements"
+#~ msgstr ""
 
 #: src/components/collection-info.tsx
 msgid "Requires Ansible"
@@ -4745,6 +4902,7 @@ msgstr "需要超级用户权限进行编辑。"
 msgid "Reserve resources"
 msgstr "保留资源"
 
+#: src/components/darkmode-switcher.tsx
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Reset"
 msgstr ""
@@ -4767,12 +4925,12 @@ msgstr "保留版本计数"
 
 #: src/components/render-plugin-doc.tsx
 #: src/components/render-plugin-doc.tsx
-msgid "Return Values"
-msgstr ""
+#~ msgid "Return Values"
+#~ msgstr ""
 
 #: src/components/render-plugin-doc.tsx
-msgid "Returned"
-msgstr ""
+#~ msgid "Returned"
+#~ msgstr ""
 
 #: src/actions/ansible-repository-version-revert.tsx
 msgid "Revert"
@@ -4834,16 +4992,14 @@ msgstr "角色 {0} 已成功添加到 {1}。"
 #~ msgstr "角色标头"
 
 #: src/containers/ansible-role/imports.tsx
-msgid "Role imports"
-msgstr ""
+#~ msgid "Role imports"
+#~ msgstr ""
 
 #: src/loaders/standalone/menu.tsx
-msgid "Role Imports"
-msgstr ""
+#~ msgid "Role Imports"
+#~ msgstr ""
 
 #: src/components/role-form.tsx
-#: src/components/role-import-form.tsx
-#: src/components/role-sync-form.tsx
 #: src/containers/role-management/role-list.tsx
 #: src/containers/role-management/role-list.tsx
 #: src/containers/role-management/role-list.tsx
@@ -4851,8 +5007,8 @@ msgid "Role name"
 msgstr "角色名称"
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "Role namespace"
-msgstr ""
+#~ msgid "Role namespace"
+#~ msgstr ""
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #~ msgid "Role namespace header"
@@ -4862,39 +5018,32 @@ msgstr ""
 #: src/containers/namespace-detail/namespace-detail.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
-msgid "Role namespaces"
-msgstr ""
+#~ msgid "Role namespaces"
+#~ msgstr ""
 
 #: src/loaders/standalone/menu.tsx
-msgid "Role Namespaces"
-msgstr ""
+#~ msgid "Role Namespaces"
+#~ msgstr ""
 
 #: src/containers/ansible-role/namespace-list.tsx
-msgid "Role namespaces will appear once created or roles are imported"
-msgstr ""
+#~ msgid "Role namespaces will appear once created or roles are imported"
+#~ msgstr ""
 
 #: src/components/legacy-role-list/legacy-role-item.tsx
 #: src/containers/legacy-roles/legacy-role.tsx
 #~ msgid "role.github_user logo"
 #~ msgstr "role.github_user logo"
 
-#: src/containers/ansible-role/role-detail.tsx
-#: src/containers/ansible-role/role-list.tsx
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/role-management/role-create.tsx
 #: src/containers/role-management/role-edit.tsx
 #: src/containers/role-management/role-list.tsx
-#: src/containers/search/multi-search.tsx
-#: src/containers/search/multi-search.tsx
-#: src/loaders/standalone/menu.tsx
-#: src/loaders/standalone/menu.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Roles"
 msgstr "角色"
 
 #: src/containers/not-found/dispatch.tsx
-msgid "Roles are not currently enabled."
-msgstr ""
+#~ msgid "Roles are not currently enabled."
+#~ msgstr ""
 
 #: src/containers/role-management/role-list.tsx
 msgid "Roles list could not be displayed."
@@ -4906,27 +5055,24 @@ msgstr ""
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "Roles will appear once imported"
-msgstr "角色在导入后将显示"
+#~ msgid "Roles will appear once imported"
+#~ msgstr "角色在导入后将显示"
 
 #: src/components/import-list.tsx
-#: src/components/role-import-list.tsx
-#: src/components/role-import-list.tsx
 #: src/components/status-indicator.tsx
 #: src/containers/task-management/task-list-view.tsx
 msgid "Running"
 msgstr "运行中"
 
 #: src/components/render-plugin-doc.tsx
-msgid "sample:"
-msgstr ""
+#~ msgid "sample:"
+#~ msgstr ""
 
 #: src/components/ansible-repository-form.tsx
 #: src/components/group-modal.tsx
 #: src/components/remote-form.tsx
 #: src/components/repository-form.tsx
 #: src/components/role-form.tsx
-#: src/components/role-namespace-edit-modal.tsx
 #: src/components/tag-manifest-modal.tsx
 #: src/components/user-form.tsx
 #: src/containers/edit-namespace/edit-namespace.tsx
@@ -4936,8 +5082,13 @@ msgstr "保存"
 
 #: src/containers/execution-environment-detail/base.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-msgid "Saved changes to execution environment \"{0}\"."
-msgstr "已保存对执行环境 \"{0}\" 的变化。"
+msgid "Saved changes to container \"{0}\"."
+msgstr ""
+
+#: src/containers/execution-environment-detail/base.tsx
+#: src/containers/execution-environment-list/execution-environment-list.tsx
+#~ msgid "Saved changes to execution environment \"{0}\"."
+#~ msgstr "已保存对执行环境 \"{0}\" 的变化。"
 
 #: src/containers/execution-environment-list/execution_environment_list.tsx
 #~ msgid "Saved changes to execution environment \"{name}\"."
@@ -4948,8 +5099,8 @@ msgid "Saved changes to namespace \"{0}\"."
 msgstr "保存对命名空间 \"{0}\" 的更改。"
 
 #: src/containers/settings/user-profile.tsx
-msgid "Saved changes to user \"{username}\"."
-msgstr "保存对用户 \"{username}\" 的更改。"
+#~ msgid "Saved changes to user \"{username}\"."
+#~ msgstr "保存对用户 \"{username}\" 的更改。"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Scroll back"
@@ -4965,7 +5116,7 @@ msgstr "滚动至末尾"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/containers/search/multi-search.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Search"
 msgstr ""
 
@@ -5100,8 +5251,8 @@ msgid "Selected group"
 msgstr "选择的组"
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "Selected provider namespace"
-msgstr ""
+#~ msgid "Selected provider namespace"
+#~ msgstr ""
 
 #: src/components/select-roles.tsx
 msgid "Selected roles"
@@ -5116,14 +5267,14 @@ msgid "Server error. Please come back later."
 msgstr "服务器错误。请稍后返回。"
 
 #: src/containers/token/token-insights.tsx
-msgid "Server URL"
-msgstr "Server URL"
+#~ msgid "Server URL"
+#~ msgstr "Server URL"
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Server URL could not be displayed."
 #~ msgstr "Server URL could not be displayed."
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "Server version"
 msgstr "服务器版本"
 
@@ -5136,15 +5287,13 @@ msgid "Settings"
 msgstr "设置"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Share"
-msgstr ""
+#~ msgid "Share"
+#~ msgstr ""
 
 #: src/components/remote-form.tsx
 msgid "Show advanced options"
 msgstr "显示高级选项"
 
-#: src/containers/not-found/dispatch.tsx
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
 msgid "Show all collections"
@@ -5152,8 +5301,13 @@ msgstr ""
 
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
-msgid "Show all execution environments"
+msgid "Show all containers"
 msgstr ""
+
+#: src/containers/search/multi-search.tsx
+#: src/containers/search/multi-search.tsx
+#~ msgid "Show all execution environments"
+#~ msgstr ""
 
 #: src/containers/not-found/dispatch.tsx
 #: src/containers/not-found/dispatch.tsx
@@ -5167,15 +5321,15 @@ msgstr ""
 
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
-msgid "Show all role namespaces"
-msgstr ""
+#~ msgid "Show all role namespaces"
+#~ msgstr ""
 
 #: src/containers/not-found/dispatch.tsx
 #: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
-msgid "Show all roles"
-msgstr ""
+#~ msgid "Show all roles"
+#~ msgstr ""
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Show content"
@@ -5191,20 +5345,24 @@ msgid "Show more collections"
 msgstr ""
 
 #: src/containers/search/multi-search.tsx
-msgid "Show more execution environments"
+msgid "Show more containers"
 msgstr ""
+
+#: src/containers/search/multi-search.tsx
+#~ msgid "Show more execution environments"
+#~ msgstr ""
 
 #: src/containers/search/multi-search.tsx
 msgid "Show more namespaces"
 msgstr ""
 
 #: src/containers/search/multi-search.tsx
-msgid "Show more role namespaces"
-msgstr ""
+#~ msgid "Show more role namespaces"
+#~ msgstr ""
 
 #: src/containers/search/multi-search.tsx
-msgid "Show more roles"
-msgstr ""
+#~ msgid "Show more roles"
+#~ msgstr ""
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Show password"
@@ -5275,7 +5433,7 @@ msgstr "签名"
 msgid "Signature keys"
 msgstr "签名密钥"
 
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Signature Keys"
 msgstr "签名密钥"
 
@@ -5362,7 +5520,6 @@ msgid "Sort results"
 msgstr "对结果进行排序"
 
 #: src/components/remote-form.tsx
-#: src/containers/token/token-insights.tsx
 msgid "SSO URL"
 msgstr "SSO URL"
 
@@ -5376,10 +5533,9 @@ msgid "Staging Repos"
 msgstr ""
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Start editing"
-msgstr ""
+#~ msgid "Start editing"
+#~ msgstr ""
 
-#: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/remote-form.tsx
 msgid "Start from scratch"
 msgstr "从头开始"
@@ -5410,13 +5566,14 @@ msgstr "状态"
 
 #: src/components/import-list.tsx
 #: src/components/import-list.tsx
-#: src/components/role-import-list.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/pulp-status.tsx
 #: src/containers/task-management/task-list-view.tsx
 #: src/containers/task-management/task-list-view.tsx
 #: src/containers/task-management/task-list-view.tsx
+#: src/menu.tsx
 msgid "Status"
 msgstr "状态"
 
@@ -5435,6 +5592,11 @@ msgstr "停止任务"
 msgid "Stop task?"
 msgstr "停止任务？"
 
+#: src/containers/pulp-status.tsx
+#: src/containers/pulp-status.tsx
+msgid "Storage"
+msgstr ""
+
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Success"
 msgstr ""
@@ -5448,11 +5610,11 @@ msgstr ""
 #~ msgstr "Success: {name} was deleted"
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "Successfully changed provider namespace."
-msgstr ""
+#~ msgid "Successfully changed provider namespace."
+#~ msgstr ""
 
 #: src/actions/ansible-repository-copy.tsx
-#: src/components/hub-copy-button.tsx
+#: src/components/pulp-copy-button.tsx
 msgid "Successfully copied to clipboard"
 msgstr "成功复制至剪贴板"
 
@@ -5469,12 +5631,12 @@ msgid "Successfully created repository {0}"
 msgstr "成功创建仓库 {0}"
 
 #: src/components/role-namespace-modal.tsx
-msgid "Successfully created role namespace {name}"
-msgstr ""
+#~ msgid "Successfully created role namespace {name}"
+#~ msgstr ""
 
 #: src/components/role-import-form.tsx
-msgid "Successfully created role namespace {user}"
-msgstr ""
+#~ msgid "Successfully created role namespace {user}"
+#~ msgstr ""
 
 #: src/components/headers/collection-header.tsx
 #~ msgid "Successfully deleted collection version."
@@ -5526,10 +5688,16 @@ msgstr "超级用户无法禁用自身。"
 msgid "Super users have all system permissions regardless of what groups they are in."
 msgstr "超级用户具有所有系统权限，无论他们所在的组是什么。"
 
+#: src/components/darkmode-switcher.tsx
+msgid "Switch to dark mode"
+msgstr ""
+
+#: src/components/darkmode-switcher.tsx
+msgid "Switch to light mode"
+msgstr ""
+
 #: src/actions/ansible-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
-#: src/components/role-sync-form.tsx
-#: src/containers/search/search.tsx
 msgid "Sync"
 msgstr "同步"
 
@@ -5556,16 +5724,20 @@ msgstr ""
 
 #: src/containers/ansible-role/role-list.tsx
 #: src/containers/ansible-role/role-sync.tsx
-msgid "Sync role"
-msgstr ""
+#~ msgid "Sync role"
+#~ msgstr ""
 
 #: src/components/role-sync-form.tsx
-msgid "Sync started"
+#~ msgid "Sync started"
+#~ msgstr ""
+
+#: src/containers/execution-environment-list/execution-environment-list.tsx
+msgid "Sync started for container \"{name}\"."
 msgstr ""
 
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-msgid "Sync started for execution environment \"{name}\"."
-msgstr "执行环境 \"{name}\" 的同步开始。"
+#~ msgid "Sync started for execution environment \"{name}\"."
+#~ msgstr "执行环境 \"{name}\" 的同步开始。"
 
 #: src/containers/execution-environment-detail/base.tsx
 #: src/containers/execution-environment/registry-list.tsx
@@ -5597,8 +5769,8 @@ msgstr ""
 #~ msgstr ""
 
 #: src/containers/token/token-insights.tsx
-msgid "Synclists are deprecated in AAP 2.4 and will be removed in a future release, use client-side <0>requirements.yml</0> instead."
-msgstr ""
+#~ msgid "Synclists are deprecated in AAP 2.4 and will be removed in a future release, use client-side <0>requirements.yml</0> instead."
+#~ msgstr ""
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Synclists are deprecated in AAP 2.4 and will be removed in a future release, use client-side <0>requirements.yml</0> instead.<1/>If you're using sync toggles with AAP 2.3 or older, you will need to use a different URL:"
@@ -5606,8 +5778,8 @@ msgstr ""
 
 #: src/components/render-plugin-doc.tsx
 #: src/components/render-plugin-doc.tsx
-msgid "Synopsis"
-msgstr ""
+#~ msgid "Synopsis"
+#~ msgstr ""
 
 #: src/components/collection-filter.ts
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
@@ -5625,8 +5797,8 @@ msgstr ""
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "Tags"
-msgstr "标签"
+#~ msgid "Tags"
+#~ msgstr "标签"
 
 #: src/components/publish-to-controller-modal.tsx
 #~ msgid "Tags could not be displayed."
@@ -5673,7 +5845,7 @@ msgstr "任务列表"
 msgid "Task management"
 msgstr "任务管理"
 
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Task Management"
 msgstr "任务管理"
 
@@ -5704,12 +5876,12 @@ msgstr "任务在创建后将显示。"
 
 #: src/containers/landing/landing-page.tsx
 #: src/containers/landing/landing-page.tsx
-msgid "Terms of use"
-msgstr ""
+#~ msgid "Terms of use"
+#~ msgstr ""
 
 #: src/loaders/standalone/menu.tsx
-msgid "Terms of Use"
-msgstr "使用条款"
+#~ msgid "Terms of Use"
+#~ msgstr "使用条款"
 
 #: src/components/namespace-form.tsx
 msgid "Text: {0}"
@@ -5735,7 +5907,7 @@ msgstr "\"{0} {1} v{2}\" 的证书不能被保存。"
 msgid "The certificate for \"{0} {1} v{2}\" is being uploaded."
 msgstr "\"{0} {1} v{2}\" 的证书正在上传。"
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "The certificate for \"{namespace} {name} v{version}\" could not be saved."
 msgstr "\"{namespace} {name} v{version}\" 的证书不能被保存。"
 
@@ -5772,20 +5944,20 @@ msgid "The collection you have selected doesn't appear to match {0}"
 msgstr "您选择的集合没与 {0} 不匹配"
 
 #: src/components/render-plugin-doc.tsx
-msgid "The documentation object for this plugin seems to contain invalid syntax that makes it impossible for Automation Hub to parse. You can still look at the unformatted documentation object bellow if you need to."
-msgstr ""
+#~ msgid "The documentation object for this plugin seems to contain invalid syntax that makes it impossible for Automation Hub to parse. You can still look at the unformatted documentation object bellow if you need to."
+#~ msgstr ""
 
 #: src/containers/collection-detail/collection-docs.tsx
 msgid "The file is not available for this version of {collectionName}"
 msgstr "文件不适用于 {collectionName} 的这个版本"
 
 #: src/components/lightspeed-modal.tsx
-msgid "The following legacy namespace will be opted in to Ansible Lightspeed:"
-msgstr "以下传统命名空间将选择 Ansible Lightspeed："
+#~ msgid "The following legacy namespace will be opted in to Ansible Lightspeed:"
+#~ msgstr "以下传统命名空间将选择 Ansible Lightspeed："
 
 #: src/components/lightspeed-modal.tsx
-msgid "The following namespace will be opted in to Ansible Lightspeed:"
-msgstr "以下命名空间将选择 Ansible Lightspeed："
+#~ msgid "The following namespace will be opted in to Ansible Lightspeed:"
+#~ msgstr "以下命名空间将选择 Ansible Lightspeed："
 
 #: src/components/preview-roles.tsx
 msgid "The following roles will be applied to group: <0>{0}</0>"
@@ -5804,8 +5976,8 @@ msgid "The password to be used for authentication when syncing. This is not requ
 msgstr "同步时要用于身份验证的密码。在使用令牌时不需要此密码。"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "The role is versionless and will always install from the {github_branch} branch."
-msgstr ""
+#~ msgid "The role is versionless and will always install from the {github_branch} branch."
+#~ msgstr ""
 
 #: src/containers/ansible-role/role-detail.tsx
 #~ msgid "The role is versionless and will always install from the head/main/master branch."
@@ -5820,16 +5992,20 @@ msgid "The selected roles will be added to this specific Ansible repository."
 msgstr "所选角色将添加到此特定的 Ansible 仓库中。"
 
 #: src/containers/execution-environment-detail/execution-environment-detail-access.tsx
-msgid "The selected roles will be added to this specific Execution Environment."
-msgstr "所选角色将添加到这个特定执行环境中。"
+msgid "The selected roles will be added to this specific Container."
+msgstr ""
+
+#: src/containers/execution-environment-detail/execution-environment-detail-access.tsx
+#~ msgid "The selected roles will be added to this specific Execution Environment."
+#~ msgstr "所选角色将添加到这个特定执行环境中。"
 
 #: src/containers/namespace-detail/namespace-detail.tsx
 msgid "The selected roles will be added to this specific namespace."
 msgstr "所选角色将添加到此特定命名空间中。"
 
 #: src/containers/token/token-insights.tsx
-msgid "The token will expire after 30 days of inactivity. Run the command below periodically to prevent your token from expiring."
-msgstr "The token will expire after 30 days of inactivity. Run the command below periodically to prevent your token from expiring."
+#~ msgid "The token will expire after 30 days of inactivity. Run the command below periodically to prevent your token from expiring."
+#~ msgstr "The token will expire after 30 days of inactivity. Run the command below periodically to prevent your token from expiring."
 
 #: src/utilities/validate-url-helper.ts
 msgid "The URL needs to be in 'http(s)://' format."
@@ -5901,15 +6077,15 @@ msgid "There have not been any imports on this namespace."
 msgstr "此命名空间中没有任何导入。"
 
 #: src/components/role-import-list.tsx
-msgid "There have not been any imports."
-msgstr ""
+#~ msgid "There have not been any imports."
+#~ msgstr ""
 
 #: src/containers/task-management/task-detail.tsx
 #: src/containers/task-management/task-detail.tsx
 msgid "There is no progress message."
 msgstr "没有进度消息。"
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "There must be only one repository with pipeline=rejected."
 msgstr ""
 
@@ -5954,16 +6130,20 @@ msgid "This field must be longer than 2 characters"
 msgstr "此字段必须大于 2 个字符"
 
 #: src/utilities/map-role-errors.ts
-msgid "This field must start with 'galaxy.'."
-msgstr "此字段必须以 \"galaxy.\" 开头。"
+#~ msgid "This field must start with 'galaxy.'."
+#~ msgstr "此字段必须以 \"galaxy.\" 开头。"
+
+#: src/components/empty-state-under-construction.tsx
+msgid "This functionality is not yet finished. For mor information please go to Pulp page"
+msgstr ""
 
 #: src/components/delete-group-modal.tsx
 msgid "This group can include users"
 msgstr "这个组可以包括用户"
 
 #: src/components/ratings.tsx
-msgid "This is the rating from old-galaxy.ansible.com. We are working on redoing the rating for the new version of galaxy."
-msgstr ""
+#~ msgid "This is the rating from old-galaxy.ansible.com. We are working on redoing the rating for the new version of galaxy."
+#~ msgstr ""
 
 #: src/components/tag-manifest-modal.tsx
 msgid "This tag already exists on another image. Do you want to move it to this image?"
@@ -5991,8 +6171,8 @@ msgid "TLS validation"
 msgstr "TLS 验证"
 
 #: src/containers/landing/landing-page.tsx
-msgid "To be able to download content from galaxy it is required to have ansible-core>=2.13.9"
-msgstr ""
+#~ msgid "To be able to download content from galaxy it is required to have ansible-core>=2.13.9"
+#~ msgstr ""
 
 #: src/components/collection-info.tsx
 msgid "To download this collection, configure your client to connect to one of the <0>distributions</0> of this repository."
@@ -6003,16 +6183,16 @@ msgstr ""
 #~ msgstr "要下载此集合，请将您的客户端配置为连接到此仓库的<0>发布</0>之一。"
 
 #: src/containers/token/token-insights.tsx
-msgid "To revoke a token or see all of your tokens, visit the <0>offline API token management</0> page."
-msgstr "To revoke a token or see all of your tokens, visit the <0>offline API token management</0> page."
+#~ msgid "To revoke a token or see all of your tokens, visit the <0>offline API token management</0> page."
+#~ msgstr "To revoke a token or see all of your tokens, visit the <0>offline API token management</0> page."
 
 #: src/components/remote-form.tsx
 msgid "Token"
 msgstr "令牌"
 
 #: src/containers/token/token-standalone.tsx
-msgid "Token could not be displayed."
-msgstr "令牌无法显示。"
+#~ msgid "Token could not be displayed."
+#~ msgstr "令牌无法显示。"
 
 #: src/components/remote-form.tsx
 msgid "Token for authenticating to the server URL."
@@ -6021,6 +6201,10 @@ msgstr "用于向服务器 URL 进行身份验证的令牌。"
 #: src/containers/token/token-standalone.tsx
 #~ msgid "Token management"
 #~ msgstr "Token management"
+
+#: src/containers/pulp-status.tsx
+msgid "Total"
+msgstr ""
 
 #: src/components/remote-form.tsx
 msgid "Total number of simultaneous connections."
@@ -6031,27 +6215,27 @@ msgid "Traceback"
 msgstr "追溯"
 
 #: src/loaders/standalone/layout.tsx
-msgid "Training"
-msgstr ""
+#~ msgid "Training"
+#~ msgstr ""
 
 #: src/loaders/standalone/layout.tsx
 #~ msgid "Training <0/>"
 #~ msgstr "培训 <0/>"
 
 #: src/containers/role-management/role-list.tsx
-msgid "true"
-msgstr "true"
+#~ msgid "true"
+#~ msgstr "true"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Try Red Hat Ansible Automation Platform"
-msgstr ""
+#~ msgid "Try Red Hat Ansible Automation Platform"
+#~ msgstr ""
 
 #: src/components/collection-content-list.tsx
 #: src/containers/task-management/task-detail.tsx
 msgid "Type"
 msgstr "类型"
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "UI Version"
 msgstr "UI 版本"
 
@@ -6059,9 +6243,13 @@ msgstr "UI 版本"
 msgid "Undeprecate"
 msgstr "取消弃用"
 
-#: src/components/render-plugin-doc.tsx
-msgid "Unformatted Documentation"
+#: src/components/empty-state-under-construction.tsx
+msgid "Under construction"
 msgstr ""
+
+#: src/components/render-plugin-doc.tsx
+#~ msgid "Unformatted Documentation"
+#~ msgstr ""
 
 #: src/components/import-modal.tsx
 msgid "unknown"
@@ -6109,13 +6297,10 @@ msgid "updated <0/>"
 msgstr ""
 
 #: src/components/collection-list-item.tsx
-#: src/components/role-item.tsx
-#: src/containers/ansible-role/role-detail.tsx
 msgid "Updated <0/>"
 msgstr "更新的 <0/>"
 
 #: src/components/import-modal.tsx
-#: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/upload-signature-modal.tsx
 msgid "Upload"
 msgstr "上传"
@@ -6129,8 +6314,8 @@ msgid "Upload anyway?"
 msgstr ""
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Upload code"
-msgstr ""
+#~ msgid "Upload code"
+#~ msgstr ""
 
 #: src/containers/namespace-detail/namespace-detail.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
@@ -6178,8 +6363,8 @@ msgstr "URL：{0}"
 #: src/containers/execution-environment-detail/base.tsx
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-msgid "Use in Controller"
-msgstr "在控制器中使用"
+#~ msgid "Use in Controller"
+#~ msgstr "在控制器中使用"
 
 #: src/components/remote-form.tsx
 msgid "Use template"
@@ -6194,40 +6379,40 @@ msgstr "使用模板"
 #~ msgstr "Use the <0>Repository Management</0> page to sync collections curated by your organization to the Red Hat Certified repository in your private Automation Hub. Users with the correct permissions can use the sync toggles on the <1>Collections</1> page to control which collections are added to their organization's sync repository."
 
 #: src/containers/landing/landing-page.tsx
-msgid "Use the <0>Search page </0>to find content for your project, then download them onto your Ansible host using <1>ansible-galaxy</1>, the command line tool that comes bundled with Ansible."
-msgstr ""
+#~ msgid "Use the <0>Search page </0>to find content for your project, then download them onto your Ansible host using <1>ansible-galaxy</1>, the command line tool that comes bundled with Ansible."
+#~ msgstr ""
 
 #: src/components/repository-form.tsx
 msgid "Use the namespace/name format for namespaced containers. Otherwise, use the library/name format."
 msgstr "命名空间范围内的容器需要使用 namespace/name 格式。其他情况使用 library/name 格式。"
 
 #: src/containers/token/token-insights.tsx
-msgid "Use the Server URL below to sync certified collections to the Red Hat Certified repository in your private Automation Hub. If you wish to sync validated content, you can add a remote with a server url pointed to the validated repo."
-msgstr ""
+#~ msgid "Use the Server URL below to sync certified collections to the Red Hat Certified repository in your private Automation Hub. If you wish to sync validated content, you can add a remote with a server url pointed to the validated repo."
+#~ msgstr ""
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Use this token to authenticate clients that need to download"
 #~ msgstr "Use this token to authenticate clients that need to download"
 
 #: src/containers/token/token-insights.tsx
-msgid "Use this token to authenticate clients that need to download content from Automation Hub. This is a secret token used to protect your content. Store your API token in a secure location."
-msgstr "Use this token to authenticate clients that need to download content from Automation Hub. This is a secret token used to protect your content. Store your API token in a secure location."
+#~ msgid "Use this token to authenticate clients that need to download content from Automation Hub. This is a secret token used to protect your content. Store your API token in a secure location."
+#~ msgstr "Use this token to authenticate clients that need to download content from Automation Hub. This is a secret token used to protect your content. Store your API token in a secure location."
 
-#: src/containers/token/token-standalone.tsx
+#: src/containers/token/token.tsx
 msgid "Use this token to authenticate the <0>ansible-galaxy</0> client."
 msgstr "使用此令牌来验证 <0>ansible-galaxy</0> 客户端。"
 
 #: src/containers/token/token-insights.tsx
-msgid "Use this URL for <0>validated</0> content from Automation Hub."
-msgstr ""
+#~ msgid "Use this URL for <0>validated</0> content from Automation Hub."
+#~ msgstr ""
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Use this URL to configure the API endpoints that clients need to"
 #~ msgstr "Use this URL to configure the API endpoints that clients need to"
 
 #: src/containers/token/token-insights.tsx
-msgid "Use this URL to configure the API endpoints that clients need to download <0>certified</0> content from Automation Hub."
-msgstr ""
+#~ msgid "Use this URL to configure the API endpoints that clients need to download <0>certified</0> content from Automation Hub."
+#~ msgstr ""
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Use this URL to configure the API endpoints that clients need to download certified content from Automation Hub. Synclists are deprecated in AAP 2.4 and will be removed in a future release, instead use client-side requirements.yml, see AAP 2.4 documentation."
@@ -6242,8 +6427,12 @@ msgstr ""
 #~ msgstr "Use this URL to configure the authentication URLs that clients"
 
 #: src/containers/token/token-insights.tsx
-msgid "Use this URL to configure the authentication URLs that clients need to download content from Automation Hub."
-msgstr "Use this URL to configure the authentication URLs that clients need to download content from Automation Hub."
+#~ msgid "Use this URL to configure the authentication URLs that clients need to download content from Automation Hub."
+#~ msgstr "Use this URL to configure the authentication URLs that clients need to download content from Automation Hub."
+
+#: src/containers/pulp-status.tsx
+msgid "Used"
+msgstr ""
 
 #: src/components/namespace-form.tsx
 msgid "Useful links"
@@ -6351,7 +6540,7 @@ msgstr "用户 <0>{username}</0> 将从组<1>{groupname}</1> 中删除。"
 #~ msgid "User <0>{username}</0> will be removed from group<1>{groupname}</1>."
 #~ msgstr "User <0>{username}</0> will be removed from group<1>{groupname}</1>."
 
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "User Access"
 msgstr "用户访问"
 
@@ -6359,11 +6548,11 @@ msgstr "用户访问"
 msgid "User details"
 msgstr "用户详情"
 
-#: src/loaders/standalone/layout.tsx
+#: src/layout.tsx
 msgid "User dropdown"
 msgstr ""
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "User Groups"
 msgstr "用户组"
 
@@ -6377,8 +6566,8 @@ msgstr "用户列表"
 msgid "User type"
 msgstr "用户类型"
 
-#: src/components/hub-about-modal.tsx
 #: src/components/patternfly-wrappers/l10n.tsx
+#: src/components/pulp-about-modal.tsx
 #: src/components/remote-form.tsx
 #: src/components/user-form.tsx
 #: src/containers/group-management/group-detail.tsx
@@ -6390,17 +6579,20 @@ msgid "Username"
 msgstr "用户名"
 
 #: src/loaders/standalone/layout.tsx
-msgid "Username: {0}"
-msgstr "用户名：{0}"
+#~ msgid "Username: {0}"
+#~ msgstr "用户名：{0}"
+
+#: src/layout.tsx
+msgid "Username: {userName}"
+msgstr ""
 
 #: src/components/access-tab.tsx
-#: src/components/role-namespace-edit-modal.tsx
 #: src/containers/group-management/group-detail.tsx
 #: src/containers/user-management/user-create.tsx
 #: src/containers/user-management/user-detail.tsx
 #: src/containers/user-management/user-edit.tsx
 #: src/containers/user-management/user-list.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Users"
 msgstr "用户"
 
@@ -6425,16 +6617,16 @@ msgid "Validated"
 msgstr "验证的"
 
 #: src/components/render-plugin-doc.tsx
-msgid "VALUE"
-msgstr ""
+#~ msgid "VALUE"
+#~ msgstr ""
 
 #: src/components/render-plugin-doc.tsx
-msgid "var"
-msgstr ""
+#~ msgid "var"
+#~ msgstr ""
 
 #: src/components/collection-filter.ts
 #: src/components/collection-header.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Version"
 msgstr "版本"
 
@@ -6454,7 +6646,7 @@ msgstr "版本："
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/ansible-repository/detail.tsx
-#: src/containers/ansible-role/role-detail.tsx
+#: src/containers/pulp-status.tsx
 msgid "Versions"
 msgstr "版本"
 
@@ -6510,8 +6702,8 @@ msgstr "查看更多"
 #~ msgstr "View private containers"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "View Shortcuts"
-msgstr ""
+#~ msgid "View Shortcuts"
+#~ msgstr ""
 
 #: src/constants.tsx
 #~ msgid "View synclist"
@@ -6533,8 +6725,8 @@ msgid "View, add, remove and change groups."
 msgstr "查看、添加、删除和更改组。"
 
 #: src/utilities/translate-locked-role.ts
-msgid "View, add, remove and change synclists."
-msgstr "查看、添加、删除和更改同步列表。"
+#~ msgid "View, add, remove and change synclists."
+#~ msgstr "查看、添加、删除和更改同步列表。"
 
 #: src/utilities/translate-locked-role.ts
 msgid "View, add, remove and change users."
@@ -6545,8 +6737,6 @@ msgstr "查看、添加、删除和更改用户。"
 #~ msgstr "查看和取消任何任务。"
 
 #: src/components/import-list.tsx
-#: src/components/role-import-list.tsx
-#: src/components/role-import-list.tsx
 #: src/containers/task-management/task-list-view.tsx
 msgid "Waiting"
 msgstr "等待"
@@ -6569,14 +6759,13 @@ msgstr "等待导入结束"
 msgid "Warning"
 msgstr "警告"
 
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/not-found/not-found.tsx
 msgid "We couldn't find the page you're looking for!"
 msgstr "我们无法找到您要查找的页面！"
 
 #: src/containers/token/token-insights.tsx
-msgid "We use a number of keys to sign our software packages. The necessary public keys are included in the relevant products and are used to automatically verify software updates. You can also verify the packages manually using the keys on this page. More information can be found <0>here.</0>"
-msgstr "We use a number of keys to sign our software packages. The necessary public keys are included in the relevant products and are used to automatically verify software updates. You can also verify the packages manually using the keys on this page. More information can be found <0>here.</0>"
+#~ msgid "We use a number of keys to sign our software packages. The necessary public keys are included in the relevant products and are used to automatically verify software updates. You can also verify the packages manually using the keys on this page. More information can be found <0>here.</0>"
+#~ msgstr "We use a number of keys to sign our software packages. The necessary public keys are included in the relevant products and are used to automatically verify software updates. You can also verify the packages manually using the keys on this page. More information can be found <0>here.</0>"
 
 #: src/components/collection-header.tsx
 msgid "Website"
@@ -6587,20 +6776,20 @@ msgstr "网站"
 #~ msgstr ""
 
 #: src/containers/landing/landing-page.tsx
-msgid "Welcome to Galaxy"
-msgstr ""
+#~ msgid "Welcome to Galaxy"
+#~ msgstr ""
 
 #: src/components/render-plugin-doc.tsx
-msgid "Why:"
-msgstr ""
+#~ msgid "Why:"
+#~ msgstr ""
 
 #: src/components/role-import-form.tsx
-msgid "Will clone <0>{link}</0>"
-msgstr ""
+#~ msgid "Will clone <0>{link}</0>"
+#~ msgstr ""
 
 #: src/components/role-sync-form.tsx
-msgid "Will sync <0>{link}</0>"
-msgstr ""
+#~ msgid "Will sync <0>{link}</0>"
+#~ msgstr ""
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #: src/containers/legacy-namespaces/legacy-namespace.tsx
@@ -6609,8 +6798,8 @@ msgstr ""
 #~ msgstr "Wisdom settings"
 
 #: src/components/ratings.tsx
-msgid "Works without change"
-msgstr ""
+#~ msgid "Works without change"
+#~ msgstr ""
 
 #: src/components/remote-form.tsx
 #: src/containers/ansible-remote/tab-details.tsx
@@ -6678,8 +6867,8 @@ msgid "You are about to sign <0>version {version}</0> under <1>{name}</1>."
 msgstr "您将签发 <1>{name}</1> 下 <0> 版本 {version}</0>。"
 
 #: src/containers/token/token-standalone.tsx
-msgid "You are an SSO user."
-msgstr ""
+#~ msgid "You are an SSO user."
+#~ msgstr ""
 
 #: src/containers/token/token-standalone.tsx
 #~ msgid "You are an SSO user. Your token will expire <0/>."
@@ -6702,8 +6891,12 @@ msgid "You currently have no remote registries."
 msgstr "您目前没有远程注册表。"
 
 #: src/components/empty-state-unauthorized.tsx
-msgid "You do not have access to Automation Hub"
-msgstr "您无法访问 Automation Hub"
+#~ msgid "You do not have access to Automation Hub"
+#~ msgstr "您无法访问 Automation Hub"
+
+#: src/components/empty-state-unauthorized.tsx
+msgid "You do not have access to Pulp UI"
+msgstr ""
 
 #: src/containers/task-management/task-list-view.tsx
 #~ msgid "You do not have permission to view all tasks. Only tasks created by you are visible."
@@ -6735,9 +6928,9 @@ msgid "You have unsaved changes"
 msgstr "您有未保存的更改"
 
 #: src/containers/token/token-standalone.tsx
-msgid "Your token will expire <0/>."
-msgstr ""
+#~ msgid "Your token will expire <0/>."
+#~ msgstr ""
 
 #: src/containers/token/token-standalone.tsx
-msgid "Your token will not expire."
-msgstr ""
+#~ msgid "Your token will not expire."
+#~ msgstr ""

@@ -13,6 +13,18 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/darkmode-switcher.tsx
+msgid "(current, default)"
+msgstr "(current, default)"
+
+#: src/components/darkmode-switcher.tsx
+msgid "(current)"
+msgstr "(current)"
+
+#: src/components/darkmode-switcher.tsx
+msgid "(default)"
+msgstr "(default)"
+
 #: src/components/collection-header.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "(latest)"
@@ -34,8 +46,7 @@ msgstr "(uploaded)"
 msgid "{0, plural, one {Failed to add collection to repository \"{repositoryName}\".} other {Failed to add collections to repository \"{repositoryName}\".}}"
 msgstr "{0, plural, one {Failed to add collection to repository \"{repositoryName}\".} other {Failed to add collections to repository \"{repositoryName}\".}}"
 
-#: src/components/role-item.tsx
-#: src/containers/ansible-role/role-detail.tsx
+#: src/components/partner-header.tsx
 msgid "{0} logo"
 msgstr "{0} logo"
 
@@ -117,10 +128,13 @@ msgid "{n, plural, one {# byte} other {# bytes}}"
 msgstr "{n, plural, one {# byte} other {# bytes}}"
 
 #: src/components/collection-filter.ts
-#: src/containers/ansible-role/namespace-detail.tsx
-#: src/containers/ansible-role/role-list.tsx
 msgid "{name} ({count})"
 msgstr "{name} ({count})"
+
+#: src/components/namespace-card.tsx
+#: src/components/namespace-list-item.tsx
+msgid "{name} logo"
+msgstr "{name} logo"
 
 #: src/containers/task-management/task-list-view.tsx
 msgid "{name} will be cancelled."
@@ -147,8 +161,8 @@ msgstr "{subTitle}"
 #: src/components/namespace-card.tsx
 #: src/components/namespace-list-item.tsx
 #: src/components/partner-header.tsx
-msgid "{title} logo"
-msgstr "{title} logo"
+#~ msgid "{title} logo"
+#~ msgstr "{title} logo"
 
 #: src/components/wizard-modal.tsx
 msgid "{title} steps"
@@ -183,8 +197,8 @@ msgid "<0>{0}</0> will be permanently deleted."
 msgstr "<0>{0}</0> will be permanently deleted."
 
 #: src/components/role-import-form.tsx
-msgid "<0>{0}</0>, provided by <1>{1}</1>"
-msgstr "<0>{0}</0>, provided by <1>{1}</1>"
+#~ msgid "<0>{0}</0>, provided by <1>{1}</1>"
+#~ msgstr "<0>{0}</0>, provided by <1>{1}</1>"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "<0>{firstIndex} - {lastIndex}</0> of <1>{itemCount}</1>"
@@ -227,34 +241,33 @@ msgstr "<0>Note:</0> Use this URL to configure ansible-galaxy to upload collecti
 #~ msgstr "<0>Red Hat is working on exciting new Ansible content development capabilities within the context of <1>Ansible Lightspeed</1> <2/> to help other automators build Ansible content.</0>"
 
 #: src/components/lightspeed-modal.tsx
-msgid "<0>Red Hat is working on exciting new Ansible content development capabilities within the context of <1>Ansible Lightspeed</1> to help other automators build Ansible content.</0>"
-msgstr "<0>Red Hat is working on exciting new Ansible content development capabilities within the context of <1>Ansible Lightspeed</1> to help other automators build Ansible content.</0>"
+#~ msgid "<0>Red Hat is working on exciting new Ansible content development capabilities within the context of <1>Ansible Lightspeed</1> to help other automators build Ansible content.</0>"
+#~ msgstr "<0>Red Hat is working on exciting new Ansible content development capabilities within the context of <1>Ansible Lightspeed</1> to help other automators build Ansible content.</0>"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "<0>Red Hat is working on exciting new Ansible content development capabilities within the context of <1>Project Wisdom</1> <2/> to help other automators build Ansible content.</0><3>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</3><4>If you have concerns, please contact the Ansible team at <5>ansible-content-ai@redhat.com</5>.</4>"
 #~ msgstr "<0>Red Hat is working on exciting new Ansible content development capabilities within the context of <1>Project Wisdom</1> <2/> to help other automators build Ansible content.</0><3>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</3><4>If you have concerns, please contact the Ansible team at <5>ansible-content-ai@redhat.com</5>.</4>"
 
 #: src/components/render-plugin-doc.tsx
-msgid "<0>Removed in version</0> {0}"
-msgstr "<0>Removed in version</0> {0}"
+#~ msgid "<0>Removed in version</0> {0}"
+#~ msgstr "<0>Removed in version</0> {0}"
 
 #: src/containers/role-management/role-list.tsx
 msgid "<0>Role <1>{0}</1> will be permanently deleted.</0><2>This will also remove all associated permissions under this role.</2>"
 msgstr "<0>Role <1>{0}</1> will be permanently deleted.</0><2>This will also remove all associated permissions under this role.</2>"
 
-#: src/containers/token/token-standalone.tsx
+#: src/containers/token/token.tsx
 msgid "<0>WARNING</0> copy this token now. This is the only time you will ever see it."
 msgstr "<0>WARNING</0> copy this token now. This is the only time you will ever see it."
 
-#: src/containers/token/token-standalone.tsx
+#: src/containers/token/token.tsx
 msgid "<0>WARNING</0> loading a new token will delete your old token."
 msgstr "<0>WARNING</0> loading a new token will delete your old token."
 
 #: src/components/lightspeed-modal.tsx
-msgid "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
-msgstr "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
+#~ msgid "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
+#~ msgstr "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
 
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/not-found/not-found.tsx
 msgid "404 - Page not found"
 msgstr "404 - Page not found"
@@ -276,13 +289,17 @@ msgstr "A tag may contain lowercase and uppercase ASCII alphabetic characters, d
 #~ msgid "A tech preview of the new Automation Hub user interface can be found <0>here</0>."
 #~ msgstr "A tech preview of the new Automation Hub user interface can be found <0>here</0>."
 
-#: src/loaders/standalone/layout.tsx
+#: src/layout.tsx
 msgid "About"
 msgstr "About"
 
+#: src/containers/about-project.tsx
+#: src/menu.tsx
+msgid "About project"
+msgstr "About project"
+
 #: src/components/execution-environment-header.tsx
 #: src/components/execution-environment-header.tsx
-#: src/components/role-namespace-edit-modal.tsx
 #: src/containers/ansible-remote/detail.tsx
 #: src/containers/ansible-remote/detail.tsx
 #: src/containers/ansible-remote/detail.tsx
@@ -347,6 +364,11 @@ msgstr "Add collection"
 #~ msgid "Add collection remote"
 #~ msgstr "Add collection remote"
 
+#: src/components/repository-form.tsx
+#: src/containers/execution-environment-list/execution-environment-list.tsx
+msgid "Add container"
+msgstr "Add container"
+
 #: src/constants.tsx
 #~ msgid "Add container distribution"
 #~ msgstr "Add container distribution"
@@ -357,8 +379,8 @@ msgstr "Add collection"
 
 #: src/components/repository-form.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-msgid "Add execution environment"
-msgstr "Add execution environment"
+#~ msgid "Add execution environment"
+#~ msgstr "Add execution environment"
 
 #: src/constants.tsx
 #~ msgid "Add group"
@@ -441,12 +463,12 @@ msgstr "add-user-modal"
 #~ "\"{namespace}\" container namespace."
 
 #: src/components/lightspeed-modal.tsx
-msgid "Additional details"
-msgstr "Additional details"
+#~ msgid "Additional details"
+#~ msgstr "Additional details"
 
 #: src/components/render-plugin-doc.tsx
-msgid "aliases"
-msgstr "aliases"
+#~ msgid "aliases"
+#~ msgstr "aliases"
 
 #: src/containers/ansible-repository/tab-details.tsx
 #: src/containers/namespace-list/namespace-list.tsx
@@ -458,8 +480,8 @@ msgid "All associated permissions under this role were removed."
 msgstr "All associated permissions under this role were removed."
 
 #: src/containers/landing/landing-page.tsx
-msgid "All policies and guidelines"
-msgstr "All policies and guidelines"
+#~ msgid "All policies and guidelines"
+#~ msgstr "All policies and guidelines"
 
 #: src/components/import-modal.tsx
 msgid "All Repos"
@@ -482,27 +504,27 @@ msgid "Already the current version"
 msgstr "Already the current version"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Alternative:"
-msgstr "Alternative:"
+#~ msgid "Alternative:"
+#~ msgstr "Alternative:"
 
 #: src/components/hub-about-modal.tsx
-msgid "Ansible Automation Platform"
-msgstr "Ansible Automation Platform"
+#~ msgid "Ansible Automation Platform"
+#~ msgstr "Ansible Automation Platform"
 
 #: src/loaders/standalone/layout.tsx
-msgid "Ansible Community Forum"
-msgstr "Ansible Community Forum"
+#~ msgid "Ansible Community Forum"
+#~ msgstr "Ansible Community Forum"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Ansible Lightspeed"
-msgstr "Ansible Lightspeed"
+#~ msgid "Ansible Lightspeed"
+#~ msgstr "Ansible Lightspeed"
 
 #: src/components/lightspeed-modal.tsx
 #: src/components/role-namespace-item.tsx
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
-msgid "Ansible Lightspeed settings"
-msgstr "Ansible Lightspeed settings"
+#~ msgid "Ansible Lightspeed settings"
+#~ msgstr "Ansible Lightspeed settings"
 
 #: src/containers/landing/landing-page.tsx
 #~ msgid "AnsibleFest"
@@ -536,9 +558,9 @@ msgstr "API Error: Failed to set deprecation."
 msgid "API error. Status code: {0}"
 msgstr "API error. Status code: {0}"
 
-#: src/containers/token/token-standalone.tsx
-#: src/containers/token/token-standalone.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/containers/token/token.tsx
+#: src/containers/token/token.tsx
+#: src/menu.tsx
 msgid "API token"
 msgstr "API token"
 
@@ -552,12 +574,12 @@ msgstr "API token"
 #~ msgstr "API token management"
 
 #: src/loaders/standalone/menu.tsx
-msgid "Approval"
-msgstr "Approval"
+#~ msgid "Approval"
+#~ msgstr "Approval"
 
 #: src/containers/certification-dashboard/certification-dashboard.tsx
-msgid "Approval dashboard"
-msgstr "Approval dashboard"
+#~ msgid "Approval dashboard"
+#~ msgstr "Approval dashboard"
 
 #: src/containers/certification-dashboard/certification-dashboard.tsx
 #: src/containers/certification-dashboard/certification-dashboard.tsx
@@ -567,6 +589,10 @@ msgstr "Approval dashboard"
 #: src/components/import-console.tsx
 msgid "Approval status:"
 msgstr "Approval status:"
+
+#: src/containers/approvals/approvals.tsx
+msgid "Approvals"
+msgstr "Approvals"
 
 #: src/components/approval-row.tsx
 #: src/components/approval-row.tsx
@@ -584,8 +610,8 @@ msgstr "approved"
 #: src/components/ansible-repository-form.tsx
 #: src/components/approval-row.tsx
 #: src/containers/ansible-repository/list.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Approved"
 msgstr "Approved"
 
@@ -602,8 +628,8 @@ msgstr "Are you sure you want to delete the repository <0>{name}</0>?<1/><2>Note
 #~ msgstr "Are you sure you want to opt the following legacy namespace in to Wisdom?"
 
 #: src/components/lightspeed-modal.tsx
-msgid "Are you sure you want to opt the following legacy namespace out of Ansible Lightspeed?"
-msgstr "Are you sure you want to opt the following legacy namespace out of Ansible Lightspeed?"
+#~ msgid "Are you sure you want to opt the following legacy namespace out of Ansible Lightspeed?"
+#~ msgstr "Are you sure you want to opt the following legacy namespace out of Ansible Lightspeed?"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Are you sure you want to opt the following legacy namespace out of Wisdom?"
@@ -614,8 +640,8 @@ msgstr "Are you sure you want to opt the following legacy namespace out of Ansib
 #~ msgstr "Are you sure you want to opt the following namespace in to Wisdom?"
 
 #: src/components/lightspeed-modal.tsx
-msgid "Are you sure you want to opt the following namespace out of Ansible Lightspeed?"
-msgstr "Are you sure you want to opt the following namespace out of Ansible Lightspeed?"
+#~ msgid "Are you sure you want to opt the following namespace out of Ansible Lightspeed?"
+#~ msgstr "Are you sure you want to opt the following namespace out of Ansible Lightspeed?"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Are you sure you want to opt the following namespace out of Wisdom?"
@@ -634,17 +660,20 @@ msgid "Authentication provider"
 msgstr "Authentication provider"
 
 #: src/components/role-import-form.tsx
-msgid "Automatic"
-msgstr "Automatic"
+#~ msgid "Automatic"
+#~ msgstr "Automatic"
 
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
 msgid "Available matching collections"
 msgstr "Available matching collections"
 
 #: src/containers/search/multi-search.tsx
-msgid "Available matching execution environments"
-msgstr "Available matching execution environments"
+msgid "Available matching containers"
+msgstr "Available matching containers"
+
+#: src/containers/search/multi-search.tsx
+#~ msgid "Available matching execution environments"
+#~ msgstr "Available matching execution environments"
 
 #: src/containers/not-found/dispatch.tsx
 #~ msgid "Available matching legacy roles"
@@ -655,13 +684,13 @@ msgid "Available matching namespaces"
 msgstr "Available matching namespaces"
 
 #: src/containers/search/multi-search.tsx
-msgid "Available matching role namespaces"
-msgstr "Available matching role namespaces"
+#~ msgid "Available matching role namespaces"
+#~ msgstr "Available matching role namespaces"
 
 #: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
-msgid "Available matching roles"
-msgstr "Available matching roles"
+#~ msgid "Available matching roles"
+#~ msgstr "Available matching roles"
 
 #: src/components/wizard-modal.tsx
 msgid "Back"
@@ -680,28 +709,28 @@ msgid "Base version"
 msgstr "Base version"
 
 #: src/components/ratings.tsx
-msgid "Based on {0} surveys."
-msgstr "Based on {0} surveys."
+#~ msgid "Based on {0} surveys."
+#~ msgstr "Based on {0} surveys."
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Breadcrumb"
 msgstr "Breadcrumb"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Browse"
-msgstr "Browse"
+#~ msgid "Browse"
+#~ msgstr "Browse"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Browse..."
 msgstr "Browse..."
 
 #: src/components/hub-about-modal.tsx
-msgid "Browser OS"
-msgstr "Browser OS"
+#~ msgid "Browser OS"
+#~ msgstr "Browser OS"
 
 #: src/components/hub-about-modal.tsx
-msgid "Browser Version"
-msgstr "Browser Version"
+#~ msgid "Browser Version"
+#~ msgstr "Browser Version"
 
 #: src/utilities/translate-task.ts
 msgid "Build image from Containerfile"
@@ -741,16 +770,11 @@ msgstr "CA certificate"
 #: src/components/delete-modal.tsx
 #: src/components/group-modal.tsx
 #: src/components/import-modal.tsx
-#: src/components/lightspeed-modal.tsx
 #: src/components/multi-repo-modal.tsx
 #: src/components/namespace-modal.tsx
 #: src/components/remote-form.tsx
 #: src/components/repository-form.tsx
 #: src/components/role-form.tsx
-#: src/components/role-import-form.tsx
-#: src/components/role-namespace-edit-modal.tsx
-#: src/components/role-namespace-modal.tsx
-#: src/components/role-sync-form.tsx
 #: src/components/sign-all-certificates-modal.tsx
 #: src/components/sign-single-certificate-modal.tsx
 #: src/components/tag-manifest-modal.tsx
@@ -789,12 +813,12 @@ msgstr "Cannot delete until collections that depend on this collection have been
 msgid "Certificate for collection \"{0} {1} v{2}\" has been successfully uploaded."
 msgstr "Certificate for collection \"{0} {1} v{2}\" has been successfully uploaded."
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Certificate for collection \"{namespace} {name} v{version}\" has been successfully uploaded."
 msgstr "Certificate for collection \"{namespace} {name} v{version}\" has been successfully uploaded."
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Certification status for collection \"{0} {1} v{2}\" has been successfully updated."
 msgstr "Certification status for collection \"{0} {1} v{2}\" has been successfully updated."
 
@@ -806,7 +830,6 @@ msgstr "Certification status for collection \"{namespace} {name} v{version}\" ha
 msgid "Certified"
 msgstr "Certified"
 
-#: src/components/role-import-form.tsx
 #: src/containers/execution-environment-detail/execution-environment-detail-activities.tsx
 msgid "Change"
 msgstr "Change"
@@ -845,8 +868,12 @@ msgstr "Change and upload collections to namespaces."
 #~ msgstr "Change distribution"
 
 #: src/utilities/translate-locked-role.ts
-msgid "Change existing execution environments."
-msgstr "Change existing execution environments."
+msgid "Change existing containers."
+msgstr "Change existing containers."
+
+#: src/utilities/translate-locked-role.ts
+#~ msgid "Change existing execution environments."
+#~ msgstr "Change existing execution environments."
 
 #: src/constants.tsx
 #~ msgid "Change group"
@@ -866,8 +893,8 @@ msgstr "Change existing execution environments."
 #: src/components/role-namespace-edit-modal.tsx
 #: src/components/role-namespace-item.tsx
 #: src/containers/ansible-role/namespace-detail.tsx
-msgid "Change provider namespace"
-msgstr "Change provider namespace"
+#~ msgid "Change provider namespace"
+#~ msgstr "Change provider namespace"
 
 #: src/constants.tsx
 #~ msgid "Change remote registry"
@@ -885,9 +912,9 @@ msgstr "Change provider namespace"
 #~ msgid "Change user"
 #~ msgstr "Change user"
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Changes to certification status for collection \"{0} {1} v{2}\" could not be saved."
 msgstr "Changes to certification status for collection \"{0} {1} v{2}\" could not be saved."
 
@@ -904,8 +931,8 @@ msgid "Changes to role \"{name}\" could not be saved."
 msgstr "Changes to role \"{name}\" could not be saved."
 
 #: src/components/role-import-form.tsx
-msgid "Checking ..."
-msgstr "Checking ..."
+#~ msgid "Checking ..."
+#~ msgstr "Checking ..."
 
 #: src/components/delete-group-modal.tsx
 msgid "Checking for affected users... <0/>"
@@ -916,12 +943,12 @@ msgid "Child tasks"
 msgstr "Child tasks"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Choices"
-msgstr "Choices"
+#~ msgid "Choices"
+#~ msgstr "Choices"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Choices:"
-msgstr "Choices:"
+#~ msgid "Choices:"
+#~ msgstr "Choices:"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/write-only-field.tsx
@@ -978,7 +1005,7 @@ msgstr "Code"
 #: src/components/collection-usedby-dependencies-list.tsx
 #: src/containers/ansible-repository/tab-collection-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Collection"
 msgstr "Collection"
 
@@ -1091,8 +1118,8 @@ msgstr "Collection doesn't have any distribution assigned."
 msgid "Collection is not being used by any collection."
 msgstr "Collection is not being used by any collection."
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Collection name"
 msgstr "Collection name"
 
@@ -1129,7 +1156,7 @@ msgstr "Collection upload canceled"
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/ansible-repository/tab-collection-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Collection versions"
 msgstr "Collection versions"
 
@@ -1161,12 +1188,9 @@ msgstr "Collection versions will appear once the collection is modified."
 
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/search.tsx
-#: src/loaders/standalone/menu.tsx
-#: src/loaders/standalone/menu.tsx
 msgid "Collections"
 msgstr "Collections"
 
@@ -1175,7 +1199,7 @@ msgstr "Collections"
 msgid "Collections sync"
 msgstr "Collections sync"
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
 #: src/containers/search/search.tsx
 msgid "Collections will appear once uploaded"
@@ -1186,12 +1210,12 @@ msgid "Command"
 msgstr "Command"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Comments"
-msgstr "Comments"
+#~ msgid "Comments"
+#~ msgstr "Comments"
 
 #: src/loaders/standalone/layout.tsx
-msgid "Communicating with the Ansible community"
-msgstr "Communicating with the Ansible community"
+#~ msgid "Communicating with the Ansible community"
+#~ msgstr "Communicating with the Ansible community"
 
 #: src/components/repository-badge.tsx
 msgid "Community"
@@ -1211,44 +1235,47 @@ msgid "Community content will never be synced if this setting is enabled"
 msgstr "Community content will never be synced if this setting is enabled"
 
 #: src/components/ratings.tsx
-msgid "Community score"
-msgstr "Community score"
+#~ msgid "Community score"
+#~ msgstr "Community score"
 
 #: src/loaders/standalone/layout.tsx
-msgid "Community User Guide"
-msgstr "Community User Guide"
+#~ msgid "Community User Guide"
+#~ msgstr "Community User Guide"
 
 #: src/components/namespace-form.tsx
 msgid "Company name"
 msgstr "Company name"
 
 #: src/components/import-list.tsx
-#: src/components/role-import-list.tsx
-#: src/components/role-import-list.tsx
 #: src/components/status-indicator.tsx
 #: src/containers/task-management/task-list-view.tsx
 msgid "Completed"
 msgstr "Completed"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Configuration"
-msgstr "Configuration"
+#~ msgid "Configuration"
+#~ msgstr "Configuration"
 
 #: src/components/repositories/remote-repository-table.tsx
 #~ msgid "Configure"
 #~ msgstr "Configure"
 
 #: src/containers/token/token-insights.tsx
-msgid "Connect Private Automation Hub"
-msgstr "Connect Private Automation Hub"
+#~ msgid "Connect Private Automation Hub"
+#~ msgstr "Connect Private Automation Hub"
 
 #: src/containers/token/token-insights.tsx
-msgid "Connect the ansible-galaxy client"
-msgstr "Connect the ansible-galaxy client"
+#~ msgid "Connect the ansible-galaxy client"
+#~ msgstr "Connect the ansible-galaxy client"
 
 #: src/containers/token/token-insights.tsx
-msgid "Connect to Hub"
-msgstr "Connect to Hub"
+#~ msgid "Connect to Hub"
+#~ msgstr "Connect to Hub"
+
+#: src/containers/pulp-status.tsx
+#: src/containers/pulp-status.tsx
+msgid "Connected"
+msgstr "Connected"
 
 #: src/utilities/validate-url-helper.ts
 msgid "Consider using a secure URL (https://)."
@@ -1261,6 +1288,22 @@ msgstr "Consider using a secure URL (https://)."
 #: src/components/empty-state-unauthorized.tsx
 msgid "Contact your organization administrator for more information."
 msgstr "Contact your organization administrator for more information."
+
+#: src/containers/execution-environment-list/execution-environment-list.tsx
+msgid "Container \"{0}\" has been added successfully."
+msgstr "Container \"{0}\" has been added successfully."
+
+#: src/containers/execution-environment/registry-list.tsx
+msgid "Container \"{name}\" could not be indexed."
+msgstr "Container \"{name}\" could not be indexed."
+
+#: src/components/delete-execution-environment-modal.tsx
+msgid "Container \"{selectedItem}\" could not be deleted."
+msgstr "Container \"{selectedItem}\" could not be deleted."
+
+#: src/components/delete-execution-environment-modal.tsx
+msgid "Container \"{selectedItem}\" has been successfully deleted."
+msgstr "Container \"{selectedItem}\" has been successfully deleted."
 
 #: src/utilities/repo-signing.ts
 msgid "Container must be synchronized with remote repository first."
@@ -1294,9 +1337,13 @@ msgstr "Container registry type"
 msgid "Container repository name"
 msgstr "Container repository name"
 
-#: src/constants.tsx
-#~ msgid "Containers"
-#~ msgstr "Containers"
+#: src/components/execution-environment-header.tsx
+#: src/containers/execution-environment-list/execution-environment-list.tsx
+#: src/containers/execution-environment-manifest/execution-environment-manifest.tsx
+#: src/containers/search/multi-search.tsx
+#: src/containers/search/multi-search.tsx
+msgid "Containers"
+msgstr "Containers"
 
 #: src/containers/collection-detail/collection-content.tsx
 msgid "Content"
@@ -1307,16 +1354,16 @@ msgid "Content added"
 msgstr "Content added"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Content added to clipboard"
-msgstr "Content added to clipboard"
+#~ msgid "Content added to clipboard"
+#~ msgstr "Content added to clipboard"
 
 #: src/components/repositories/local-repository-table.tsx
 #~ msgid "Content count"
 #~ msgstr "Content count"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Content from roles and collections can be referenced in Ansible playbooks and immediately put to work. You'll find content for provisioning infrastructure, deploying applications, and all of the tasks you do everyday."
-msgstr "Content from roles and collections can be referenced in Ansible playbooks and immediately put to work. You'll find content for provisioning infrastructure, deploying applications, and all of the tasks you do everyday."
+#~ msgid "Content from roles and collections can be referenced in Ansible playbooks and immediately put to work. You'll find content for provisioning infrastructure, deploying applications, and all of the tasks you do everyday."
+#~ msgstr "Content from roles and collections can be referenced in Ansible playbooks and immediately put to work. You'll find content for provisioning infrastructure, deploying applications, and all of the tasks you do everyday."
 
 #: src/containers/landing/landing-page.tsx
 #~ msgid "Content from roles and collections can be referenced in Ansible PlayBooks and immediately put to work. You'll find content for provisioning infrastructure, deploying applications, and all of the tasks you do everyday."
@@ -1334,6 +1381,10 @@ msgstr "Content not present in remote repository will be removed from the local 
 msgid "Content removed"
 msgstr "Content removed"
 
+#: src/containers/pulp-status.tsx
+msgid "Content settings"
+msgstr "Content settings"
+
 #: src/components/collection-header.tsx
 msgid "Contents"
 msgstr "Contents"
@@ -1348,8 +1399,8 @@ msgstr "Contents"
 #~ msgstr "Controllers list could not be displayed."
 
 #: src/containers/landing/landing-page.tsx
-msgid "Cookie preferences"
-msgstr "Cookie preferences"
+#~ msgid "Cookie preferences"
+#~ msgstr "Cookie preferences"
 
 #: src/components/patternfly-wrappers/copy-url.tsx
 #~ msgid "Copied"
@@ -1364,16 +1415,15 @@ msgid "Copy CLI configuration"
 msgstr "Copy CLI configuration"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Copy code to clipboard"
-msgstr "Copy code to clipboard"
+#~ msgid "Copy code to clipboard"
+#~ msgstr "Copy code to clipboard"
 
 #: src/utilities/translate-task.ts
 msgid "Copy content"
 msgstr "Copy content"
 
-#: src/components/hub-copy-button.tsx
 #: src/components/patternfly-wrappers/l10n.tsx
-#: src/components/patternfly-wrappers/l10n.tsx
+#: src/components/pulp-copy-button.tsx
 msgid "Copy to clipboard"
 msgstr "Copy to clipboard"
 
@@ -1404,14 +1454,11 @@ msgid "Count"
 msgstr "Count"
 
 #: src/containers/token/token-insights.tsx
-msgid "CRC public key"
-msgstr "CRC public key"
+#~ msgid "CRC public key"
+#~ msgstr "CRC public key"
 
 #: src/components/group-modal.tsx
 #: src/components/namespace-modal.tsx
-#: src/components/role-import-form.tsx
-#: src/components/role-namespace-modal.tsx
-#: src/containers/ansible-role/namespace-list.tsx
 #: src/containers/group-management/group-list.tsx
 #: src/containers/group-management/group-list.tsx
 #: src/containers/namespace-list/namespace-list.tsx
@@ -1450,16 +1497,20 @@ msgstr "Create a password using at least {minLength} characters, including speci
 #~ msgstr "Create a password using at least 9 characters, including special characters , ex <!@$%>. Avoid using common names or expressions."
 
 #: src/components/role-namespace-modal.tsx
-msgid "Create a role namespace"
-msgstr "Create a role namespace"
+#~ msgid "Create a role namespace"
+#~ msgstr "Create a role namespace"
 
 #: src/utilities/translate-locked-role.ts
-msgid "Create and update execution environments under existing container namespaces."
-msgstr "Create and update execution environments under existing container namespaces."
+msgid "Create and update containers under existing container namespaces."
+msgstr "Create and update containers under existing container namespaces."
+
+#: src/utilities/translate-locked-role.ts
+#~ msgid "Create and update execution environments under existing container namespaces."
+#~ msgstr "Create and update execution environments under existing container namespaces."
 
 #: src/components/collection-header.tsx
-msgid "Create issue"
-msgstr "Create issue"
+#~ msgid "Create issue"
+#~ msgstr "Create issue"
 
 #: src/constants.tsx
 #: src/constants.tsx
@@ -1480,13 +1531,10 @@ msgid "Create, delete and change collection namespaces. Upload and delete collec
 msgstr "Create, delete and change collection namespaces. Upload and delete collections. Sync collections from remotes. Approve and reject collections."
 
 #: src/containers/ansible-repository/tab-distributions.tsx
-#: src/containers/ansible-role/namespace-detail.tsx
-#: src/containers/ansible-role/namespace-list.tsx
-#: src/containers/ansible-role/role-list.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
 #: src/containers/execution-environment/registry-list.tsx
-#: src/containers/group-management/group-detail.tsx
+#: src/containers/pulp-status.tsx
 #: src/containers/role-management/role-list.tsx
 #: src/containers/user-management/user-list.tsx
 msgid "Created"
@@ -1513,20 +1561,20 @@ msgid "Creation started for distribution {distributionName}"
 msgstr "Creation started for distribution {distributionName}"
 
 #: src/utilities/translate-task.ts
-msgid "Curate all synclist repositories"
-msgstr "Curate all synclist repositories"
+#~ msgid "Curate all synclist repositories"
+#~ msgstr "Curate all synclist repositories"
 
 #: src/constants.tsx
 #~ msgid "Curate all synclist repository"
 #~ msgstr "Curate all synclist repository"
 
 #: src/utilities/translate-task.ts
-msgid "Curate synclist repository"
-msgstr "Curate synclist repository"
+#~ msgid "Curate synclist repository"
+#~ msgstr "Curate synclist repository"
 
 #: src/utilities/translate-task.ts
-msgid "Curate synclist repository batch"
-msgstr "Curate synclist repository batch"
+#~ msgid "Curate synclist repository batch"
+#~ msgstr "Curate synclist repository batch"
 
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Current content"
@@ -1537,12 +1585,16 @@ msgid "Current page"
 msgstr "Current page"
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "Current provider namespace"
-msgstr "Current provider namespace"
+#~ msgid "Current provider namespace"
+#~ msgstr "Current provider namespace"
 
 #: src/components/tag-manifest-modal.tsx
 msgid "Current tags"
 msgstr "Current tags"
+
+#: src/containers/pulp-status.tsx
+msgid "Current task"
+msgstr "Current task"
 
 #: src/components/repository-form.tsx
 msgid "Currently excluded tags"
@@ -1561,8 +1613,8 @@ msgid "Custom permissions"
 msgstr "Custom permissions"
 
 #: src/loaders/standalone/layout.tsx
-msgid "Customer Support"
-msgstr "Customer Support"
+#~ msgid "Customer Support"
+#~ msgstr "Customer Support"
 
 #: src/loaders/standalone/layout.tsx
 #~ msgid "Customer Support <0/>"
@@ -1572,25 +1624,33 @@ msgstr "Customer Support"
 msgid "Danger"
 msgstr "Danger"
 
+#: src/components/darkmode-switcher.tsx
+msgid "Dark"
+msgstr "Dark"
+
+#: src/containers/pulp-status.tsx
+msgid "Database connection"
+msgstr "Database connection"
+
 #: src/containers/execution-environment-detail/execution-environment-detail-activities.tsx
 msgid "Date"
 msgstr "Date"
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Date created"
 msgstr "Date created"
 
 #: src/components/render-plugin-doc.tsx
-msgid "default"
-msgstr "default"
+#~ msgid "default"
+#~ msgstr "default"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Default:"
-msgstr "Default:"
+#~ msgid "Default:"
+#~ msgstr "Default:"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Defaults"
-msgstr "Defaults"
+#~ msgid "Defaults"
+#~ msgstr "Defaults"
 
 #: src/actions/ansible-remote-delete.tsx
 #: src/actions/ansible-repository-delete.tsx
@@ -1822,7 +1882,6 @@ msgid "Deprecate"
 msgstr "Deprecate"
 
 #: src/components/deprecated-tag.tsx
-#: src/components/render-plugin-doc.tsx
 msgid "DEPRECATED"
 msgstr "DEPRECATED"
 
@@ -1839,11 +1898,9 @@ msgstr "Deprecation status update starting for collection \"{name}\"."
 #: src/components/collection-content-list.tsx
 #: src/components/multiple-repo-selector.tsx
 #: src/components/namespace-form.tsx
-#: src/components/render-plugin-doc.tsx
 #: src/components/repository-form.tsx
 #: src/components/role-form.tsx
 #: src/components/role-list-table.tsx
-#: src/components/role-namespace-edit-modal.tsx
 #: src/components/select-roles.tsx
 #: src/containers/ansible-repository/tab-collection-versions.tsx
 #: src/containers/ansible-repository/tab-details.tsx
@@ -1884,8 +1941,8 @@ msgid "Details"
 msgstr "Details"
 
 #: src/components/role-import-form.tsx
-msgid "Did you mean {0}?"
-msgstr "Did you mean {0}?"
+#~ msgid "Did you mean {0}?"
+#~ msgstr "Did you mean {0}?"
 
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
@@ -1894,8 +1951,8 @@ msgid "Digest"
 msgstr "Digest"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Digital accessibility"
-msgstr "Digital accessibility"
+#~ msgid "Digital accessibility"
+#~ msgstr "Digital accessibility"
 
 #: src/containers/ansible-remote/tab-details.tsx
 msgid "Disabled"
@@ -1925,7 +1982,7 @@ msgstr "Distributions"
 msgid "Distributions could not be displayed."
 msgstr "Distributions could not be displayed."
 
-#: src/loaders/standalone/layout.tsx
+#: src/layout.tsx
 msgid "Docs dropdown"
 msgstr "Docs dropdown"
 
@@ -1934,25 +1991,27 @@ msgid "Docs site"
 msgstr "Docs site"
 
 #: src/components/collection-header.tsx
-#: src/containers/ansible-role/role-detail.tsx
 #: src/containers/collection-detail/collection-docs.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-#: src/loaders/standalone/menu.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/layout.tsx
 msgid "Documentation"
 msgstr "Documentation"
 
 #: src/containers/token/token-insights.tsx
-msgid "Documentation on how to configure the <0>ansible-galaxy</0> client can be found <1>here</1>. Use the following parameters to configure the client."
-msgstr "Documentation on how to configure the <0>ansible-galaxy</0> client can be found <1>here</1>. Use the following parameters to configure the client."
+#~ msgid "Documentation on how to configure the <0>ansible-galaxy</0> client can be found <1>here</1>. Use the following parameters to configure the client."
+#~ msgstr "Documentation on how to configure the <0>ansible-galaxy</0> client can be found <1>here</1>. Use the following parameters to configure the client."
 
 #: src/components/render-plugin-doc.tsx
-msgid "Documentation Syntax Error: cannot parse plugin documention."
-msgstr "Documentation Syntax Error: cannot parse plugin documention."
+#~ msgid "Documentation Syntax Error: cannot parse plugin documention."
+#~ msgstr "Documentation Syntax Error: cannot parse plugin documention."
 
 #: src/components/ratings.tsx
-msgid "Does what it promises"
-msgstr "Does what it promises"
+#~ msgid "Does what it promises"
+#~ msgstr "Does what it promises"
+
+#: src/containers/pulp-status.tsx
+msgid "Domain enabled"
+msgstr "Domain enabled"
 
 #: src/components/import-console.tsx
 #: src/containers/task-management/task-detail.tsx
@@ -1960,14 +2019,12 @@ msgid "Done"
 msgstr "Done"
 
 #: src/components/collection-info.tsx
-#: src/components/patternfly-wrappers/l10n.tsx
-#: src/containers/landing/landing-page.tsx
 msgid "Download"
 msgstr "Download"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Download {0} tarball"
-msgstr "Download {0} tarball"
+#~ msgid "Download {0} tarball"
+#~ msgstr "Download {0} tarball"
 
 #: src/actions/ansible-remote-download-ca.tsx
 msgid "Download CA certificate"
@@ -1986,8 +2043,8 @@ msgid "Download client certification file"
 msgstr "Download client certification file"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Download code"
-msgstr "Download code"
+#~ msgid "Download code"
+#~ msgstr "Download code"
 
 #: src/components/remote-form.tsx
 #: src/containers/ansible-remote/tab-details.tsx
@@ -1996,8 +2053,8 @@ msgstr "Download concurrency"
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "Download count"
-msgstr "Download count"
+#~ msgid "Download count"
+#~ msgstr "Download count"
 
 #: src/components/download-count.tsx
 msgid "Download count is the sum of all versions' download counts"
@@ -2008,8 +2065,8 @@ msgid "Download key"
 msgstr "Download key"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Download latest tarball"
-msgstr "Download latest tarball"
+#~ msgid "Download latest tarball"
+#~ msgstr "Download latest tarball"
 
 #: src/components/remote-form.tsx
 msgid "Download only signed collections"
@@ -2036,8 +2093,8 @@ msgstr "Drag a file here or browse to upload"
 #~ msgstr "Drag and drop a file or upload one"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Drag and drop a file or upload one."
-msgstr "Drag and drop a file or upload one."
+#~ msgid "Drag and drop a file or upload one."
+#~ msgstr "Drag and drop a file or upload one."
 
 #: src/components/signing/upload-sign-certificate-modal.tsx
 #~ msgid "Drag and drop a file or upload one'"
@@ -2049,8 +2106,8 @@ msgid "Dropdown"
 msgstr "Dropdown"
 
 #: src/components/ratings.tsx
-msgid "Ease of use"
-msgstr "Ease of use"
+#~ msgid "Ease of use"
+#~ msgstr "Ease of use"
 
 #: src/actions/ansible-remote-edit.tsx
 #: src/actions/ansible-repository-edit.tsx
@@ -2069,13 +2126,17 @@ msgstr "Ease of use"
 msgid "Edit"
 msgstr "Edit"
 
+#: src/components/repository-form.tsx
+msgid "Edit container"
+msgstr "Edit container"
+
 #: src/containers/edit-namespace/edit-namespace.tsx
 msgid "Edit details"
 msgstr "Edit details"
 
 #: src/components/repository-form.tsx
-msgid "Edit execution environment"
-msgstr "Edit execution environment"
+#~ msgid "Edit execution environment"
+#~ msgstr "Edit execution environment"
 
 #: src/containers/group-management/group-detail.tsx
 #~ msgid "Edit group permissions"
@@ -2128,12 +2189,10 @@ msgid "Editable"
 msgstr "Editable"
 
 #: src/components/render-plugin-doc.tsx
-msgid "elements"
-msgstr "elements"
+#~ msgid "elements"
+#~ msgstr "elements"
 
 #: src/components/user-form.tsx
-#: src/containers/group-management/group-detail.tsx
-#: src/containers/group-management/group-detail.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/user-management/user-list.tsx
@@ -2141,12 +2200,13 @@ msgid "Email"
 msgstr "Email"
 
 #: src/containers/ansible-remote/tab-details.tsx
+#: src/containers/pulp-status.tsx
 msgid "Enabled"
 msgstr "Enabled"
 
 #: src/components/render-plugin-doc.tsx
-msgid "env"
-msgstr "env"
+#~ msgid "env"
+#~ msgstr "env"
 
 #: src/containers/execution-environment-manifest/execution-environment-manifest.tsx
 msgid "Environment"
@@ -2209,7 +2269,6 @@ msgstr "Error deleting group."
 #~ msgid "Error editing group."
 #~ msgstr "Error editing group."
 
-#: src/containers/ansible-role/imports.tsx
 #: src/containers/my-imports/my-imports.tsx
 msgid "Error fetching import from API"
 msgstr "Error fetching import from API"
@@ -2226,7 +2285,7 @@ msgstr "Error fetching import from API"
 #~ msgid "Error loading collection repositories."
 #~ msgstr "Error loading collection repositories."
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Error loading collections."
 msgstr "Error loading collections."
 
@@ -2279,7 +2338,7 @@ msgstr "Error loading environments."
 msgid "Error loading repositories."
 msgstr "Error loading repositories."
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Error loading repository with label {pipeline}."
 msgstr "Error loading repository with label {pipeline}."
 
@@ -2330,8 +2389,8 @@ msgid "Error when saving registry."
 msgstr "Error when saving registry."
 
 #: src/components/render-plugin-doc.tsx
-msgid "ERROR while parsing: {0}"
-msgstr "ERROR while parsing: {0}"
+#~ msgid "ERROR while parsing: {0}"
+#~ msgstr "ERROR while parsing: {0}"
 
 #: src/containers/execution-environment-detail/base.tsx
 #: src/containers/execution-environment-list/execution_environment_list.tsx
@@ -2345,8 +2404,8 @@ msgstr "ERROR while parsing: {0}"
 
 #: src/components/render-plugin-doc.tsx
 #: src/components/render-plugin-doc.tsx
-msgid "Examples"
-msgstr "Examples"
+#~ msgid "Examples"
+#~ msgstr "Examples"
 
 #: src/components/access-tab.tsx
 msgid "Except for members of groups below."
@@ -2357,24 +2416,24 @@ msgstr "Except for members of groups below."
 #~ msgstr "Execution Environment"
 
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-msgid "Execution environment \"{0}\" has been added successfully."
-msgstr "Execution environment \"{0}\" has been added successfully."
+#~ msgid "Execution environment \"{0}\" has been added successfully."
+#~ msgstr "Execution environment \"{0}\" has been added successfully."
 
 #: src/containers/execution-environment/registry-list.tsx
-msgid "Execution environment \"{name}\" could not be indexed."
-msgstr "Execution environment \"{name}\" could not be indexed."
+#~ msgid "Execution environment \"{name}\" could not be indexed."
+#~ msgstr "Execution environment \"{name}\" could not be indexed."
 
 #: src/containers/execution-environment-list/execution_environment_list.tsx
 #~ msgid "Execution environment \"{name}\" has been added successfully."
 #~ msgstr "Execution environment \"{name}\" has been added successfully."
 
 #: src/components/delete-execution-environment-modal.tsx
-msgid "Execution environment \"{selectedItem}\" could not be deleted."
-msgstr "Execution environment \"{selectedItem}\" could not be deleted."
+#~ msgid "Execution environment \"{selectedItem}\" could not be deleted."
+#~ msgstr "Execution environment \"{selectedItem}\" could not be deleted."
 
 #: src/components/delete-execution-environment-modal.tsx
-msgid "Execution environment \"{selectedItem}\" has been successfully deleted."
-msgstr "Execution environment \"{selectedItem}\" has been successfully deleted."
+#~ msgid "Execution environment \"{selectedItem}\" has been successfully deleted."
+#~ msgstr "Execution environment \"{selectedItem}\" has been successfully deleted."
 
 #: src/containers/execution-environment-list/execution_environment_list.tsx
 #~ msgid "Execution environment added."
@@ -2387,29 +2446,26 @@ msgstr "Execution environment \"{selectedItem}\" has been successfully deleted."
 #: src/containers/execution-environment-list/execution-environment-list.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
-msgid "Execution environments"
-msgstr "Execution environments"
+#~ msgid "Execution environments"
+#~ msgstr "Execution environments"
 
 #: src/components/execution-environment-header.tsx
 #: src/containers/execution-environment-manifest/execution-environment-manifest.tsx
 #: src/loaders/standalone/menu.tsx
 #: src/loaders/standalone/menu.tsx
-msgid "Execution Environments"
-msgstr "Execution Environments"
+#~ msgid "Execution Environments"
+#~ msgstr "Execution Environments"
 
 #: src/containers/token/token-standalone.tsx
-msgid "Expiration"
-msgstr "Expiration"
+#~ msgid "Expiration"
+#~ msgstr "Expiration"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Extend the power of Ansible to your entire team."
-msgstr "Extend the power of Ansible to your entire team."
+#~ msgid "Extend the power of Ansible to your entire team."
+#~ msgstr "Extend the power of Ansible to your entire team."
 
 #: src/components/import-console.tsx
 #: src/components/import-list.tsx
-#: src/components/role-import-form.tsx
-#: src/components/role-import-list.tsx
-#: src/components/role-import-list.tsx
 #: src/components/status-indicator.tsx
 #: src/containers/task-management/task-list-view.tsx
 msgid "Failed"
@@ -2428,8 +2484,8 @@ msgid "Failed to approve collection."
 msgstr "Failed to approve collection."
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "Failed to change provider namespace."
-msgstr "Failed to change provider namespace."
+#~ msgid "Failed to change provider namespace."
+#~ msgstr "Failed to change provider namespace."
 
 #: src/components/copy-collection-to-repository-modal.tsx
 msgid "Failed to copy collection version."
@@ -2437,8 +2493,8 @@ msgstr "Failed to copy collection version."
 
 #: src/components/role-import-form.tsx
 #: src/components/role-namespace-modal.tsx
-msgid "Failed to create role namespace"
-msgstr "Failed to create role namespace"
+#~ msgid "Failed to create role namespace"
+#~ msgstr "Failed to create role namespace"
 
 #: src/containers/execution-environment/registry-list.tsx
 #~ msgid "Failed to delete remote registry {name}"
@@ -2457,28 +2513,28 @@ msgid "Failed to find repository version"
 msgstr "Failed to find repository version"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Failed to find role"
-msgstr "Failed to find role"
+#~ msgid "Failed to find role"
+#~ msgstr "Failed to find role"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Failed to get import log"
-msgstr "Failed to get import log"
+#~ msgid "Failed to get import log"
+#~ msgstr "Failed to get import log"
 
 #: src/components/role-import-form.tsx
-msgid "Failed to import role"
-msgstr "Failed to import role"
+#~ msgid "Failed to import role"
+#~ msgstr "Failed to import role"
 
 #: src/actions/ansible-repository-delete.tsx
 msgid "Failed to list distributions, removing only the repository."
 msgstr "Failed to list distributions, removing only the repository."
 
 #: src/components/role-import-list.tsx
-msgid "Failed to list role imports"
-msgstr "Failed to list role imports"
+#~ msgid "Failed to list role imports"
+#~ msgstr "Failed to list role imports"
 
 #: src/components/lightspeed-modal.tsx
-msgid "Failed to load Ansible Lightspeed information."
-msgstr "Failed to load Ansible Lightspeed information."
+#~ msgid "Failed to load Ansible Lightspeed information."
+#~ msgstr "Failed to load Ansible Lightspeed information."
 
 #: src/containers/ansible-repository/tab-collection-versions.tsx
 #~ msgid "Failed to load collection versions"
@@ -2509,41 +2565,45 @@ msgid "Failed to load repositories."
 msgstr "Failed to load repositories."
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Failed to load role content"
-msgstr "Failed to load role content"
+#~ msgid "Failed to load role content"
+#~ msgstr "Failed to load role content"
 
 #: src/containers/ansible-role/namespace-detail.tsx
-msgid "Failed to load role namespace"
-msgstr "Failed to load role namespace"
+#~ msgid "Failed to load role namespace"
+#~ msgstr "Failed to load role namespace"
 
 #: src/containers/ansible-role/namespace-list.tsx
-msgid "Failed to load role namespaces"
-msgstr "Failed to load role namespaces"
+#~ msgid "Failed to load role namespaces"
+#~ msgstr "Failed to load role namespaces"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Failed to load role versions"
-msgstr "Failed to load role versions"
+#~ msgid "Failed to load role versions"
+#~ msgstr "Failed to load role versions"
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "Failed to load roles"
-msgstr "Failed to load roles"
+#~ msgid "Failed to load roles"
+#~ msgstr "Failed to load roles"
+
+#: src/containers/pulp-status.tsx
+msgid "Failed to load status"
+msgstr "Failed to load status"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Failed to load Wisdom information."
 #~ msgstr "Failed to load Wisdom information."
 
 #: src/components/lightspeed-modal.tsx
-msgid "Failed to opt in to Ansible Lightspeed."
-msgstr "Failed to opt in to Ansible Lightspeed."
+#~ msgid "Failed to opt in to Ansible Lightspeed."
+#~ msgstr "Failed to opt in to Ansible Lightspeed."
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Failed to opt in to Wisdom."
 #~ msgstr "Failed to opt in to Wisdom."
 
 #: src/components/lightspeed-modal.tsx
-msgid "Failed to opt out of Ansible Lightspeed."
-msgstr "Failed to opt out of Ansible Lightspeed."
+#~ msgid "Failed to opt out of Ansible Lightspeed."
+#~ msgstr "Failed to opt out of Ansible Lightspeed."
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Failed to opt out of Wisdom."
@@ -2570,8 +2630,8 @@ msgid "Failed to remove repository {name}"
 msgstr "Failed to remove repository {name}"
 
 #: src/containers/login/login.tsx
-msgid "Failed to retrieve user data."
-msgstr "Failed to retrieve user data."
+#~ msgid "Failed to retrieve user data."
+#~ msgstr "Failed to retrieve user data."
 
 #: src/actions/ansible-repository-version-revert.tsx
 msgid "Failed to revert repository \"{repositoryName}\" to version \"{number}\""
@@ -2582,20 +2642,24 @@ msgid "Failed to search collections ({keywords})"
 msgstr "Failed to search collections ({keywords})"
 
 #: src/containers/search/multi-search.tsx
-msgid "Failed to search execution environments ({keywords})"
-msgstr "Failed to search execution environments ({keywords})"
+msgid "Failed to search containers ({keywords})"
+msgstr "Failed to search containers ({keywords})"
+
+#: src/containers/search/multi-search.tsx
+#~ msgid "Failed to search execution environments ({keywords})"
+#~ msgstr "Failed to search execution environments ({keywords})"
 
 #: src/containers/search/multi-search.tsx
 msgid "Failed to search namespaces ({keywords})"
 msgstr "Failed to search namespaces ({keywords})"
 
 #: src/containers/search/multi-search.tsx
-msgid "Failed to search role namespaces ({keywords})"
-msgstr "Failed to search role namespaces ({keywords})"
+#~ msgid "Failed to search role namespaces ({keywords})"
+#~ msgstr "Failed to search role namespaces ({keywords})"
 
 #: src/containers/search/multi-search.tsx
-msgid "Failed to search roles ({keywords})"
-msgstr "Failed to search roles ({keywords})"
+#~ msgid "Failed to search roles ({keywords})"
+#~ msgstr "Failed to search roles ({keywords})"
 
 #: src/containers/namespace-detail/namespace-detail.tsx
 msgid "Failed to sign all collections."
@@ -2619,17 +2683,17 @@ msgid "Failed to sync repository \"{name}\""
 msgstr "Failed to sync repository \"{name}\""
 
 #: src/components/role-sync-form.tsx
-msgid "Failed to sync role"
-msgstr "Failed to sync role"
+#~ msgid "Failed to sync role"
+#~ msgstr "Failed to sync role"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Featured"
-msgstr "Featured"
+#~ msgid "Featured"
+#~ msgstr "Featured"
 
 #: src/components/role-import-form.tsx
 #: src/components/role-sync-form.tsx
-msgid "Field is required."
-msgstr "Field is required."
+#~ msgid "Field is required."
+#~ msgstr "Field is required."
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "File upload"
@@ -2654,14 +2718,18 @@ msgstr "Filter by {0}"
 #~ msgid "Find a group"
 #~ msgstr "Find a group"
 
+#: src/containers/execution-environment/registry-list.tsx
+msgid "Find containers in this registry"
+msgstr "Find containers in this registry"
+
 #: src/components/collection-content-list.tsx
 #: src/components/table-of-contents.tsx
 msgid "Find content"
 msgstr "Find content"
 
 #: src/containers/execution-environment/registry-list.tsx
-msgid "Find execution environments in this registry"
-msgstr "Find execution environments in this registry"
+#~ msgid "Find execution environments in this registry"
+#~ msgstr "Find execution environments in this registry"
 
 #: src/components/collection-content-list.tsx
 #: src/components/table-of-contents.tsx
@@ -2674,8 +2742,6 @@ msgid "Finished at"
 msgstr "Finished at"
 
 #: src/components/user-form.tsx
-#: src/containers/group-management/group-detail.tsx
-#: src/containers/group-management/group-detail.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/user-management/user-list.tsx
@@ -2691,24 +2757,28 @@ msgid "Force a sync to happen."
 msgstr "Force a sync to happen."
 
 #: src/components/role-import-form.tsx
-msgid "Found"
-msgstr "Found"
+#~ msgid "Found"
+#~ msgstr "Found"
 
 #: src/components/role-import-form.tsx
-msgid "Found a standalone namespace (<0>{0}</0>), but NOT a provider namespace."
-msgstr "Found a standalone namespace (<0>{0}</0>), but NOT a provider namespace."
+#~ msgid "Found a standalone namespace (<0>{0}</0>), but NOT a provider namespace."
+#~ msgstr "Found a standalone namespace (<0>{0}</0>), but NOT a provider namespace."
 
-#: src/components/hub-about-modal.tsx
+#: src/containers/pulp-status.tsx
+msgid "Free"
+msgstr "Free"
+
+#: src/components/pulp-about-modal.tsx
 msgid "Galaxy Importer"
 msgstr "Galaxy Importer"
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "Galaxy Logo"
 msgstr "Galaxy Logo"
 
 #: src/containers/role-management/role-list.tsx
-msgid "Galaxy only"
-msgstr "Galaxy only"
+#~ msgid "Galaxy only"
+#~ msgstr "Galaxy only"
 
 #: src/utilities/translate-task.ts
 msgid "General create"
@@ -2727,29 +2797,29 @@ msgid "General update"
 msgstr "General update"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Get the trial"
-msgstr "Get the trial"
+#~ msgid "Get the trial"
+#~ msgstr "Get the trial"
 
 #: src/containers/repositories/repository-list.tsx
 #~ msgid "Get token"
 #~ msgstr "Get token"
 
 #: src/components/role-import-form.tsx
-msgid "GitHub ref (a commit, branch or tag)"
-msgstr "GitHub ref (a commit, branch or tag)"
+#~ msgid "GitHub ref (a commit, branch or tag)"
+#~ msgstr "GitHub ref (a commit, branch or tag)"
 
 #: src/components/role-import-form.tsx
-msgid "GitHub repository"
-msgstr "GitHub repository"
+#~ msgid "GitHub repository"
+#~ msgstr "GitHub repository"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "GitHub Repository"
-msgstr "GitHub Repository"
+#~ msgid "GitHub Repository"
+#~ msgstr "GitHub Repository"
 
 #: src/components/role-import-form.tsx
 #: src/components/role-sync-form.tsx
-msgid "GitHub user"
-msgstr "GitHub user"
+#~ msgid "GitHub user"
+#~ msgstr "GitHub user"
 
 #: src/utilities/wait-for-task.ts
 msgid "Giving up waiting for task after 10 attempts."
@@ -2876,13 +2946,12 @@ msgid "Group name"
 msgstr "Group name"
 
 #: src/components/access-tab.tsx
-#: src/components/role-namespace-edit-modal.tsx
 #: src/components/user-form.tsx
 #: src/components/user-form.tsx
 #: src/containers/group-management/group-detail.tsx
 #: src/containers/group-management/group-list.tsx
 #: src/containers/user-management/user-list.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Groups"
 msgstr "Groups"
 
@@ -2904,8 +2973,8 @@ msgid "Has words"
 msgstr "Has words"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Help other Ansible users by sharing the awesome roles and collections you create."
-msgstr "Help other Ansible users by sharing the awesome roles and collections you create."
+#~ msgid "Help other Ansible users by sharing the awesome roles and collections you create."
+#~ msgstr "Help other Ansible users by sharing the awesome roles and collections you create."
 
 #: src/components/write-only-field.tsx
 msgid "hidden value"
@@ -2974,8 +3043,8 @@ msgid "Images will appear once uploaded"
 msgstr "Images will appear once uploaded"
 
 #: src/components/role-import-form.tsx
-msgid "Import"
-msgstr "Import"
+#~ msgid "Import"
+#~ msgstr "Import"
 
 #: src/utilities/translate-task.ts
 #: src/utilities/translate-task.ts
@@ -2991,14 +3060,13 @@ msgid "Import collection"
 msgstr "Import collection"
 
 #: src/components/collection-header.tsx
-#: src/containers/ansible-role/role-detail.tsx
 #: src/containers/collection-detail/collection-import-log.tsx
 msgid "Import log"
 msgstr "Import log"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Import new version"
-msgstr "Import new version"
+#~ msgid "Import new version"
+#~ msgstr "Import new version"
 
 #: src/utilities/translate-task.ts
 msgid "Import repository version"
@@ -3008,13 +3076,14 @@ msgstr "Import repository version"
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-import.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "Import role"
-msgstr "Import role"
+#~ msgid "Import role"
+#~ msgstr "Import role"
 
 #: src/components/role-import-form.tsx
-msgid "Import started"
-msgstr "Import started"
+#~ msgid "Import started"
+#~ msgstr "Import started"
 
+#: src/containers/my-imports/my-imports.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
 msgid "Imports"
 msgstr "Imports"
@@ -3032,36 +3101,47 @@ msgid "Including all tags might transfer a lot of data."
 msgstr "Including all tags might transfer a lot of data."
 
 #: src/containers/execution-environment/registry-list.tsx
-msgid "Index execution environments"
-msgstr "Index execution environments"
+msgid "Index containers"
+msgstr "Index containers"
+
+#: src/containers/execution-environment/registry-list.tsx
+#~ msgid "Index execution environments"
+#~ msgstr "Index execution environments"
+
+#: src/containers/execution-environment/registry-list.tsx
+msgid "Indexing containers is not supported"
+msgstr "Indexing containers is not supported"
 
 #: src/containers/execution-environment/registry-list.tsx
 #~ msgid "Indexing execution environments in {name}"
 #~ msgstr "Indexing execution environments in {name}"
 
 #: src/containers/execution-environment/registry-list.tsx
-msgid "Indexing execution environments is only supported on registry.redhat.io"
-msgstr "Indexing execution environments is only supported on registry.redhat.io"
+#~ msgid "Indexing execution environments is only supported on registry.redhat.io"
+#~ msgstr "Indexing execution environments is only supported on registry.redhat.io"
 
 #: src/containers/execution-environment/registry-list.tsx
 #~ msgid "Indexing failed for {name}"
 #~ msgstr "Indexing failed for {name}"
 
 #: src/containers/execution-environment/registry-list.tsx
-msgid "Indexing started for execution environment \"{name}\"."
-msgstr "Indexing started for execution environment \"{name}\"."
+msgid "Indexing started for container \"{name}\"."
+msgstr "Indexing started for container \"{name}\"."
+
+#: src/containers/execution-environment/registry-list.tsx
+#~ msgid "Indexing started for execution environment \"{name}\"."
+#~ msgstr "Indexing started for execution environment \"{name}\"."
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Info"
 msgstr "Info"
 
 #: src/components/render-plugin-doc.tsx
-msgid "ini entries:"
-msgstr "ini entries:"
+#~ msgid "ini entries:"
+#~ msgstr "ini entries:"
 
 #: src/components/collection-header.tsx
 #: src/components/collection-info.tsx
-#: src/containers/ansible-role/role-detail.tsx
 msgid "Install"
 msgstr "Install"
 
@@ -3074,8 +3154,8 @@ msgid "Installation"
 msgstr "Installation"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Installation:"
-msgstr "Installation:"
+#~ msgid "Installation:"
+#~ msgstr "Installation:"
 
 #: src/containers/execution-environment-detail/execution-environment-detail.tsx
 msgid "Instructions"
@@ -3121,23 +3201,26 @@ msgstr "It's safe to close this window. These tasks will finish in the backgroun
 msgid "Items per page"
 msgstr "Items per page"
 
+#: src/containers/pulp-status.tsx
+msgid "JSON"
+msgstr "JSON"
+
 #: src/containers/landing/landing-page.tsx
-msgid "Jump-start your automation project with great content from the Ansible community. Galaxy provides pre-packaged units of work known to Ansible as roles and collections."
-msgstr "Jump-start your automation project with great content from the Ansible community. Galaxy provides pre-packaged units of work known to Ansible as roles and collections."
+#~ msgid "Jump-start your automation project with great content from the Ansible community. Galaxy provides pre-packaged units of work known to Ansible as roles and collections."
+#~ msgstr "Jump-start your automation project with great content from the Ansible community. Galaxy provides pre-packaged units of work known to Ansible as roles and collections."
 
 #: src/components/render-plugin-doc.tsx
-msgid "Key"
-msgstr "Key"
+#~ msgid "Key"
+#~ msgstr "Key"
 
 #: src/containers/signature-keys/list.tsx
 msgid "Key fingerprint"
 msgstr "Key fingerprint"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Keyboard Shortcuts"
-msgstr "Keyboard Shortcuts"
+#~ msgid "Keyboard Shortcuts"
+#~ msgstr "Keyboard Shortcuts"
 
-#: src/components/role-namespace-edit-modal.tsx
 #: src/containers/namespace-list/namespace-list.tsx
 msgid "keywords"
 msgstr "keywords"
@@ -3147,9 +3230,6 @@ msgstr "keywords"
 #: src/components/multi-search-search.tsx
 #: src/components/multi-search-search.tsx
 #: src/containers/ansible-repository/tab-collection-versions.tsx
-#: src/containers/ansible-role/namespace-detail.tsx
-#: src/containers/ansible-role/namespace-list.tsx
-#: src/containers/ansible-role/role-list.tsx
 msgid "Keywords"
 msgstr "Keywords"
 
@@ -3158,6 +3238,11 @@ msgstr "Keywords"
 #: src/containers/ansible-repository/tab-details.tsx
 msgid "Labels"
 msgstr "Labels"
+
+#: src/containers/pulp-status.tsx
+#: src/containers/pulp-status.tsx
+msgid "Last heartbeat"
+msgstr "Last heartbeat"
 
 #: src/components/collection-filter.ts
 #: src/containers/execution-environment-list/execution-environment-list.tsx
@@ -3169,8 +3254,6 @@ msgstr "Last modified"
 #~ msgstr "Last Modified"
 
 #: src/components/user-form.tsx
-#: src/containers/group-management/group-detail.tsx
-#: src/containers/group-management/group-detail.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/user-management/user-list.tsx
@@ -3182,6 +3265,7 @@ msgstr "Last name"
 #~ msgstr "Last synced"
 
 #: src/containers/execution-environment/registry-list.tsx
+#: src/containers/pulp-status.tsx
 msgid "Last updated"
 msgstr "Last updated"
 
@@ -3211,16 +3295,16 @@ msgstr "Layers"
 #~ msgstr "Legacy"
 
 #: src/components/lightspeed-modal.tsx
-msgid "Legacy namespace <0>{name}</0> is opted in to Ansible Lightspeed."
-msgstr "Legacy namespace <0>{name}</0> is opted in to Ansible Lightspeed."
+#~ msgid "Legacy namespace <0>{name}</0> is opted in to Ansible Lightspeed."
+#~ msgstr "Legacy namespace <0>{name}</0> is opted in to Ansible Lightspeed."
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Legacy namespace <0>{name}</0> is opted in to Wisdom."
 #~ msgstr "Legacy namespace <0>{name}</0> is opted in to Wisdom."
 
 #: src/components/lightspeed-modal.tsx
-msgid "Legacy namespace <0>{name}</0> is opted out of Ansible Lightspeed."
-msgstr "Legacy namespace <0>{name}</0> is opted out of Ansible Lightspeed."
+#~ msgid "Legacy namespace <0>{name}</0> is opted out of Ansible Lightspeed."
+#~ msgstr "Legacy namespace <0>{name}</0> is opted out of Ansible Lightspeed."
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Legacy namespace <0>{name}</0> is opted out of Wisdom."
@@ -3243,6 +3327,10 @@ msgstr "Legacy namespace <0>{name}</0> is opted out of Ansible Lightspeed."
 #: src/components/collection-info.tsx
 msgid "License"
 msgstr "License"
+
+#: src/components/darkmode-switcher.tsx
+msgid "Light"
+msgstr "Light"
 
 #: src/components/remote-form.tsx
 msgid "Limits total download rate in requests per second."
@@ -3270,20 +3358,19 @@ msgstr "List of Collections"
 #~ msgstr "List of Legacy Roles"
 
 #: src/containers/ansible-role/namespace-list.tsx
-msgid "List of role namespaces"
-msgstr "List of role namespaces"
+#~ msgid "List of role namespaces"
+#~ msgstr "List of role namespaces"
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "List of roles"
-msgstr "List of roles"
+#~ msgid "List of roles"
+#~ msgstr "List of roles"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "List of versions"
-msgstr "List of versions"
+#~ msgid "List of versions"
+#~ msgstr "List of versions"
 
-#: src/containers/token/token-insights.tsx
-#: src/containers/token/token-standalone.tsx
+#: src/containers/token/token.tsx
 msgid "Load token"
 msgstr "Load token"
 
@@ -3306,11 +3393,12 @@ msgid "Log In"
 msgstr "Log In"
 
 #: src/containers/login/login.tsx
-msgid "Log in to your account"
-msgstr "Log in to your account"
+#~ msgid "Log in to your account"
+#~ msgstr "Log in to your account"
 
 #: src/components/login-link.tsx
-#: src/components/login-link.tsx
+#: src/containers/login/login.tsx
+#: src/menu.tsx
 msgid "Login"
 msgstr "Login"
 
@@ -3318,7 +3406,7 @@ msgstr "Login"
 msgid "Logo URL"
 msgstr "Logo URL"
 
-#: src/loaders/standalone/layout.tsx
+#: src/layout.tsx
 msgid "Logout"
 msgstr "Logout"
 
@@ -3349,16 +3437,16 @@ msgid "Manage tags"
 msgstr "Manage tags"
 
 #: src/containers/token/token-insights.tsx
-msgid "Manage tokens"
-msgstr "Manage tokens"
+#~ msgid "Manage tokens"
+#~ msgstr "Manage tokens"
 
 #: src/containers/execution-environment-manifest/execution-environment-manifest.tsx
 msgid "Manifest lists are not currently supported on this screen, please use the <0>Images</0> tab to see manifest list details."
 msgstr "Manifest lists are not currently supported on this screen, please use the <0>Images</0> tab to see manifest list details."
 
 #: src/containers/landing/landing-page.tsx
-msgid "Maybe you have automation for installing and configuring a popular software package, or for deploying software built by your company. Whatever it is, use Galaxy to share it with the community."
-msgstr "Maybe you have automation for installing and configuring a popular software package, or for deploying software built by your company. Whatever it is, use Galaxy to share it with the community."
+#~ msgid "Maybe you have automation for installing and configuring a popular software package, or for deploying software built by your company. Whatever it is, use Galaxy to share it with the community."
+#~ msgstr "Maybe you have automation for installing and configuring a popular software package, or for deploying software built by your company. Whatever it is, use Galaxy to share it with the community."
 
 #: src/containers/task-management/task-detail.tsx
 msgid "Message"
@@ -3389,8 +3477,8 @@ msgid "Must be an integer."
 msgstr "Must be an integer."
 
 #: src/containers/my-imports/my-imports.tsx
-msgid "My imports"
-msgstr "My imports"
+#~ msgid "My imports"
+#~ msgstr "My imports"
 
 #: src/containers/namespace-list/namespace-list.tsx
 msgid "My namespaces"
@@ -3398,7 +3486,7 @@ msgstr "My namespaces"
 
 #: src/containers/settings/user-profile.tsx
 #: src/containers/settings/user-profile.tsx
-#: src/loaders/standalone/layout.tsx
+#: src/layout.tsx
 msgid "My profile"
 msgstr "My profile"
 
@@ -3417,8 +3505,6 @@ msgstr "My profile"
 #: src/components/repository-form.tsx
 #: src/components/repository-form.tsx
 #: src/components/role-form.tsx
-#: src/components/role-namespace-edit-modal.tsx
-#: src/components/role-namespace-modal.tsx
 #: src/components/select-group.tsx
 #: src/components/select-group.tsx
 #: src/components/select-roles.tsx
@@ -3427,9 +3513,6 @@ msgstr "My profile"
 #: src/components/select-user.tsx
 #: src/containers/ansible-repository/tab-distributions.tsx
 #: src/containers/ansible-repository/tab-distributions.tsx
-#: src/containers/ansible-role/namespace-detail.tsx
-#: src/containers/ansible-role/namespace-list.tsx
-#: src/containers/ansible-role/role-list.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
@@ -3440,6 +3523,8 @@ msgstr "My profile"
 #: src/containers/group-management/group-detail-role-management/group-detail-role-management.tsx
 #: src/containers/group-management/group-detail-role-management/group-detail-role-management.tsx
 #: src/containers/namespace-list/namespace-list.tsx
+#: src/containers/pulp-status.tsx
+#: src/containers/pulp-status.tsx
 #: src/containers/signature-keys/list.tsx
 #: src/containers/signature-keys/list.tsx
 #: src/containers/signature-keys/list.tsx
@@ -3476,10 +3561,9 @@ msgstr "Name must not be empty."
 #: src/components/collection-filter.ts
 #: src/components/import-list.tsx
 #: src/containers/ansible-repository/tab-collection-versions.tsx
-#: src/containers/ansible-role/role-list.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Namespace"
 msgstr "Namespace"
 
@@ -3492,16 +3576,16 @@ msgid "Namespace \"{name}\" has been successfully deleted."
 msgstr "Namespace \"{name}\" has been successfully deleted."
 
 #: src/components/lightspeed-modal.tsx
-msgid "Namespace <0>{name}</0> is opted in to Ansible Lightspeed."
-msgstr "Namespace <0>{name}</0> is opted in to Ansible Lightspeed."
+#~ msgid "Namespace <0>{name}</0> is opted in to Ansible Lightspeed."
+#~ msgstr "Namespace <0>{name}</0> is opted in to Ansible Lightspeed."
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Namespace <0>{name}</0> is opted in to Wisdom."
 #~ msgstr "Namespace <0>{name}</0> is opted in to Wisdom."
 
 #: src/components/lightspeed-modal.tsx
-msgid "Namespace <0>{name}</0> is opted out of Ansible Lightspeed."
-msgstr "Namespace <0>{name}</0> is opted out of Ansible Lightspeed."
+#~ msgid "Namespace <0>{name}</0> is opted out of Ansible Lightspeed."
+#~ msgstr "Namespace <0>{name}</0> is opted out of Ansible Lightspeed."
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #~ msgid "Namespace <0>{name}</0> is opted out of Wisdom."
@@ -3512,11 +3596,10 @@ msgstr "Namespace <0>{name}</0> is opted out of Ansible Lightspeed."
 #~ msgstr "Namespace Header"
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "Namespace list"
-msgstr "Namespace list"
+#~ msgid "Namespace list"
+#~ msgstr "Namespace list"
 
 #: src/components/namespace-modal.tsx
-#: src/components/role-import-form.tsx
 msgid "Namespace name"
 msgstr "Namespace name"
 
@@ -3534,11 +3617,17 @@ msgstr "Namespace names are limited to alphanumeric characters and underscores, 
 #~ msgid "Namespace successfully edited."
 #~ msgstr "Namespace successfully edited."
 
+#: src/containers/collection-detail/collection-content.tsx
+#: src/containers/collection-detail/collection-dependencies.tsx
+#: src/containers/collection-detail/collection-detail.tsx
+#: src/containers/collection-detail/collection-distributions.tsx
+#: src/containers/collection-detail/collection-docs.tsx
+#: src/containers/collection-detail/collection-import-log.tsx
+#: src/containers/edit-namespace/edit-namespace.tsx
+#: src/containers/namespace-detail/namespace-detail.tsx
 #: src/containers/namespace-list/namespace-list.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
-#: src/loaders/standalone/menu.tsx
-#: src/paths.ts
 msgid "Namespaces"
 msgstr "Namespaces"
 
@@ -3548,7 +3637,6 @@ msgstr "Namespaces"
 msgid "Namespaces list could not be displayed."
 msgstr "Namespaces list could not be displayed."
 
-#: src/components/role-namespace-edit-modal.tsx
 #: src/containers/namespace-list/namespace-list.tsx
 msgid "Namespaces will appear once created"
 msgstr "Namespaces will appear once created"
@@ -3562,8 +3650,8 @@ msgid "Needs review"
 msgstr "Needs review"
 
 #: src/containers/ansible-repository/list.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Needs Review"
 msgstr "Needs Review"
 
@@ -3602,8 +3690,8 @@ msgid "No activities yet"
 msgstr "No activities yet"
 
 #: src/components/render-plugin-doc.tsx
-msgid "No alternatives specified."
-msgstr "No alternatives specified."
+#~ msgid "No alternatives specified."
+#~ msgstr "No alternatives specified."
 
 #: src/components/select-group.tsx
 msgid "No assignable groups."
@@ -3672,15 +3760,14 @@ msgid "No images yet"
 msgstr "No images yet"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "No import logs for role id {0}"
-msgstr "No import logs for role id {0}"
+#~ msgid "No import logs for role id {0}"
+#~ msgstr "No import logs for role id {0}"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "No import logs were found for the role."
-msgstr "No import logs were found for the role."
+#~ msgid "No import logs were found for the role."
+#~ msgstr "No import logs were found for the role."
 
 #: src/components/import-list.tsx
-#: src/components/role-import-list.tsx
 msgid "No imports"
 msgstr "No imports"
 
@@ -3688,47 +3775,50 @@ msgstr "No imports"
 #~ msgid "No local repositories yet"
 #~ msgstr "No local repositories yet"
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "No managed collections yet"
 msgstr "No managed collections yet"
 
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
 msgid "No matching collections found."
 msgstr "No matching collections found."
 
 #: src/containers/search/multi-search.tsx
-msgid "No matching execution environments found."
-msgstr "No matching execution environments found."
+msgid "No matching containers found."
+msgstr "No matching containers found."
+
+#: src/containers/search/multi-search.tsx
+#~ msgid "No matching execution environments found."
+#~ msgstr "No matching execution environments found."
 
 #: src/containers/not-found/dispatch.tsx
 #~ msgid "No matching legacy roles found."
 #~ msgstr "No matching legacy roles found."
 
 #: src/components/role-import-form.tsx
-msgid "No matching namespace found"
-msgstr "No matching namespace found"
+#~ msgid "No matching namespace found"
+#~ msgstr "No matching namespace found"
 
 #: src/containers/search/multi-search.tsx
 msgid "No matching namespaces found."
 msgstr "No matching namespaces found."
 
 #: src/containers/search/multi-search.tsx
-msgid "No matching role namespaces found."
-msgstr "No matching role namespaces found."
+#~ msgid "No matching role namespaces found."
+#~ msgstr "No matching role namespaces found."
 
 #: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
-msgid "No matching roles found."
-msgstr "No matching roles found."
+#~ msgid "No matching roles found."
+#~ msgstr "No matching roles found."
 
 #: src/components/import-list.tsx
 msgid "No namespace selected."
 msgstr "No namespace selected."
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "No namespaces found"
-msgstr "No namespaces found"
+#~ msgid "No namespaces found"
+#~ msgstr "No namespaces found"
 
 #: src/containers/namespace-list/namespace-list.tsx
 msgid "No namespaces yet"
@@ -3752,8 +3842,8 @@ msgid "No README"
 msgstr "No README"
 
 #: src/components/render-plugin-doc.tsx
-msgid "No reason specified."
-msgstr "No reason specified."
+#~ msgid "No reason specified."
+#~ msgstr "No reason specified."
 
 #: src/containers/ansible-repository/list.tsx
 msgid "no remote"
@@ -3788,13 +3878,13 @@ msgid "No results match the filter criteria. Try changing your filter settings."
 msgstr "No results match the filter criteria. Try changing your filter settings."
 
 #: src/containers/ansible-role/namespace-list.tsx
-msgid "No role namespaces yet"
-msgstr "No role namespaces yet"
+#~ msgid "No role namespaces yet"
+#~ msgstr "No role namespaces yet"
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "No roles yet"
-msgstr "No roles yet"
+#~ msgid "No roles yet"
+#~ msgstr "No roles yet"
 
 #: src/containers/signature-keys/list.tsx
 msgid "No signature keys yet"
@@ -3830,8 +3920,8 @@ msgid "No version of {fqn} exists that matches {version_range}."
 msgstr "No version of {fqn} exists that matches {version_range}."
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "No versions"
-msgstr "No versions"
+#~ msgid "No versions"
+#~ msgstr "No versions"
 
 #: src/components/ansible-repository-form.tsx
 #: src/components/ansible-repository-form.tsx
@@ -3839,8 +3929,6 @@ msgstr "No versions"
 #: src/components/pulp-labels.tsx
 #: src/components/repository-form.tsx
 #: src/components/repository-form.tsx
-#: src/components/role-namespace-edit-modal.tsx
-#: src/components/role-namespace-edit-modal.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
@@ -3851,6 +3939,7 @@ msgstr "No versions"
 #: src/containers/ansible-repository/tab-details.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
+#: src/containers/pulp-status.tsx
 msgid "None"
 msgstr "None"
 
@@ -3859,16 +3948,19 @@ msgstr "None"
 msgid "Not a super user"
 msgstr "Not a super user"
 
+#: src/containers/pulp-status.tsx
+msgid "Not enabled"
+msgstr "Not enabled"
+
 #: src/components/permission-chip-selector.tsx
 #: src/components/typeahead.tsx
 #: src/containers/collection-detail/collection-docs.tsx
-#: src/containers/not-found/dispatch.tsx
 msgid "Not found"
 msgstr "Not found"
 
 #: src/containers/not-found/not-found.tsx
-msgid "Not found image"
-msgstr "Not found image"
+#~ msgid "Not found image"
+#~ msgstr "Not found image"
 
 #: src/components/collection-usedby-dependencies-list.tsx
 msgid "Not required for use by other collections"
@@ -3884,8 +3976,8 @@ msgstr "Not required for use by other collections"
 
 #: src/components/render-plugin-doc.tsx
 #: src/components/render-plugin-doc.tsx
-msgid "Notes"
-msgstr "Notes"
+#~ msgid "Notes"
+#~ msgstr "Notes"
 
 #: src/components/remote-form.tsx
 msgid "Number must be greater than 0"
@@ -3896,8 +3988,20 @@ msgid "of"
 msgstr "of"
 
 #: src/containers/token/token-insights.tsx
-msgid "Offline token"
-msgstr "Offline token"
+#~ msgid "Offline token"
+#~ msgstr "Offline token"
+
+#: src/containers/pulp-status.tsx
+msgid "Online api apps"
+msgstr "Online api apps"
+
+#: src/containers/pulp-status.tsx
+msgid "Online content apps"
+msgstr "Online content apps"
+
+#: src/containers/pulp-status.tsx
+msgid "Online workers"
+msgstr "Online workers"
 
 #: src/actions/ansible-repository-sync.tsx
 msgid "Only perform the sync if changes are reported by the remote server."
@@ -3921,8 +4025,8 @@ msgstr "Only perform the sync if changes are reported by the remote server. To f
 
 #: src/components/lightspeed-modal.tsx
 #: src/components/lightspeed-modal.tsx
-msgid "Opt in to Ansible Lightspeed"
-msgstr "Opt in to Ansible Lightspeed"
+#~ msgid "Opt in to Ansible Lightspeed"
+#~ msgstr "Opt in to Ansible Lightspeed"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #: src/components/wisdom-modal/wisdom-modal.tsx
@@ -3931,8 +4035,8 @@ msgstr "Opt in to Ansible Lightspeed"
 
 #: src/components/lightspeed-modal.tsx
 #: src/components/lightspeed-modal.tsx
-msgid "Opt out of Ansible Lightspeed"
-msgstr "Opt out of Ansible Lightspeed"
+#~ msgid "Opt out of Ansible Lightspeed"
+#~ msgstr "Opt out of Ansible Lightspeed"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #: src/components/wisdom-modal/wisdom-modal.tsx
@@ -3943,21 +4047,34 @@ msgstr "Opt out of Ansible Lightspeed"
 msgid "Optimize"
 msgstr "Optimize"
 
+#: src/containers/pulp-status.tsx
+msgid "Origin"
+msgstr "Origin"
+
+#: src/containers/task-management/task-list-view.tsx
 #: src/utilities/translate-task.ts
 msgid "Orphan cleanup"
 msgstr "Orphan cleanup"
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Orphan cleanup could not be started"
+msgstr "Orphan cleanup could not be started"
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Orphan cleanup started"
+msgstr "Orphan cleanup started"
 
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
 msgid "OS / Arch"
 msgstr "OS / Arch"
 
 #: src/components/role-import-form.tsx
-msgid "Overrides any galaxy_info.namespace metadata"
-msgstr "Overrides any galaxy_info.namespace metadata"
+#~ msgid "Overrides any galaxy_info.namespace metadata"
+#~ msgstr "Overrides any galaxy_info.namespace metadata"
 
 #: src/components/role-import-form.tsx
-msgid "Overrides any galaxy_info.role_name metadata"
-msgstr "Overrides any galaxy_info.role_name metadata"
+#~ msgid "Overrides any galaxy_info.role_name metadata"
+#~ msgstr "Overrides any galaxy_info.role_name metadata"
 
 #: src/components/execution-environment-header/execution-environment-header.tsx
 #: src/components/execution-environment-header/execution-environment-header.tsx
@@ -3973,13 +4090,13 @@ msgid "Pagination"
 msgstr "Pagination"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Parameter"
-msgstr "Parameter"
+#~ msgid "Parameter"
+#~ msgstr "Parameter"
 
 #: src/components/render-plugin-doc.tsx
 #: src/components/render-plugin-doc.tsx
-msgid "Parameters"
-msgstr "Parameters"
+#~ msgid "Parameters"
+#~ msgstr "Parameters"
 
 #: src/containers/task-management/task-detail.tsx
 msgid "Parent task"
@@ -3995,8 +4112,8 @@ msgstr "Parent task"
 
 #: src/containers/namespace-list/namespace-list.tsx
 #: src/paths.ts
-msgid "Partners"
-msgstr "Partners"
+#~ msgid "Partners"
+#~ msgstr "Partners"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/remote-form.tsx
@@ -4012,9 +4129,13 @@ msgstr "Password confirmation"
 msgid "Passwords do not match"
 msgstr "Passwords do not match"
 
+#: src/containers/pulp-status.tsx
+msgid "Path prefix"
+msgstr "Path prefix"
+
 #: src/containers/not-found/dispatch.tsx
-msgid "Pathname <0>{pathname}</0> could refer to a collection or a role."
-msgstr "Pathname <0>{pathname}</0> could refer to a collection or a role."
+#~ msgid "Pathname <0>{pathname}</0> could refer to a collection or a role."
+#~ msgstr "Pathname <0>{pathname}</0> could refer to a collection or a role."
 
 #: src/components/status-indicator.tsx
 msgid "Pending"
@@ -4135,8 +4256,8 @@ msgid "Please use a jpeg or png; svg images are not supported."
 msgstr "Please use a jpeg or png; svg images are not supported."
 
 #: src/containers/landing/landing-page.tsx
-msgid "Please, check it running the command:"
-msgstr "Please, check it running the command:"
+#~ msgid "Please, check it running the command:"
+#~ msgstr "Please, check it running the command:"
 
 #: src/components/namespace-modal.tsx
 msgid "Please, provide the namespace name"
@@ -4159,8 +4280,8 @@ msgid "Preview"
 msgstr "Preview"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Privacy statement"
-msgstr "Privacy statement"
+#~ msgid "Privacy statement"
+#~ msgstr "Privacy statement"
 
 #: src/containers/ansible-repository/list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
@@ -4203,8 +4324,8 @@ msgid "Provided by <0>{nsTitle}</0>"
 msgstr "Provided by <0>{nsTitle}</0>"
 
 #: src/containers/ansible-role/namespace-list.tsx
-msgid "Provider"
-msgstr "Provider"
+#~ msgid "Provider"
+#~ msgstr "Provider"
 
 #: src/components/remote-form.tsx
 msgid "Proxy password"
@@ -4245,7 +4366,7 @@ msgstr "Pull only latest?"
 msgid "Pull this image"
 msgstr "Pull this image"
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "Pulp Ansible Version"
 msgstr "Pulp Ansible Version"
 
@@ -4273,7 +4394,7 @@ msgstr "Pulp Ansible Version"
 #~ msgid "Pulp ansible: Update collection remote"
 #~ msgstr "Pulp ansible: Update collection remote"
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "Pulp Container Version"
 msgstr "Pulp Container Version"
 
@@ -4305,7 +4426,7 @@ msgstr "Pulp Container Version"
 #~ msgid "Pulp container: Untage image"
 #~ msgstr "Pulp container: Untage image"
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "Pulp Core Version"
 msgstr "Pulp Core Version"
 
@@ -4373,9 +4494,25 @@ msgstr "Pulp type"
 #~ msgid "Pulpcore: Upload commit"
 #~ msgstr "Pulpcore: Upload commit"
 
+#: src/containers/task-management/task-list-view.tsx
+msgid "Purge tasks"
+msgstr "Purge tasks"
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Purge Tasks could not be started"
+msgstr "Purge Tasks could not be started"
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Purge Tasks started"
+msgstr "Purge Tasks started"
+
 #: src/utilities/translate-locked-role.ts
-msgid "Push and change execution environments."
-msgstr "Push and change execution environments."
+msgid "Push and change containers."
+msgstr "Push and change containers."
+
+#: src/utilities/translate-locked-role.ts
+#~ msgid "Push and change execution environments."
+#~ msgstr "Push and change execution environments."
 
 #: src/containers/execution-environment-list/execution-environment-list.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
@@ -4403,20 +4540,24 @@ msgstr "Push container images"
 #~ msgstr "Push, and change execution environments."
 
 #: src/utilities/translate-locked-role.ts
-msgid "Push, delete and change execution environments. Create, delete and change remote registries."
-msgstr "Push, delete and change execution environments. Create, delete and change remote registries."
+msgid "Push, delete and change containers. Create, delete and change remote registries."
+msgstr "Push, delete and change containers. Create, delete and change remote registries."
+
+#: src/utilities/translate-locked-role.ts
+#~ msgid "Push, delete and change execution environments. Create, delete and change remote registries."
+#~ msgstr "Push, delete and change execution environments. Create, delete and change remote registries."
 
 #: src/constants.tsx
 #~ msgid "Push, delete, and change execution environments. Create, delete and change remote registries."
 #~ msgstr "Push, delete, and change execution environments. Create, delete and change remote registries."
 
 #: src/components/ratings.tsx
-msgid "Quality of docs"
-msgstr "Quality of docs"
+#~ msgid "Quality of docs"
+#~ msgstr "Quality of docs"
 
 #: src/components/ratings.tsx
-msgid "Quality score"
-msgstr "Quality score"
+#~ msgid "Quality score"
+#~ msgstr "Quality score"
 
 #: src/containers/ansible-remote/tab-details.tsx
 msgid "Rate limit"
@@ -4435,8 +4576,8 @@ msgid "Readme"
 msgstr "Readme"
 
 #: src/components/ratings.tsx
-msgid "Ready for production"
-msgstr "Ready for production"
+#~ msgid "Ready for production"
+#~ msgstr "Ready for production"
 
 #: src/components/tag-manifest-modal.tsx
 msgid "Reason: task {0}"
@@ -4451,12 +4592,16 @@ msgid "Recursive remove content"
 msgstr "Recursive remove content"
 
 #: src/components/repository-badge.tsx
-msgid "Red Hat Certified"
-msgstr "Red Hat Certified"
+#~ msgid "Red Hat Certified"
+#~ msgstr "Red Hat Certified"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Red Hat is working on exciting new Ansible content development capabilities within the context of <0>Ansible Lightspeed</0> to help other automators build Ansible content. Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations. If you have concerns, please contact the Ansible team at <1>ansible-content-ai@redhat.com</1>"
-msgstr "Red Hat is working on exciting new Ansible content development capabilities within the context of <0>Ansible Lightspeed</0> to help other automators build Ansible content. Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations. If you have concerns, please contact the Ansible team at <1>ansible-content-ai@redhat.com</1>"
+#~ msgid "Red Hat is working on exciting new Ansible content development capabilities within the context of <0>Ansible Lightspeed</0> to help other automators build Ansible content. Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations. If you have concerns, please contact the Ansible team at <1>ansible-content-ai@redhat.com</1>"
+#~ msgstr "Red Hat is working on exciting new Ansible content development capabilities within the context of <0>Ansible Lightspeed</0> to help other automators build Ansible content. Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations. If you have concerns, please contact the Ansible team at <1>ansible-content-ai@redhat.com</1>"
+
+#: src/containers/pulp-status.tsx
+msgid "Redis connection"
+msgstr "Redis connection"
 
 #: src/components/repository-form.tsx
 msgid "Registries list could not be displayed."
@@ -4485,8 +4630,8 @@ msgstr "rejected"
 #: src/components/approval-row.tsx
 #: src/components/repository-badge.tsx
 #: src/containers/ansible-repository/list.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Rejected"
 msgstr "Rejected"
 
@@ -4504,8 +4649,8 @@ msgstr "Rejected"
 #~ msgstr "released {0}"
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "Released <0/>"
-msgstr "Released <0/>"
+#~ msgid "Released <0/>"
+#~ msgstr "Released <0/>"
 
 #: src/components/ansible-repository-form.tsx
 #: src/containers/ansible-repository/list.tsx
@@ -4531,8 +4676,8 @@ msgid "Remote registries"
 msgstr "Remote registries"
 
 #: src/loaders/standalone/menu.tsx
-msgid "Remote Registries"
-msgstr "Remote Registries"
+#~ msgid "Remote Registries"
+#~ msgstr "Remote Registries"
 
 #: src/containers/execution-environment/registry-list.tsx
 msgid "Remote registry \"{name}\" could not be deleted."
@@ -4553,7 +4698,7 @@ msgstr "Remote registry \"{name}\" has been successfully deleted."
 #: src/containers/ansible-remote/detail.tsx
 #: src/containers/ansible-remote/edit.tsx
 #: src/containers/ansible-remote/list.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Remotes"
 msgstr "Remotes"
 
@@ -4632,9 +4777,21 @@ msgstr "Remove user from group?"
 msgid "Remove version {version} from repository"
 msgstr "Remove version {version} from repository"
 
+#: src/containers/task-management/task-list-view.tsx
+msgid "Repair"
+msgstr "Repair"
+
 #: src/utilities/translate-task.ts
 msgid "Repair all artifacts"
 msgstr "Repair all artifacts"
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Repair Artifact Storage could not be started"
+msgstr "Repair Artifact Storage could not be started"
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Repair Artifact Storage started"
+msgstr "Repair Artifact Storage started"
 
 #: src/utilities/translate-task.ts
 msgid "Repair repository version"
@@ -4657,7 +4814,7 @@ msgstr "Repo"
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/ansible-repository/edit.tsx
 #: src/containers/ansible-repository/list.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Repositories"
 msgstr "Repositories"
 
@@ -4679,7 +4836,7 @@ msgstr "Repositories will appear once created."
 #: src/components/import-modal.tsx
 #: src/components/multiple-repo-selector.tsx
 #: src/components/repository-badge.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Repository"
 msgstr "Repository"
 
@@ -4727,12 +4884,12 @@ msgid "Repository versions will appear once the repository is modified."
 msgstr "Repository versions will appear once the repository is modified."
 
 #: src/components/render-plugin-doc.tsx
-msgid "required"
-msgstr "required"
+#~ msgid "required"
+#~ msgstr "required"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Requirements"
-msgstr "Requirements"
+#~ msgid "Requirements"
+#~ msgstr "Requirements"
 
 #: src/components/collection-info.tsx
 msgid "Requires Ansible"
@@ -4746,6 +4903,7 @@ msgstr "Requires super user permissions to edit."
 msgid "Reserve resources"
 msgstr "Reserve resources"
 
+#: src/components/darkmode-switcher.tsx
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Reset"
 msgstr "Reset"
@@ -4768,12 +4926,12 @@ msgstr "Retained version count"
 
 #: src/components/render-plugin-doc.tsx
 #: src/components/render-plugin-doc.tsx
-msgid "Return Values"
-msgstr "Return Values"
+#~ msgid "Return Values"
+#~ msgstr "Return Values"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Returned"
-msgstr "Returned"
+#~ msgid "Returned"
+#~ msgstr "Returned"
 
 #: src/actions/ansible-repository-version-revert.tsx
 msgid "Revert"
@@ -4835,16 +4993,14 @@ msgstr "Role {0} has been successfully added to {1}."
 #~ msgstr "Role Header"
 
 #: src/containers/ansible-role/imports.tsx
-msgid "Role imports"
-msgstr "Role imports"
+#~ msgid "Role imports"
+#~ msgstr "Role imports"
 
 #: src/loaders/standalone/menu.tsx
-msgid "Role Imports"
-msgstr "Role Imports"
+#~ msgid "Role Imports"
+#~ msgstr "Role Imports"
 
 #: src/components/role-form.tsx
-#: src/components/role-import-form.tsx
-#: src/components/role-sync-form.tsx
 #: src/containers/role-management/role-list.tsx
 #: src/containers/role-management/role-list.tsx
 #: src/containers/role-management/role-list.tsx
@@ -4852,8 +5008,8 @@ msgid "Role name"
 msgstr "Role name"
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "Role namespace"
-msgstr "Role namespace"
+#~ msgid "Role namespace"
+#~ msgstr "Role namespace"
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #~ msgid "Role namespace header"
@@ -4863,39 +5019,32 @@ msgstr "Role namespace"
 #: src/containers/namespace-detail/namespace-detail.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
-msgid "Role namespaces"
-msgstr "Role namespaces"
+#~ msgid "Role namespaces"
+#~ msgstr "Role namespaces"
 
 #: src/loaders/standalone/menu.tsx
-msgid "Role Namespaces"
-msgstr "Role Namespaces"
+#~ msgid "Role Namespaces"
+#~ msgstr "Role Namespaces"
 
 #: src/containers/ansible-role/namespace-list.tsx
-msgid "Role namespaces will appear once created or roles are imported"
-msgstr "Role namespaces will appear once created or roles are imported"
+#~ msgid "Role namespaces will appear once created or roles are imported"
+#~ msgstr "Role namespaces will appear once created or roles are imported"
 
 #: src/components/legacy-role-list/legacy-role-item.tsx
 #: src/containers/legacy-roles/legacy-role.tsx
 #~ msgid "role.github_user logo"
 #~ msgstr "role.github_user logo"
 
-#: src/containers/ansible-role/role-detail.tsx
-#: src/containers/ansible-role/role-list.tsx
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/role-management/role-create.tsx
 #: src/containers/role-management/role-edit.tsx
 #: src/containers/role-management/role-list.tsx
-#: src/containers/search/multi-search.tsx
-#: src/containers/search/multi-search.tsx
-#: src/loaders/standalone/menu.tsx
-#: src/loaders/standalone/menu.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Roles"
 msgstr "Roles"
 
 #: src/containers/not-found/dispatch.tsx
-msgid "Roles are not currently enabled."
-msgstr "Roles are not currently enabled."
+#~ msgid "Roles are not currently enabled."
+#~ msgstr "Roles are not currently enabled."
 
 #: src/containers/role-management/role-list.tsx
 msgid "Roles list could not be displayed."
@@ -4907,27 +5056,24 @@ msgstr "Roles synchronize"
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "Roles will appear once imported"
-msgstr "Roles will appear once imported"
+#~ msgid "Roles will appear once imported"
+#~ msgstr "Roles will appear once imported"
 
 #: src/components/import-list.tsx
-#: src/components/role-import-list.tsx
-#: src/components/role-import-list.tsx
 #: src/components/status-indicator.tsx
 #: src/containers/task-management/task-list-view.tsx
 msgid "Running"
 msgstr "Running"
 
 #: src/components/render-plugin-doc.tsx
-msgid "sample:"
-msgstr "sample:"
+#~ msgid "sample:"
+#~ msgstr "sample:"
 
 #: src/components/ansible-repository-form.tsx
 #: src/components/group-modal.tsx
 #: src/components/remote-form.tsx
 #: src/components/repository-form.tsx
 #: src/components/role-form.tsx
-#: src/components/role-namespace-edit-modal.tsx
 #: src/components/tag-manifest-modal.tsx
 #: src/components/user-form.tsx
 #: src/containers/edit-namespace/edit-namespace.tsx
@@ -4937,8 +5083,13 @@ msgstr "Save"
 
 #: src/containers/execution-environment-detail/base.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-msgid "Saved changes to execution environment \"{0}\"."
-msgstr "Saved changes to execution environment \"{0}\"."
+msgid "Saved changes to container \"{0}\"."
+msgstr "Saved changes to container \"{0}\"."
+
+#: src/containers/execution-environment-detail/base.tsx
+#: src/containers/execution-environment-list/execution-environment-list.tsx
+#~ msgid "Saved changes to execution environment \"{0}\"."
+#~ msgstr "Saved changes to execution environment \"{0}\"."
 
 #: src/containers/execution-environment-list/execution_environment_list.tsx
 #~ msgid "Saved changes to execution environment \"{name}\"."
@@ -4949,8 +5100,8 @@ msgid "Saved changes to namespace \"{0}\"."
 msgstr "Saved changes to namespace \"{0}\"."
 
 #: src/containers/settings/user-profile.tsx
-msgid "Saved changes to user \"{username}\"."
-msgstr "Saved changes to user \"{username}\"."
+#~ msgid "Saved changes to user \"{username}\"."
+#~ msgstr "Saved changes to user \"{username}\"."
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Scroll back"
@@ -4966,7 +5117,7 @@ msgstr "Scroll to end"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/containers/search/multi-search.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Search"
 msgstr "Search"
 
@@ -5101,8 +5252,8 @@ msgid "Selected group"
 msgstr "Selected group"
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "Selected provider namespace"
-msgstr "Selected provider namespace"
+#~ msgid "Selected provider namespace"
+#~ msgstr "Selected provider namespace"
 
 #: src/components/select-roles.tsx
 msgid "Selected roles"
@@ -5117,14 +5268,14 @@ msgid "Server error. Please come back later."
 msgstr "Server error. Please come back later."
 
 #: src/containers/token/token-insights.tsx
-msgid "Server URL"
-msgstr "Server URL"
+#~ msgid "Server URL"
+#~ msgstr "Server URL"
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Server URL could not be displayed."
 #~ msgstr "Server URL could not be displayed."
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "Server version"
 msgstr "Server version"
 
@@ -5137,15 +5288,13 @@ msgid "Settings"
 msgstr "Settings"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Share"
-msgstr "Share"
+#~ msgid "Share"
+#~ msgstr "Share"
 
 #: src/components/remote-form.tsx
 msgid "Show advanced options"
 msgstr "Show advanced options"
 
-#: src/containers/not-found/dispatch.tsx
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
 msgid "Show all collections"
@@ -5153,8 +5302,13 @@ msgstr "Show all collections"
 
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
-msgid "Show all execution environments"
-msgstr "Show all execution environments"
+msgid "Show all containers"
+msgstr "Show all containers"
+
+#: src/containers/search/multi-search.tsx
+#: src/containers/search/multi-search.tsx
+#~ msgid "Show all execution environments"
+#~ msgstr "Show all execution environments"
 
 #: src/containers/not-found/dispatch.tsx
 #: src/containers/not-found/dispatch.tsx
@@ -5168,15 +5322,15 @@ msgstr "Show all namespaces"
 
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
-msgid "Show all role namespaces"
-msgstr "Show all role namespaces"
+#~ msgid "Show all role namespaces"
+#~ msgstr "Show all role namespaces"
 
 #: src/containers/not-found/dispatch.tsx
 #: src/containers/not-found/dispatch.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
-msgid "Show all roles"
-msgstr "Show all roles"
+#~ msgid "Show all roles"
+#~ msgstr "Show all roles"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Show content"
@@ -5192,20 +5346,24 @@ msgid "Show more collections"
 msgstr "Show more collections"
 
 #: src/containers/search/multi-search.tsx
-msgid "Show more execution environments"
-msgstr "Show more execution environments"
+msgid "Show more containers"
+msgstr "Show more containers"
+
+#: src/containers/search/multi-search.tsx
+#~ msgid "Show more execution environments"
+#~ msgstr "Show more execution environments"
 
 #: src/containers/search/multi-search.tsx
 msgid "Show more namespaces"
 msgstr "Show more namespaces"
 
 #: src/containers/search/multi-search.tsx
-msgid "Show more role namespaces"
-msgstr "Show more role namespaces"
+#~ msgid "Show more role namespaces"
+#~ msgstr "Show more role namespaces"
 
 #: src/containers/search/multi-search.tsx
-msgid "Show more roles"
-msgstr "Show more roles"
+#~ msgid "Show more roles"
+#~ msgstr "Show more roles"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Show password"
@@ -5276,7 +5434,7 @@ msgstr "Signature"
 msgid "Signature keys"
 msgstr "Signature keys"
 
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Signature Keys"
 msgstr "Signature Keys"
 
@@ -5363,7 +5521,6 @@ msgid "Sort results"
 msgstr "Sort results"
 
 #: src/components/remote-form.tsx
-#: src/containers/token/token-insights.tsx
 msgid "SSO URL"
 msgstr "SSO URL"
 
@@ -5377,10 +5534,9 @@ msgid "Staging Repos"
 msgstr "Staging Repos"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Start editing"
-msgstr "Start editing"
+#~ msgid "Start editing"
+#~ msgstr "Start editing"
 
-#: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/remote-form.tsx
 msgid "Start from scratch"
 msgstr "Start from scratch"
@@ -5411,13 +5567,14 @@ msgstr "State"
 
 #: src/components/import-list.tsx
 #: src/components/import-list.tsx
-#: src/components/role-import-list.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
+#: src/containers/pulp-status.tsx
 #: src/containers/task-management/task-list-view.tsx
 #: src/containers/task-management/task-list-view.tsx
 #: src/containers/task-management/task-list-view.tsx
+#: src/menu.tsx
 msgid "Status"
 msgstr "Status"
 
@@ -5436,6 +5593,11 @@ msgstr "Stop task"
 msgid "Stop task?"
 msgstr "Stop task?"
 
+#: src/containers/pulp-status.tsx
+#: src/containers/pulp-status.tsx
+msgid "Storage"
+msgstr "Storage"
+
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Success"
 msgstr "Success"
@@ -5449,11 +5611,11 @@ msgstr "Success"
 #~ msgstr "Success: {name} was deleted"
 
 #: src/components/role-namespace-edit-modal.tsx
-msgid "Successfully changed provider namespace."
-msgstr "Successfully changed provider namespace."
+#~ msgid "Successfully changed provider namespace."
+#~ msgstr "Successfully changed provider namespace."
 
 #: src/actions/ansible-repository-copy.tsx
-#: src/components/hub-copy-button.tsx
+#: src/components/pulp-copy-button.tsx
 msgid "Successfully copied to clipboard"
 msgstr "Successfully copied to clipboard"
 
@@ -5470,12 +5632,12 @@ msgid "Successfully created repository {0}"
 msgstr "Successfully created repository {0}"
 
 #: src/components/role-namespace-modal.tsx
-msgid "Successfully created role namespace {name}"
-msgstr "Successfully created role namespace {name}"
+#~ msgid "Successfully created role namespace {name}"
+#~ msgstr "Successfully created role namespace {name}"
 
 #: src/components/role-import-form.tsx
-msgid "Successfully created role namespace {user}"
-msgstr "Successfully created role namespace {user}"
+#~ msgid "Successfully created role namespace {user}"
+#~ msgstr "Successfully created role namespace {user}"
 
 #: src/components/headers/collection-header.tsx
 #~ msgid "Successfully deleted collection version."
@@ -5527,10 +5689,16 @@ msgstr "Super users can't disable themselves."
 msgid "Super users have all system permissions regardless of what groups they are in."
 msgstr "Super users have all system permissions regardless of what groups they are in."
 
+#: src/components/darkmode-switcher.tsx
+msgid "Switch to dark mode"
+msgstr "Switch to dark mode"
+
+#: src/components/darkmode-switcher.tsx
+msgid "Switch to light mode"
+msgstr "Switch to light mode"
+
 #: src/actions/ansible-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
-#: src/components/role-sync-form.tsx
-#: src/containers/search/search.tsx
 msgid "Sync"
 msgstr "Sync"
 
@@ -5557,16 +5725,20 @@ msgstr "Sync repository \"{name}\""
 
 #: src/containers/ansible-role/role-list.tsx
 #: src/containers/ansible-role/role-sync.tsx
-msgid "Sync role"
-msgstr "Sync role"
+#~ msgid "Sync role"
+#~ msgstr "Sync role"
 
 #: src/components/role-sync-form.tsx
-msgid "Sync started"
-msgstr "Sync started"
+#~ msgid "Sync started"
+#~ msgstr "Sync started"
 
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-msgid "Sync started for execution environment \"{name}\"."
-msgstr "Sync started for execution environment \"{name}\"."
+msgid "Sync started for container \"{name}\"."
+msgstr "Sync started for container \"{name}\"."
+
+#: src/containers/execution-environment-list/execution-environment-list.tsx
+#~ msgid "Sync started for execution environment \"{name}\"."
+#~ msgstr "Sync started for execution environment \"{name}\"."
 
 #: src/containers/execution-environment-detail/base.tsx
 #: src/containers/execution-environment/registry-list.tsx
@@ -5598,8 +5770,8 @@ msgstr "Synchronize"
 #~ msgstr "Synclist distribution was not found."
 
 #: src/containers/token/token-insights.tsx
-msgid "Synclists are deprecated in AAP 2.4 and will be removed in a future release, use client-side <0>requirements.yml</0> instead."
-msgstr "Synclists are deprecated in AAP 2.4 and will be removed in a future release, use client-side <0>requirements.yml</0> instead."
+#~ msgid "Synclists are deprecated in AAP 2.4 and will be removed in a future release, use client-side <0>requirements.yml</0> instead."
+#~ msgstr "Synclists are deprecated in AAP 2.4 and will be removed in a future release, use client-side <0>requirements.yml</0> instead."
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Synclists are deprecated in AAP 2.4 and will be removed in a future release, use client-side <0>requirements.yml</0> instead.<1/>If you're using sync toggles with AAP 2.3 or older, you will need to use a different URL:"
@@ -5607,8 +5779,8 @@ msgstr "Synclists are deprecated in AAP 2.4 and will be removed in a future rele
 
 #: src/components/render-plugin-doc.tsx
 #: src/components/render-plugin-doc.tsx
-msgid "Synopsis"
-msgstr "Synopsis"
+#~ msgid "Synopsis"
+#~ msgstr "Synopsis"
 
 #: src/components/collection-filter.ts
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
@@ -5626,8 +5798,8 @@ msgstr "Tag image"
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
-msgid "Tags"
-msgstr "Tags"
+#~ msgid "Tags"
+#~ msgstr "Tags"
 
 #: src/components/publish-to-controller-modal.tsx
 #~ msgid "Tags could not be displayed."
@@ -5674,7 +5846,7 @@ msgstr "Task list"
 msgid "Task management"
 msgstr "Task management"
 
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Task Management"
 msgstr "Task Management"
 
@@ -5705,12 +5877,12 @@ msgstr "Tasks will appear once created."
 
 #: src/containers/landing/landing-page.tsx
 #: src/containers/landing/landing-page.tsx
-msgid "Terms of use"
-msgstr "Terms of use"
+#~ msgid "Terms of use"
+#~ msgstr "Terms of use"
 
 #: src/loaders/standalone/menu.tsx
-msgid "Terms of Use"
-msgstr "Terms of Use"
+#~ msgid "Terms of Use"
+#~ msgstr "Terms of Use"
 
 #: src/components/namespace-form.tsx
 msgid "Text: {0}"
@@ -5736,7 +5908,7 @@ msgstr "The certificate for \"{0} {1} v{2}\" could not be saved."
 msgid "The certificate for \"{0} {1} v{2}\" is being uploaded."
 msgstr "The certificate for \"{0} {1} v{2}\" is being uploaded."
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "The certificate for \"{namespace} {name} v{version}\" could not be saved."
 msgstr "The certificate for \"{namespace} {name} v{version}\" could not be saved."
 
@@ -5773,20 +5945,20 @@ msgid "The collection you have selected doesn't appear to match {0}"
 msgstr "The collection you have selected doesn't appear to match {0}"
 
 #: src/components/render-plugin-doc.tsx
-msgid "The documentation object for this plugin seems to contain invalid syntax that makes it impossible for Automation Hub to parse. You can still look at the unformatted documentation object bellow if you need to."
-msgstr "The documentation object for this plugin seems to contain invalid syntax that makes it impossible for Automation Hub to parse. You can still look at the unformatted documentation object bellow if you need to."
+#~ msgid "The documentation object for this plugin seems to contain invalid syntax that makes it impossible for Automation Hub to parse. You can still look at the unformatted documentation object bellow if you need to."
+#~ msgstr "The documentation object for this plugin seems to contain invalid syntax that makes it impossible for Automation Hub to parse. You can still look at the unformatted documentation object bellow if you need to."
 
 #: src/containers/collection-detail/collection-docs.tsx
 msgid "The file is not available for this version of {collectionName}"
 msgstr "The file is not available for this version of {collectionName}"
 
 #: src/components/lightspeed-modal.tsx
-msgid "The following legacy namespace will be opted in to Ansible Lightspeed:"
-msgstr "The following legacy namespace will be opted in to Ansible Lightspeed:"
+#~ msgid "The following legacy namespace will be opted in to Ansible Lightspeed:"
+#~ msgstr "The following legacy namespace will be opted in to Ansible Lightspeed:"
 
 #: src/components/lightspeed-modal.tsx
-msgid "The following namespace will be opted in to Ansible Lightspeed:"
-msgstr "The following namespace will be opted in to Ansible Lightspeed:"
+#~ msgid "The following namespace will be opted in to Ansible Lightspeed:"
+#~ msgstr "The following namespace will be opted in to Ansible Lightspeed:"
 
 #: src/components/preview-roles.tsx
 msgid "The following roles will be applied to group: <0>{0}</0>"
@@ -5805,8 +5977,8 @@ msgid "The password to be used for authentication when syncing. This is not requ
 msgstr "The password to be used for authentication when syncing. This is not required when using a token."
 
 #: src/containers/ansible-role/role-detail.tsx
-msgid "The role is versionless and will always install from the {github_branch} branch."
-msgstr "The role is versionless and will always install from the {github_branch} branch."
+#~ msgid "The role is versionless and will always install from the {github_branch} branch."
+#~ msgstr "The role is versionless and will always install from the {github_branch} branch."
 
 #: src/containers/ansible-role/role-detail.tsx
 #~ msgid "The role is versionless and will always install from the head/main/master branch."
@@ -5821,16 +5993,20 @@ msgid "The selected roles will be added to this specific Ansible repository."
 msgstr "The selected roles will be added to this specific Ansible repository."
 
 #: src/containers/execution-environment-detail/execution-environment-detail-access.tsx
-msgid "The selected roles will be added to this specific Execution Environment."
-msgstr "The selected roles will be added to this specific Execution Environment."
+msgid "The selected roles will be added to this specific Container."
+msgstr "The selected roles will be added to this specific Container."
+
+#: src/containers/execution-environment-detail/execution-environment-detail-access.tsx
+#~ msgid "The selected roles will be added to this specific Execution Environment."
+#~ msgstr "The selected roles will be added to this specific Execution Environment."
 
 #: src/containers/namespace-detail/namespace-detail.tsx
 msgid "The selected roles will be added to this specific namespace."
 msgstr "The selected roles will be added to this specific namespace."
 
 #: src/containers/token/token-insights.tsx
-msgid "The token will expire after 30 days of inactivity. Run the command below periodically to prevent your token from expiring."
-msgstr "The token will expire after 30 days of inactivity. Run the command below periodically to prevent your token from expiring."
+#~ msgid "The token will expire after 30 days of inactivity. Run the command below periodically to prevent your token from expiring."
+#~ msgstr "The token will expire after 30 days of inactivity. Run the command below periodically to prevent your token from expiring."
 
 #: src/utilities/validate-url-helper.ts
 msgid "The URL needs to be in 'http(s)://' format."
@@ -5902,15 +6078,15 @@ msgid "There have not been any imports on this namespace."
 msgstr "There have not been any imports on this namespace."
 
 #: src/components/role-import-list.tsx
-msgid "There have not been any imports."
-msgstr "There have not been any imports."
+#~ msgid "There have not been any imports."
+#~ msgstr "There have not been any imports."
 
 #: src/containers/task-management/task-detail.tsx
 #: src/containers/task-management/task-detail.tsx
 msgid "There is no progress message."
 msgstr "There is no progress message."
 
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "There must be only one repository with pipeline=rejected."
 msgstr "There must be only one repository with pipeline=rejected."
 
@@ -5955,16 +6131,20 @@ msgid "This field must be longer than 2 characters"
 msgstr "This field must be longer than 2 characters"
 
 #: src/utilities/map-role-errors.ts
-msgid "This field must start with 'galaxy.'."
-msgstr "This field must start with 'galaxy.'."
+#~ msgid "This field must start with 'galaxy.'."
+#~ msgstr "This field must start with 'galaxy.'."
+
+#: src/components/empty-state-under-construction.tsx
+msgid "This functionality is not yet finished. For mor information please go to Pulp page"
+msgstr "This functionality is not yet finished. For mor information please go to Pulp page"
 
 #: src/components/delete-group-modal.tsx
 msgid "This group can include users"
 msgstr "This group can include users"
 
 #: src/components/ratings.tsx
-msgid "This is the rating from old-galaxy.ansible.com. We are working on redoing the rating for the new version of galaxy."
-msgstr "This is the rating from old-galaxy.ansible.com. We are working on redoing the rating for the new version of galaxy."
+#~ msgid "This is the rating from old-galaxy.ansible.com. We are working on redoing the rating for the new version of galaxy."
+#~ msgstr "This is the rating from old-galaxy.ansible.com. We are working on redoing the rating for the new version of galaxy."
 
 #: src/components/tag-manifest-modal.tsx
 msgid "This tag already exists on another image. Do you want to move it to this image?"
@@ -5992,8 +6172,8 @@ msgid "TLS validation"
 msgstr "TLS validation"
 
 #: src/containers/landing/landing-page.tsx
-msgid "To be able to download content from galaxy it is required to have ansible-core>=2.13.9"
-msgstr "To be able to download content from galaxy it is required to have ansible-core>=2.13.9"
+#~ msgid "To be able to download content from galaxy it is required to have ansible-core>=2.13.9"
+#~ msgstr "To be able to download content from galaxy it is required to have ansible-core>=2.13.9"
 
 #: src/components/collection-info.tsx
 msgid "To download this collection, configure your client to connect to one of the <0>distributions</0> of this repository."
@@ -6004,16 +6184,16 @@ msgstr "To download this collection, configure your client to connect to one of 
 #~ msgstr "To download this collection, configure your client to connect to one of this repositories <0>distributions</0>."
 
 #: src/containers/token/token-insights.tsx
-msgid "To revoke a token or see all of your tokens, visit the <0>offline API token management</0> page."
-msgstr "To revoke a token or see all of your tokens, visit the <0>offline API token management</0> page."
+#~ msgid "To revoke a token or see all of your tokens, visit the <0>offline API token management</0> page."
+#~ msgstr "To revoke a token or see all of your tokens, visit the <0>offline API token management</0> page."
 
 #: src/components/remote-form.tsx
 msgid "Token"
 msgstr "Token"
 
 #: src/containers/token/token-standalone.tsx
-msgid "Token could not be displayed."
-msgstr "Token could not be displayed."
+#~ msgid "Token could not be displayed."
+#~ msgstr "Token could not be displayed."
 
 #: src/components/remote-form.tsx
 msgid "Token for authenticating to the server URL."
@@ -6022,6 +6202,10 @@ msgstr "Token for authenticating to the server URL."
 #: src/containers/token/token-standalone.tsx
 #~ msgid "Token management"
 #~ msgstr "Token management"
+
+#: src/containers/pulp-status.tsx
+msgid "Total"
+msgstr "Total"
 
 #: src/components/remote-form.tsx
 msgid "Total number of simultaneous connections."
@@ -6032,27 +6216,27 @@ msgid "Traceback"
 msgstr "Traceback"
 
 #: src/loaders/standalone/layout.tsx
-msgid "Training"
-msgstr "Training"
+#~ msgid "Training"
+#~ msgstr "Training"
 
 #: src/loaders/standalone/layout.tsx
 #~ msgid "Training <0/>"
 #~ msgstr "Training <0/>"
 
 #: src/containers/role-management/role-list.tsx
-msgid "true"
-msgstr "true"
+#~ msgid "true"
+#~ msgstr "true"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Try Red Hat Ansible Automation Platform"
-msgstr "Try Red Hat Ansible Automation Platform"
+#~ msgid "Try Red Hat Ansible Automation Platform"
+#~ msgstr "Try Red Hat Ansible Automation Platform"
 
 #: src/components/collection-content-list.tsx
 #: src/containers/task-management/task-detail.tsx
 msgid "Type"
 msgstr "Type"
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "UI Version"
 msgstr "UI Version"
 
@@ -6060,9 +6244,13 @@ msgstr "UI Version"
 msgid "Undeprecate"
 msgstr "Undeprecate"
 
+#: src/components/empty-state-under-construction.tsx
+msgid "Under construction"
+msgstr "Under construction"
+
 #: src/components/render-plugin-doc.tsx
-msgid "Unformatted Documentation"
-msgstr "Unformatted Documentation"
+#~ msgid "Unformatted Documentation"
+#~ msgstr "Unformatted Documentation"
 
 #: src/components/import-modal.tsx
 msgid "unknown"
@@ -6110,13 +6298,10 @@ msgid "updated <0/>"
 msgstr "updated <0/>"
 
 #: src/components/collection-list-item.tsx
-#: src/components/role-item.tsx
-#: src/containers/ansible-role/role-detail.tsx
 msgid "Updated <0/>"
 msgstr "Updated <0/>"
 
 #: src/components/import-modal.tsx
-#: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/upload-signature-modal.tsx
 msgid "Upload"
 msgstr "Upload"
@@ -6130,8 +6315,8 @@ msgid "Upload anyway?"
 msgstr "Upload anyway?"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Upload code"
-msgstr "Upload code"
+#~ msgid "Upload code"
+#~ msgstr "Upload code"
 
 #: src/containers/namespace-detail/namespace-detail.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
@@ -6179,8 +6364,8 @@ msgstr "URL: {0}"
 #: src/containers/execution-environment-detail/base.tsx
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-msgid "Use in Controller"
-msgstr "Use in Controller"
+#~ msgid "Use in Controller"
+#~ msgstr "Use in Controller"
 
 #: src/components/remote-form.tsx
 msgid "Use template"
@@ -6195,40 +6380,40 @@ msgstr "Use template"
 #~ msgstr "Use the <0>Repository Management</0> page to sync collections curated by your organization to the Red Hat Certified repository in your private Automation Hub. Users with the correct permissions can use the sync toggles on the <1>Collections</1> page to control which collections are added to their organization's sync repository."
 
 #: src/containers/landing/landing-page.tsx
-msgid "Use the <0>Search page </0>to find content for your project, then download them onto your Ansible host using <1>ansible-galaxy</1>, the command line tool that comes bundled with Ansible."
-msgstr "Use the <0>Search page </0>to find content for your project, then download them onto your Ansible host using <1>ansible-galaxy</1>, the command line tool that comes bundled with Ansible."
+#~ msgid "Use the <0>Search page </0>to find content for your project, then download them onto your Ansible host using <1>ansible-galaxy</1>, the command line tool that comes bundled with Ansible."
+#~ msgstr "Use the <0>Search page </0>to find content for your project, then download them onto your Ansible host using <1>ansible-galaxy</1>, the command line tool that comes bundled with Ansible."
 
 #: src/components/repository-form.tsx
 msgid "Use the namespace/name format for namespaced containers. Otherwise, use the library/name format."
 msgstr "Use the namespace/name format for namespaced containers. Otherwise, use the library/name format."
 
 #: src/containers/token/token-insights.tsx
-msgid "Use the Server URL below to sync certified collections to the Red Hat Certified repository in your private Automation Hub. If you wish to sync validated content, you can add a remote with a server url pointed to the validated repo."
-msgstr "Use the Server URL below to sync certified collections to the Red Hat Certified repository in your private Automation Hub. If you wish to sync validated content, you can add a remote with a server url pointed to the validated repo."
+#~ msgid "Use the Server URL below to sync certified collections to the Red Hat Certified repository in your private Automation Hub. If you wish to sync validated content, you can add a remote with a server url pointed to the validated repo."
+#~ msgstr "Use the Server URL below to sync certified collections to the Red Hat Certified repository in your private Automation Hub. If you wish to sync validated content, you can add a remote with a server url pointed to the validated repo."
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Use this token to authenticate clients that need to download"
 #~ msgstr "Use this token to authenticate clients that need to download"
 
 #: src/containers/token/token-insights.tsx
-msgid "Use this token to authenticate clients that need to download content from Automation Hub. This is a secret token used to protect your content. Store your API token in a secure location."
-msgstr "Use this token to authenticate clients that need to download content from Automation Hub. This is a secret token used to protect your content. Store your API token in a secure location."
+#~ msgid "Use this token to authenticate clients that need to download content from Automation Hub. This is a secret token used to protect your content. Store your API token in a secure location."
+#~ msgstr "Use this token to authenticate clients that need to download content from Automation Hub. This is a secret token used to protect your content. Store your API token in a secure location."
 
-#: src/containers/token/token-standalone.tsx
+#: src/containers/token/token.tsx
 msgid "Use this token to authenticate the <0>ansible-galaxy</0> client."
 msgstr "Use this token to authenticate the <0>ansible-galaxy</0> client."
 
 #: src/containers/token/token-insights.tsx
-msgid "Use this URL for <0>validated</0> content from Automation Hub."
-msgstr "Use this URL for <0>validated</0> content from Automation Hub."
+#~ msgid "Use this URL for <0>validated</0> content from Automation Hub."
+#~ msgstr "Use this URL for <0>validated</0> content from Automation Hub."
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Use this URL to configure the API endpoints that clients need to"
 #~ msgstr "Use this URL to configure the API endpoints that clients need to"
 
 #: src/containers/token/token-insights.tsx
-msgid "Use this URL to configure the API endpoints that clients need to download <0>certified</0> content from Automation Hub."
-msgstr "Use this URL to configure the API endpoints that clients need to download <0>certified</0> content from Automation Hub."
+#~ msgid "Use this URL to configure the API endpoints that clients need to download <0>certified</0> content from Automation Hub."
+#~ msgstr "Use this URL to configure the API endpoints that clients need to download <0>certified</0> content from Automation Hub."
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Use this URL to configure the API endpoints that clients need to download certified content from Automation Hub. Synclists are deprecated in AAP 2.4 and will be removed in a future release, instead use client-side requirements.yml, see AAP 2.4 documentation."
@@ -6243,8 +6428,12 @@ msgstr "Use this URL to configure the API endpoints that clients need to downloa
 #~ msgstr "Use this URL to configure the authentication URLs that clients"
 
 #: src/containers/token/token-insights.tsx
-msgid "Use this URL to configure the authentication URLs that clients need to download content from Automation Hub."
-msgstr "Use this URL to configure the authentication URLs that clients need to download content from Automation Hub."
+#~ msgid "Use this URL to configure the authentication URLs that clients need to download content from Automation Hub."
+#~ msgstr "Use this URL to configure the authentication URLs that clients need to download content from Automation Hub."
+
+#: src/containers/pulp-status.tsx
+msgid "Used"
+msgstr "Used"
 
 #: src/components/namespace-form.tsx
 msgid "Useful links"
@@ -6352,7 +6541,7 @@ msgstr "User <0>{username}</0> will be removed from group <1>{groupname}</1>."
 #~ msgid "User <0>{username}</0> will be removed from group<1>{groupname}</1>."
 #~ msgstr "User <0>{username}</0> will be removed from group<1>{groupname}</1>."
 
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "User Access"
 msgstr "User Access"
 
@@ -6360,11 +6549,11 @@ msgstr "User Access"
 msgid "User details"
 msgstr "User details"
 
-#: src/loaders/standalone/layout.tsx
+#: src/layout.tsx
 msgid "User dropdown"
 msgstr "User dropdown"
 
-#: src/components/hub-about-modal.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "User Groups"
 msgstr "User Groups"
 
@@ -6378,8 +6567,8 @@ msgstr "User list"
 msgid "User type"
 msgstr "User type"
 
-#: src/components/hub-about-modal.tsx
 #: src/components/patternfly-wrappers/l10n.tsx
+#: src/components/pulp-about-modal.tsx
 #: src/components/remote-form.tsx
 #: src/components/user-form.tsx
 #: src/containers/group-management/group-detail.tsx
@@ -6391,17 +6580,20 @@ msgid "Username"
 msgstr "Username"
 
 #: src/loaders/standalone/layout.tsx
-msgid "Username: {0}"
-msgstr "Username: {0}"
+#~ msgid "Username: {0}"
+#~ msgstr "Username: {0}"
+
+#: src/layout.tsx
+msgid "Username: {userName}"
+msgstr "Username: {userName}"
 
 #: src/components/access-tab.tsx
-#: src/components/role-namespace-edit-modal.tsx
 #: src/containers/group-management/group-detail.tsx
 #: src/containers/user-management/user-create.tsx
 #: src/containers/user-management/user-detail.tsx
 #: src/containers/user-management/user-edit.tsx
 #: src/containers/user-management/user-list.tsx
-#: src/loaders/standalone/menu.tsx
+#: src/menu.tsx
 msgid "Users"
 msgstr "Users"
 
@@ -6426,16 +6618,16 @@ msgid "Validated"
 msgstr "Validated"
 
 #: src/components/render-plugin-doc.tsx
-msgid "VALUE"
-msgstr "VALUE"
+#~ msgid "VALUE"
+#~ msgstr "VALUE"
 
 #: src/components/render-plugin-doc.tsx
-msgid "var"
-msgstr "var"
+#~ msgid "var"
+#~ msgstr "var"
 
 #: src/components/collection-filter.ts
 #: src/components/collection-header.tsx
-#: src/containers/certification-dashboard/certification-dashboard.tsx
+#: src/containers/approvals/approvals.tsx
 msgid "Version"
 msgstr "Version"
 
@@ -6455,7 +6647,7 @@ msgstr "Version:"
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/ansible-repository/detail.tsx
-#: src/containers/ansible-role/role-detail.tsx
+#: src/containers/pulp-status.tsx
 msgid "Versions"
 msgstr "Versions"
 
@@ -6511,8 +6703,8 @@ msgstr "View more"
 #~ msgstr "View private containers"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "View Shortcuts"
-msgstr "View Shortcuts"
+#~ msgid "View Shortcuts"
+#~ msgstr "View Shortcuts"
 
 #: src/constants.tsx
 #~ msgid "View synclist"
@@ -6534,8 +6726,8 @@ msgid "View, add, remove and change groups."
 msgstr "View, add, remove and change groups."
 
 #: src/utilities/translate-locked-role.ts
-msgid "View, add, remove and change synclists."
-msgstr "View, add, remove and change synclists."
+#~ msgid "View, add, remove and change synclists."
+#~ msgstr "View, add, remove and change synclists."
 
 #: src/utilities/translate-locked-role.ts
 msgid "View, add, remove and change users."
@@ -6546,8 +6738,6 @@ msgstr "View, add, remove and change users."
 #~ msgstr "View, and cancel any task."
 
 #: src/components/import-list.tsx
-#: src/components/role-import-list.tsx
-#: src/components/role-import-list.tsx
 #: src/containers/task-management/task-list-view.tsx
 msgid "Waiting"
 msgstr "Waiting"
@@ -6570,14 +6760,13 @@ msgstr "waiting for import to finish"
 msgid "Warning"
 msgstr "Warning"
 
-#: src/containers/not-found/dispatch.tsx
 #: src/containers/not-found/not-found.tsx
 msgid "We couldn't find the page you're looking for!"
 msgstr "We couldn't find the page you're looking for!"
 
 #: src/containers/token/token-insights.tsx
-msgid "We use a number of keys to sign our software packages. The necessary public keys are included in the relevant products and are used to automatically verify software updates. You can also verify the packages manually using the keys on this page. More information can be found <0>here.</0>"
-msgstr "We use a number of keys to sign our software packages. The necessary public keys are included in the relevant products and are used to automatically verify software updates. You can also verify the packages manually using the keys on this page. More information can be found <0>here.</0>"
+#~ msgid "We use a number of keys to sign our software packages. The necessary public keys are included in the relevant products and are used to automatically verify software updates. You can also verify the packages manually using the keys on this page. More information can be found <0>here.</0>"
+#~ msgstr "We use a number of keys to sign our software packages. The necessary public keys are included in the relevant products and are used to automatically verify software updates. You can also verify the packages manually using the keys on this page. More information can be found <0>here.</0>"
 
 #: src/components/collection-header.tsx
 msgid "Website"
@@ -6588,20 +6777,20 @@ msgstr "Website"
 #~ msgstr "Welcome to Beta Galaxy"
 
 #: src/containers/landing/landing-page.tsx
-msgid "Welcome to Galaxy"
-msgstr "Welcome to Galaxy"
+#~ msgid "Welcome to Galaxy"
+#~ msgstr "Welcome to Galaxy"
 
 #: src/components/render-plugin-doc.tsx
-msgid "Why:"
-msgstr "Why:"
+#~ msgid "Why:"
+#~ msgstr "Why:"
 
 #: src/components/role-import-form.tsx
-msgid "Will clone <0>{link}</0>"
-msgstr "Will clone <0>{link}</0>"
+#~ msgid "Will clone <0>{link}</0>"
+#~ msgstr "Will clone <0>{link}</0>"
 
 #: src/components/role-sync-form.tsx
-msgid "Will sync <0>{link}</0>"
-msgstr "Will sync <0>{link}</0>"
+#~ msgid "Will sync <0>{link}</0>"
+#~ msgstr "Will sync <0>{link}</0>"
 
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #: src/containers/legacy-namespaces/legacy-namespace.tsx
@@ -6610,8 +6799,8 @@ msgstr "Will sync <0>{link}</0>"
 #~ msgstr "Wisdom settings"
 
 #: src/components/ratings.tsx
-msgid "Works without change"
-msgstr "Works without change"
+#~ msgid "Works without change"
+#~ msgstr "Works without change"
 
 #: src/components/remote-form.tsx
 #: src/containers/ansible-remote/tab-details.tsx
@@ -6679,8 +6868,8 @@ msgid "You are about to sign <0>version {version}</0> under <1>{name}</1>."
 msgstr "You are about to sign <0>version {version}</0> under <1>{name}</1>."
 
 #: src/containers/token/token-standalone.tsx
-msgid "You are an SSO user."
-msgstr "You are an SSO user."
+#~ msgid "You are an SSO user."
+#~ msgstr "You are an SSO user."
 
 #: src/containers/token/token-standalone.tsx
 #~ msgid "You are an SSO user. Your token will expire <0/>."
@@ -6703,8 +6892,12 @@ msgid "You currently have no remote registries."
 msgstr "You currently have no remote registries."
 
 #: src/components/empty-state-unauthorized.tsx
-msgid "You do not have access to Automation Hub"
-msgstr "You do not have access to Automation Hub"
+#~ msgid "You do not have access to Automation Hub"
+#~ msgstr "You do not have access to Automation Hub"
+
+#: src/components/empty-state-unauthorized.tsx
+msgid "You do not have access to Pulp UI"
+msgstr "You do not have access to Pulp UI"
 
 #: src/containers/task-management/task-list-view.tsx
 #~ msgid "You do not have permission to view all tasks. Only tasks created by you are visible."
@@ -6736,9 +6929,9 @@ msgid "You have unsaved changes"
 msgstr "You have unsaved changes"
 
 #: src/containers/token/token-standalone.tsx
-msgid "Your token will expire <0/>."
-msgstr "Your token will expire <0/>."
+#~ msgid "Your token will expire <0/>."
+#~ msgstr "Your token will expire <0/>."
 
 #: src/containers/token/token-standalone.tsx
-msgid "Your token will not expire."
-msgstr "Your token will not expire."
+#~ msgid "Your token will not expire."
+#~ msgstr "Your token will not expire."
