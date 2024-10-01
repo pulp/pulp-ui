@@ -60,7 +60,6 @@ jobs:
           git config --local user.name "cron-release workflow"
           git config --local user.email "pulp-ui+cron-release@example.com"
 
-      # FIXME: reuse i18n.yml? replace?
       - name: 'Update gettext'
         run: |
           npm run gettext:extract
