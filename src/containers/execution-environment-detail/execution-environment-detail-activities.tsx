@@ -98,7 +98,7 @@ class ExecutionEnvironmentDetailActivities extends Component<
 
   queryActivities(name) {
     const manifestLink = (digestOrTag) =>
-      formatEEPath(Paths.executionEnvironmentManifest, {
+      formatEEPath(Paths.container.repository.manifest, {
         container: name,
         digest: digestOrTag,
       });

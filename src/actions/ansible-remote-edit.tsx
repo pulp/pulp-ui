@@ -5,5 +5,5 @@ import { Action } from './action';
 export const ansibleRemoteEditAction = Action({
   title: msg`Edit`,
   onClick: ({ name }, { navigate }) =>
-    navigate(formatPath(Paths.ansibleRemoteEdit, { name })),
+    navigate(formatPath(Paths.ansible.remote.edit, { name })),
 });

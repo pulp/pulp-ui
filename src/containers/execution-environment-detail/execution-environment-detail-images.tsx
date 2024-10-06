@@ -338,7 +338,7 @@ class ExecutionEnvironmentDetailImages extends Component<
     const { hasPermission } = this.context as IAppContextType;
     const container = containerName(this.props.routeParams);
     const manifestLink = (digestOrTag) =>
-      formatEEPath(Paths.executionEnvironmentManifest, {
+      formatEEPath(Paths.container.repository.manifest, {
         container,
         digest: digestOrTag,
       });

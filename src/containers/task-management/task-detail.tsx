@@ -103,7 +103,7 @@ class TaskDetail extends Component<RouteProps, IState> {
     } = this.state;
 
     const breadcrumbs = [
-      { url: formatPath(Paths.taskList), name: t`Task management` },
+      { url: formatPath(Paths.core.task.list), name: t`Task management` },
       { name: task ? taskName : '' },
     ];
     const parentTaskId = parentTask
@@ -208,7 +208,7 @@ class TaskDetail extends Component<RouteProps, IState> {
                       <DescriptionListDescription>
                         {parentTask ? (
                           <Link
-                            to={formatPath(Paths.taskDetail, {
+                            to={formatPath(Paths.core.task.detail, {
                               task: parentTaskId,
                             })}
                           >
@@ -230,7 +230,7 @@ class TaskDetail extends Component<RouteProps, IState> {
                               return (
                                 <Fragment key={childTaskId}>
                                   <Link
-                                    to={formatPath(Paths.taskDetail, {
+                                    to={formatPath(Paths.core.task.detail, {
                                       task: childTaskId,
                                     })}
                                   >
@@ -514,7 +514,7 @@ class TaskDetail extends Component<RouteProps, IState> {
         });
       })
       .catch(() => {
-        this.setState({ redirect: formatPath(Paths.notFound) });
+        this.setState({ redirect: formatPath(Paths.meta.not_found) });
       });
   }
 }

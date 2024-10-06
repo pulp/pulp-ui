@@ -117,7 +117,7 @@ class EditNamespace extends Component<RouteProps, IState> {
         active: params.tab === 'edit-details',
         title: t`Edit details`,
         link: formatPath(
-          Paths.editNamespace,
+          Paths.ansible.namespace.edit,
           { namespace: namespace.name },
           { tab: 'edit-details' },
         ),
@@ -126,7 +126,7 @@ class EditNamespace extends Component<RouteProps, IState> {
         active: params.tab === 'edit-resources',
         title: t`Edit resources`,
         link: formatPath(
-          Paths.editNamespace,
+          Paths.ansible.namespace.edit,
           { namespace: namespace.name },
           { tab: 'edit-resources' },
         ),
@@ -144,10 +144,13 @@ class EditNamespace extends Component<RouteProps, IState> {
         <PartnerHeader
           namespace={namespace}
           breadcrumbs={[
-            { name: t`Namespaces`, url: formatPath(Paths.namespaces) },
+            {
+              name: t`Namespaces`,
+              url: formatPath(Paths.ansible.namespace.list),
+            },
             {
               name: namespace.name,
-              url: formatPath(Paths.namespaceDetail, {
+              url: formatPath(Paths.ansible.namespace.detail, {
                 namespace: namespace.name,
               }),
             },
@@ -255,7 +258,7 @@ class EditNamespace extends Component<RouteProps, IState> {
               errorMessages: {},
               saving: false,
               unsavedData: false,
-              redirect: formatPath(Paths.namespaceDetail, {
+              redirect: formatPath(Paths.ansible.namespace.detail, {
                 namespace: this.state.namespace.name,
               }),
             },
@@ -294,7 +297,7 @@ class EditNamespace extends Component<RouteProps, IState> {
 
   private cancel() {
     this.setState({
-      redirect: formatPath(Paths.namespaceDetail, {
+      redirect: formatPath(Paths.ansible.namespace.detail, {
         namespace: this.state.namespace.name,
       }),
     });

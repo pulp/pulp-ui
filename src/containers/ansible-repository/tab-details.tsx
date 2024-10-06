@@ -53,7 +53,7 @@ export const DetailsTab = ({ item }: TabProps) => {
           label: t`Remote`,
           value: item?.remote ? (
             <Link
-              to={formatPath(Paths.ansibleRemoteDetail, {
+              to={formatPath(Paths.ansible.remote.detail, {
                 name: item?.remote.name,
               })}
             >

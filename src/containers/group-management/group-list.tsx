@@ -334,7 +334,7 @@ class GroupList extends Component<RouteProps, IState> {
     GroupAPI.create({ name: value })
       .then((result) => {
         this.setState({
-          redirect: formatPath(Paths.groupDetail, {
+          redirect: formatPath(Paths.core.group.detail, {
             group: result.data.id,
           }),
           createModalVisible: false,
@@ -426,7 +426,7 @@ class GroupList extends Component<RouteProps, IState> {
       <Tr data-cy={`GroupList-row-${group.name}`} key={index}>
         <Td>
           <Link
-            to={formatPath(Paths.groupDetail, {
+            to={formatPath(Paths.core.group.detail, {
               group: group.id,
             })}
           >

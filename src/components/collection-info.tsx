@@ -114,7 +114,7 @@ export const CollectionInfo = ({
                     To download this collection, configure your client to
                     connect to one of the{' '}
                     <Link
-                      to={formatPath(Paths.collectionDistributions, {
+                      to={formatPath(Paths.ansible.collection.distributions, {
                         repo: repository.name,
                         namespace: collection_version.namespace,
                         collection: collection_version.name,
@@ -183,7 +183,7 @@ export const CollectionInfo = ({
             </div>
             <Link
               to={formatPath(
-                Paths.collectionDocsIndex,
+                Paths.ansible.collection.docs_index,
                 {
                   collection: collection_version.name,
                   namespace: collection_version.namespace,

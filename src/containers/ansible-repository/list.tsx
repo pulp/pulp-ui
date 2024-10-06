@@ -114,7 +114,7 @@ const AnsibleRepositoryList = ListPage<AnsibleRepositoryType>({
     return (
       <Tr key={index}>
         <Td>
-          <Link to={formatPath(Paths.ansibleRepositoryDetail, { name })}>
+          <Link to={formatPath(Paths.ansible.repository.detail, { name })}>
             {name}
           </Link>
         </Td>

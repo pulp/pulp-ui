@@ -16,7 +16,7 @@ export function NamespaceListItem({
   namespace: { avatar_url: string; company: string; name: string };
 }) {
   const { avatar_url, name } = namespace;
-  const namespace_url = formatPath(Paths.namespaceDetail, {
+  const namespace_url = formatPath(Paths.ansible.namespace.detail, {
     namespace: name,
   });
 

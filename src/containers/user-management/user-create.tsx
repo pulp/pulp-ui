@@ -53,7 +53,7 @@ class UserCreate extends Component<RouteProps, IState> {
       !(this.context as IAppContextType).user ||
       !hasPermission('galaxy.add_user');
     const breadcrumbs = [
-      { url: formatPath(Paths.userList), name: t`Users` },
+      { url: formatPath(Paths.core.user.list), name: t`Users` },
       { name: t`Create new user` },
     ];
     const title = t`Create new user`;
@@ -76,7 +76,9 @@ class UserCreate extends Component<RouteProps, IState> {
           this.setState({ user: user, errorMessages: errorMessages })
         }
         saveUser={this.saveUser}
-        onCancel={() => this.setState({ redirect: formatPath(Paths.userList) })}
+        onCancel={() =>
+          this.setState({ redirect: formatPath(Paths.core.user.list) })
+        }
         isNewUser
       />
     );
@@ -84,7 +86,7 @@ class UserCreate extends Component<RouteProps, IState> {
   private saveUser = () => {
     const { user } = this.state;
     UserAPI.create(user)
-      .then(() => this.setState({ redirect: formatPath(Paths.userList) }))
+      .then(() => this.setState({ redirect: formatPath(Paths.core.user.list) }))
       .catch((err) => {
         this.setState({ errorMessages: mapErrorMessages(err) });
       });

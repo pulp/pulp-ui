@@ -51,7 +51,9 @@ class UserProfile extends Component<RouteProps, IState> {
         this.initialState = { ...extendedResult };
         this.setState({ user: extendedResult });
       })
-      .catch(() => this.setState({ redirect: formatPath(Paths.notFound) }));
+      .catch(() =>
+        this.setState({ redirect: formatPath(Paths.meta.not_found) }),
+      );
   }
 
   render() {
@@ -137,7 +139,7 @@ class UserProfile extends Component<RouteProps, IState> {
         // redirect to login page when password is changed
         // SSO not relevant, user edit disabled
         if (user.password) {
-          this.setState({ redirect: formatPath(Paths.login) });
+          this.setState({ redirect: formatPath(Paths.meta.login) });
         }
       })
       .catch((err) => {

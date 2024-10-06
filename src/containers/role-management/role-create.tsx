@@ -60,7 +60,7 @@ class RoleCreate extends Component<RouteProps, IState> {
       !(this.context as IAppContextType).user ||
       (this.context as IAppContextType).user.is_anonymous;
     const breadcrumbs = [
-      { url: formatPath(Paths.roleList), name: t`Roles` },
+      { url: formatPath(Paths.core.role.list), name: t`Roles` },
       { name: t`Create new role` },
     ];
 
@@ -118,7 +118,7 @@ class RoleCreate extends Component<RouteProps, IState> {
   private cancelRole = () => {
     this.setState({
       errorMessages: {},
-      redirect: formatPath(Paths.roleList),
+      redirect: formatPath(Paths.core.role.list),
     });
   };
 
@@ -129,7 +129,7 @@ class RoleCreate extends Component<RouteProps, IState> {
       RoleAPI.create({ name, description, permissions })
         .then(() =>
           this.setState({
-            redirect: formatPath(Paths.roleList),
+            redirect: formatPath(Paths.core.role.list),
             errorMessages: null,
           }),
         )

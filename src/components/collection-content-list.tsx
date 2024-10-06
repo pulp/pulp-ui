@@ -107,7 +107,7 @@ export const CollectionContentList = ({
               <Td>
                 <Link
                   to={formatPath(
-                    Paths.collectionContentDocs,
+                    Paths.ansible.collection.content_docs,
                     {
                       collection: collection_version.name,
                       namespace: collection_version.namespace,

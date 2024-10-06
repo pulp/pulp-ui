@@ -114,7 +114,7 @@ function parseLinks(docs_blob: DocsBlobType, props): Table {
 
   table.documentation.push({
     display: t`Readme`,
-    url: formatPath(Paths.collectionDocsIndex, baseUrlParams),
+    url: formatPath(Paths.ansible.collection.docs_index, baseUrlParams),
     type: 'docs',
     name: 'readme',
   });
@@ -123,7 +123,7 @@ function parseLinks(docs_blob: DocsBlobType, props): Table {
     for (const file of docs_blob.documentation_files) {
       table.documentation.push({
         display: my_capitalize(file.name.split('.')[0].split('_').join(' ')),
-        url: formatPath(Paths.collectionDocsPage, {
+        url: formatPath(Paths.ansible.collection.docs_page, {
           ...baseUrlParams,
           page: file.name,
         }),
@@ -257,7 +257,7 @@ function my_capitalize(s: string) {
 function getContentEntry(content, base): DocsEntry {
   return {
     display: content.content_name,
-    url: formatPath(Paths.collectionContentDocs, {
+    url: formatPath(Paths.ansible.collection.content_docs, {
       ...base,
       type: content.content_type,
       name: content.content_name,

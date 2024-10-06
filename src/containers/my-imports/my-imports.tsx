@@ -181,7 +181,7 @@ class MyImports extends Component<RouteProps, IState> {
                     ) : (
                       <Link
                         to={formatPath(
-                          Paths.collection,
+                          Paths.ansible.collection.detail,
                           {
                             namespace: selectedImport.namespace,
                             collection: selectedImport.name,

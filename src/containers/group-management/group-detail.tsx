@@ -193,7 +193,7 @@ class GroupDetail extends Component<RouteProps, IState> {
         active: params.tab === 'access',
         title: t`Access`,
         link: formatPath(
-          Paths.groupDetail,
+          Paths.core.group.detail,
           { group: group.id },
           { tab: 'access' },
         ),
@@ -203,7 +203,7 @@ class GroupDetail extends Component<RouteProps, IState> {
           active: params.tab === 'users',
           title: t`Users`,
           link: formatPath(
-            Paths.groupDetail,
+            Paths.core.group.detail,
             { group: group.id },
             { tab: 'users' },
           ),
@@ -229,7 +229,7 @@ class GroupDetail extends Component<RouteProps, IState> {
           breadcrumbs={
             <Breadcrumbs
               links={[
-                { url: formatPath(Paths.groupList), name: t`Groups` },
+                { url: formatPath(Paths.core.group.list), name: t`Groups` },
                 { name: group.name },
               ]}
             />
@@ -412,7 +412,7 @@ class GroupDetail extends Component<RouteProps, IState> {
             t`Group "${group}" has been successfully deleted.`,
             'success',
           );
-          this.setState({ redirect: formatPath(Paths.groupList) });
+          this.setState({ redirect: formatPath(Paths.core.group.list) });
         })
         .catch((e) => {
           const { status, statusText } = e.response;
@@ -703,7 +703,7 @@ class GroupDetail extends Component<RouteProps, IState> {
       })
       .catch((e) => {
         if (e.response.status === 404) {
-          this.setState({ redirect: formatPath(Paths.notFound) });
+          this.setState({ redirect: formatPath(Paths.meta.not_found) });
         } else {
           const { status, statusText } = e.response;
           this.addAlert(

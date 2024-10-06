@@ -1,3 +1,4 @@
+export { default as AboutProject } from './about-project';
 export { default as AnsibleRemoteDetail } from './ansible-remote/detail';
 export { default as AnsibleRemoteEdit } from './ansible-remote/edit';
 export { default as AnsibleRemoteList } from './ansible-remote/list';
@@ -37,9 +38,7 @@ export { default as UserProfile } from './settings/user-profile';
 export { default as SignatureKeysList } from './signature-keys/list';
 export { default as TaskDetail } from './task-management/task-detail';
 export { default as TaskListView } from './task-management/task-list-view';
-export { default as Token } from './token/token';
 export { default as UserCreate } from './user-management/user-create';
 export { default as UserDetail } from './user-management/user-detail';
 export { default as EditUser } from './user-management/user-edit';
 export { default as UserList } from './user-management/user-list';
-export { default as AboutProject } from './about-project';

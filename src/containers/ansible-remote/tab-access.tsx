@@ -305,7 +305,7 @@ export const RemoteAccessTab = ({
       updateProps={updateProps}
       user={selectedUser}
       users={users}
-      urlPrefix={formatPath(Paths.ansibleRemoteDetail, {
+      urlPrefix={formatPath(Paths.ansible.remote.detail, {
         name,
       })}
     />

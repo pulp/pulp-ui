@@ -406,7 +406,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
       <Tr data-cy={`ExecutionEnvironmentList-row-${item.name}`} key={index}>
         <Td>
           <Link
-            to={formatEEPath(Paths.executionEnvironmentDetail, {
+            to={formatEEPath(Paths.container.repository.detail, {
               container: item.pulp.distribution.base_path,
             })}
           >

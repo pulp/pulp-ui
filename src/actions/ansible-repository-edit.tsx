@@ -5,5 +5,5 @@ import { Action } from './action';
 export const ansibleRepositoryEditAction = Action({
   title: msg`Edit`,
   onClick: ({ name }, { navigate }) =>
-    navigate(formatPath(Paths.ansibleRepositoryEdit, { name })),
+    navigate(formatPath(Paths.ansible.repository.edit, { name })),
 });

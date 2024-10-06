@@ -51,62 +51,79 @@ export function formatEEPath(path, data, params?) {
 }
 
 export const Paths = {
-  ansibleRemoteDetail: '/ansible/remotes/:name',
-  ansibleRemoteEdit: '/ansible/remotes/:name/edit',
-  ansibleRemotes: '/ansible/remotes',
-  ansibleRepositories: '/ansible/repositories',
-  ansibleRepositoryDetail: '/ansible/repositories/:name',
-  ansibleRepositoryEdit: '/ansible/repositories/:name/edit',
-  approvals: '/approvals',
-  collection: '/ansible/collections/:repo/:namespace/:collection',
-  collectionContentDocs:
-    '/ansible/collections/:repo/:namespace/:collection/content/:type/:name',
-  collectionContentList:
-    '/ansible/collections/:repo/:namespace/:collection/content',
-  collectionDependencies:
-    '/ansible/collections/:repo/:namespace/:collection/dependencies',
-  collectionDistributions:
-    '/ansible/collections/:repo/:namespace/:collection/distributions',
-  collectionDocsIndex: '/ansible/collections/:repo/:namespace/:collection/docs',
-  collectionDocsPage:
-    '/ansible/collections/:repo/:namespace/:collection/docs/:page',
-  collectionImportLog:
-    '/ansible/collections/:repo/:namespace/:collection/import-log',
-  collections: '/ansible/collections',
-  createRole: '/roles/create',
-  createUser: '/users/create',
-  editNamespace: '/my-namespaces/edit/:namespace',
-  editUser: '/users/:userID/edit',
-  executionEnvironmentDetailAccess:
-    '/containers/:namespace?/:container/_content/access',
-  executionEnvironmentDetailActivities:
-    '/containers/:namespace?/:container/_content/activity',
-  executionEnvironmentDetailImages:
-    '/containers/:namespace?/:container/_content/images',
-  executionEnvironmentDetail: '/containers/:namespace?/:container',
-  executionEnvironmentManifest:
-    '/containers/:namespace?/:container/_content/images/:digest',
-  executionEnvironments: '/containers',
-  executionEnvironmentsRegistries: '/registries',
-  groupDetail: '/group/:group',
-  groupList: '/group-list',
-  login: '/login',
-  myImports: '/my-imports',
-  myNamespaces: '/ansible/my-namespaces',
-  namespaceDetail: '/ansible/namespaces/:namespace',
-  namespaces: '/ansible/namespaces',
-  notFound: '/not-found', // FIXME: don't redirect
-  roleEdit: '/role/:role',
-  roleList: '/roles',
-  search: '/search',
-  signatureKeys: '/signature-keys',
-  status: '/status',
-  taskDetail: '/task/:task',
-  taskList: '/tasks',
-  runTask: '',
-  token: '/token',
-  userDetail: '/users/:userID',
-  userList: '/users',
-  userProfileSettings: '/settings/user-profile',
-  aboutProject: '/about-project',
+  ansible: {
+    approvals: '/approvals',
+    collection: {
+      content_docs:
+        '/ansible/collections/:repo/:namespace/:collection/content/:type/:name',
+      content_list: '/ansible/collections/:repo/:namespace/:collection/content',
+      dependencies:
+        '/ansible/collections/:repo/:namespace/:collection/dependencies',
+      detail: '/ansible/collections/:repo/:namespace/:collection',
+      distributions:
+        '/ansible/collections/:repo/:namespace/:collection/distributions',
+      docs_index: '/ansible/collections/:repo/:namespace/:collection/docs',
+      docs_page: '/ansible/collections/:repo/:namespace/:collection/docs/:page',
+      imports: '/ansible/collections/:repo/:namespace/:collection/import-log',
+      list: '/ansible/collections',
+    },
+    imports: '/my-imports',
+    namespace: {
+      detail: '/ansible/namespaces/:namespace',
+      edit: '/my-namespaces/edit/:namespace',
+      list: '/ansible/namespaces',
+      mine: '/ansible/my-namespaces',
+    },
+    remote: {
+      detail: '/ansible/remotes/:name',
+      edit: '/ansible/remotes/:name/edit',
+      list: '/ansible/remotes',
+    },
+    repository: {
+      detail: '/ansible/repositories/:name',
+      edit: '/ansible/repositories/:name/edit',
+      list: '/ansible/repositories',
+    },
+  },
+  container: {
+    remote: { list: '/registries' },
+    repository: {
+      access: '/containers/:namespace?/:container/_content/access',
+      activities: '/containers/:namespace?/:container/_content/activity',
+      detail: '/containers/:namespace?/:container',
+      images: '/containers/:namespace?/:container/_content/images',
+      list: '/containers',
+      manifest: '/containers/:namespace?/:container/_content/images/:digest',
+    },
+  },
+  core: {
+    group: {
+      detail: '/group/:group',
+      list: '/group-list',
+    },
+    role: {
+      create: '/roles/create',
+      edit: '/role/:role',
+      list: '/roles',
+    },
+    signature_keys: '/signature-keys',
+    status: '/status',
+    task: {
+      detail: '/task/:task',
+      list: '/tasks',
+    },
+    user: {
+      create: '/users/create',
+      detail: '/users/:user_id',
+      edit: '/users/:user_id/edit',
+      list: '/users',
+      profile: '/settings/user-profile',
+    },
+  },
+  meta: {
+    about: '/about-project',
+    login: '/login',
+    not_found: '/not-found', // FIXME: don't redirect
+    search: '/search',
+  },
 };

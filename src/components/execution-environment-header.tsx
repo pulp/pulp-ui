@@ -32,25 +32,22 @@ export const ExecutionEnvironmentHeader = ({
     {
       active: tab === 'detail',
       title: t`Detail`,
-      link: formatEEPath(Paths.executionEnvironmentDetail, linkParams),
+      link: formatEEPath(Paths.container.repository.detail, linkParams),
     },
     {
       active: tab === 'activity',
       title: t`Activity`,
-      link: formatEEPath(
-        Paths.executionEnvironmentDetailActivities,
-        linkParams,
-      ),
+      link: formatEEPath(Paths.container.repository.activities, linkParams),
     },
     {
       active: tab === 'images',
       title: t`Images`,
-      link: formatEEPath(Paths.executionEnvironmentDetailImages, linkParams),
+      link: formatEEPath(Paths.container.repository.images, linkParams),
     },
     {
       active: tab === 'access',
       title: t`Access`,
-      link: formatEEPath(Paths.executionEnvironmentDetailAccess, linkParams),
+      link: formatEEPath(Paths.container.repository.access, linkParams),
     },
   ];
 
@@ -63,14 +60,14 @@ export const ExecutionEnvironmentHeader = ({
         <Breadcrumbs
           links={[
             {
-              url: formatPath(Paths.executionEnvironments),
+              url: formatPath(Paths.container.repository.list),
               name: t`Containers`,
             },
             {
               name: container.name,
               url:
                 tab === 'access'
-                  ? formatEEPath(Paths.executionEnvironmentDetail, linkParams)
+                  ? formatEEPath(Paths.container.repository.detail, linkParams)
                   : null,
             },
             tab === 'access'
@@ -78,7 +75,7 @@ export const ExecutionEnvironmentHeader = ({
                   name: t`Access`,
                   url: groupId
                     ? formatEEPath(
-                        Paths.executionEnvironmentDetailAccess,
+                        Paths.container.repository.access,
                         linkParams,
                       )
                     : null,

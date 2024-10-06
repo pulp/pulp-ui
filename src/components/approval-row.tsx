@@ -51,7 +51,7 @@ export const ApprovalRow = ({
       <Td>
         <Link
           to={formatPath(
-            Paths.collection,
+            Paths.ansible.collection.detail,
             {
               namespace: version.namespace,
               collection: version.name,
@@ -155,7 +155,7 @@ export const ApprovalRow = ({
         component={
           <Link
             to={formatPath(
-              Paths.myImports,
+              Paths.ansible.imports,
               {},
               {
                 namespace: version.namespace,

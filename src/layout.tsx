@@ -51,9 +51,7 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
       <DropdownItem
         key='profile'
         component={
-          <Link
-            to={formatPath(Paths.userProfileSettings)}
-          >{t`My profile`}</Link>
+          <Link to={formatPath(Paths.core.user.profile)}>{t`My profile`}</Link>
         }
       />,
 
@@ -99,7 +97,7 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
       </MastheadToggle>
       <MastheadMain>
         <MastheadBrand>
-          <Link to={formatPath(Paths.status)}>
+          <Link to={formatPath(Paths.core.status)}>
             <SmallLogo alt={APPLICATION_NAME} />
           </Link>
           <span

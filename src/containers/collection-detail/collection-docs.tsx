@@ -103,15 +103,15 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
     const { collection_version, repository } = collection;
 
     const breadcrumbs = [
-      { name: t`Namespaces`, url: formatPath(Paths.namespaces) },
+      { name: t`Namespaces`, url: formatPath(Paths.ansible.namespace.list) },
       {
-        url: formatPath(Paths.namespaceDetail, {
+        url: formatPath(Paths.ansible.namespace.detail, {
           namespace: collection_version.namespace,
         }),
         name: collection_version.namespace,
       },
       {
-        url: formatPath(Paths.collection, {
+        url: formatPath(Paths.ansible.collection.detail, {
           namespace: collection_version.namespace,
           collection: collection_version.name,
           repo: repository.name,
@@ -200,7 +200,7 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
       return (
         <Link
           to={formatPath(
-            Paths.collectionDocsPage,
+            Paths.ansible.collection.docs_page,
             {
               namespace: collection_version.namespace,
               collection: collection_version.name,

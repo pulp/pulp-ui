@@ -133,7 +133,7 @@ export const ansibleRepositorySyncAction = Action({
     // Remote checks only available on detail screen; list will have remote: string, so no .url
     if (remote && remote.url === 'https://galaxy.ansible.com/api/') {
       const name = remote.name;
-      const url = formatPath(Paths.ansibleRemoteEdit, { name });
+      const url = formatPath(Paths.ansible.remote.edit, { name });
 
       if (!remote.requirements_file) {
         return (

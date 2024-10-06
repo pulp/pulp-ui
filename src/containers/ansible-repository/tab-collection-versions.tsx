@@ -73,7 +73,7 @@ export const CollectionVersionsTab = ({
         <Td>
           <Link
             to={formatPath(
-              Paths.collection,
+              Paths.ansible.collection.detail,
               {
                 repo: repository.name,
                 namespace,

@@ -165,12 +165,12 @@ export class NamespaceList extends Component<IProps, IState> {
     const tabs = [
       {
         title: t`All`,
-        link: formatPath(Paths.namespaces),
+        link: formatPath(Paths.ansible.namespace.list),
         active: !filterOwner,
       },
       {
         title: t`My namespaces`,
-        link: formatPath(Paths.myNamespaces),
+        link: formatPath(Paths.ansible.namespace.mine),
         active: filterOwner,
       },
     ];
@@ -183,7 +183,7 @@ export class NamespaceList extends Component<IProps, IState> {
           onCreateSuccess={(result) =>
             this.setState({
               redirect: formatPath(
-                Paths.namespaceDetail,
+                Paths.ansible.namespace.detail,
                 {
                   namespace: result.name,
                 },

@@ -84,7 +84,7 @@ export const CollectionUsedbyDependenciesList = ({
                         <Td>
                           <Link
                             to={formatPath(
-                              Paths.collection,
+                              Paths.ansible.collection.detail,
                               {
                                 collection: name,
                                 namespace,

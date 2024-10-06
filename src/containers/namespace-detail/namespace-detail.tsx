@@ -272,7 +272,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
         active: tab === 'collections',
         title: t`Collections`,
         link: formatPath(
-          Paths.namespaceDetail,
+          Paths.ansible.namespace.detail,
           { namespace: namespace.name },
           { tab: 'collections' },
         ),
@@ -281,7 +281,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
         active: tab === 'cli-configuration',
         title: t`CLI configuration`,
         link: formatPath(
-          Paths.namespaceDetail,
+          Paths.ansible.namespace.detail,
           { namespace: namespace.name },
           { tab: 'cli-configuration' },
         ),
@@ -290,7 +290,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
         active: tab === 'resources',
         title: t`Resources`,
         link: formatPath(
-          Paths.namespaceDetail,
+          Paths.ansible.namespace.detail,
           { namespace: namespace.name },
           { tab: 'resources' },
         ),
@@ -299,7 +299,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
         active: tab === 'access',
         title: t`Access`,
         link: formatPath(
-          Paths.namespaceDetail,
+          Paths.ansible.namespace.detail,
           { namespace: namespace.name },
           { tab: 'access' },
         ),
@@ -307,12 +307,12 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
     ];
 
     const breadcrumbs = [
-      { name: t`Namespaces`, url: formatPath(Paths.namespaces) },
+      { name: t`Namespaces`, url: formatPath(Paths.ansible.namespace.list) },
       {
         name: namespace.name,
         url:
           tab === 'access'
-            ? formatPath(Paths.namespaceDetail, {
+            ? formatPath(Paths.ansible.namespace.detail, {
                 namespace: namespace.name,
               })
             : null,
@@ -320,7 +320,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
       tab === 'access' && (group || user)
         ? {
             url: formatPath(
-              Paths.namespaceDetail,
+              Paths.ansible.namespace.detail,
               { namespace: namespace.name },
               { tab },
             ),
@@ -380,7 +380,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
           onUploadSuccess={() =>
             this.setState({
               redirect: formatPath(
-                Paths.myImports,
+                Paths.ansible.imports,
                 {},
                 {
                   namespace: namespace.name,
@@ -646,7 +646,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
                     stateUpdate: { showRoleRemoveModal: null },
                   });
                 }}
-                urlPrefix={formatPath(Paths.namespaceDetail, {
+                urlPrefix={formatPath(Paths.ansible.namespace.detail, {
                   namespace: namespace.name,
                 })}
               />
@@ -846,7 +846,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
         },
       )
       .catch(() => {
-        this.setState({ redirect: formatPath(Paths.notFound) });
+        this.setState({ redirect: formatPath(Paths.meta.not_found) });
       });
   }
 
@@ -874,7 +874,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
         key='edit'
         component={
           <Link
-            to={formatPath(Paths.editNamespace, {
+            to={formatPath(Paths.ansible.namespace.edit, {
               namespace: this.state.namespace.name,
             })}
           >
@@ -900,7 +900,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
         component={
           <Link
             to={formatPath(
-              Paths.myImports,
+              Paths.ansible.imports,
               {},
               {
                 namespace: this.state.namespace.name,
@@ -979,7 +979,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
       NamespaceAPI.delete(name)
         .then(() => {
           this.setState({
-            redirect: formatPath(Paths.namespaces),
+            redirect: formatPath(Paths.ansible.namespace.list),
             confirmDelete: false,
             isNamespacePending: false,
           });

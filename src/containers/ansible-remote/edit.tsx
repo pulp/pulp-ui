@@ -31,14 +31,14 @@ const initialRemote: AnsibleRemoteType = {
 const AnsibleRemoteEdit = Page<AnsibleRemoteType>({
   breadcrumbs: ({ name }) =>
     [
-      { url: formatPath(Paths.ansibleRemotes), name: t`Remotes` },
-      name && { url: formatPath(Paths.ansibleRemoteDetail, { name }), name },
+      { url: formatPath(Paths.ansible.remote.list), name: t`Remotes` },
+      name && { url: formatPath(Paths.ansible.remote.detail, { name }), name },
       name ? { name: t`Edit` } : { name: t`Add` },
     ].filter(Boolean),
 
   displayName: 'AnsibleRemoteEdit',
   errorTitle: msg`Remote could not be displayed.`,
-  listUrl: formatPath(Paths.ansibleRemotes),
+  listUrl: formatPath(Paths.ansible.remote.list),
   query: ({ name }) => {
     return AnsibleRemoteAPI.list({ name })
       .then(({ data: { results } }) => results[0])
@@ -124,7 +124,7 @@ const AnsibleRemoteEdit = Page<AnsibleRemoteType>({
           );
 
           navigate(
-            formatPath(Paths.ansibleRemoteDetail, {
+            formatPath(Paths.ansible.remote.detail, {
               name: data.name,
             }),
           );
@@ -143,10 +143,10 @@ const AnsibleRemoteEdit = Page<AnsibleRemoteType>({
       setState({ errorMessages: {}, remoteToEdit: undefined });
       navigate(
         item
-          ? formatPath(Paths.ansibleRemoteDetail, {
+          ? formatPath(Paths.ansible.remote.detail, {
               name: item.name,
             })
-          : formatPath(Paths.ansibleRemotes),
+          : formatPath(Paths.ansible.remote.list),
       );
     };
 
