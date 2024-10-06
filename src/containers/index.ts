@@ -1,3 +1,4 @@
+export { default as AboutProject } from './about-project';
 export { default as AnsibleRemoteDetail } from './ansible-remote/detail';
 export { default as AnsibleRemoteEdit } from './ansible-remote/edit';
 export { default as AnsibleRemoteList } from './ansible-remote/list';
@@ -41,4 +42,3 @@ export { default as UserCreate } from './user-management/user-create';
 export { default as UserDetail } from './user-management/user-detail';
 export { default as EditUser } from './user-management/user-edit';
 export { default as UserList } from './user-management/user-list';
-export { default as AboutProject } from './about-project';
