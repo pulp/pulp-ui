@@ -104,7 +104,6 @@ export const Paths = {
   taskDetail: '/task/:task',
   taskList: '/tasks',
   runTask: '',
-  token: '/token',
   userDetail: '/users/:userID',
   userList: '/users',
   userProfileSettings: '/settings/user-profile',
