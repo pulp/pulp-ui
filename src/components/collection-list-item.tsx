@@ -73,7 +73,7 @@ export const CollectionListItem = ({
     <DataListCell key='content'>
       <div>
         <Link
-          to={formatPath(Paths.collection, {
+          to={formatPath(Paths.ansible.collection.detail, {
             collection: collection_version.name,
             namespace: collection_version.namespace,
             repo: repository.name,
@@ -89,7 +89,7 @@ export const CollectionListItem = ({
               <Trans>
                 Provided by&nbsp;
                 <Link
-                  to={formatPath(Paths.namespaceDetail, {
+                  to={formatPath(Paths.ansible.namespace.detail, {
                     namespace: collection_version.namespace,
                   })}
                 >

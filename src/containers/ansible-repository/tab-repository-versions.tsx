@@ -63,7 +63,7 @@ const VersionContent = ({
       <Td>
         <Link
           to={formatPath(
-            Paths.collection,
+            Paths.ansible.collection.detail,
             {
               repo: repositoryName,
               namespace,
@@ -150,7 +150,7 @@ const BaseVersion = ({
   return (
     <Link
       to={formatPath(
-        Paths.ansibleRepositoryDetail,
+        Paths.ansible.repository.detail,
         {
           name: repositoryName,
         },
@@ -216,7 +216,7 @@ export const RepositoryVersionsTab = ({
         <Td>
           <Link
             to={formatPath(
-              Paths.ansibleRepositoryDetail,
+              Paths.ansible.repository.detail,
               {
                 name: repositoryName,
               },

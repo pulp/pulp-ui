@@ -131,7 +131,7 @@ export class RoleList extends Component<RouteProps, IState> {
     const isSuperuser = (this.context as IAppContextType).user.is_superuser;
 
     const addRoles = isSuperuser && (
-      <Link to={formatPath(Paths.createRole)}>
+      <Link to={formatPath(Paths.core.role.create)}>
         <Button variant={'primary'}>{t`Add roles`}</Button>
       </Link>
     );
@@ -395,7 +395,7 @@ export class RoleList extends Component<RouteProps, IState> {
         isDisabled={locked}
         onClick={() =>
           this.setState({
-            redirect: formatPath(Paths.roleEdit, { role: roleID }),
+            redirect: formatPath(Paths.core.role.edit, { role: roleID }),
           })
         }
       >

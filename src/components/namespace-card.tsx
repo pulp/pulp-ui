@@ -68,7 +68,7 @@ export const NamespaceCard = ({ namespace, showDetailLink }: IProps) => {
       {showDetailLink ? (
         <CardFooter>
           <Link
-            to={formatPath(Paths.namespaceDetail, {
+            to={formatPath(Paths.ansible.namespace.detail, {
               namespace: name,
             })}
           >{t`View collections`}</Link>

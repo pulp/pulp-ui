@@ -314,7 +314,7 @@ export class TaskListView extends Component<RouteProps, IState> {
     return (
       <Tr key={index}>
         <Td>
-          <Link to={formatPath(Paths.taskDetail, { task: taskId })}>
+          <Link to={formatPath(Paths.core.task.detail, { task: taskId })}>
             {name}
           </Link>
         </Td>

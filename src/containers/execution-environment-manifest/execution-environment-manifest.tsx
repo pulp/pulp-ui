@@ -107,11 +107,11 @@ class ExecutionEnvironmentManifest extends Component<RouteProps, IState> {
               links={[
                 {
                   name: t`Containers`,
-                  url: formatPath(Paths.executionEnvironments),
+                  url: formatPath(Paths.container.repository.list),
                 },
                 {
                   name: this.state.container.name,
-                  url: formatEEPath(Paths.executionEnvironmentDetail, {
+                  url: formatEEPath(Paths.container.repository.detail, {
                     container: container.name,
                   }),
                 },
@@ -144,7 +144,7 @@ class ExecutionEnvironmentManifest extends Component<RouteProps, IState> {
               Manifest lists are not currently supported on this screen, please
               use the{' '}
               <Link
-                to={formatEEPath(Paths.executionEnvironmentDetailImages, {
+                to={formatEEPath(Paths.container.repository.images, {
                   container: container.name,
                 })}
               >

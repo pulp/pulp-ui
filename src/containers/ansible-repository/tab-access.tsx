@@ -305,7 +305,7 @@ export const RepositoryAccessTab = ({
       updateProps={updateProps}
       user={selectedUser}
       users={users}
-      urlPrefix={formatPath(Paths.ansibleRepositoryDetail, {
+      urlPrefix={formatPath(Paths.ansible.repository.detail, {
         name,
       })}
     />

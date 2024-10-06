@@ -34,7 +34,7 @@ class UserEdit extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    const id = this.props.routeParams.userID;
+    const id = this.props.routeParams.user_id;
 
     UserAPI.get(id)
       .then((result) =>
@@ -65,9 +65,9 @@ class UserEdit extends Component<RouteProps, IState> {
     }
 
     const breadcrumbs = [
-      { url: formatPath(Paths.userList), name: t`Users` },
+      { url: formatPath(Paths.core.user.list), name: t`Users` },
       {
-        url: formatPath(Paths.userDetail, { userID: user.id }),
+        url: formatPath(Paths.core.user.detail, { user_id: user.id }),
         name: user.username,
       },
       { name: t`Edit` },
@@ -83,7 +83,9 @@ class UserEdit extends Component<RouteProps, IState> {
           this.setState({ user: user, errorMessages: errorMessages })
         }
         saveUser={this.saveUser}
-        onCancel={() => this.setState({ redirect: formatPath(Paths.userList) })}
+        onCancel={() =>
+          this.setState({ redirect: formatPath(Paths.core.user.list) })
+        }
       />
     );
   }
@@ -97,9 +99,9 @@ class UserEdit extends Component<RouteProps, IState> {
           (this.context as IAppContextType).user.id === user.id &&
           user.password
         ) {
-          this.setState({ redirect: formatPath(Paths.login) });
+          this.setState({ redirect: formatPath(Paths.meta.login) });
         } else {
-          this.setState({ redirect: formatPath(Paths.userList) });
+          this.setState({ redirect: formatPath(Paths.core.user.list) });
         }
       })
       .catch((err) => {

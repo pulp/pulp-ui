@@ -166,7 +166,7 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
             <MaybeLink
               to={
                 user.id
-                  ? formatPath(Paths.userDetail, { userID: user.id })
+                  ? formatPath(Paths.core.user.detail, { user_id: user.id })
                   : null
               }
               title={userName}
@@ -183,7 +183,10 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
             {user.groups.map(({ id: group, name }, index) => (
               <>
                 {index ? ', ' : null}
-                <Link key={group} to={formatPath(Paths.groupDetail, { group })}>
+                <Link
+                  key={group}
+                  to={formatPath(Paths.core.group.detail, { group })}
+                >
                   {name}
                 </Link>
               </>

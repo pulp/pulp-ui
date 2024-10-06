@@ -77,7 +77,9 @@ const AuthHandler = ({
     //  return null;
     //}
 
-    return <Navigate to={formatPath(Paths.login, {}, { next: pathname })} />;
+    return (
+      <Navigate to={formatPath(Paths.meta.login, {}, { next: pathname })} />
+    );
   }
 
   return <Component path={path} />;
@@ -89,96 +91,111 @@ export class AppRoutes extends Component {
     return [
       {
         component: ExecutionEnvironmentDetailActivities,
-        path: Paths.executionEnvironmentDetailActivities,
+        path: Paths.container.repository.activities,
       },
       {
         component: ExecutionEnvironmentDetailAccess,
-        path: Paths.executionEnvironmentDetailAccess,
+        path: Paths.container.repository.access,
       },
       {
         component: ExecutionEnvironmentManifest,
-        path: Paths.executionEnvironmentManifest,
+        path: Paths.container.repository.manifest,
       },
       {
         component: ExecutionEnvironmentDetailImages,
-        path: Paths.executionEnvironmentDetailImages,
+        path: Paths.container.repository.images,
       },
       {
         component: ExecutionEnvironmentDetail,
-        path: Paths.executionEnvironmentDetail,
+        path: Paths.container.repository.detail,
       },
       {
         component: ExecutionEnvironmentList,
-        path: Paths.executionEnvironments,
+        path: Paths.container.repository.list,
       },
       {
         component: ExecutionEnvironmentRegistryList,
-        path: Paths.executionEnvironmentsRegistries,
+        path: Paths.container.remote.list,
       },
       {
         component: TaskListView,
-        path: Paths.taskList,
+        path: Paths.core.task.list,
       },
-      { component: GroupList, path: Paths.groupList },
-      { component: GroupDetail, path: Paths.groupDetail },
-      { component: TaskDetail, path: Paths.taskDetail },
-      { component: EditRole, path: Paths.roleEdit },
+      { component: GroupList, path: Paths.core.group.list },
+      { component: GroupDetail, path: Paths.core.group.detail },
+      { component: TaskDetail, path: Paths.core.task.detail },
+      { component: EditRole, path: Paths.core.role.edit },
       {
         component: RoleCreate,
-        path: Paths.createRole,
+        path: Paths.core.role.create,
       },
-      { component: RoleList, path: Paths.roleList },
-      { component: AnsibleRemoteDetail, path: Paths.ansibleRemoteDetail },
-      { component: AnsibleRemoteEdit, path: Paths.ansibleRemoteEdit },
-      { component: AnsibleRemoteList, path: Paths.ansibleRemotes },
+      { component: RoleList, path: Paths.core.role.list },
+      { component: AnsibleRemoteDetail, path: Paths.ansible.remote.detail },
+      { component: AnsibleRemoteEdit, path: Paths.ansible.remote.edit },
+      { component: AnsibleRemoteList, path: Paths.ansible.remote.list },
       {
         component: AnsibleRepositoryDetail,
-        path: Paths.ansibleRepositoryDetail,
+        path: Paths.ansible.repository.detail,
       },
       {
         component: AnsibleRepositoryEdit,
-        path: Paths.ansibleRepositoryEdit,
+        path: Paths.ansible.repository.edit,
       },
-      { component: AnsibleRepositoryList, path: Paths.ansibleRepositories },
-      { component: UserProfile, path: Paths.userProfileSettings },
+      { component: AnsibleRepositoryList, path: Paths.ansible.repository.list },
+      { component: UserProfile, path: Paths.core.user.profile },
       {
         component: UserCreate,
-        path: Paths.createUser,
+        path: Paths.core.user.create,
       },
-      { component: SignatureKeysList, path: Paths.signatureKeys },
+      { component: SignatureKeysList, path: Paths.core.signature_keys },
       {
         component: EditUser,
-        path: Paths.editUser,
+        path: Paths.core.user.edit,
       },
-      { component: UserDetail, path: Paths.userDetail },
-      { component: UserList, path: Paths.userList },
-      { component: Approvals, path: Paths.approvals },
-      { component: NotFound, path: Paths.notFound },
-      { component: Partners, path: Paths.namespaces },
-      { component: EditNamespace, path: Paths.editNamespace },
-      { component: MyNamespaces, path: Paths.myNamespaces },
-      { component: LoginPage, path: Paths.login, noAuth: true },
-      { component: CollectionDocs, path: Paths.collectionDocsPage },
-      { component: CollectionDocs, path: Paths.collectionDocsIndex },
-      { component: CollectionDocs, path: Paths.collectionContentDocs },
-      { component: CollectionContent, path: Paths.collectionContentList },
-      { component: CollectionImportLog, path: Paths.collectionImportLog },
+      { component: UserDetail, path: Paths.core.user.detail },
+      { component: UserList, path: Paths.core.user.list },
+      { component: Approvals, path: Paths.ansible.approvals },
+      { component: NotFound, path: Paths.meta.not_found },
+      { component: Partners, path: Paths.ansible.namespace.list },
+      { component: EditNamespace, path: Paths.ansible.namespace.edit },
+      { component: MyNamespaces, path: Paths.ansible.namespace.mine },
+      { component: LoginPage, path: Paths.meta.login, noAuth: true },
+      {
+        component: CollectionDocs,
+        path: Paths.ansible.collection.docs_page,
+      },
+      {
+        component: CollectionDocs,
+        path: Paths.ansible.collection.docs_index,
+      },
+      {
+        component: CollectionDocs,
+        path: Paths.ansible.collection.content_docs,
+      },
+      {
+        component: CollectionContent,
+        path: Paths.ansible.collection.content_list,
+      },
+      {
+        component: CollectionImportLog,
+        path: Paths.ansible.collection.imports,
+      },
       {
         component: CollectionDistributions,
-        path: Paths.collectionDistributions,
+        path: Paths.ansible.collection.distributions,
       },
       {
         component: CollectionDependencies,
-        path: Paths.collectionDependencies,
+        path: Paths.ansible.collection.dependencies,
       },
-      { component: CollectionDetail, path: Paths.collection },
-      { component: Search, path: Paths.collections },
-      { component: MyImports, path: Paths.myImports },
-      { component: NamespaceDetail, path: Paths.namespaceDetail },
-      { component: Search, path: Paths.collections },
-      { component: PulpStatus, path: Paths.status, noAuth: true },
-      { component: MultiSearch, path: Paths.search },
-      { component: AboutProject, path: Paths.aboutProject, noAuth: true },
+      { component: CollectionDetail, path: Paths.ansible.collection.detail },
+      { component: Search, path: Paths.ansible.collection.detail },
+      { component: MyImports, path: Paths.ansible.imports },
+      { component: NamespaceDetail, path: Paths.ansible.namespace.detail },
+      { component: Search, path: Paths.ansible.collection.detail },
+      { component: PulpStatus, path: Paths.core.status, noAuth: true },
+      { component: MultiSearch, path: Paths.meta.search },
+      { component: AboutProject, path: Paths.meta.about, noAuth: true },
     ];
   }
 
@@ -196,7 +213,7 @@ export class AppRoutes extends Component {
         ))}
         <Route
           path={'/'}
-          element={<Navigate to={formatPath(Paths.status)} />}
+          element={<Navigate to={formatPath(Paths.core.status)} />}
         />
         <Route
           path='*'

@@ -56,7 +56,7 @@ const AnsibleRemoteList = ListPage<AnsibleRemoteType>({
     return (
       <Tr key={index}>
         <Td>
-          <Link to={formatPath(Paths.ansibleRemoteDetail, { name })}>
+          <Link to={formatPath(Paths.ansible.remote.detail, { name })}>
             {name}
           </Link>
         </Td>

@@ -46,13 +46,15 @@ class UserDetail extends Component<RouteProps, IState> {
 
   componentDidMount() {
     const { hasPermission, user } = this.context as IAppContextType;
-    const id = this.props.routeParams.userID;
+    const id = this.props.routeParams.user_id;
     if (!user || user.is_anonymous || !hasPermission('galaxy.view_user')) {
       this.setState({ unauthorized: true });
     } else {
       UserAPI.get(id)
         .then((result) => this.setState({ userDetail: result.data }))
-        .catch(() => this.setState({ redirect: formatPath(Paths.notFound) }));
+        .catch(() =>
+          this.setState({ redirect: formatPath(Paths.meta.not_found) }),
+        );
     }
   }
 
@@ -73,7 +75,7 @@ class UserDetail extends Component<RouteProps, IState> {
     }
 
     const breadcrumbs = [
-      { url: formatPath(Paths.userList), name: t`Users` },
+      { url: formatPath(Paths.core.user.list), name: t`Users` },
       { name: userDetail.username },
     ];
     const title = t`User details`;
@@ -113,8 +115,8 @@ class UserDetail extends Component<RouteProps, IState> {
               {!!user && hasPermission('galaxy.change_user') ? (
                 <div>
                   <Link
-                    to={formatPath(Paths.editUser, {
-                      userID: userDetail.id,
+                    to={formatPath(Paths.core.user.edit, {
+                      user_id: userDetail.id,
                     })}
                   >
                     <Button>{t`Edit`}</Button>
@@ -145,7 +147,7 @@ class UserDetail extends Component<RouteProps, IState> {
       },
       () => {
         if (didDelete) {
-          this.setState({ redirect: formatPath(Paths.userList) });
+          this.setState({ redirect: formatPath(Paths.core.user.list) });
         }
       },
     );

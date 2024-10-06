@@ -20,9 +20,9 @@ const initialRepository: AnsibleRepositoryType = {
 const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
   breadcrumbs: ({ name }) =>
     [
-      { url: formatPath(Paths.ansibleRepositories), name: t`Repositories` },
+      { url: formatPath(Paths.ansible.repository.list), name: t`Repositories` },
       name && {
-        url: formatPath(Paths.ansibleRepositoryDetail, { name }),
+        url: formatPath(Paths.ansible.repository.detail, { name }),
         name,
       },
       name ? { name: t`Edit` } : { name: t`Add` },
@@ -30,7 +30,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
 
   displayName: 'AnsibleRepositoryEdit',
   errorTitle: msg`Repository could not be displayed.`,
-  listUrl: formatPath(Paths.ansibleRepositories),
+  listUrl: formatPath(Paths.ansible.repository.list),
   query: ({ name }) => {
     return AnsibleRepositoryAPI.list({ name })
       .then(({ data: { results } }) => results[0])
@@ -167,7 +167,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
           });
 
           navigate(
-            formatPath(Paths.ansibleRepositoryDetail, {
+            formatPath(Paths.ansible.repository.detail, {
               name: data.name,
             }),
           );
@@ -186,10 +186,10 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
       setState({ errorMessages: {}, repositoryToEdit: undefined });
       navigate(
         item
-          ? formatPath(Paths.ansibleRepositoryDetail, {
+          ? formatPath(Paths.ansible.repository.detail, {
               name: item.name,
             })
-          : formatPath(Paths.ansibleRepositories),
+          : formatPath(Paths.ansible.repository.list),
       );
     };
 

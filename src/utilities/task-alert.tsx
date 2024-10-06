@@ -21,7 +21,7 @@ export const taskAlert = (
         <MaybeLink
           to={
             task
-              ? formatPath(Paths.taskDetail, {
+              ? formatPath(Paths.core.task.detail, {
                   task: parsePulpIDFromURL(task?.task || task),
                 })
               : null

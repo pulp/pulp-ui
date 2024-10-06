@@ -85,8 +85,8 @@ export function withContainerRepo(WrappedComponent) {
 
     render() {
       const redirect = {
-        list: formatPath(Paths.executionEnvironments),
-        notFound: formatPath(Paths.notFound),
+        list: formatPath(Paths.container.repository.list),
+        notFound: formatPath(Paths.meta.not_found),
       }[this.state.redirect];
 
       if (redirect) {

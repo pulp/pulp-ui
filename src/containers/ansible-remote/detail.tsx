@@ -17,11 +17,11 @@ import { DetailsTab } from './tab-details';
 const AnsibleRemoteDetail = PageWithTabs<AnsibleRemoteType>({
   breadcrumbs: ({ name, tab, params: { user, group } }) =>
     [
-      { url: formatPath(Paths.ansibleRemotes), name: t`Remotes` },
-      { url: formatPath(Paths.ansibleRemoteDetail, { name }), name },
+      { url: formatPath(Paths.ansible.remote.list), name: t`Remotes` },
+      { url: formatPath(Paths.ansible.remote.detail, { name }), name },
       tab === 'access' && (group || user)
         ? {
-            url: formatPath(Paths.ansibleRemoteDetail, { name }, { tab }),
+            url: formatPath(Paths.ansible.remote.detail, { name }, { tab }),
             name: t`Access`,
           }
         : null,
@@ -38,7 +38,7 @@ const AnsibleRemoteDetail = PageWithTabs<AnsibleRemoteType>({
     ansibleRemoteDownloadCAAction,
     ansibleRemoteDeleteAction,
   ],
-  listUrl: formatPath(Paths.ansibleRemotes),
+  listUrl: formatPath(Paths.ansible.remote.list),
   query: ({ name }) => {
     return AnsibleRemoteAPI.list({ name })
       .then(({ data: { results } }) => results[0])
@@ -68,12 +68,20 @@ const AnsibleRemoteDetail = PageWithTabs<AnsibleRemoteType>({
     {
       active: tab === 'details',
       title: t`Details`,
-      link: formatPath(Paths.ansibleRemoteDetail, { name }, { tab: 'details' }),
+      link: formatPath(
+        Paths.ansible.remote.detail,
+        { name },
+        { tab: 'details' },
+      ),
     },
     {
       active: tab === 'access',
       title: t`Access`,
-      link: formatPath(Paths.ansibleRemoteDetail, { name }, { tab: 'access' }),
+      link: formatPath(
+        Paths.ansible.remote.detail,
+        { name },
+        { tab: 'access' },
+      ),
     },
   ],
 });

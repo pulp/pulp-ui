@@ -33,12 +33,12 @@ const AnsibleRepositoryDetail = PageWithTabs<
 >({
   breadcrumbs: ({ name, tab, params: { repositoryVersion, user, group } }) =>
     [
-      { url: formatPath(Paths.ansibleRepositories), name: t`Repositories` },
-      { url: formatPath(Paths.ansibleRepositoryDetail, { name }), name },
+      { url: formatPath(Paths.ansible.repository.list), name: t`Repositories` },
+      { url: formatPath(Paths.ansible.repository.detail, { name }), name },
       (tab === 'access' && (group || user)) ||
       (tab === 'repository-versions' && repositoryVersion)
         ? {
-            url: formatPath(Paths.ansibleRepositoryDetail, { name }, { tab }),
+            url: formatPath(Paths.ansible.repository.detail, { name }, { tab }),
             name: t`Versions`,
           }
         : null,
@@ -70,7 +70,7 @@ const AnsibleRepositoryDetail = PageWithTabs<
       )}
     </>
   ),
-  listUrl: formatPath(Paths.ansibleRepositories),
+  listUrl: formatPath(Paths.ansible.repository.list),
   query: ({ name }) => {
     return AnsibleRepositoryAPI.list({ name, page_size: 1 })
       .then(({ data: { results } }) => results[0])
@@ -123,7 +123,7 @@ const AnsibleRepositoryDetail = PageWithTabs<
       collections: (
         <Navigate
           to={formatPath(
-            Paths.collections,
+            Paths.ansible.collection.detail,
             {},
             { repository_name: item?.name },
           )}
@@ -135,7 +135,7 @@ const AnsibleRepositoryDetail = PageWithTabs<
       active: tab === 'details',
       title: t`Details`,
       link: formatPath(
-        Paths.ansibleRepositoryDetail,
+        Paths.ansible.repository.detail,
         { name },
         { tab: 'details' },
       ),
@@ -144,7 +144,7 @@ const AnsibleRepositoryDetail = PageWithTabs<
       active: tab === 'access',
       title: t`Access`,
       link: formatPath(
-        Paths.ansibleRepositoryDetail,
+        Paths.ansible.repository.detail,
         { name },
         { tab: 'access' },
       ),
@@ -153,7 +153,7 @@ const AnsibleRepositoryDetail = PageWithTabs<
       active: tab === 'collection-versions',
       title: t`Collection versions`,
       link: formatPath(
-        Paths.ansibleRepositoryDetail,
+        Paths.ansible.repository.detail,
         { name },
         { tab: 'collection-versions' },
       ),
@@ -162,7 +162,7 @@ const AnsibleRepositoryDetail = PageWithTabs<
       active: tab === 'repository-versions',
       title: t`Versions`,
       link: formatPath(
-        Paths.ansibleRepositoryDetail,
+        Paths.ansible.repository.detail,
         { name },
         { tab: 'repository-versions' },
       ),
@@ -171,7 +171,7 @@ const AnsibleRepositoryDetail = PageWithTabs<
       active: tab === 'distributions',
       title: t`Distributions`,
       link: formatPath(
-        Paths.ansibleRepositoryDetail,
+        Paths.ansible.repository.detail,
         { name },
         { tab: 'distributions' },
       ),
@@ -180,7 +180,11 @@ const AnsibleRepositoryDetail = PageWithTabs<
       active: tab === 'collections',
       title: t`Collections`,
       icon: <ArrowRightIcon />,
-      link: formatPath(Paths.collections, {}, { repository_name: name }),
+      link: formatPath(
+        Paths.ansible.collection.detail,
+        {},
+        { repository_name: name },
+      ),
     },
   ],
 });

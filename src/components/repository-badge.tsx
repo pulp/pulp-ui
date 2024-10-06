@@ -43,7 +43,7 @@ export const RepositoryBadge = ({
 
   const label = (
     <Label variant='outline' isCompact={isTextContent} title={name}>
-      <Link to={formatPath(Paths.ansibleRepositoryDetail, { name })}>
+      <Link to={formatPath(Paths.ansible.repository.detail, { name })}>
         {repoName}
       </Link>
     </Label>

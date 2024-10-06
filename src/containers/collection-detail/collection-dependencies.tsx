@@ -96,15 +96,15 @@ class CollectionDependencies extends Component<RouteProps, IState> {
     const { collection_version: version, repository } = collection;
 
     const breadcrumbs = [
-      { name: t`Namespaces`, url: formatPath(Paths.namespaces) },
+      { name: t`Namespaces`, url: formatPath(Paths.ansible.namespace.list) },
       {
-        url: formatPath(Paths.namespaceDetail, {
+        url: formatPath(Paths.ansible.namespace.detail, {
           namespace: version.namespace,
         }),
         name: version.namespace,
       },
       {
-        url: formatPath(Paths.collection, {
+        url: formatPath(Paths.ansible.collection.detail, {
           namespace: version.namespace,
           collection: version.name,
           repo: repository.name,
@@ -226,7 +226,7 @@ class CollectionDependencies extends Component<RouteProps, IState> {
         const [collection] = result.data.data;
 
         dependency_repo.repo = collection.repository.name;
-        dependency_repo.path = formatPath(Paths.collection, {
+        dependency_repo.path = formatPath(Paths.ansible.collection.detail, {
           collection: dependency_repo.name,
           namespace: dependency_repo.namespace,
           repo: dependency_repo.repo,

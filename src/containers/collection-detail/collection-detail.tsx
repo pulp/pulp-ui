@@ -63,9 +63,9 @@ class CollectionDetail extends Component<RouteProps, IBaseCollectionState> {
     const { collection_version: version } = collection;
 
     const breadcrumbs = [
-      { name: t`Namespaces`, url: formatPath(Paths.namespaces) },
+      { name: t`Namespaces`, url: formatPath(Paths.ansible.namespace.list) },
       {
-        url: formatPath(Paths.namespaceDetail, {
+        url: formatPath(Paths.ansible.namespace.detail, {
           namespace: version.namespace,
         }),
         name: version.namespace,

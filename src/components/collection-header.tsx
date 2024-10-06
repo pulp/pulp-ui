@@ -194,7 +194,7 @@ export const CollectionHeader = ({
           onUploadSuccess={() =>
             setRedirect(
               formatPath(
-                Paths.myImports,
+                Paths.ansible.imports,
                 {},
                 { namespace: updateCollection.collection_version.namespace },
               ),
@@ -310,7 +310,7 @@ export const CollectionHeader = ({
                 }
               },
               load: null,
-              redirect: formatPath(Paths.namespaceDetail, {
+              redirect: formatPath(Paths.ansible.namespace.detail, {
                 namespace: deleteCollection.collection_version.namespace,
               }),
               addAlert: (alert) => queueAlert(alert),
@@ -532,32 +532,48 @@ export const CollectionHeader = ({
       {
         active: active === 'install',
         title: t`Install`,
-        link: formatPath(Paths.collection, pathParams, reduced),
+        link: formatPath(Paths.ansible.collection.detail, pathParams, reduced),
       },
       {
         active: active === 'documentation',
         title: t`Documentation`,
-        link: formatPath(Paths.collectionDocsIndex, pathParams, reduced),
+        link: formatPath(
+          Paths.ansible.collection.docs_index,
+          pathParams,
+          reduced,
+        ),
       },
       {
         active: active === 'contents',
         title: t`Contents`,
-        link: formatPath(Paths.collectionContentList, pathParams, reduced),
+        link: formatPath(
+          Paths.ansible.collection.content_list,
+          pathParams,
+          reduced,
+        ),
       },
       {
         active: active === 'import-log',
         title: t`Import log`,
-        link: formatPath(Paths.collectionImportLog, pathParams, reduced),
+        link: formatPath(Paths.ansible.collection.imports, pathParams, reduced),
       },
       {
         active: active === 'dependencies',
         title: t`Dependencies`,
-        link: formatPath(Paths.collectionDependencies, pathParams, reduced),
+        link: formatPath(
+          Paths.ansible.collection.dependencies,
+          pathParams,
+          reduced,
+        ),
       },
       {
         active: active === 'distributions',
         title: t`Distributions`,
-        link: formatPath(Paths.collectionDistributions, pathParams, reduced),
+        link: formatPath(
+          Paths.ansible.collection.distributions,
+          pathParams,
+          reduced,
+        ),
       },
     ];
 
@@ -814,7 +830,7 @@ export const CollectionHeader = ({
             ),
           });
           setRedirect(
-            formatPath(Paths.namespaceDetail, {
+            formatPath(Paths.ansible.namespace.detail, {
               namespace: deleteCollection.collection_version.namespace,
             }),
           );

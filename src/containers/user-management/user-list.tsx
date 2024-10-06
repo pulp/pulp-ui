@@ -185,7 +185,7 @@ class UserList extends Component<RouteProps, IState> {
                     {!!user && hasPermission('galaxy.add_user') ? (
                       <ToolbarGroup>
                         <ToolbarItem>
-                          <Link to={formatPath(Paths.createUser)}>
+                          <Link to={formatPath(Paths.core.user.create)}>
                             <Button>{t`Create`}</Button>
                           </Link>
                         </ToolbarItem>
@@ -250,7 +250,7 @@ class UserList extends Component<RouteProps, IState> {
           title={t`No users yet`}
           description={t`Users will appear once created`}
           button={
-            <Link to={formatPath(Paths.createUser)}>
+            <Link to={formatPath(Paths.core.user.create)}>
               <Button variant={'primary'}>{t`Create`}</Button>
             </Link>
           }
@@ -324,8 +324,8 @@ class UserList extends Component<RouteProps, IState> {
           key='edit'
           component={
             <Link
-              to={formatPath(Paths.editUser, {
-                userID: user.id,
+              to={formatPath(Paths.core.user.edit, {
+                user_id: user.id,
               })}
             >
               {t`Edit`}
@@ -347,7 +347,7 @@ class UserList extends Component<RouteProps, IState> {
     return (
       <Tr data-cy={`UserList-row-${user.username}`} key={index}>
         <Td>
-          <Link to={formatPath(Paths.userDetail, { userID: user.id })}>
+          <Link to={formatPath(Paths.core.user.detail, { user_id: user.id })}>
             {user.username}
           </Link>
 

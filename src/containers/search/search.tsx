@@ -201,7 +201,7 @@ class Search extends Component<RouteProps, IState> {
               onUploadSuccess={() =>
                 this.setState({
                   redirect: formatPath(
-                    Paths.myImports,
+                    Paths.ansible.imports,
                     {},
                     {
                       namespace: updateCollection.collection_version.namespace,

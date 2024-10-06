@@ -150,7 +150,7 @@ class ExecutionEnvironmentDetailAccess extends Component<
           updateProps={(prop) => {
             this.setState(prop);
           }}
-          urlPrefix={formatEEPath(Paths.executionEnvironmentDetailAccess, {
+          urlPrefix={formatEEPath(Paths.container.repository.access, {
             container: name,
           })}
           user={selectedUser}

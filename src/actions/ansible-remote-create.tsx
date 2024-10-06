@@ -5,5 +5,5 @@ import { Action } from './action';
 export const ansibleRemoteCreateAction = Action({
   title: msg`Add remote`,
   onClick: (item, { navigate }) =>
-    navigate(formatPath(Paths.ansibleRemoteEdit, { name: '_' })),
+    navigate(formatPath(Paths.ansible.remote.edit, { name: '_' })),
 });

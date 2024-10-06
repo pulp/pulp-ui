@@ -30,7 +30,7 @@ function PulpLoginPage(_props) {
         // verified, save
         setCredentials(username, password, remember);
         setRedirect(
-          next && next !== '/login/' ? next : formatPath(Paths.status),
+          next && next !== '/login/' ? next : formatPath(Paths.core.status),
         );
       })
       .catch((result) => {

@@ -204,12 +204,12 @@ const MultiSearch = (props: RouteProps) => {
           title={t`Collections`}
           showAllLink={
             <Link
-              to={formatPath(Paths.collections)}
+              to={formatPath(Paths.ansible.collection.detail)}
             >{t`Show all collections`}</Link>
           }
           showMoreLink={
             <Link
-              to={formatPath(Paths.collections, {}, { keywords })}
+              to={formatPath(Paths.ansible.collection.detail, {}, { keywords })}
             >{t`Show more collections`}</Link>
           }
         >
@@ -230,12 +230,12 @@ const MultiSearch = (props: RouteProps) => {
           title={t`Namespaces`}
           showAllLink={
             <Link
-              to={formatPath(Paths.namespaces)}
+              to={formatPath(Paths.ansible.namespace.list)}
             >{t`Show all namespaces`}</Link>
           }
           showMoreLink={
             <Link
-              to={formatPath(Paths.namespaces, {}, { keywords })}
+              to={formatPath(Paths.ansible.namespace.list, {}, { keywords })}
             >{t`Show more namespaces`}</Link>
           }
         >
@@ -252,13 +252,13 @@ const MultiSearch = (props: RouteProps) => {
             title={t`Containers`}
             showAllLink={
               <Link
-                to={formatPath(Paths.executionEnvironments)}
+                to={formatPath(Paths.container.repository.list)}
               >{t`Show all containers`}</Link>
             }
             showMoreLink={
               <Link
                 to={formatPath(
-                  Paths.executionEnvironments,
+                  Paths.container.repository.list,
                   {},
                   { name__icontains: keywords },
                 )}
@@ -279,7 +279,7 @@ const MultiSearch = (props: RouteProps) => {
                   <article className='pf-v5-c-card'>
                     <div className='pf-v5-c-card__title'>
                       <Link
-                        to={formatEEPath(Paths.executionEnvironmentDetail, {
+                        to={formatEEPath(Paths.container.repository.detail, {
                           container: item.pulp.distribution.base_path,
                         })}
                       >
@@ -314,7 +314,7 @@ const MultiSearch = (props: RouteProps) => {
           emptyStateTitle={t`No matching collections found.`}
           showAllLink={
             <Link
-              to={formatPath(Paths.collections)}
+              to={formatPath(Paths.ansible.collection.detail)}
             >{t`Show all collections`}</Link>
           }
         />
@@ -325,7 +325,7 @@ const MultiSearch = (props: RouteProps) => {
           emptyStateTitle={t`No matching namespaces found.`}
           showAllLink={
             <Link
-              to={formatPath(Paths.namespaces)}
+              to={formatPath(Paths.ansible.namespace.list)}
             >{t`Show all namespaces`}</Link>
           }
         />
@@ -337,7 +337,7 @@ const MultiSearch = (props: RouteProps) => {
             emptyStateTitle={t`No matching containers found.`}
             showAllLink={
               <Link
-                to={formatPath(Paths.executionEnvironments)}
+                to={formatPath(Paths.container.repository.list)}
               >{t`Show all containers`}</Link>
             }
           />

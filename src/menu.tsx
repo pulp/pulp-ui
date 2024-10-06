@@ -29,74 +29,70 @@ const altPath = (p) => formatPath(p, {}, null, { ignoreMissing: true });
 function standaloneMenu() {
   return [
     menuItem(t`Status`, {
-      url: formatPath(Paths.status),
+      url: formatPath(Paths.core.status),
     }),
     menuItem(t`Login`, {
-      url: formatPath(Paths.login),
+      url: formatPath(Paths.meta.login),
       condition: ({ user }) => !user,
     }),
     menuItem(t`Search`, {
-      url: formatPath(Paths.search),
+      url: formatPath(Paths.meta.search),
       condition: ({ user }) => !!user,
     }),
     menuSection('Pulp Ansible', { condition: ({ user }) => !!user }, [
       /* menuItem(t`Collections`, {
-        url: formatPath(Paths.collections),
+        url: formatPath(Paths.ansible.collection.detail),
         alternativeUrls: [altPath('/repo/:repo')],
       }),*/
       /* menuItem(t`Namespaces`, {
-        url: formatPath(Paths.namespaces),
-        alternativeUrls: [altPath(Paths.myNamespaces)],
+        url: formatPath(Paths.ansible.namespace.list),
+        alternativeUrls: [altPath(Paths.ansible.namespace.mine)],
       }), */
       menuItem(t`Repositories`, {
-        url: formatPath(Paths.ansibleRepositories),
+        url: formatPath(Paths.ansible.repository.list),
       }),
       menuItem(t`Remotes`, {
-        url: formatPath(Paths.ansibleRemotes),
+        url: formatPath(Paths.ansible.remote.list),
       }),
       /*menuItem(t`Approvals`, {
-        url: formatPath(Paths.approvals),
+        url: formatPath(Paths.ansible.approvals),
       }),*/
       /*menuItem(t`Imports`, {
-        url: formatPath(Paths.myImports),
+        url: formatPath(Paths.ansible.imports),
       }),*/
     ]),
     /* menuSection('Pulp Container', { condition: ({ user }) => !!user }, [
       menuItem(t`Containers`, {
-        url: formatPath(Paths.executionEnvironments),
+        url: formatPath(Paths.container.repository.list),
       }),
       menuItem(t`Remote Registries`, {
-        url: formatPath(Paths.executionEnvironmentsRegistries),
+        url: formatPath(Paths.container.remote.list),
       }),
     ]),*/
     menuItem(t`Task Management`, {
-      url: formatPath(Paths.taskList),
-      alternativeUrls: [altPath(Paths.taskDetail)],
-      condition: ({ user }) => !!user,
-    }),
-    menuItem(t`API token`, {
-      url: formatPath(Paths.token),
+      url: formatPath(Paths.core.task.list),
+      alternativeUrls: [altPath(Paths.core.task.detail)],
       condition: ({ user }) => !!user,
     }),
     menuItem(t`Signature Keys`, {
-      url: formatPath(Paths.signatureKeys),
+      url: formatPath(Paths.core.signature_keys),
       condition: ({ user }) => !!user,
     }),
     menuSection(t`User Access`, { condition: ({ user }) => !!user }, [
       menuItem(t`Users`, {
-        url: formatPath(Paths.userList),
+        url: formatPath(Paths.core.user.list),
       }),
       menuItem(t`Groups`, {
-        url: formatPath(Paths.groupList),
-        alternativeUrls: [altPath(Paths.groupDetail)],
+        url: formatPath(Paths.core.group.list),
+        alternativeUrls: [altPath(Paths.core.group.detail)],
       }),
       menuItem(t`Roles`, {
-        url: formatPath(Paths.roleList),
-        alternativeUrls: [altPath(Paths.roleEdit)],
+        url: formatPath(Paths.core.role.list),
+        alternativeUrls: [altPath(Paths.core.role.edit)],
       }),
     ]),
     menuItem(t`About project`, {
-      url: formatPath(Paths.aboutProject),
+      url: formatPath(Paths.meta.about),
     }),
   ];
 }

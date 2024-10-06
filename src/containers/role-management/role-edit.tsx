@@ -102,7 +102,7 @@ class EditRole extends Component<RouteProps, IState> {
         })
         .catch((e) => {
           const { status, statusText } = e.response;
-          this.setState({ redirect: formatPath(Paths.notFound) });
+          this.setState({ redirect: formatPath(Paths.meta.not_found) });
           this.addAlert(
             t`Role "${this.state.role.name}" could not be displayed.`,
             'danger',
@@ -148,7 +148,7 @@ class EditRole extends Component<RouteProps, IState> {
     }
 
     const breadcrumbs = [
-      { url: formatPath(Paths.roleList), name: t`Roles` },
+      { url: formatPath(Paths.core.role.list), name: t`Roles` },
       { name: role.name },
     ];
 
@@ -209,7 +209,7 @@ class EditRole extends Component<RouteProps, IState> {
   private cancelRole = () => {
     this.setState({
       errorMessages: {},
-      redirect: formatPath(Paths.roleList),
+      redirect: formatPath(Paths.core.role.list),
     });
   };
 
@@ -233,7 +233,9 @@ class EditRole extends Component<RouteProps, IState> {
       const { name, description } = this.state;
 
       RoleAPI.updatePermissions(roleID, { name, description, permissions })
-        .then(() => this.setState({ redirect: formatPath(Paths.roleList) }))
+        .then(() =>
+          this.setState({ redirect: formatPath(Paths.core.role.list) }),
+        )
         .catch((err) => {
           const { status, statusText } = err.response;
           if (err.response.status === 400) {
