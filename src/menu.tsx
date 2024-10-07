@@ -4,6 +4,7 @@ import { reject, some } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ExternalLink, NavList } from 'src/components';
+import { plugin_versions } from 'src/utilities';
 import { Paths, formatPath } from './paths';
 import { useUserContext } from './user-context';
 
@@ -26,6 +27,21 @@ const menuSection = (name, options = {}, items = []) => ({
 
 const altPath = (p) => formatPath(p, {}, null, { ignoreMissing: true });
 
+// condition: loggedIn OR condition: and(loggedIn, hasPlugin('rpm'))
+const loggedIn = ({ user }) => !!user;
+const hasPlugin =
+  (name) =>
+  ({ plugins }) =>
+    !!plugins[name];
+const and =
+  (...conditions) =>
+  (context) =>
+    conditions.every((condition) => condition(context));
+// const or = (...conditions) => (context) => conditions.some((condition) => condition(context));
+
+// FIXME: fix those screens
+const BROKEN = () => false;
+
 function standaloneMenu() {
   return [
     menuItem(t`Status`, {
@@ -33,52 +49,66 @@ function standaloneMenu() {
     }),
     menuItem(t`Login`, {
       url: formatPath(Paths.meta.login),
-      condition: ({ user }) => !user,
+      condition: ({ user }) => !user, // not logged in
     }),
     menuItem(t`Search`, {
       url: formatPath(Paths.meta.search),
-      condition: ({ user }) => !!user,
+      condition: and(BROKEN, loggedIn),
     }),
-    menuSection('Pulp Ansible', { condition: ({ user }) => !!user }, [
-      /* menuItem(t`Collections`, {
-        url: formatPath(Paths.ansible.collection.detail),
-        alternativeUrls: [altPath('/repo/:repo')],
-      }),*/
-      /* menuItem(t`Namespaces`, {
-        url: formatPath(Paths.ansible.namespace.list),
-        alternativeUrls: [altPath(Paths.ansible.namespace.mine)],
-      }), */
-      menuItem(t`Repositories`, {
-        url: formatPath(Paths.ansible.repository.list),
-      }),
-      menuItem(t`Remotes`, {
-        url: formatPath(Paths.ansible.remote.list),
-      }),
-      /*menuItem(t`Approvals`, {
-        url: formatPath(Paths.ansible.approvals),
-      }),*/
-      /*menuItem(t`Imports`, {
-        url: formatPath(Paths.ansible.imports),
-      }),*/
-    ]),
-    /* menuSection('Pulp Container', { condition: ({ user }) => !!user }, [
-      menuItem(t`Containers`, {
-        url: formatPath(Paths.container.repository.list),
-      }),
-      menuItem(t`Remote Registries`, {
-        url: formatPath(Paths.container.remote.list),
-      }),
-    ]),*/
+    menuSection(
+      'Pulp Ansible',
+      { condition: and(loggedIn, hasPlugin('ansible')) },
+      [
+        menuItem(t`Collections`, {
+          url: formatPath(Paths.ansible.collection.list),
+          alternativeUrls: [altPath('/repo/:repo')],
+          condition: BROKEN,
+        }),
+        menuItem(t`Namespaces`, {
+          url: formatPath(Paths.ansible.namespace.list),
+          alternativeUrls: [altPath(Paths.ansible.namespace.mine)],
+          condition: BROKEN,
+        }),
+        menuItem(t`Repositories`, {
+          url: formatPath(Paths.ansible.repository.list),
+        }),
+        menuItem(t`Remotes`, {
+          url: formatPath(Paths.ansible.remote.list),
+        }),
+        menuItem(t`Approvals`, {
+          url: formatPath(Paths.ansible.approvals),
+          condition: BROKEN,
+        }),
+        menuItem(t`Imports`, {
+          url: formatPath(Paths.ansible.imports),
+          condition: BROKEN,
+        }),
+      ],
+    ),
+    menuSection(
+      'Pulp Container',
+      { condition: and(loggedIn, hasPlugin('container')) },
+      [
+        menuItem(t`Containers`, {
+          url: formatPath(Paths.container.repository.list),
+          condition: BROKEN,
+        }),
+        menuItem(t`Remote Registries`, {
+          url: formatPath(Paths.container.remote.list),
+          condition: BROKEN,
+        }),
+      ],
+    ),
     menuItem(t`Task Management`, {
       url: formatPath(Paths.core.task.list),
       alternativeUrls: [altPath(Paths.core.task.detail)],
-      condition: ({ user }) => !!user,
+      condition: loggedIn,
     }),
     menuItem(t`Signature Keys`, {
       url: formatPath(Paths.core.signature_keys),
-      condition: ({ user }) => !!user,
+      condition: loggedIn,
     }),
-    menuSection(t`User Access`, { condition: ({ user }) => !!user }, [
+    menuSection(t`User Access`, { condition: loggedIn }, [
       menuItem(t`Users`, {
         url: formatPath(Paths.core.user.list),
       }),
@@ -178,7 +208,18 @@ function MenuSection({
   context;
   expandedSections;
 }) {
-  return section.condition(context) ? (
+  if (!section.condition(context)) {
+    return null;
+  }
+
+  if (
+    !section.items ||
+    !section.items.find((item) => item.condition(context))
+  ) {
+    return null;
+  }
+
+  return (
     <NavExpandable
       title={section.name}
       groupId={section.name}
@@ -192,7 +233,7 @@ function MenuSection({
         expandedSections={expandedSections}
       />
     </NavExpandable>
-  ) : null;
+  );
 }
 
 function Menu({
@@ -218,6 +259,20 @@ function Menu({
   );
 }
 
+function usePlugins() {
+  const [plugins, setPlugins] = useState({});
+
+  useEffect(() => {
+    plugin_versions().then((arr) =>
+      setPlugins(
+        Object.fromEntries(arr.map(({ name, version }) => [name, version])),
+      ),
+    );
+  }, []);
+
+  return plugins;
+}
+
 export const StandaloneMenu = () => {
   const [expandedSections, setExpandedSections] = useState([]);
 
@@ -225,6 +280,8 @@ export const StandaloneMenu = () => {
   const [menu, setMenu] = useState([]);
 
   const { credentials } = useUserContext();
+
+  const plugins = usePlugins();
 
   useEffect(() => {
     setMenu(standaloneMenu());
@@ -250,7 +307,7 @@ export const StandaloneMenu = () => {
       <NavList>
         <Menu
           items={menu}
-          context={{ user: credentials }}
+          context={{ user: credentials, plugins }}
           expandedSections={expandedSections}
         />
       </NavList>

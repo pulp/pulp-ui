@@ -306,12 +306,13 @@ export const ListPage = function <T>({
                               }}
                             />
                           </ToolbarItem>
-                          {headerActions?.length &&
-                            headerActions.map((action) => (
-                              <ToolbarItem key={action.title}>
-                                {action.button(null, actionContext)}
-                              </ToolbarItem>
-                            ))}
+                          {headerActions?.length
+                            ? headerActions.map((action) => (
+                                <ToolbarItem key={action.title}>
+                                  {action.button(null, actionContext)}
+                                </ToolbarItem>
+                              ))
+                            : null}
                         </ToolbarGroup>
                       </ToolbarContent>
                     </Toolbar>
