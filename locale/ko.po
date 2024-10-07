@@ -29,6 +29,10 @@ msgstr ""
 msgid "(latest)"
 msgstr "(최신)"
 
+#: src/components/lazy-rpm-repository.tsx
+msgid "(more)"
+msgstr ""
+
 #: src/components/collection-header.tsx
 msgid "(signed)"
 msgstr "(서명됨)"
@@ -614,6 +618,10 @@ msgstr "승인됨"
 #: src/containers/approvals/approvals.tsx
 msgid "Approved"
 msgstr "승인됨"
+
+#: src/containers/rpm/package-list.tsx
+msgid "Arch"
+msgstr ""
 
 #: src/components/delete-ansible-remote-modal.tsx
 msgid "Are you sure you want to delete the remote <0>{name}</0>?<1/><2>Note:</2> This will also delete all associated resources under this remote."
@@ -2559,6 +2567,7 @@ msgid "Failed to load remotes: {remotesError}"
 msgstr "원격을 로드하지 못했습니다: {remotesError}"
 
 #: src/components/lazy-repositories.tsx
+#: src/components/lazy-rpm-repository.tsx
 msgid "Failed to load repositories: {error}"
 msgstr "리포지토리를 로드하지 못했습니다: {error}"
 
@@ -3828,6 +3837,10 @@ msgstr "선택된 네임스페이스가 없습니다."
 msgid "No namespaces yet"
 msgstr "아직 네임스페이스가 없음"
 
+#: src/containers/rpm/package-list.tsx
+msgid "No packages yet"
+msgstr ""
+
 #: src/containers/task-management/task-detail.tsx
 msgid "No parent task"
 msgstr "상위 작업 없음"
@@ -4084,6 +4097,23 @@ msgstr "OS/ Arch"
 #: src/components/execution-environment-header/execution-environment-header.tsx
 #~ msgid "Owners"
 #~ msgstr "Owners"
+
+#: src/containers/rpm/package-list.tsx
+#: src/containers/rpm/package-list.tsx
+msgid "Package name"
+msgstr ""
+
+#: src/containers/rpm/package-list.tsx
+msgid "Packages"
+msgstr ""
+
+#: src/containers/rpm/package-list.tsx
+msgid "Packages could not be displayed."
+msgstr ""
+
+#: src/containers/rpm/package-list.tsx
+msgid "Packages will appear once created."
+msgstr ""
 
 #: src/components/headers/base-header.tsx
 #~ msgid "Page logo"
@@ -4841,6 +4871,7 @@ msgstr "생성된 리포지토리가 나타납니다."
 #: src/components/multiple-repo-selector.tsx
 #: src/components/repository-badge.tsx
 #: src/containers/approvals/approvals.tsx
+#: src/containers/rpm/package-list.tsx
 msgid "Repository"
 msgstr "리포지토리"
 
@@ -5062,6 +5093,10 @@ msgstr ""
 #: src/containers/ansible-role/role-list.tsx
 #~ msgid "Roles will appear once imported"
 #~ msgstr "가져온 후 역할이 나타납니다"
+
+#: src/menu.tsx
+msgid "RPMs"
+msgstr ""
 
 #: src/components/import-list.tsx
 #: src/components/status-indicator.tsx
@@ -6632,6 +6667,7 @@ msgstr "검증됨"
 #: src/components/collection-filter.ts
 #: src/components/collection-header.tsx
 #: src/containers/approvals/approvals.tsx
+#: src/containers/rpm/package-list.tsx
 msgid "Version"
 msgstr "버전"
 

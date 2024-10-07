@@ -30,6 +30,10 @@ msgstr "(default)"
 msgid "(latest)"
 msgstr "(latest)"
 
+#: src/components/lazy-rpm-repository.tsx
+msgid "(more)"
+msgstr "(more)"
+
 #: src/components/collection-header.tsx
 msgid "(signed)"
 msgstr "(signed)"
@@ -615,6 +619,10 @@ msgstr "approved"
 #: src/containers/approvals/approvals.tsx
 msgid "Approved"
 msgstr "Approved"
+
+#: src/containers/rpm/package-list.tsx
+msgid "Arch"
+msgstr "Arch"
 
 #: src/components/delete-ansible-remote-modal.tsx
 msgid "Are you sure you want to delete the remote <0>{name}</0>?<1/><2>Note:</2> This will also delete all associated resources under this remote."
@@ -2560,6 +2568,7 @@ msgid "Failed to load remotes: {remotesError}"
 msgstr "Failed to load remotes: {remotesError}"
 
 #: src/components/lazy-repositories.tsx
+#: src/components/lazy-rpm-repository.tsx
 msgid "Failed to load repositories: {error}"
 msgstr "Failed to load repositories: {error}"
 
@@ -3829,6 +3838,10 @@ msgstr "No namespace selected."
 msgid "No namespaces yet"
 msgstr "No namespaces yet"
 
+#: src/containers/rpm/package-list.tsx
+msgid "No packages yet"
+msgstr "No packages yet"
+
 #: src/containers/task-management/task-detail.tsx
 msgid "No parent task"
 msgstr "No parent task"
@@ -4085,6 +4098,23 @@ msgstr "OS / Arch"
 #: src/components/execution-environment-header/execution-environment-header.tsx
 #~ msgid "Owners"
 #~ msgstr "Owners"
+
+#: src/containers/rpm/package-list.tsx
+#: src/containers/rpm/package-list.tsx
+msgid "Package name"
+msgstr "Package name"
+
+#: src/containers/rpm/package-list.tsx
+msgid "Packages"
+msgstr "Packages"
+
+#: src/containers/rpm/package-list.tsx
+msgid "Packages could not be displayed."
+msgstr "Packages could not be displayed."
+
+#: src/containers/rpm/package-list.tsx
+msgid "Packages will appear once created."
+msgstr "Packages will appear once created."
 
 #: src/components/headers/base-header.tsx
 #~ msgid "Page logo"
@@ -4842,6 +4872,7 @@ msgstr "Repositories will appear once created."
 #: src/components/multiple-repo-selector.tsx
 #: src/components/repository-badge.tsx
 #: src/containers/approvals/approvals.tsx
+#: src/containers/rpm/package-list.tsx
 msgid "Repository"
 msgstr "Repository"
 
@@ -5063,6 +5094,10 @@ msgstr "Roles synchronize"
 #: src/containers/ansible-role/role-list.tsx
 #~ msgid "Roles will appear once imported"
 #~ msgstr "Roles will appear once imported"
+
+#: src/menu.tsx
+msgid "RPMs"
+msgstr "RPMs"
 
 #: src/components/import-list.tsx
 #: src/components/status-indicator.tsx
@@ -6633,6 +6668,7 @@ msgstr "Validated"
 #: src/components/collection-filter.ts
 #: src/components/collection-header.tsx
 #: src/containers/approvals/approvals.tsx
+#: src/containers/rpm/package-list.tsx
 msgid "Version"
 msgstr "Version"
 

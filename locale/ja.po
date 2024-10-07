@@ -29,6 +29,10 @@ msgstr ""
 msgid "(latest)"
 msgstr "(最新)"
 
+#: src/components/lazy-rpm-repository.tsx
+msgid "(more)"
+msgstr ""
+
 #: src/components/collection-header.tsx
 msgid "(signed)"
 msgstr "(署名済み)"
@@ -614,6 +618,10 @@ msgstr "承認"
 #: src/containers/approvals/approvals.tsx
 msgid "Approved"
 msgstr "承認済"
+
+#: src/containers/rpm/package-list.tsx
+msgid "Arch"
+msgstr ""
 
 #: src/components/delete-ansible-remote-modal.tsx
 msgid "Are you sure you want to delete the remote <0>{name}</0>?<1/><2>Note:</2> This will also delete all associated resources under this remote."
@@ -2559,6 +2567,7 @@ msgid "Failed to load remotes: {remotesError}"
 msgstr "リモートの読み込みに失敗しました: {remotesError}"
 
 #: src/components/lazy-repositories.tsx
+#: src/components/lazy-rpm-repository.tsx
 msgid "Failed to load repositories: {error}"
 msgstr "リポジトリーの読み込みに失敗しました: {error}"
 
@@ -3828,6 +3837,10 @@ msgstr "名前空間が選択されていません。"
 msgid "No namespaces yet"
 msgstr "まだ名前空間はありません"
 
+#: src/containers/rpm/package-list.tsx
+msgid "No packages yet"
+msgstr ""
+
 #: src/containers/task-management/task-detail.tsx
 msgid "No parent task"
 msgstr "親タスクなし"
@@ -4084,6 +4097,23 @@ msgstr "OS / アーキテクチャー"
 #: src/components/execution-environment-header/execution-environment-header.tsx
 #~ msgid "Owners"
 #~ msgstr "Owners"
+
+#: src/containers/rpm/package-list.tsx
+#: src/containers/rpm/package-list.tsx
+msgid "Package name"
+msgstr ""
+
+#: src/containers/rpm/package-list.tsx
+msgid "Packages"
+msgstr ""
+
+#: src/containers/rpm/package-list.tsx
+msgid "Packages could not be displayed."
+msgstr ""
+
+#: src/containers/rpm/package-list.tsx
+msgid "Packages will appear once created."
+msgstr ""
 
 #: src/components/headers/base-header.tsx
 #~ msgid "Page logo"
@@ -4841,6 +4871,7 @@ msgstr "リポジトリーが作成されると表示されます。"
 #: src/components/multiple-repo-selector.tsx
 #: src/components/repository-badge.tsx
 #: src/containers/approvals/approvals.tsx
+#: src/containers/rpm/package-list.tsx
 msgid "Repository"
 msgstr "リポジトリー"
 
@@ -5062,6 +5093,10 @@ msgstr ""
 #: src/containers/ansible-role/role-list.tsx
 #~ msgid "Roles will appear once imported"
 #~ msgstr "インポートするとロールが表示されます"
+
+#: src/menu.tsx
+msgid "RPMs"
+msgstr ""
 
 #: src/components/import-list.tsx
 #: src/components/status-indicator.tsx
@@ -6632,6 +6667,7 @@ msgstr "検証済み"
 #: src/components/collection-filter.ts
 #: src/components/collection-header.tsx
 #: src/containers/approvals/approvals.tsx
+#: src/containers/rpm/package-list.tsx
 msgid "Version"
 msgstr "バージョン"
 
