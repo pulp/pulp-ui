@@ -123,7 +123,7 @@ const AnsibleRepositoryDetail = PageWithTabs<
       collections: (
         <Navigate
           to={formatPath(
-            Paths.ansible.collection.detail,
+            Paths.ansible.collection.list,
             {},
             { repository_name: item?.name },
           )}
@@ -181,7 +181,7 @@ const AnsibleRepositoryDetail = PageWithTabs<
       title: t`Collections`,
       icon: <ArrowRightIcon />,
       link: formatPath(
-        Paths.ansible.collection.detail,
+        Paths.ansible.collection.list,
         {},
         { repository_name: name },
       ),

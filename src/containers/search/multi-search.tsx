@@ -204,12 +204,12 @@ const MultiSearch = (props: RouteProps) => {
           title={t`Collections`}
           showAllLink={
             <Link
-              to={formatPath(Paths.ansible.collection.detail)}
+              to={formatPath(Paths.ansible.collection.list)}
             >{t`Show all collections`}</Link>
           }
           showMoreLink={
             <Link
-              to={formatPath(Paths.ansible.collection.detail, {}, { keywords })}
+              to={formatPath(Paths.ansible.collection.list, {}, { keywords })}
             >{t`Show more collections`}</Link>
           }
         >
