@@ -256,12 +256,12 @@ msgid "<0>Role <1>{0}</1> will be permanently deleted.</0><2>This will also remo
 msgstr "<0>Rol <1>{0}</1> wordt permanent verwijderd.</0><2>Hiermee worden ook alle bijbehorende machtigingen van deze rol verwijderd.</2>"
 
 #: src/containers/token/token.tsx
-msgid "<0>WARNING</0> copy this token now. This is the only time you will ever see it."
-msgstr "<0>WAARSCHUWING</0> kopieer dit token nu. Dit is de enige keer dat u het ooit zult zien."
+#~ msgid "<0>WARNING</0> copy this token now. This is the only time you will ever see it."
+#~ msgstr "<0>WAARSCHUWING</0> kopieer dit token nu. Dit is de enige keer dat u het ooit zult zien."
 
 #: src/containers/token/token.tsx
-msgid "<0>WARNING</0> loading a new token will delete your old token."
-msgstr "<0>WAARSCHUWING</0> het laden van een nieuw token zal uw oude token verwijderen."
+#~ msgid "<0>WARNING</0> loading a new token will delete your old token."
+#~ msgstr "<0>WAARSCHUWING</0> het laden van een nieuw token zal uw oude token verwijderen."
 
 #: src/components/lightspeed-modal.tsx
 #~ msgid "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
@@ -560,8 +560,8 @@ msgstr "API-fout. Status code: {0}"
 #: src/containers/token/token.tsx
 #: src/containers/token/token.tsx
 #: src/menu.tsx
-msgid "API token"
-msgstr "API-token"
+#~ msgid "API token"
+#~ msgstr "API-token"
 
 #: src/loaders/standalone/standalone-loader.tsx
 #~ msgid "API Token"
@@ -590,6 +590,7 @@ msgid "Approval status:"
 msgstr "Goedkeuringsstatus:"
 
 #: src/containers/approvals/approvals.tsx
+#: src/menu.tsx
 msgid "Approvals"
 msgstr ""
 
@@ -1190,6 +1191,7 @@ msgstr "Collectieversies verschijnen zodra de collectie is gewijzigd."
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/search.tsx
+#: src/menu.tsx
 msgid "Collections"
 msgstr "Collecties"
 
@@ -1341,6 +1343,7 @@ msgstr "Naam container-repository"
 #: src/containers/execution-environment-manifest/execution-environment-manifest.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
+#: src/menu.tsx
 msgid "Containers"
 msgstr "Containers"
 
@@ -3084,6 +3087,7 @@ msgstr ""
 
 #: src/containers/my-imports/my-imports.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
+#: src/menu.tsx
 msgid "Imports"
 msgstr "Invoer"
 
@@ -3370,8 +3374,8 @@ msgstr "Lijst van collecties"
 #~ msgstr "Lijst met versies"
 
 #: src/containers/token/token.tsx
-msgid "Load token"
-msgstr "Laadtoken"
+#~ msgid "Load token"
+#~ msgstr "Laadtoken"
 
 #: src/actions/ansible-repository-copy.tsx
 msgid "Loading distribution..."
@@ -3627,6 +3631,7 @@ msgstr "Namespace-namen zijn beperkt tot alfanumerieke tekens en underscores, mo
 #: src/containers/namespace-list/namespace-list.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
+#: src/menu.tsx
 msgid "Namespaces"
 msgstr "Namespaces"
 
@@ -4674,9 +4679,9 @@ msgstr "Externe naam"
 msgid "Remote registries"
 msgstr ""
 
-#: src/loaders/standalone/menu.tsx
-#~ msgid "Remote Registries"
-#~ msgstr "Externe registers"
+#: src/menu.tsx
+msgid "Remote Registries"
+msgstr "Externe registers"
 
 #: src/containers/execution-environment/registry-list.tsx
 msgid "Remote registry \"{name}\" could not be deleted."
@@ -6399,8 +6404,8 @@ msgstr "Gebruik de indeling namespace/naam voor containers met namespace. Gebrui
 #~ msgstr "Use this token to authenticate clients that need to download content from Automation Hub. This is a secret token used to protect your content. Store your API token in a secure location."
 
 #: src/containers/token/token.tsx
-msgid "Use this token to authenticate the <0>ansible-galaxy</0> client."
-msgstr "Gebruik dit token voor authenticatie van de <0>ansible-galaxy</0>-client."
+#~ msgid "Use this token to authenticate the <0>ansible-galaxy</0> client."
+#~ msgstr "Gebruik dit token voor authenticatie van de <0>ansible-galaxy</0>-client."
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Use this URL for <0>validated</0> content from Automation Hub."

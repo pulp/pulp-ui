@@ -256,12 +256,12 @@ msgid "<0>Role <1>{0}</1> will be permanently deleted.</0><2>This will also remo
 msgstr "<0>ロール<1>{0}</1> は永久に削除されます。</0><2>また、このロールの下にあるすべての関連するパーミッションも削除されます。</2>"
 
 #: src/containers/token/token.tsx
-msgid "<0>WARNING</0> copy this token now. This is the only time you will ever see it."
-msgstr "<0>警告</0> このトークンを今すぐコピーしてください。このトークンはこれ以降表示されません。"
+#~ msgid "<0>WARNING</0> copy this token now. This is the only time you will ever see it."
+#~ msgstr "<0>警告</0> このトークンを今すぐコピーしてください。このトークンはこれ以降表示されません。"
 
 #: src/containers/token/token.tsx
-msgid "<0>WARNING</0> loading a new token will delete your old token."
-msgstr "<0>警告</0> 新しいトークンを読み込むと、古いトークンが削除されます。"
+#~ msgid "<0>WARNING</0> loading a new token will delete your old token."
+#~ msgstr "<0>警告</0> 新しいトークンを読み込むと、古いトークンが削除されます。"
 
 #: src/components/lightspeed-modal.tsx
 #~ msgid "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
@@ -560,8 +560,8 @@ msgstr "API エラー。ステータスコード: {0}"
 #: src/containers/token/token.tsx
 #: src/containers/token/token.tsx
 #: src/menu.tsx
-msgid "API token"
-msgstr "API トークン"
+#~ msgid "API token"
+#~ msgstr "API トークン"
 
 #: src/loaders/standalone/standalone-loader.tsx
 #~ msgid "API Token"
@@ -590,6 +590,7 @@ msgid "Approval status:"
 msgstr "承認状態:"
 
 #: src/containers/approvals/approvals.tsx
+#: src/menu.tsx
 msgid "Approvals"
 msgstr ""
 
@@ -1190,6 +1191,7 @@ msgstr "コレクションが変更されると、コレクションのバージ
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/search.tsx
+#: src/menu.tsx
 msgid "Collections"
 msgstr "コレクション"
 
@@ -1341,6 +1343,7 @@ msgstr "コンテナーリポジトリー名"
 #: src/containers/execution-environment-manifest/execution-environment-manifest.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
+#: src/menu.tsx
 msgid "Containers"
 msgstr "Containers"
 
@@ -3084,6 +3087,7 @@ msgstr ""
 
 #: src/containers/my-imports/my-imports.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
+#: src/menu.tsx
 msgid "Imports"
 msgstr "インポート"
 
@@ -3370,8 +3374,8 @@ msgstr "コレクションの一覧"
 #~ msgstr "バージョンのリスト"
 
 #: src/containers/token/token.tsx
-msgid "Load token"
-msgstr "トークンの読み込み"
+#~ msgid "Load token"
+#~ msgstr "トークンの読み込み"
 
 #: src/actions/ansible-repository-copy.tsx
 msgid "Loading distribution..."
@@ -3627,6 +3631,7 @@ msgstr "名前空間の名前に使用できるのは、英数字とアンダー
 #: src/containers/namespace-list/namespace-list.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
+#: src/menu.tsx
 msgid "Namespaces"
 msgstr "名前空間"
 
@@ -4674,9 +4679,9 @@ msgstr "リモート名"
 msgid "Remote registries"
 msgstr ""
 
-#: src/loaders/standalone/menu.tsx
-#~ msgid "Remote Registries"
-#~ msgstr "リモートレジストリー"
+#: src/menu.tsx
+msgid "Remote Registries"
+msgstr "リモートレジストリー"
 
 #: src/containers/execution-environment/registry-list.tsx
 msgid "Remote registry \"{name}\" could not be deleted."
@@ -6399,8 +6404,8 @@ msgstr "名前空間を指定したコンテナーには名前空間/名前の�
 #~ msgstr "Use this token to authenticate clients that need to download content from Automation Hub. This is a secret token used to protect your content. Store your API token in a secure location."
 
 #: src/containers/token/token.tsx
-msgid "Use this token to authenticate the <0>ansible-galaxy</0> client."
-msgstr "このトークンを使用して、<0>ansible-galaxy</0> クライアントを認証します。"
+#~ msgid "Use this token to authenticate the <0>ansible-galaxy</0> client."
+#~ msgstr "このトークンを使用して、<0>ansible-galaxy</0> クライアントを認証します。"
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Use this URL for <0>validated</0> content from Automation Hub."

@@ -256,12 +256,12 @@ msgid "<0>Role <1>{0}</1> will be permanently deleted.</0><2>This will also remo
 msgstr "<0>역할 <1>{0}</1>은 영구적으로 삭제됩니다.</0>이 역할 아래에 연결된 모든 관련 권한도 제거됩니다.<2></2>"
 
 #: src/containers/token/token.tsx
-msgid "<0>WARNING</0> copy this token now. This is the only time you will ever see it."
-msgstr "<0>경고</0> 이 토큰을 지금 복사합니다. 토큰이 표시됩니다."
+#~ msgid "<0>WARNING</0> copy this token now. This is the only time you will ever see it."
+#~ msgstr "<0>경고</0> 이 토큰을 지금 복사합니다. 토큰이 표시됩니다."
 
 #: src/containers/token/token.tsx
-msgid "<0>WARNING</0> loading a new token will delete your old token."
-msgstr "<0>경고</0> 새 토큰을 로드하면 이전 토큰이 삭제됩니다."
+#~ msgid "<0>WARNING</0> loading a new token will delete your old token."
+#~ msgstr "<0>경고</0> 새 토큰을 로드하면 이전 토큰이 삭제됩니다."
 
 #: src/components/lightspeed-modal.tsx
 #~ msgid "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
@@ -560,8 +560,8 @@ msgstr "API 오류. 상태 코드: {0}"
 #: src/containers/token/token.tsx
 #: src/containers/token/token.tsx
 #: src/menu.tsx
-msgid "API token"
-msgstr "API 토큰"
+#~ msgid "API token"
+#~ msgstr "API 토큰"
 
 #: src/loaders/standalone/standalone-loader.tsx
 #~ msgid "API Token"
@@ -590,6 +590,7 @@ msgid "Approval status:"
 msgstr "승인 상태:"
 
 #: src/containers/approvals/approvals.tsx
+#: src/menu.tsx
 msgid "Approvals"
 msgstr ""
 
@@ -1190,6 +1191,7 @@ msgstr "컬렉션을 수정하면 컬렉션 버전이 표시됩니다."
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/search.tsx
+#: src/menu.tsx
 msgid "Collections"
 msgstr "컬렉션"
 
@@ -1341,6 +1343,7 @@ msgstr "컨테이너 리포지터리 이름"
 #: src/containers/execution-environment-manifest/execution-environment-manifest.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
+#: src/menu.tsx
 msgid "Containers"
 msgstr "Containers"
 
@@ -3084,6 +3087,7 @@ msgstr ""
 
 #: src/containers/my-imports/my-imports.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
+#: src/menu.tsx
 msgid "Imports"
 msgstr "가져오기"
 
@@ -3370,8 +3374,8 @@ msgstr "컬렉션 목록"
 #~ msgstr "버전 목록"
 
 #: src/containers/token/token.tsx
-msgid "Load token"
-msgstr "토큰 로드"
+#~ msgid "Load token"
+#~ msgstr "토큰 로드"
 
 #: src/actions/ansible-repository-copy.tsx
 msgid "Loading distribution..."
@@ -3627,6 +3631,7 @@ msgstr "네임스페이스 이름은 영숫자와 밑줄로 제한되며 최소 
 #: src/containers/namespace-list/namespace-list.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
+#: src/menu.tsx
 msgid "Namespaces"
 msgstr "네임스페이스"
 
@@ -4674,9 +4679,9 @@ msgstr "원격 이름"
 msgid "Remote registries"
 msgstr ""
 
-#: src/loaders/standalone/menu.tsx
-#~ msgid "Remote Registries"
-#~ msgstr "원격 레지스트리"
+#: src/menu.tsx
+msgid "Remote Registries"
+msgstr "원격 레지스트리"
 
 #: src/containers/execution-environment/registry-list.tsx
 msgid "Remote registry \"{name}\" could not be deleted."
@@ -6399,8 +6404,8 @@ msgstr "네임스페이스가 지정된 컨테이너의 경우 네임스페이�
 #~ msgstr "Use this token to authenticate clients that need to download content from Automation Hub. This is a secret token used to protect your content. Store your API token in a secure location."
 
 #: src/containers/token/token.tsx
-msgid "Use this token to authenticate the <0>ansible-galaxy</0> client."
-msgstr "이 토큰을 사용하여 <0>ansible-CBC</0> 클라이언트를 인증합니다."
+#~ msgid "Use this token to authenticate the <0>ansible-galaxy</0> client."
+#~ msgstr "이 토큰을 사용하여 <0>ansible-CBC</0> 클라이언트를 인증합니다."
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Use this URL for <0>validated</0> content from Automation Hub."

@@ -256,12 +256,12 @@ msgid "<0>Role <1>{0}</1> will be permanently deleted.</0><2>This will also remo
 msgstr "<0>角色 <1>{0}</1> 将被永久删除。</0><2>这也会删除此角色下的所有相关权限。</2>"
 
 #: src/containers/token/token.tsx
-msgid "<0>WARNING</0> copy this token now. This is the only time you will ever see it."
-msgstr "<0>警告</0> 复制此令牌。此时是您可能看到它的唯一时间。"
+#~ msgid "<0>WARNING</0> copy this token now. This is the only time you will ever see it."
+#~ msgstr "<0>警告</0> 复制此令牌。此时是您可能看到它的唯一时间。"
 
 #: src/containers/token/token.tsx
-msgid "<0>WARNING</0> loading a new token will delete your old token."
-msgstr "<0>警告</0> 加载新令牌将删除您的旧令牌。"
+#~ msgid "<0>WARNING</0> loading a new token will delete your old token."
+#~ msgstr "<0>警告</0> 加载新令牌将删除您的旧令牌。"
 
 #: src/components/lightspeed-modal.tsx
 #~ msgid "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
@@ -560,8 +560,8 @@ msgstr "API 错误。状态代码：{0}"
 #: src/containers/token/token.tsx
 #: src/containers/token/token.tsx
 #: src/menu.tsx
-msgid "API token"
-msgstr "API 令牌"
+#~ msgid "API token"
+#~ msgstr "API 令牌"
 
 #: src/loaders/standalone/standalone-loader.tsx
 #~ msgid "API Token"
@@ -590,6 +590,7 @@ msgid "Approval status:"
 msgstr "批准状态："
 
 #: src/containers/approvals/approvals.tsx
+#: src/menu.tsx
 msgid "Approvals"
 msgstr ""
 
@@ -1190,6 +1191,7 @@ msgstr "修改集合后会出现集合版本。"
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/search.tsx
+#: src/menu.tsx
 msgid "Collections"
 msgstr "集合"
 
@@ -1341,6 +1343,7 @@ msgstr "容器仓库名称"
 #: src/containers/execution-environment-manifest/execution-environment-manifest.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
+#: src/menu.tsx
 msgid "Containers"
 msgstr "Containers"
 
@@ -3084,6 +3087,7 @@ msgstr ""
 
 #: src/containers/my-imports/my-imports.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
+#: src/menu.tsx
 msgid "Imports"
 msgstr "导入"
 
@@ -3370,8 +3374,8 @@ msgstr "集合列表"
 #~ msgstr "版本列表"
 
 #: src/containers/token/token.tsx
-msgid "Load token"
-msgstr "加载令牌"
+#~ msgid "Load token"
+#~ msgstr "加载令牌"
 
 #: src/actions/ansible-repository-copy.tsx
 msgid "Loading distribution..."
@@ -3627,6 +3631,7 @@ msgstr "命名空间名称限制为字母数字字符和下划线，长度最少
 #: src/containers/namespace-list/namespace-list.tsx
 #: src/containers/search/multi-search.tsx
 #: src/containers/search/multi-search.tsx
+#: src/menu.tsx
 msgid "Namespaces"
 msgstr "命名空间"
 
@@ -4674,9 +4679,9 @@ msgstr "远程名称"
 msgid "Remote registries"
 msgstr ""
 
-#: src/loaders/standalone/menu.tsx
-#~ msgid "Remote Registries"
-#~ msgstr "远程注册表"
+#: src/menu.tsx
+msgid "Remote Registries"
+msgstr "远程注册表"
 
 #: src/containers/execution-environment/registry-list.tsx
 msgid "Remote registry \"{name}\" could not be deleted."
@@ -6399,8 +6404,8 @@ msgstr "命名空间范围内的容器需要使用 namespace/name 格式。其�
 #~ msgstr "Use this token to authenticate clients that need to download content from Automation Hub. This is a secret token used to protect your content. Store your API token in a secure location."
 
 #: src/containers/token/token.tsx
-msgid "Use this token to authenticate the <0>ansible-galaxy</0> client."
-msgstr "使用此令牌来验证 <0>ansible-galaxy</0> 客户端。"
+#~ msgid "Use this token to authenticate the <0>ansible-galaxy</0> client."
+#~ msgstr "使用此令牌来验证 <0>ansible-galaxy</0> 客户端。"
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Use this URL for <0>validated</0> content from Automation Hub."
