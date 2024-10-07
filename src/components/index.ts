@@ -53,6 +53,7 @@ export { ImportModal } from './import-modal';
 export { LanguageSwitcher } from './language-switcher';
 export { LazyDistributions } from './lazy-distributions';
 export { LazyRepositories } from './lazy-repositories';
+export { LazyRPMRepository } from './lazy-rpm-repository';
 export { LinkTabs, type LinkTabsProps } from './link-tabs';
 export { ListItemActions } from './list-item-actions';
 export {

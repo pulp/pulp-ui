@@ -99,6 +99,11 @@ function standaloneMenu() {
         }),
       ],
     ),
+    menuSection('Pulp RPM', { condition: and(loggedIn, hasPlugin('rpm')) }, [
+      menuItem(t`RPMs`, {
+        url: formatPath(Paths.rpm.package.list),
+      }),
+    ]),
     menuItem(t`Task Management`, {
       url: formatPath(Paths.core.task.list),
       alternativeUrls: [altPath(Paths.core.task.detail)],

@@ -35,6 +35,7 @@ import {
   NotFound,
   Partners,
   PulpStatus,
+  RPMPackageList,
   RoleCreate,
   RoleList,
   Search,
@@ -189,13 +190,13 @@ export class AppRoutes extends Component {
         path: Paths.ansible.collection.dependencies,
       },
       { component: CollectionDetail, path: Paths.ansible.collection.detail },
-      { component: Search, path: Paths.ansible.collection.detail },
+      { component: Search, path: Paths.ansible.collection.list },
       { component: MyImports, path: Paths.ansible.imports },
       { component: NamespaceDetail, path: Paths.ansible.namespace.detail },
-      { component: Search, path: Paths.ansible.collection.detail },
       { component: PulpStatus, path: Paths.core.status, noAuth: true },
       { component: MultiSearch, path: Paths.meta.search },
       { component: AboutProject, path: Paths.meta.about, noAuth: true },
+      { component: RPMPackageList, path: Paths.rpm.package.list },
     ];
   }
 

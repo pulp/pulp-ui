@@ -126,4 +126,7 @@ export const Paths = {
     not_found: '/not-found', // FIXME: don't redirect
     search: '/search',
   },
+  rpm: {
+    package: { list: '/rpm/rpms' },
+  },
 };
