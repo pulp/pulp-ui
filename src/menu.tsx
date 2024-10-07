@@ -208,7 +208,18 @@ function MenuSection({
   context;
   expandedSections;
 }) {
-  return section.condition(context) ? (
+  if (!section.condition(context)) {
+    return null;
+  }
+
+  if (
+    !section.items ||
+    !section.items.find((item) => item.condition(context))
+  ) {
+    return null;
+  }
+
+  return (
     <NavExpandable
       title={section.name}
       groupId={section.name}
@@ -222,7 +233,7 @@ function MenuSection({
         expandedSections={expandedSections}
       />
     </NavExpandable>
-  ) : null;
+  );
 }
 
 function Menu({
