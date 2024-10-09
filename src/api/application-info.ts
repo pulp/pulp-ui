@@ -1,6 +1,6 @@
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
-class API extends HubAPI {
+class API extends PulpAPI {
   get() {
     return super.get('');
   }
