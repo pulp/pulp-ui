@@ -17,7 +17,7 @@ const buildInfo = {
   hash:
     process.env.PULP_UI_COMMIT ||
     execSync('git rev-parse HEAD', { encoding: 'utf-8' }).trim(),
-  date: execSync('date --iso=d', { encoding: 'utf-8' }).trim(),
+  date: execSync('date -I', { encoding: 'utf-8' }).trim(),
   version: require('../package.json').version,
 };
 
