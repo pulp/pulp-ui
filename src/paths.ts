@@ -127,6 +127,7 @@ export const Paths = {
     search: '/search',
   },
   rpm: {
+    search: '/rpm/search',
     package: { list: '/rpm/rpms' },
   },
 };

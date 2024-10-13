@@ -33,6 +33,7 @@ export { default as RoleCreate } from './role-management/role-create';
 export { default as EditRole } from './role-management/role-edit';
 export { default as RoleList } from './role-management/role-list';
 export { default as RPMPackageList } from './rpm/package-list';
+export { default as RPMSearch } from './rpm/search';
 export { default as MultiSearch } from './search/multi-search';
 export { default as Search } from './search/search';
 export { default as UserProfile } from './settings/user-profile';
