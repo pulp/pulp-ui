@@ -46,6 +46,9 @@ or open http://localhost:8080/pulp/api/v3/status/
 ```sh
 podman exec -it pulp pulpcore-manager reset-admin-password --password admin
 ```
+```sh
+docker exec -it compose-pulp_api-1 pulpcore-manager reset-admin-password --password admin
+```
 
 #### configure `pulp-cli`:
 
