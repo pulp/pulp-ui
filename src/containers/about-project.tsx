@@ -17,7 +17,7 @@ class AboutProject extends Component<RouteProps> {
         <Main>
             <Card ouiaId="BasicCard">
               <CardTitle>
-              <Brand style={{'display': 'block', 'margin-left': 'auto', 'margin-right': 'auto'}} src={PulpLogo} alt="PatternFly logo"/>
+              <Brand style={{'display': 'block', 'margin-left': 'auto', 'margin-right': 'auto'}} src={PulpLogo} alt="Pulp logo"/>
               </CardTitle>
               <CardBody style={{'text-align': 'center'}}>Pulp is an open source project that makes it easy for developers to fetch, upload, and distribute Software Packages on-prem or in the cloud.</CardBody>
             </Card>
