@@ -28,7 +28,7 @@ class AboutProject extends Component<RouteProps> {
                   <CardTitle>Pulp UI</CardTitle>
                   <CardBody>{t`This project is an attempt to up-cycle Ansible Galaxy UI codebase. The first version contains mostly saved code with minor fixes. In the future more types of content will be added. We welcome kindly contributions.`}</CardBody>
                   <CardFooter> <ExternalLink
-                    href={'https://github.com/pulp/pulp_ui'}
+                    href={'https://github.com/pulp/pulp-ui'}
                   >
                     {'GitHub repository'}
                   </ExternalLink></CardFooter>
