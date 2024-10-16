@@ -37,7 +37,7 @@ class AboutProject extends Component<RouteProps> {
                 <CardTitle>Issue tracker</CardTitle>
                 <CardBody>{`If you find a bug or have an idea for enhancement, please feel free to file a Github issue. Thank you for contributing to improvement of the project.`}</CardBody>
                 <CardFooter> <ExternalLink
-                  href={'https://github.com/pulp/pulp_ui/issues'}
+                  href={'https://github.com/pulp/pulp-ui/issues'}
                 >
                   {'GitHub issues'}
                 </ExternalLink></CardFooter>
