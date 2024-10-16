@@ -26,7 +26,7 @@ class AboutProject extends Component<RouteProps> {
               <Gallery hasGutter style={{'grid-template-columns': '32.5% 32.5% 32.5%'}}>
                 <Card ouiaId="BasicCard">
                   <CardTitle>Pulp UI</CardTitle>
-                  <CardBody>{t`This project is an attempt to up-cycle Ansible Galaxy UI codebase. The first version contains mostly saved code with minor fixes. In the future more types of content will be added. We welcome kindly contributions.`}</CardBody>
+                  <CardBody>{t`This project is an attempt to up-cycle the Ansible Galaxy UI codebase. The first version contains mostly saved code with minor fixes. In the future more types of content will be added. We welcome kindly any contributions.`}</CardBody>
                   <CardFooter> <ExternalLink
                     href={'https://github.com/pulp/pulp-ui'}
                   >
