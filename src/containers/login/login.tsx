@@ -4,7 +4,7 @@ import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclam
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { PulpLoginAPI } from 'src/api';
-import { LoginForm } from 'src/components';
+import { FormFieldHelper, LoginForm } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import { useUserContext } from 'src/user-context';
 import { useQueryParams, withRouter } from 'src/utilities';
@@ -61,15 +61,22 @@ function PulpLoginPage(_props) {
     >
       <LoginForm
         helperText={
-          <span style={{ color: 'var(--pf-v5-global--danger-color--100)' }}>
-            <ExclamationCircleIcon /> {error}
-          </span>
+          <>
+            {error ? (
+              <span style={{ color: 'var(--pf-v5-global--danger-color--100)' }}>
+                <ExclamationCircleIcon /> {error}
+              </span>
+            ) : null}
+            <FormFieldHelper variant='warning'>
+              {t`Pulp UI is currently using HTTP Basic Authentication. Your credentials will be stored in your browser's sessionStorage or localStorage, in plain text.`}
+            </FormFieldHelper>
+          </>
         }
         onChangePassword={(_e, value) => setPassword(value)}
         onChangeUsername={(_e, value) => setUsername(value)}
         onLoginButtonClick={onLoginClick}
         passwordValue={password}
-        showHelperText={!!error}
+        showHelperText
         usernameValue={username}
         rememberMeLabel='Keep credentials in localStorage.'
         isRememberMeChecked={remember}
