@@ -68,7 +68,7 @@ function PulpLoginPage(_props) {
               </span>
             ) : null}
             <FormFieldHelper variant='warning'>
-              {t`Pulp UI is currently using HTTP Basic Authenticationn. Your credentials will be stored in your browser's sessionStorage or localStorage, in plain text.`}
+              {t`Pulp UI is currently using HTTP Basic Authentication. Your credentials will be stored in your browser's sessionStorage or localStorage, in plain text.`}
             </FormFieldHelper>
           </>
         }
