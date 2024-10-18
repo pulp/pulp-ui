@@ -1,68 +1,70 @@
-name: "PR checks"
+name: 'PR checks'
 
 on:
   pull_request:
-    branches: [ 'main' ]
+    branches: ['main']
 
 jobs:
-
   pr-checks:
     runs-on: ubuntu-latest
     steps:
+      - name: 'Checkout pulp-ui (${{ github.ref }})'
+        uses: actions/checkout@v4
 
-    - name: "Checkout pulp-ui (${{ github.ref }})"
-      uses: actions/checkout@v4
+      - name: 'Install node 20'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-    - name: "Install node 20"
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: 'npm'
+      - name: 'Install python 3.13'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
 
-    - name: "Checks"
-      run: |
-        # fail if npm install had to change package-lock.json
-        npm install
-        git diff --exit-code package-lock.json
+      - name: 'Checks'
+        run: |
+          # fail if npm install had to change package-lock.json
+          npm install
+          git diff --exit-code package-lock.json
 
-        # dependencies
-        npm run lint-setup-break-system-packages
+          # dependencies
+          npm run lint-setup
 
-        # run linters
-        npm run lint
+          # run linters
+          npm run lint
 
-        # uses `this` but not `class`
-        sudo apt install -y ripgrep
-        rg '\bclass\b' src/ | cut -d: -f1 | sort -u > src.class
-        rg '\bthis[\.,)\]}]\b' src/ | cut -d: -f1 | sort -u > src.this
-        if [ `comm -13 src.class src.this | wc -l` -ne 0 ]; then
-          echo
-          echo "Files using this but not class:"
-          echo
-          comm -13 src.class src.this
-          echo
-          rg '\bthis[\.,)\]}]\b' `comm -13 src.class src.this`
-          echo
-          exit 1
-        fi
+          # uses `this` but not `class`
+          sudo apt install -y ripgrep
+          rg '\bclass\b' src/ | cut -d: -f1 | sort -u > src.class
+          rg '\bthis[\.,)\]}]\b' src/ | cut -d: -f1 | sort -u > src.this
+          if [ `comm -13 src.class src.this | wc -l` -ne 0 ]; then
+            echo
+            echo "Files using this but not class:"
+            echo
+            comm -13 src.class src.this
+            echo
+            rg '\bthis[\.,)\]}]\b' `comm -13 src.class src.this`
+            echo
+            exit 1
+          fi
 
   merge-commits:
     runs-on: ubuntu-latest
     steps:
+      # need to checkout out head, the merge commit won't have any merges in history
+      # also need more than 1 commit, assuming no PR will have more than 128
+      - name: 'Checkout pulp-ui HEAD'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 128
+          ref: ${{ github.event.pull_request.head.sha }}
 
-    # need to checkout out head, the merge commit won't have any merges in history
-    # also need more than 1 commit, assuming no PR will have more than 128
-    - name: "Checkout pulp-ui HEAD"
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 128
-        ref: ${{ github.event.pull_request.head.sha }}
-
-    - name: "Ensure no merge commits"
-      run: |
-        # fail on merge commits in the PR
-        # since squash&merge doesn't create merge commits,
-        # and the last non-squash merges were in Jul 2019,
-        # we can just look for any merge commits since 2020
-        count=`git log --min-parents=2 --since 2020-01-01 | tee /dev/stderr | wc -l`
-        [ "$count" = 0 ]
+      - name: 'Ensure no merge commits'
+        run: |
+          # fail on merge commits in the PR
+          # since squash&merge doesn't create merge commits,
+          # and the last non-squash merges were in Jul 2019,
+          # we can just look for any merge commits since 2020
+          count=`git log --min-parents=2 --since 2020-01-01 | tee /dev/stderr | wc -l`
+          [ "$count" = 0 ]
