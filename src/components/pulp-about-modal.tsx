@@ -9,9 +9,9 @@ import {
 } from '@patternfly/react-core';
 import React, { type ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ApplicationInfoAPI } from 'src/api';
 import { DateComponent, ExternalLink, MaybeLink } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
+import { plugin_versions } from 'src/utilities';
 import PulpLogo from 'static/images/pulp_logo.png';
 
 const Label = ({ children }: { children: ReactNode }) => (
@@ -29,33 +29,24 @@ interface IProps {
 }
 
 interface IApplicationInfo {
-  galaxy_importer_version?: string;
-  galaxy_ng_commit?: string;
-  galaxy_ng_version?: string;
-  pulp_ansible_version?: string;
-  pulp_container_version?: string;
   pulp_core_version?: string;
-  server_version?: string;
 }
 
 export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
   const [applicationInfo, setApplicationInfo] = useState<IApplicationInfo>({});
 
   useEffect(() => {
-    ApplicationInfoAPI.get().then(({ data }) => setApplicationInfo(data));
+    plugin_versions().then((arr) =>
+      setApplicationInfo({
+        pulp_core_version: arr.find((p) => p.name == 'core').version,
+      }),
+    );
   }, []);
 
   const {
-    server_version, // 4.8.0dev
-    galaxy_ng_version, // 4.8.0dev | 4.8.1
-    galaxy_ng_commit, // origin/main:1234567 | main:12345678 | ""
-    galaxy_importer_version, // 0.4.13
-    pulp_core_version, // 3.28.12
-    pulp_ansible_version, // 0.19.0
-    pulp_container_version, // 2.15.2
+    pulp_core_version, // e.g. 3.65.0
   } = applicationInfo;
 
-  const galaxy_ng_sha = galaxy_ng_commit?.split(':')[1];
   const ui_sha = UI_BUILD_INFO?.hash?.slice(0, 7);
   const ui_date = UI_BUILD_INFO?.date;
   const ui_version = UI_BUILD_INFO?.version;
@@ -65,7 +56,7 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
 
   return (
     <AboutModal
-      brandImageAlt={t`Galaxy Logo`}
+      brandImageAlt={t`Pulp Logo`}
       brandImageSrc={PulpLogo}
       isOpen={isOpen}
       onClose={onClose}
@@ -73,73 +64,17 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
     >
       <TextContent>
         <TextList component={TextListVariants.dl}>
-          <Label>{t`Server version`}</Label>
-          <Value>
-            {server_version !== galaxy_ng_version ? (
-              <>
-                {server_version}
-                <br />
-              </>
-            ) : null}
-            {galaxy_ng_version?.includes('dev') ? (
-              galaxy_ng_version
-            ) : (
-              <ExternalLink
-                href={`https://github.com/ansible/galaxy_ng/releases/tag/${galaxy_ng_version}`}
-              >
-                {galaxy_ng_version}
-              </ExternalLink>
-            )}
-            {galaxy_ng_commit ? (
-              <>
-                <br />
-                {galaxy_ng_sha ? (
-                  <ExternalLink
-                    href={`https://github.com/ansible/galaxy_ng/commit/${galaxy_ng_sha}`}
-                  >
-                    {galaxy_ng_commit}
-                  </ExternalLink>
-                ) : (
-                  galaxy_ng_commit
-                )}
-              </>
-            ) : null}
-          </Value>
-
-          <Label>{t`Pulp Ansible Version`}</Label>
-          <Value>
-            <ExternalLink
-              href={`https://github.com/pulp/pulp_ansible/releases/tag/${pulp_ansible_version}`}
-            >
-              {pulp_ansible_version}
-            </ExternalLink>
-          </Value>
-
-          <Label>{t`Pulp Container Version`}</Label>
-          <Value>
-            <ExternalLink
-              href={`https://github.com/pulp/pulp_container/releases/tag/${pulp_container_version}`}
-            >
-              {pulp_container_version}
-            </ExternalLink>
-          </Value>
-
           <Label>{t`Pulp Core Version`}</Label>
           <Value>
-            <ExternalLink
-              href={`https://github.com/pulp/pulpcore/releases/tag/${pulp_core_version}`}
-            >
-              {pulp_core_version}
-            </ExternalLink>
-          </Value>
-
-          <Label>{t`Galaxy Importer`}</Label>
-          <Value>
-            <ExternalLink
-              href={`https://github.com/ansible/galaxy-importer/releases/tag/v${galaxy_importer_version}`}
-            >
-              {galaxy_importer_version}
-            </ExternalLink>
+            {pulp_core_version?.includes('.dev') ? (
+              pulp_core_version
+            ) : (
+              <ExternalLink
+                href={`https://github.com/pulp/pulpcore/releases/tag/${pulp_core_version}`}
+              >
+                {pulp_core_version}
+              </ExternalLink>
+            )}
           </Value>
 
           <Label>{t`UI Version`}</Label>
