@@ -1,5 +1,6 @@
 const { resolve } = require('node:path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -21,39 +22,42 @@ const buildInfo = {
   version: require('../package.json').version,
 };
 
+const appName = 'Pulp UI';
 const docsURL = 'https://docs.pulpproject.org/';
 
 // Default user defined settings
 const defaultConfigs = [
-  // Global scope means that the variable will be available to the app itself
-  // as a constant after it is compiled
-  { name: 'API_BASE_PATH', default: '', scope: 'global' },
-  { name: 'API_HOST', default: '', scope: 'global' },
-  { name: 'APPLICATION_NAME', default: 'Pulp UI', scope: 'global' },
-  { name: 'UI_BASE_PATH', default: '', scope: 'global' },
-  { name: 'UI_BUILD_INFO', default: buildInfo, scope: 'global' },
-  { name: 'UI_DOCS_URL', default: docsURL, scope: 'global' },
-  { name: 'UI_EXTERNAL_LOGIN_URI', default: '/login', scope: 'global' },
+  // scope = webpack | browser | both
+  // webpack: will only be available to webpack config, via `customConfigs`
+  // browser: will only be available in the browser, as DefinePlugin constants
+  // both: means both
+  { name: 'APPLICATION_NAME', default: appName, scope: 'both' },
 
-  // Webpack scope: only available in customConfigs here, not exposed to the UI
-  { name: 'UI_PORT', default: 8002, scope: 'webpack' },
-  { name: 'UI_USE_HTTPS', default: false, scope: 'webpack' },
-  { name: 'WEBPACK_PROXY', default: undefined, scope: 'webpack' },
-  { name: 'WEBPACK_PUBLIC_PATH', default: undefined, scope: 'webpack' },
+  { name: 'UI_BUILD_INFO', default: buildInfo, scope: 'browser' },
+  { name: 'UI_DOCS_URL', default: docsURL, scope: 'browser' },
+
+  { name: 'DEV_PORT', scope: 'webpack' },
+  { name: 'DEV_HTTPS', scope: 'webpack' },
+  { name: 'DEV_PROXY', scope: 'webpack' },
+  { name: 'WEBPACK_PUBLIC_PATH', scope: 'webpack' },
 ];
 
 module.exports = (inputConfigs) => {
   const customConfigs = {};
   const globals = {};
 
-  defaultConfigs.forEach((item) => {
-    customConfigs[item.name] = inputConfigs[item.name] ?? item.default;
-  });
+  defaultConfigs
+    .filter(({ scope }) => ['both', 'webpack'].includes(scope))
+    .forEach((item) => {
+      customConfigs[item.name] = inputConfigs[item.name] ?? item.default;
+    });
 
   defaultConfigs
-    .filter(({ scope }) => scope === 'global')
+    .filter(({ scope }) => ['both', 'browser'].includes(scope))
     .forEach((item) => {
-      globals[item.name] = JSON.stringify(customConfigs[item.name]);
+      globals[item.name] = JSON.stringify(
+        inputConfigs[item.name] ?? item.default,
+      );
     });
 
   return {
@@ -70,21 +74,19 @@ module.exports = (inputConfigs) => {
             host: '0.0.0.0',
             hot: false,
             liveReload: true,
-            onListening: (server) =>
+            onListening: ({ options: { https, port } }) =>
               console.log(
                 'App should run on:',
-                `${server.options.https ? 'https' : 'http'}://localhost:${
-                  server.options.port
-                }`,
+                `${https ? 'https' : 'http'}://localhost:${port}`,
               ),
-            port: customConfigs.UI_PORT,
-            proxy: Object.entries(customConfigs.WEBPACK_PROXY).map(
-              ([k, v]) => ({
-                context: [k],
-                target: v,
+            port: customConfigs.DEV_PORT,
+            proxy: Object.entries(customConfigs.DEV_PROXY).map(
+              ([path, target]) => ({
+                context: [path],
+                target,
               }),
             ),
-            server: { type: customConfigs.UI_USE_HTTPS ? 'https' : 'http' },
+            server: { type: customConfigs.DEV_HTTPS ? 'https' : 'http' },
             static: { directory: resolve(__dirname, '../dist') },
           },
         }),
@@ -143,6 +145,15 @@ module.exports = (inputConfigs) => {
         applicationName: customConfigs.APPLICATION_NAME,
         favicon: 'static/images/favicon.ico',
         template: resolve(__dirname, '../src/index.html'),
+      }),
+      // copy pulp-ui-config.json
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: resolve(__dirname, '../pulp-ui-config.json'),
+            to: 'pulp-ui-config.json',
+          },
+        ],
       }),
     ].filter(Boolean),
     resolve: {

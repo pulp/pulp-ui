@@ -46,12 +46,14 @@ const StatusVersions = ({
 
   return (
     <table style={{ width: '100%' }}>
-      {sorted.map(({ component, version }) => (
-        <tr key={component}>
-          <td>{component}</td>
-          <td>{version}</td>
-        </tr>
-      ))}
+      <tbody>
+        {sorted.map(({ component, version }) => (
+          <tr key={component}>
+            <td>{component}</td>
+            <td>{version}</td>
+          </tr>
+        ))}
+      </tbody>
     </table>
   );
 };
