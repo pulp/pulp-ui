@@ -104,6 +104,8 @@ export { PreviewRoles } from './preview-roles';
 export { ProviderLink } from './provider-link';
 export { PulpAboutModal } from './pulp-about-modal';
 export { PulpCopyButton } from './pulp-copy-button';
+export { PulpCodeBlock } from './pulp-code-block';
+export { PulpDownloadButton } from './pulp-download-button';
 export { PulpLabels } from './pulp-labels';
 export { PulpListToolbar } from './pulp-list-toolbar';
 export { PulpPagination } from './pulp-pagination';
