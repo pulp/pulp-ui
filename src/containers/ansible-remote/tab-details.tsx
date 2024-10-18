@@ -1,16 +1,11 @@
 import { t } from '@lingui/macro';
-import {
-  CodeBlock,
-  CodeBlockAction,
-  CodeBlockCode,
-} from '@patternfly/react-core';
 import React from 'react';
 import { type AnsibleRemoteType } from 'src/api';
 import {
   CopyURL,
   Details,
   LazyRepositories,
-  PulpCopyButton,
+  PulpCodeBlock,
 } from 'src/components';
 
 interface TabProps {
@@ -18,22 +13,8 @@ interface TabProps {
   actionContext: object;
 }
 
-const PFCodeBlock = ({ code }: { code: string }) => {
-  const actions = (
-    <CodeBlockAction>
-      <PulpCopyButton text={code} textId='code-content' />
-    </CodeBlockAction>
-  );
-
-  return (
-    <CodeBlock actions={actions}>
-      <CodeBlockCode id='code-content'>{code}</CodeBlockCode>
-    </CodeBlock>
-  );
-};
-
-const MaybeCode = ({ code }: { code: string }) =>
-  code ? <PFCodeBlock code={code} /> : <>{t`None`}</>;
+const MaybeCode = ({ code, filename }: { code: string, filename: string }) =>
+  code ? <PulpCodeBlock code={code} filename={filename} /> : <>{t`None`}</>;
 
 export const DetailsTab = ({ item }: TabProps) => (
   <Details
@@ -51,8 +32,8 @@ export const DetailsTab = ({ item }: TabProps) => (
         label: t`TLS validation`,
         value: item?.tls_validation ? t`Enabled` : t`Disabled`,
       },
-      { label: t`Client certificate`, value: item?.client_cert || t`None` },
-      { label: t`CA certificate`, value: item?.ca_cert || t`None` },
+      { label: t`Client certificate`, value: <MaybeCode code={item?.client_cert} filename={item.name + '-client_cert'} /> },
+      { label: t`CA certificate`, value: <MaybeCode code={item?.ca_cert} filename={item.name + '-ca_cert'} /> },
       {
         label: t`Download concurrency`,
         value: item?.download_concurrency ?? t`None`,
@@ -64,7 +45,7 @@ export const DetailsTab = ({ item }: TabProps) => (
       },
       {
         label: t`YAML requirements`,
-        value: <MaybeCode code={item?.requirements_file} />,
+        value: <MaybeCode code={item?.requirements_file} filename={item.name + '-requirements.yml'} />,
       },
     ]}
   />
