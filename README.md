@@ -69,3 +69,18 @@ npm run start
 ```
 
 and open http://localhost:8002/ :tada: :)
+
+If your API listens elsewhere, you can use `API_PROXY=http://elsewhere:12345 npm run start` instead.
+
+
+## Misc
+
+### post-build configuration
+
+The UI builds produced by `npm run build` can be further configured by serving a `/pulp-ui-config.json` alongside the built UI.
+(Note it has to be mapped at `/`, not just wherever `index.html` is served from.)
+
+* `API_BASE_PATH` - defaults to `/pulp/api/v3/` - change when using domains or a different path
+* `UI_BASE_PATH` - defaults to `/ui/` - change when only serving index in a subdirectory, or want different browser path prefix
+* `UI_EXTERNAL_LOGIN_URI` - defaults to nothing - set to something like `/login/` when using an SSO
+* `EXTRA_VERSION` - an extra version string to display in about modal

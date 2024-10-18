@@ -11,6 +11,7 @@ import React, { type ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { DateComponent, ExternalLink, MaybeLink } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
+import { config } from 'src/ui-config';
 import { plugin_versions } from 'src/utilities';
 import PulpLogo from 'static/images/pulp_logo.png';
 
@@ -50,6 +51,7 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
   const ui_sha = UI_BUILD_INFO?.hash?.slice(0, 7);
   const ui_date = UI_BUILD_INFO?.date;
   const ui_version = UI_BUILD_INFO?.version;
+  const ui_extra = config.EXTRA_VERSION;
 
   // FIXME
   const user = { username: userName, id: null, groups: [] };
@@ -97,6 +99,12 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
             {', '}
             <DateComponent date={ui_date} />
             {ui_version ? ')' : null}
+            {ui_extra ? (
+              <>
+                <br />
+                {ui_extra}
+              </>
+            ) : null}
           </Value>
 
           <Label>{t`Username`}</Label>

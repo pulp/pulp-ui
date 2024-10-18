@@ -17,6 +17,7 @@ import {
   Spinner,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
+import { config } from 'src/ui-config';
 import { parsePulpIDFromURL } from 'src/utilities';
 
 interface TabProps {
@@ -31,7 +32,7 @@ interface TabProps {
 
 const AnyAPI = (href) =>
   new (class extends PulpAPI {
-    apiPath = href.replace(API_BASE_PATH, '');
+    apiPath = href.replace(config.API_BASE_PATH, '');
   })();
 
 const VersionContent = ({

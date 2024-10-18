@@ -11,7 +11,7 @@ interface UploadProps {
 class API extends PulpAPI {
   apiPath = 'content/ansible/collection_signatures/';
 
-  // Returns /api/automation-hub/pulp/api/v3/tasks/0be64cb4-3b7e-4a6b-b35d-c3b589923a90/
+  // Returns /pulp/api/v3/tasks/0be64cb4-3b7e-4a6b-b35d-c3b589923a90/
   upload(data: UploadProps): Promise<{ data: { task: string } }> {
     const formData = new FormData();
     formData.append('file', data.file);
