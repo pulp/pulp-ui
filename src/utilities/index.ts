@@ -8,6 +8,7 @@ export { filterIsSet } from './filter-is-set';
 export { getHumanSize } from './get-human-size';
 export { getContainersURL, getRepoURL } from './get-repo-url';
 export { lastSyncStatus, lastSynced } from './last-sync-task';
+export { loginURL } from './login-url';
 export {
   ErrorMessagesType,
   alertErrorsWithoutFields,

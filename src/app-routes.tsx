@@ -48,6 +48,8 @@ import {
   UserProfile,
 } from 'src/containers';
 import { Paths, formatPath } from 'src/paths';
+import { config } from 'src/ui-config';
+import { loginURL } from 'src/utilities';
 import { useUserContext } from './user-context';
 
 interface IAuthHandlerProps {
@@ -71,12 +73,11 @@ const AuthHandler = ({
   const { pathname } = useLocation();
 
   if (!credentials && !noAuth) {
-    //const isExternalAuth = featureFlags.external_authentication;
     // NOTE: also update LoginLink when changing this
-    //if (isExternalAuth && UI_EXTERNAL_LOGIN_URI) {
-    //  window.location.replace(loginURL(pathname));
-    //  return null;
-    //}
+    if (config.UI_EXTERNAL_LOGIN_URI) {
+      window.location.replace(loginURL(pathname));
+      return null;
+    }
 
     return (
       <Navigate to={formatPath(Paths.meta.login, {}, { next: pathname })} />
