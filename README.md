@@ -1,5 +1,6 @@
 # pulp-ui
-a community driven UI for [Pulp](https://pulpproject.org/)
+
+A community driven UI for [Pulp](https://pulpproject.org/).
 
 ## How to run
 
