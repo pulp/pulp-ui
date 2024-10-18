@@ -3,17 +3,16 @@ import { i18n } from '@lingui/core';
 import { t } from '@lingui/macro';
 import { I18nProvider } from '@lingui/react';
 import '@patternfly/patternfly/patternfly.scss';
-import { Alert } from '@patternfly/react-core';
 import React, { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { LoadingSpinner, UIVersion } from 'src/components';
+import { Alert, LoadingSpinner, UIVersion } from 'src/components';
 import { AppContextProvider } from './app-context';
 import { AppRoutes } from './app-routes';
 import './darkmode';
 import './l10n';
 import { StandaloneLayout } from './layout';
-import { config, configPromise } from './ui-config';
+import { configPromise } from './ui-config';
 import { UserContextProvider } from './user-context';
 
 // App entrypoint
