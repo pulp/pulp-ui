@@ -17,7 +17,12 @@ export {
 } from './map-error-messages';
 export { mapNetworkErrors, validateInput } from './map-role-errors';
 export { ParamHelper, type ParamType } from './param-helper';
-export { parsePulpIDFromURL } from './parse-pulp-id';
+export {
+  parsePulpIDFromURL,
+  parsePulpIDFromPRN,
+  parsePulpResource,
+  translatePulpResourceToURL,
+} from './parse-pulp-id';
 export { plugin_versions } from './plugin-version';
 export { RepoSigningUtils } from './repo-signing';
 export { repositoryBasePath } from './repository-base-path';

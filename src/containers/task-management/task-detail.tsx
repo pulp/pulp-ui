@@ -33,6 +33,8 @@ import {
   type RouteProps,
   jsxErrorMessage,
   parsePulpIDFromURL,
+  parsePulpResource,
+  translatePulpResourceToURL,
   translateTask,
   withRouter,
 } from 'src/utilities';
@@ -462,43 +464,32 @@ class TaskDetail extends Component<RouteProps, IState> {
           });
         }
         if (result.data.reserved_resources_record.length) {
-          result.data.reserved_resources_record.forEach((resource) => {
-            const url = resource.replace(API_BASE_PATH, '');
-            const id = parsePulpIDFromURL(url);
-            const urlParts = url.split('/');
-            let resourceType = '';
-            let pluginName = '';
-
-            // pulp hrefs follow this pattern for resources added by plugins:
-            // /<resource name>/<plugin name>/<resource type>/<pk>/
-            // Locks can be added on the entire resource (ex /repositories/) or on a specific
-            // instance of a resource (ex /repositories/ansible/ansible/123123/
-
-            // if the url has 3 or more segements, parse out the resource, plugin name, and resource type
-            if (urlParts.length >= 3) {
-              resourceType = `${urlParts[0]}: ${urlParts[2]}`;
-              pluginName = urlParts[1];
-              // otherwise, just return the resource type
-            } else {
-              resource = urlParts[0];
-            }
-
-            if (id) {
-              allRelatedTasks.push(
-                GenericPulpAPI.get(url)
-                  .then((result) => {
-                    resources.push({
-                      name: result.data.name,
-                      type: resourceType,
-                      pluginName,
-                    });
-                  })
-                  .catch(() => {
-                    return true;
-                  }),
-              );
-            } else {
-              resources.push({ type: resourceType });
+          result.data.reserved_resources_record.forEach((record) => {
+            // TODO: Maybe do something special if it is a shared resource
+            const resource = parsePulpResource(record.replace('shared:', ''));
+            if (resource) {
+              if (!resource.resource_label) {
+                const url = translatePulpResourceToURL(resource).replace(
+                  API_BASE_PATH,
+                  '',
+                );
+                allRelatedTasks.push(
+                  GenericPulpAPI.get(url)
+                    .then((result) => {
+                      resources.push({
+                        name: result.data.name,
+                        pluginName: resource.plugin,
+                        type: resource.model,
+                      });
+                    })
+                    .catch(() => true),
+                );
+              } else {
+                resources.push({
+                  type: 'Domain Resource',
+                  name: resource.resource_label,
+                });
+              }
             }
           });
         }
