@@ -1,4 +1,4 @@
-import { Trans, t } from '@lingui/macro';
+import { t } from '@lingui/macro';
 import {
   ActionGroup,
   Button,
@@ -7,14 +7,12 @@ import {
   FormGroup,
   TextInput,
 } from '@patternfly/react-core';
-import { Select, SelectOption } from '@patternfly/react-core/deprecated';
 import React, { useEffect, useState } from 'react';
 import { AnsibleRemoteAPI, type AnsibleRepositoryType } from 'src/api';
 import {
   FormFieldHelper,
   HelpButton,
   LazyDistributions,
-  PulpLabels,
   Spinner,
   Typeahead,
 } from 'src/components';
@@ -28,7 +26,7 @@ interface IProps {
   allowEditName: boolean;
   errorMessages: ErrorMessagesType;
   onCancel: () => void;
-  onSave: ({ createDistribution, hideFromSearch, pipeline }) => void;
+  onSave: ({ createDistribution }) => void;
   repository: AnsibleRepositoryType;
   updateRepository: (r) => void;
 }
@@ -103,20 +101,12 @@ export const AnsibleRepositoryForm = ({
     }
   };
 
-  const [hideFromSearch, setHideFromSearch] = useState(
-    repository?.pulp_labels?.hide_from_search === '',
-  );
-  const [pipeline, setPipeline] = useState(repository?.pulp_labels?.pipeline);
-  const [disableHideFromSearch, setDisableHideFromSearch] = useState(
-    hideFromSearch && pipeline === 'staging',
-  );
-
   const [remotes, setRemotes] = useState(null);
   const [remotesError, setRemotesError] = useState(null);
   const loadRemotes = (name?) => {
     setRemotesError(null);
     AnsibleRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
-      .then(({ data }) => setRemotes(data.results))
+      .then(({ data }) => setRemotes(data.results.map((r) => ({...r, id: r.pulp_href}))))
       .catch((e) => {
         const { status, statusText } = e.response;
         setRemotes([]);
@@ -140,81 +130,6 @@ export const AnsibleRepositoryForm = ({
 
   const selectedRemote = remotes?.find?.(
     ({ pulp_href }) => pulp_href === repository?.remote,
-  );
-
-  const [selectedPipeline, setSelectedPipeline] = useState(
-    hideFromSearch && pipeline === 'staging'
-      ? 'staging'
-      : pipeline === 'approved'
-        ? 'approved'
-        : 'none',
-  );
-
-  const [selectOpen, setSelectOpen] = useState(false);
-
-  const selectPipeline = (value) => {
-    if (disableHideFromSearch && value !== 'staging') {
-      setHideFromSearch(repository?.pulp_labels?.hide_from_search === '');
-    }
-    if (value === 'staging') {
-      setSelectedPipeline(value);
-      setPipeline(value);
-      setHideFromSearch(true);
-      setDisableHideFromSearch(true);
-    } else if (value === 'approved') {
-      setSelectedPipeline(value);
-      setPipeline(value);
-      setDisableHideFromSearch(false);
-    } else {
-      setSelectedPipeline('none');
-      setPipeline(null);
-      setDisableHideFromSearch(false);
-    }
-    setSelectOpen(false);
-  };
-
-  const selectOptions = {
-    staging: { id: 'staging', toString: () => t`Staging` },
-    approved: { id: 'approved', toString: () => t`Approved` },
-    none: { id: 'none', toString: () => t`None` },
-  };
-
-  const pipelineHelp = (
-    <Trans>
-      Pipeline adds repository labels with pre-defined meanings:
-      <ul>
-        <li>
-          <b>None</b> - users require permissions to modify content in this
-          repository to upload collection.
-        </li>
-        <li>
-          <b>Approved</b> - collections can be moved here on approval.
-          Publishing directly to this repository is disabled.
-        </li>
-        <li>
-          <b>Staging</b> - collections uploaded here require approval before
-          showing up on the search page. Anyone with upload permissions for a
-          namespace can upload collections to this repository.
-        </li>
-      </ul>
-    </Trans>
-  );
-  const labelsHelp = (
-    <Trans>
-      Repository labels can change the context in which a repository is seen.
-      <ul>
-        <li>
-          <b>Hide from search</b> (
-          <pre style={{ display: 'inline-block' }}>hide_from_search</pre>) -
-          prevent collections in this repository from showing up on the home
-          page
-        </li>
-        <li>
-          (<pre style={{ display: 'inline-block' }}>pipeline: *</pre>) - see
-          Pipeline above
-        </li>
-      </ul>
-    </Trans>
   );
 
   return (
@@ -244,51 +159,6 @@ export const AnsibleRepositoryForm = ({
             label={t`Create a "${repository.name}" distribution`}
             id='create_distribution'
           />
-        </>,
-      )}
-
-      {formGroup(
-        'pipeline',
-        t`Pipeline`,
-        pipelineHelp,
-        <div data-cy='pipeline'>
-          <Select
-            variant='single'
-            isOpen={selectOpen}
-            onToggle={() => setSelectOpen(!selectOpen)}
-            onSelect={(_e, value: { id }) => selectPipeline(value.id)}
-            selections={selectOptions[selectedPipeline]}
-          >
-            {Object.entries(selectOptions).map(([k, v]) => (
-              <SelectOption key={k} value={v} />
-            ))}
-          </Select>
-        </div>,
-      )}
-
-      {formGroup(
-        'labels',
-        t`Labels`,
-        labelsHelp,
-        <>
-          <div
-            // prevents "N more" clicks from submitting the form
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-          >
-            <PulpLabels labels={repository.pulp_labels} />
-          </div>
-          <div style={{ marginTop: '12px' }}>
-            <Checkbox
-              isChecked={hideFromSearch}
-              isDisabled={disableHideFromSearch}
-              label={t`Hide from search`}
-              id='hide_from_search'
-              onChange={(_event, value) => setHideFromSearch(value)}
-            />
-          </div>
         </>,
       )}
 
@@ -371,8 +241,6 @@ export const AnsibleRepositoryForm = ({
           onClick={() =>
             onSave({
               createDistribution,
-              hideFromSearch,
-              pipeline,
             })
           }
         >
