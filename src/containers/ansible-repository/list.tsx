@@ -58,22 +58,7 @@ const AnsibleRepositoryList = ListPage<AnsibleRepositoryType>({
     },
     {
       id: 'pulp_label_select',
-      title: t`Pipeline`,
-      inputType: 'select',
-      options: [
-        {
-          id: 'pipeline=rejected',
-          title: t`Rejected`,
-        },
-        {
-          id: 'pipeline=staging',
-          title: t`Needs Review`,
-        },
-        {
-          id: 'pipeline=approved',
-          title: t`Approved`,
-        },
-      ],
+      title: t`Pulp Label`,
     },
     {
       id: 'remote',
