@@ -4476,6 +4476,10 @@ msgstr ""
 msgid "Pulp type"
 msgstr "Pulp 类型"
 
+#: src/containers/login/login.tsx
+msgid "Pulp UI is currently using HTTP Basic Authentication. Your credentials will be stored in your browser's sessionStorage or localStorage, in plain text."
+msgstr ""
+
 #: src/constants.tsx
 #~ msgid "Pulpcore: Add and remove"
 #~ msgstr "Pulpcore：添加和删除"
