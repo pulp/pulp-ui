@@ -20,10 +20,7 @@ export { NamespaceAPI } from './namespace';
 export { PulpLoginAPI } from './pulp-login';
 export { PulpStatusAPI } from './pulp-status';
 export { AnsibleRemoteType } from './response-types/ansible-remote';
-export {
-  AnsibleRepositoryType,
-  AnsibleRepositoryVersionType,
-} from './response-types/ansible-repository';
+export { AnsibleRepositoryType } from './response-types/ansible-repository';
 export {
   CollectionDetailType,
   CollectionUploadType,
@@ -33,15 +30,10 @@ export {
   CollectionVersionSearch,
   ContentSummaryType,
   DocsBlobType,
-  PluginContentType,
-  PluginDoc,
-  PluginOption,
-  ReturnedValue,
 } from './response-types/collection';
 export {
   ContainerManifestType,
   ContainerRepositoryType,
-  ExecutionEnvironmentType,
 } from './response-types/execution-environment';
 export { ImportDetailType, ImportListType } from './response-types/import';
 export {
@@ -52,7 +44,7 @@ export {
 export { GroupObjectPermissionType } from './response-types/permissions';
 export { PulpStatus } from './response-types/pulp';
 export { RemoteType } from './response-types/remote';
-export { GroupRoleType, RoleType } from './response-types/role';
+export { RoleType } from './response-types/role';
 export { TaskType } from './response-types/task';
 export {
   GroupType,

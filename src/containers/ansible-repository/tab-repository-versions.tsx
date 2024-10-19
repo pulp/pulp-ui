@@ -6,7 +6,6 @@ import { ansibleRepositoryVersionRevertAction } from 'src/actions';
 import {
   AnsibleRepositoryAPI,
   type AnsibleRepositoryType,
-  type AnsibleRepositoryVersionType,
   GenericPulpAPI,
 } from 'src/api';
 import {
@@ -27,6 +26,27 @@ interface TabProps {
     state: { params };
     hasPermission: (string) => boolean;
     hasObjectPermission: (string) => boolean;
+  };
+}
+
+type ContentSummary = Record<
+  string,
+  {
+    count: number;
+    href: string;
+  }
+>;
+
+interface AnsibleRepositoryVersionType {
+  pulp_href: string;
+  pulp_created: string;
+  number: number;
+  repository: string;
+  base_version: null;
+  content_summary: {
+    added: ContentSummary;
+    removed: ContentSummary;
+    present: ContentSummary;
   };
 }
 

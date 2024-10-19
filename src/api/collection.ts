@@ -3,10 +3,27 @@ import { repositoryBasePath } from 'src/utilities';
 import { HubAPI } from './hub';
 import {
   type CollectionDetailType,
-  type CollectionListType,
   type CollectionUploadType,
+  type CollectionVersion,
   type CollectionVersionSearch,
 } from './response-types/collection';
+
+interface CollectionListType {
+  id: string;
+  name: string;
+  description: string;
+  deprecated: boolean;
+  latest_version: CollectionVersion;
+  sign_state: 'signed' | 'unsigned';
+
+  namespace: {
+    id: number;
+    description: string;
+    name: string;
+    avatar_url: string;
+    company: string;
+  };
+}
 
 function filterContents(contents) {
   if (contents) {

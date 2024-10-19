@@ -1,16 +1,5 @@
 import { type LastSyncType } from './remote';
 
-export class ExecutionEnvironmentType {
-  created_at: string;
-  name: string;
-  description: string;
-  updated_at: string;
-  pulp: {
-    distribution: { base_path: string };
-    repository: { pulp_id: string; version: string };
-  };
-}
-
 export class ContainerManifestType {
   pulp_id: string;
   created_at: string;
