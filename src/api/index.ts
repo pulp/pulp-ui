@@ -17,8 +17,10 @@ export { GroupAPI } from './group';
 export { GroupRoleAPI } from './group-role';
 export { ImportAPI } from './import';
 export { NamespaceAPI } from './namespace';
+export { OrphanCleanupAPI } from './orphan-cleanup';
 export { PulpLoginAPI } from './pulp-login';
 export { PulpStatusAPI } from './pulp-status';
+export { RepairAPI } from './repair';
 export { AnsibleRemoteType } from './response-types/ansible-remote';
 export { AnsibleRepositoryType } from './response-types/ansible-repository';
 export {
@@ -61,4 +63,5 @@ export { SigningServiceAPI, SigningServiceType } from './signing-service';
 export { TagAPI } from './tag';
 export { TaskAPI } from './task';
 export { TaskManagementAPI } from './task-management';
+export { TaskPurgeAPI } from './task-purge';
 export { UserAPI } from './user';

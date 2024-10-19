@@ -9,10 +9,13 @@ import {
 import { Table, Tbody, Td, Tr } from '@patternfly/react-table';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { TaskManagementAPI, type TaskType } from 'src/api';
-import { OrphanCleanupAPI } from 'src/api/orphan-cleanup';
-import { RepairAPI } from 'src/api/repair';
-import { TaskPurgeAPI } from 'src/api/task-purge';
+import {
+  OrphanCleanupAPI,
+  RepairAPI,
+  TaskManagementAPI,
+  TaskPurgeAPI,
+  type TaskType,
+} from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
