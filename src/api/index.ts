@@ -19,7 +19,6 @@ export { GroupRoleAPI } from './group-role';
 export { ImportAPI } from './import';
 export { MyNamespaceAPI } from './my-namespace';
 export { NamespaceAPI } from './namespace';
-export { PulpAPI } from './pulp';
 export { PulpLoginAPI } from './pulp-login';
 export { PulpStatusAPI } from './pulp-status';
 export { AnsibleRemoteType } from './response-types/ansible-remote';
