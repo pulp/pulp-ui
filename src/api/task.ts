@@ -1,7 +1,8 @@
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
-export class API extends HubAPI {
-  apiPath = 'v3/tasks/';
-}
+const base = new PulpAPI();
 
-export const TaskAPI = new API();
+// FIXME HubAPI
+export const TaskAPI = {
+  get: (id) => base.http.get(`v3/tasks/${id}/`),
+};

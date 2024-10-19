@@ -1,6 +1,6 @@
 import { clearSetFieldsFromRequest } from 'src/utilities';
 import { type RemoteType } from '.';
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
 // removes unchanged values and write only fields before updating
 function smartUpdate(remote: RemoteType, unmodifiedRemote: RemoteType) {
@@ -31,30 +31,30 @@ function smartUpdate(remote: RemoteType, unmodifiedRemote: RemoteType) {
   return reducedData;
 }
 
-class API extends HubAPI {
-  apiPath = '_ui/v1/execution-environments/registries/';
+const base = new PulpAPI();
 
-  // list(params?)
-  // create(data)
-  // get(name)
-  // delete(name)
+// FIXME HubAPI
+export const ExecutionEnvironmentRegistryAPI = {
+  create: (data) =>
+    base.http.post(`_ui/v1/execution-environments/registries/`, data),
 
-  smartUpdate(pk, newValue: RemoteType, oldValue: RemoteType) {
-    const reducedData = smartUpdate(newValue, oldValue);
-    return super.update(pk, reducedData);
-  }
+  delete: (id) =>
+    base.http.delete(`_ui/v1/execution-environments/registries/${id}/`),
 
-  update(_id, _obj) {
-    throw 'use smartUpdate()';
-  }
+  get: (id) => base.http.get(`_ui/v1/execution-environments/registries/${id}/`),
 
-  index(id) {
-    return this.http.post(this.apiPath + id + '/index/', {});
-  }
+  index: (id) =>
+    base.http.post(`_ui/v1/execution-environments/registries/${id}/index/`, {}),
 
-  sync(id) {
-    return this.http.post(this.apiPath + id + '/sync/', {});
-  }
-}
+  list: (params?) =>
+    base.list(`_ui/v1/execution-environments/registries/`, params),
 
-export const ExecutionEnvironmentRegistryAPI = new API();
+  smartUpdate: (id, newValue: RemoteType, oldValue: RemoteType) =>
+    base.http.put(
+      `_ui/v1/execution-environments/registries/${id}/`,
+      smartUpdate(newValue, oldValue),
+    ),
+
+  sync: (id) =>
+    base.http.post(`_ui/v1/execution-environments/registries/${id}/sync/`, {}),
+};

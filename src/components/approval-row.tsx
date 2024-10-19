@@ -8,11 +8,7 @@ import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/excl
 import { Td, Tr } from '@patternfly/react-table';
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  CollectionAPI,
-  type CollectionVersionSearch,
-  type FeatureFlagsType,
-} from 'src/api';
+import { CollectionAPI, type CollectionVersionSearch } from 'src/api';
 import {
   DateComponent,
   ListItemActions,
@@ -24,7 +20,7 @@ import { Paths, formatPath } from 'src/paths';
 interface IProps {
   approve: (collectionVersion: CollectionVersionSearch) => void;
   collectionVersion: CollectionVersionSearch;
-  featureFlags: FeatureFlagsType;
+  featureFlags;
   isVersionUpdating: (collectionVersion: CollectionVersionSearch) => boolean;
   openUploadCertificateModal: (
     collectionVersion: CollectionVersionSearch,

@@ -4,7 +4,7 @@ import cx from 'classnames';
 import React, { useEffect, useState } from 'react';
 import {
   type ImportListType,
-  MyNamespaceAPI,
+  NamespaceAPI,
   type NamespaceType,
   PulpStatus,
 } from 'src/api';
@@ -211,7 +211,7 @@ export const ImportList = ({
     if (!namespace_filter) {
       namespace_filter = '';
     }
-    MyNamespaceAPI.list({ page_size: 10, keywords: namespace_filter })
+    NamespaceAPI.list({ page_size: 10, keywords: namespace_filter })
       .then((result) => {
         setNamespaces(result.data.data);
       })

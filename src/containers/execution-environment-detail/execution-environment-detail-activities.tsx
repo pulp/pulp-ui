@@ -115,7 +115,7 @@ class ExecutionEnvironmentDetailActivities extends Component<
     );
 
     this.setState({ loading: true }, () => {
-      ActivitiesAPI.list(name, this.state.page)
+      ActivitiesAPI.listRepo(name, { page: this.state.page })
         .then((result) => {
           const activities = [];
           result.data.data.forEach((activity) => {

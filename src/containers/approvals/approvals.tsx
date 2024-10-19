@@ -114,11 +114,7 @@ class Approvals extends Component<RouteProps, IState> {
 
   componentDidMount() {
     const { user, hasPermission } = this.context as IAppContextType;
-    if (
-      !user ||
-      user.is_anonymous ||
-      !hasPermission('ansible.modify_ansible_repo_content')
-    ) {
+    if (!user || !hasPermission('ansible.modify_ansible_repo_content')) {
       this.setState({ unauthorized: true });
     } else {
       this.setState({ loading: true });

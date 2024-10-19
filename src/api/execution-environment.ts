@@ -1,43 +1,48 @@
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
-class API extends HubAPI {
-  apiPath = 'v3/plugin/execution-environments/repositories/';
+const base = new PulpAPI();
 
-  readme(name) {
-    return this.http.get(this.apiPath + `${name}/_content/readme/`);
-  }
+// FIXME HubAPI
+export const ExecutionEnvironmentAPI = {
+  deleteExecutionEnvironment: (name) =>
+    base.http.delete(`v3/plugin/execution-environments/repositories/${name}/`),
 
-  saveReadme(name, readme) {
-    return this.http.put(this.apiPath + `${name}/_content/readme/`, readme);
-  }
+  deleteImage: (name, manifest) =>
+    base.http.delete(
+      `v3/plugin/execution-environments/repositories/${name}/_content/images/${manifest}/`,
+    ),
 
-  images(name, params) {
-    return this.http.get(
-      this.apiPath + `${name}/_content/images/`,
-      this.mapParams(params),
-    );
-  }
+  get: (id) =>
+    base.http.get(`v3/plugin/execution-environments/repositories/${id}/`),
 
-  image(name, digest) {
-    return this.http.get(this.apiPath + `${name}/_content/images/${digest}/`);
-  }
+  image: (name, digest) =>
+    base.http.get(
+      `v3/plugin/execution-environments/repositories/${name}/_content/images/${digest}/`,
+    ),
 
-  tags(name, params) {
-    return this.http.get(
-      this.apiPath + `${name}/_content/tags/`,
-      this.mapParams(params),
-    );
-  }
+  images: (name, params) =>
+    base.list(
+      `v3/plugin/execution-environments/repositories/${name}/_content/images/`,
+      params,
+    ),
 
-  deleteImage(name, manifest) {
-    return this.http.delete(
-      this.apiPath + `${name}/_content/images/${manifest}/`,
-    );
-  }
+  list: (params?) =>
+    base.list(`v3/plugin/execution-environments/repositories/`, params),
 
-  deleteExecutionEnvironment(name) {
-    return this.http.delete(this.apiPath + `${name}/`);
-  }
-}
+  readme: (name) =>
+    base.http.get(
+      `v3/plugin/execution-environments/repositories/${name}/_content/readme/`,
+    ),
 
-export const ExecutionEnvironmentAPI = new API();
+  saveReadme: (name, readme) =>
+    base.http.put(
+      `v3/plugin/execution-environments/repositories/${name}/_content/readme/`,
+      readme,
+    ),
+
+  tags: (name, params) =>
+    base.list(
+      `v3/plugin/execution-environments/repositories/${name}/_content/tags/`,
+      params,
+    ),
+};

@@ -86,10 +86,7 @@ class EditRole extends Component<RouteProps, IState> {
 
   componentDidMount() {
     this.setState({ editPermissions: true });
-    if (
-      !(this.context as IAppContextType).user ||
-      (this.context as IAppContextType).user.is_anonymous
-    ) {
+    if (!(this.context as IAppContextType).user) {
       this.setState({ unauthorized: true });
     } else {
       RoleAPI.get(this.state.params.id)

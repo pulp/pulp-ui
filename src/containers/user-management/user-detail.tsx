@@ -50,7 +50,7 @@ class UserDetail extends Component<RouteProps, IState> {
   componentDidMount() {
     const { hasPermission, user } = this.context as IAppContextType;
     const id = this.props.routeParams.user_id;
-    if (!user || user.is_anonymous || !hasPermission('galaxy.view_user')) {
+    if (!user || !hasPermission('galaxy.view_user')) {
       this.setState({ unauthorized: true });
     } else {
       UserAPI.get(id)

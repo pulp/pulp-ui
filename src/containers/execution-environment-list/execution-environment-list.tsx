@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom';
 import {
   ExecutionEnvironmentAPI,
   ExecutionEnvironmentRemoteAPI,
-  type ExecutionEnvironmentType,
 } from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {
@@ -50,6 +49,17 @@ import {
   withRouter,
 } from 'src/utilities';
 import './execution-environment.scss';
+
+interface ExecutionEnvironmentType {
+  created_at: string;
+  name: string;
+  description: string;
+  updated_at: string;
+  pulp: {
+    distribution: { base_path: string };
+    repository: { pulp_id: string; version: string };
+  };
+}
 
 interface IState {
   alerts: AlertType[];
@@ -103,10 +113,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    if (
-      !(this.context as IAppContextType).user ||
-      (this.context as IAppContextType).user.is_anonymous
-    ) {
+    if (!(this.context as IAppContextType).user) {
       this.setState({ unauthorized: true, loading: false });
     } else {
       this.queryEnvironments();

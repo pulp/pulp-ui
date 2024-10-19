@@ -98,10 +98,7 @@ export class RoleList extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    if (
-      !(this.context as IAppContextType).user ||
-      (this.context as IAppContextType).user.is_anonymous
-    ) {
+    if (!(this.context as IAppContextType).user) {
       this.setState({ loading: false, unauthorized: true });
     } else {
       this.queryRoles();
