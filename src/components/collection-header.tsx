@@ -22,7 +22,6 @@ import {
   CollectionVersionAPI,
   type CollectionVersionContentType,
   type CollectionVersionSearch,
-  MyNamespaceAPI,
   NamespaceAPI,
   SignCollectionAPI,
 } from 'src/api';
@@ -502,7 +501,7 @@ export const CollectionHeader = ({
       });
     };
 
-    MyNamespaceAPI.get(collection.collection_version.namespace, {
+    NamespaceAPI.get(collection.collection_version.namespace, {
       include_related: 'my_permissions',
     })
       .then((value) => {

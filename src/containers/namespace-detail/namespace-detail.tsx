@@ -9,7 +9,6 @@ import {
   CollectionVersionAPI,
   type CollectionVersionSearch,
   type GroupType,
-  MyNamespaceAPI,
   NamespaceAPI,
   type NamespaceType,
   type RoleType,
@@ -197,7 +196,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
     stateUpdate,
   }) {
     const { name } = this.state.namespace;
-    MyNamespaceAPI.update(name, {
+    NamespaceAPI.update(name, {
       ...this.state.namespace,
       users: users || this.state.namespace.users,
       groups: groups || this.state.namespace.groups,
@@ -794,7 +793,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
       NamespaceAPI.get(this.props.routeParams.namespace, {
         include_related: 'my_permissions',
       }),
-      MyNamespaceAPI.get(this.props.routeParams.namespace, {
+      /*MyNamespaceAPI.get(this.props.routeParams.namespace, {
         include_related: 'my_permissions',
       }).catch((e) => {
         // this needs fixing on backend to return nothing in these cases with 200 status
@@ -811,7 +810,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
         return e.response && e.response.status === 404
           ? null
           : Promise.reject(e);
-      }),
+      }),*/
     ])
       .then(
         ([
@@ -822,12 +821,12 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
             },
           },
           { data: namespace },
-          myNamespace,
+          //myNamespace,
         ]) => {
           this.setState({
             canSign: canSignNamespace(
               this.context as IAppContextType,
-              myNamespace?.data,
+              {}, //  myNamespace?.data,
             ),
             group: this.filterGroup(this.state.params.group, namespace.groups),
             user: this.filterUser(this.state.params.user, namespace.users),
@@ -841,7 +840,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
                   }))
                 : [],
             },
-            showControls: !!myNamespace,
+            showControls: true, //!!myNamespace,
             unfilteredCount,
           });
         },

@@ -3,7 +3,7 @@ import { ActionGroup, Button, Form } from '@patternfly/react-core';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import {
-  MyNamespaceAPI,
+  NamespaceAPI,
   type NamespaceLinkType,
   type NamespaceType,
 } from 'src/api';
@@ -223,7 +223,7 @@ class EditNamespace extends Component<RouteProps, IState> {
   }
 
   private loadNamespace() {
-    MyNamespaceAPI.get(this.props.routeParams.namespace)
+    NamespaceAPI.get(this.props.routeParams.namespace)
       .then((response) => {
         // Add an empty link to the end of the links array to create an empty field
         // on the link edit form for adding new links
@@ -250,7 +250,7 @@ class EditNamespace extends Component<RouteProps, IState> {
 
       namespace.links = setLinks;
 
-      MyNamespaceAPI.update(this.state.namespace.name, namespace)
+      NamespaceAPI.update(this.state.namespace.name, namespace)
         .then((result) => {
           this.setState(
             {

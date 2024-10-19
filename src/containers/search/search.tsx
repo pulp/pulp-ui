@@ -6,7 +6,7 @@ import {
   CollectionAPI,
   CollectionVersionAPI,
   type CollectionVersionSearch,
-  MyNamespaceAPI,
+  NamespaceAPI,
 } from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {
@@ -427,7 +427,7 @@ class Search extends Component<RouteProps, IState> {
       });
     };
 
-    MyNamespaceAPI.get(collection.collection_version.namespace, {
+    NamespaceAPI.get(collection.collection_version.namespace, {
       include_related: 'my_permissions',
     })
       .then((value) => {

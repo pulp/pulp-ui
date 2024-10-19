@@ -4,18 +4,17 @@ import React, {
   useContext,
   useState,
 } from 'react';
-import { type FeatureFlagsType, type SettingsType } from 'src/api';
 import { type AlertType } from 'src/components';
 import { useUserContext } from './user-context';
 
 export interface IAppContextType {
   alerts: AlertType[];
-  featureFlags: FeatureFlagsType; // deprecated
+  featureFlags; // deprecated
   hasPermission: (name: string) => boolean;
   queueAlert: (alert: AlertType) => void;
   selectedRepo?: string; // deprecated
   setAlerts: (alerts: AlertType[]) => void;
-  settings: SettingsType; // deprecated
+  settings; // deprecated
   updateTitle: (title: string) => void; // deprecated
   user; // deprecated
 }

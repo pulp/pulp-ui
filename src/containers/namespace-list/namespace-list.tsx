@@ -2,7 +2,7 @@ import { t } from '@lingui/macro';
 import { Button } from '@patternfly/react-core';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
-import { MyNamespaceAPI, NamespaceAPI, type NamespaceListType } from 'src/api';
+import { NamespaceAPI, type NamespaceListType } from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
@@ -91,7 +91,7 @@ export class NamespaceList extends Component<IProps, IState> {
     this.setState({ alerts: (this.context as IAppContextType).alerts || [] });
     (this.context as IAppContextType).setAlerts([]);
 
-    if (this.props.filterOwner) {
+    /*if (this.props.filterOwner) {
       // Make a query with no params and see if it returns results to tell
       // if the user can edit namespaces
       MyNamespaceAPI.list({})
@@ -122,9 +122,9 @@ export class NamespaceList extends Component<IProps, IState> {
               }),
           );
         });
-    } else {
-      this.loadNamespaces();
-    }
+    } else {*/
+    this.loadNamespaces();
+    // }
   }
 
   render() {
@@ -298,8 +298,8 @@ export class NamespaceList extends Component<IProps, IState> {
   }
 
   private loadNamespaces() {
-    const { filterOwner } = this.props;
-    const api = filterOwner ? MyNamespaceAPI : NamespaceAPI;
+    //const { filterOwner } = this.props;
+    const api = NamespaceAPI; // filterOwner ? MyNamespaceAPI : NamespaceAPI;
 
     this.setState({ loading: true }, () => {
       api
