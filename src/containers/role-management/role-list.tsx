@@ -128,15 +128,13 @@ export class RoleList extends Component<RouteProps, IState> {
       return <Navigate to={redirect} />;
     }
 
-    const isSuperuser = (this.context as IAppContextType).user.is_superuser;
-
-    const addRoles = isSuperuser && (
+    const addRoles = (
       <Link to={formatPath(Paths.core.role.create)}>
         <Button variant={'primary'}>{t`Add roles`}</Button>
       </Link>
     );
 
-    let tableHeader = [
+    const tableHeader = [
       {
         title: '',
         type: 'none',
@@ -162,17 +160,12 @@ export class RoleList extends Component<RouteProps, IState> {
         type: 'none',
         id: 'locked',
       },
+      {
+        title: '',
+        type: 'none',
+        id: 'kebab',
+      },
     ];
-    if (isSuperuser) {
-      tableHeader = [
-        ...tableHeader,
-        {
-          title: '',
-          type: 'none',
-          id: 'kebab',
-        },
-      ];
-    }
 
     return (
       <>
@@ -332,11 +325,9 @@ export class RoleList extends Component<RouteProps, IState> {
                               t`Editable`
                             )}
                           </Td>
-                          {isSuperuser && (
-                            <ListItemActions
-                              kebabItems={this.renderDropdownItems(role)}
-                            />
-                          )}
+                          <ListItemActions
+                            kebabItems={this.renderDropdownItems(role)}
+                          />
                         </ExpandableRow>
                       ))}
                     </RoleListTable>
@@ -418,29 +409,24 @@ export class RoleList extends Component<RouteProps, IState> {
     );
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { hasPermission } = this.context as IAppContextType;
-    const dropdownItems = (this.context as IAppContextType).user.is_superuser
-      ? [
-          // hasPermission('galaxy.change_containerregistryremote') &&
-          locked ? (
-            <Tooltip key='edit' content={t`Built-in roles cannot be edited.`}>
-              {editItem}
-            </Tooltip>
-          ) : (
-            editItem
-          ),
-          // hasPermission('galaxy.delete_containerregistryremote') &&
-          locked ? (
-            <Tooltip
-              key='delete'
-              content={t`Built-in roles cannot be deleted.`}
-            >
-              {deleteItem}
-            </Tooltip>
-          ) : (
-            deleteItem
-          ),
-        ]
-      : null;
+    const dropdownItems = [
+      // hasPermission('galaxy.change_containerregistryremote') &&
+      locked ? (
+        <Tooltip key='edit' content={t`Built-in roles cannot be edited.`}>
+          {editItem}
+        </Tooltip>
+      ) : (
+        editItem
+      ),
+      // hasPermission('galaxy.delete_containerregistryremote') &&
+      locked ? (
+        <Tooltip key='delete' content={t`Built-in roles cannot be deleted.`}>
+          {deleteItem}
+        </Tooltip>
+      ) : (
+        deleteItem
+      ),
+    ];
 
     return dropdownItems;
   };

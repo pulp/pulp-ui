@@ -29,13 +29,11 @@ export const DeleteUserModal = ({
     <DeleteModal
       cancelAction={() => closeModal(false)}
       deleteAction={() => deleteUser()}
-      isDisabled={waiting || user.is_superuser || user.id === currentUser.id}
+      isDisabled={waiting || user.username === currentUser.username}
       spinner={waiting}
       title={t`Delete user?`}
     >
-      {user.is_superuser ? (
-        t`Deleting super users is not allowed.`
-      ) : user.id === currentUser.id ? (
+      {user.id === currentUser.id ? (
         t`Deleting yourself is not allowed.`
       ) : (
         <Trans>

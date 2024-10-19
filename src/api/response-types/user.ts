@@ -15,16 +15,20 @@ export class GroupType {
 }
 
 export class UserType {
-  id?: number;
-  username: string;
-  first_name?: string;
-  last_name?: string;
-  email?: string;
-  groups: GroupType[];
   auth_provider?: string[];
   date_joined?: string;
-  password?: string;
-  model_permissions?: ModelPermissionsType;
-  is_superuser?: boolean;
+  email?: string;
+  first_name?: string;
+  groups: GroupType[];
+  hidden_fields?;
+  id?: number;
+  is_active?: boolean;
   is_anonymous?: boolean;
+  is_staff?: boolean;
+  last_name?: string;
+  model_permissions?: ModelPermissionsType;
+  password?: string;
+  prn?: string;
+  pulp_href?: string;
+  username: string;
 }

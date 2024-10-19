@@ -47,16 +47,14 @@ export const CollectionDropdown = ({
       display_repositories,
     },
     hasPermission,
-    user: { is_anonymous, is_superuser },
+    user: { is_anonymous },
   } = useAppContext();
 
   const hasObjectPermission = (permission) =>
     namespace?.related_fields?.my_permissions?.includes?.(permission);
 
   const hasPerm = (permission) =>
-    hasPermission(permission) ||
-    hasObjectPermission(permission) ||
-    is_superuser;
+    hasPermission(permission) || hasObjectPermission(permission);
 
   const canCopy = display_repositories && !is_anonymous;
   const canDelete =

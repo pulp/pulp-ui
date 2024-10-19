@@ -4,12 +4,10 @@ import {
   Button,
   FormGroup,
   Label,
-  Switch,
   TextInput,
 } from '@patternfly/react-core';
 import React, { useEffect, useState } from 'react';
 import { GroupAPI, type UserType } from 'src/api';
-import { useAppContext } from 'src/app-context';
 import {
   Alert,
   type AlertType,
@@ -41,8 +39,6 @@ export const UserForm = ({
   updateUser,
   user,
 }: IProps) => {
-  const { user: currentUser } = useAppContext();
-
   const [formErrors, setFormErrors] = useState<{ groups: AlertType }>({
     groups: null,
   });
@@ -105,18 +101,6 @@ export const UserForm = ({
     </FormGroup>
   );
 
-  const readonlyAuth = () => (
-    <FormGroup
-      fieldId='auth_provider'
-      key='readonlyAuth'
-      label={t`Authentication provider`}
-    >
-      {user?.auth_provider?.map((provider) => (
-        <Label key={provider}>{provider}</Label>
-      ))}
-    </FormGroup>
-  );
-
   const readonlyGroups = () =>
     user.groups.length ? (
       <FormGroup
@@ -157,50 +141,6 @@ export const UserForm = ({
     </FormGroup>
   );
 
-  const superuserLabel = (
-    <FormGroup
-      fieldId='is_superuser'
-      key='superuserLabel'
-      label={
-        <>
-          {t`User type`}
-          <HelpButton
-            content={t`Super users have all system permissions regardless of what groups they are in.`}
-          />
-        </>
-      }
-    >
-      {isReadonly ? (
-        user.is_superuser ? (
-          t`Super user`
-        ) : (
-          t`Not a super user`
-        )
-      ) : (
-        <>
-          <Switch
-            isDisabled={
-              !currentUser.is_superuser ||
-              isReadonly ||
-              currentUser.id === user.id
-            }
-            label={t`Super user`}
-            labelOff={t`Not a super user`}
-            isChecked={user.is_superuser}
-            onChange={() =>
-              updateUserFieldByName(!user.is_superuser, 'is_superuser')
-            }
-          />
-          <FormFieldHelper
-            variant={'is_superuser' in errorMessages ? 'error' : 'default'}
-          >
-            {errorMessages['is_superuser'] || getSuperUserHelperText(user)}
-          </FormFieldHelper>
-        </>
-      )}
-    </FormGroup>
-  );
-
   const formButtons = () => (
     <ActionGroup key='actions'>
       <Button
@@ -220,8 +160,11 @@ export const UserForm = ({
   const formSuffix = [
     !isReadonly && passwordConfirmGroup(),
     isMe || isReadonly ? readonlyGroups() : editGroups(),
-    isMe && isReadonly && readonlyAuth(),
-    superuserLabel,
+    errorMessages.non_field_errors ? (
+      <FormFieldHelper variant='error'>
+        {errorMessages.non_field_errors}
+      </FormFieldHelper>
+    ) : null,
     !isReadonly && formButtons(),
   ];
 
@@ -237,17 +180,6 @@ export const UserForm = ({
       onSave={() => saveUser()}
     />
   );
-
-  function getSuperUserHelperText(user) {
-    if (!currentUser.is_superuser) {
-      return t`Requires super user permissions to edit.`;
-    }
-    if (currentUser.id === user.id) {
-      return t`Super users can't disable themselves.`;
-    }
-
-    return null;
-  }
 
   function clearGroups() {
     const newUser = { ...user };

@@ -1,14 +1,8 @@
 import { t } from '@lingui/macro';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { UserAPI, type UserType } from 'src/api';
-import { AppContext, type IAppContextType } from 'src/app-context';
-import {
-  BaseHeader,
-  Breadcrumbs,
-  EmptyStateUnauthorized,
-  UserFormPage,
-} from 'src/components';
+import { UserFormPage } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import {
   type ErrorMessagesType,
@@ -17,80 +11,48 @@ import {
   withRouter,
 } from 'src/utilities';
 
-interface IState {
-  user: UserType;
-  errorMessages: ErrorMessagesType;
-  redirect?: string;
-}
+function UserCreate(_props: RouteProps) {
+  const [errorMessages, setErrorMessages] = useState<ErrorMessagesType>({});
+  const [redirect, setRedirect] = useState<string>();
+  const [user, setUser] = useState<UserType>({
+    username: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    groups: [],
+  });
 
-class UserCreate extends Component<RouteProps, IState> {
-  static contextType = AppContext;
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      user: {
-        username: '',
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        groups: [],
-        is_superuser: false,
-      },
-      errorMessages: {},
-    };
-  }
-
-  render() {
-    if (this.state.redirect) {
-      return <Navigate to={this.state.redirect} />;
-    }
-    const { hasPermission } = this.context as IAppContextType;
-    const { user, errorMessages } = this.state;
-    const notAuthorised =
-      !(this.context as IAppContextType).user ||
-      !hasPermission('galaxy.add_user');
-    const breadcrumbs = [
-      { url: formatPath(Paths.core.user.list), name: t`Users` },
-      { name: t`Create new user` },
-    ];
-    const title = t`Create new user`;
-
-    return notAuthorised ? (
-      <>
-        <BaseHeader
-          breadcrumbs={<Breadcrumbs links={breadcrumbs} />}
-          title={title}
-        />
-        <EmptyStateUnauthorized />
-      </>
-    ) : (
-      <UserFormPage
-        user={user}
-        breadcrumbs={breadcrumbs}
-        title={title}
-        errorMessages={errorMessages}
-        updateUser={(user, errorMessages) =>
-          this.setState({ user: user, errorMessages: errorMessages })
-        }
-        saveUser={this.saveUser}
-        onCancel={() =>
-          this.setState({ redirect: formatPath(Paths.core.user.list) })
-        }
-        isNewUser
-      />
-    );
-  }
-  private saveUser = () => {
-    const { user } = this.state;
+  const saveUser = () =>
     UserAPI.create(user)
-      .then(() => this.setState({ redirect: formatPath(Paths.core.user.list) }))
-      .catch((err) => {
-        this.setState({ errorMessages: mapErrorMessages(err) });
-      });
-  };
+      .then(() => setRedirect(formatPath(Paths.core.user.list)))
+      .catch((err) => setErrorMessages(mapErrorMessages(err)));
+
+  if (redirect) {
+    return <Navigate to={redirect} />;
+  }
+
+  const breadcrumbs = [
+    { url: formatPath(Paths.core.user.list), name: t`Users` },
+    { name: t`Create new user` },
+  ];
+  const title = t`Create new user`;
+
+  return (
+    <UserFormPage
+      breadcrumbs={breadcrumbs}
+      errorMessages={errorMessages}
+      isNewUser
+      onCancel={() => setRedirect(formatPath(Paths.core.user.list))}
+      saveUser={saveUser}
+      title={title}
+      updateUser={(user, errorMessages) => {
+        setErrorMessages(errorMessages);
+        setUser(user);
+      }}
+      user={user}
+    />
+  );
 }
 
 export default withRouter(UserCreate);

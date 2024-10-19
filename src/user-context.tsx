@@ -14,6 +14,8 @@ export interface IUserContextType {
     remember?: boolean,
   ) => void;
   clearCredentials: () => void;
+  updateUsername: (username: string) => void;
+  updatePassword: (password: string) => void;
 }
 
 export const UserContext = createContext<IUserContextType>(undefined);
@@ -54,6 +56,10 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
         setCredentials: (username, password, remember = false) =>
           setCredentials({ username, password, remember }),
         clearCredentials: () => setCredentials(null),
+        updateUsername: (username) =>
+          setCredentials((credentials) => ({ ...credentials, username })),
+        updatePassword: (password) =>
+          setCredentials((credentials) => ({ ...credentials, password })),
       }}
     >
       {children}

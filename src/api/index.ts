@@ -1,4 +1,3 @@
-export { ActiveUserAPI } from './active-user';
 export { ActivitiesAPI } from './activities';
 export { AnsibleDistributionAPI } from './ansible-distribution';
 export { AnsibleRemoteAPI } from './ansible-remote';
