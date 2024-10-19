@@ -27,7 +27,6 @@ export class API extends PulpAPI {
     delete newUser.prn;
     delete newUser.pulp_href;
 
-    console.log('UserAPI.saveUser', user, newUser);
     return UserAPI.patch(user.id, newUser);
   }
 }
