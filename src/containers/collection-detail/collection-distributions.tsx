@@ -14,6 +14,7 @@ import {
   LoadingPage,
   LoadingSpinner,
   Main,
+  NotFound,
   PulpPagination,
   SortTable,
 } from 'src/components';
@@ -39,6 +40,7 @@ const CollectionDistributions = (props: RouteProps) => {
   const [distributions, setDistributions] = useState(null);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
   const [params, setParams] = useState(
     Object.keys(routeParams).length
       ? routeParams
@@ -51,7 +53,6 @@ const CollectionDistributions = (props: RouteProps) => {
     loadCollection({
       forceReload,
       matchParams: props.routeParams,
-      navigate: props.navigate,
       setCollection: (
         collections,
         collection,
@@ -67,6 +68,7 @@ const CollectionDistributions = (props: RouteProps) => {
 
         loadDistributions(collection.repository.pulp_href);
       },
+      setNotFound,
       stateParams: params,
     });
   };
@@ -90,6 +92,10 @@ const CollectionDistributions = (props: RouteProps) => {
   useEffect(() => {
     loadCollections(false);
   }, [params]);
+
+  if (notFound) {
+    return <NotFound />;
+  }
 
   if (!collection || !content || collections.length <= 0) {
     return <LoadingPage />;

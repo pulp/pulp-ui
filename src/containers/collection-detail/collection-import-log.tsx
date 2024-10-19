@@ -7,6 +7,7 @@ import {
   ImportConsole,
   LoadingPage,
   Main,
+  NotFound,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import { ParamHelper, type RouteProps, withRouter } from 'src/utilities';
@@ -35,6 +36,7 @@ class CollectionImportLog extends Component<RouteProps, IState> {
       collectionsCount: 0,
       content: null,
       loadingImports: true,
+      notFound: false,
       params,
       selectedImport: undefined,
       selectedImportDetail: undefined,
@@ -54,10 +56,15 @@ class CollectionImportLog extends Component<RouteProps, IState> {
       collectionsCount,
       content,
       loadingImports,
+      notFound,
       params,
       selectedImport,
       selectedImportDetail,
     } = this.state;
+
+    if (notFound) {
+      return <NotFound />;
+    }
 
     if (!collection) {
       return <LoadingPage />;
@@ -156,7 +163,6 @@ class CollectionImportLog extends Component<RouteProps, IState> {
     loadCollection({
       forceReload,
       matchParams: this.props.routeParams,
-      navigate: this.props.navigate,
       setCollection: (
         collections,
         collection,
@@ -174,6 +180,7 @@ class CollectionImportLog extends Component<RouteProps, IState> {
           },
           callback,
         ),
+      setNotFound: (notFound) => this.setState({ notFound }),
       stateParams: this.state.params,
     });
   }

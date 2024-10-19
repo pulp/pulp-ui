@@ -18,9 +18,9 @@ import {
   type LinkTabsProps,
   LoadingSpinner,
   Main,
+  NotFound,
   closeAlert,
 } from 'src/components';
-import { NotFound } from 'src/containers/not-found/not-found';
 import {
   ParamHelper,
   type RouteProps,

@@ -539,7 +539,7 @@ class ExecutionEnvironmentDetailImages extends Component<
             loading: false,
           });
         })
-        .catch(() => this.setState({ redirect: 'notFound' })),
+        .catch(() => this.props.setNotFound(true)),
     );
   }
 

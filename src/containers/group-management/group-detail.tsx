@@ -34,6 +34,7 @@ import {
   ListItemActions,
   LoadingPage,
   Main,
+  NotFound,
   PulpPagination,
   SortTable,
   Typeahead,
@@ -56,6 +57,7 @@ interface IState {
   group: GroupObjectPermissionType;
   inputText: string;
   itemCount: number;
+  notFound: boolean;
   options: { id: number; name: string }[];
   originalPermissions: { id: number; name: string }[];
   params: {
@@ -97,6 +99,7 @@ class GroupDetail extends Component<RouteProps, IState> {
       group: null,
       inputText: '',
       itemCount: 0,
+      notFound: false,
       options: undefined,
       originalPermissions: [],
       params: {
@@ -155,6 +158,7 @@ class GroupDetail extends Component<RouteProps, IState> {
       addModalVisible,
       alerts,
       group,
+      notFound,
       params,
       showDeleteModal,
       showUserRemoveModal,
@@ -176,9 +180,15 @@ class GroupDetail extends Component<RouteProps, IState> {
         />
       );
     }
+
     if (unauthorized) {
       return <EmptyStateUnauthorized />;
     }
+
+    if (notFound) {
+      return <NotFound />;
+    }
+
     if (!group) {
       return <LoadingPage />;
     }
@@ -703,7 +713,7 @@ class GroupDetail extends Component<RouteProps, IState> {
       })
       .catch((e) => {
         if (e.response.status === 404) {
-          this.setState({ redirect: formatPath(Paths.meta.not_found) });
+          this.setState({ notFound: true });
         } else {
           const { status, statusText } = e.response;
           this.addAlert(

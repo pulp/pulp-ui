@@ -8,6 +8,7 @@ import {
   CollectionInfo,
   LoadingPage,
   Main,
+  NotFound,
   closeAlert,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
@@ -31,6 +32,7 @@ class CollectionDetail extends Component<RouteProps, IBaseCollectionState> {
       collectionsCount: 0,
       content: null,
       distroBasePath: null,
+      notFound: false,
       params,
     };
   }
@@ -53,8 +55,13 @@ class CollectionDetail extends Component<RouteProps, IBaseCollectionState> {
       collections,
       collectionsCount,
       content,
+      notFound,
       params,
     } = this.state;
+
+    if (notFound) {
+      return <NotFound />;
+    }
 
     if (collections.length <= 0) {
       return <LoadingPage />;
@@ -130,7 +137,6 @@ class CollectionDetail extends Component<RouteProps, IBaseCollectionState> {
     loadCollection({
       forceReload,
       matchParams: this.props.routeParams,
-      navigate: this.props.navigate,
       setCollection: (
         collections,
         collection,
@@ -145,6 +151,7 @@ class CollectionDetail extends Component<RouteProps, IBaseCollectionState> {
           collectionsCount,
           actuallyCollection,
         }),
+      setNotFound: (notFound) => this.setState({ notFound }),
       stateParams: this.state.params,
     });
   }

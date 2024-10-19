@@ -9,6 +9,7 @@ import {
   EmptyStateUnauthorized,
   LoadingPage,
   Main,
+  NotFound,
   RoleForm,
   RoleHeader,
   closeAlert,
@@ -26,28 +27,28 @@ import {
 } from 'src/utilities';
 
 interface IState {
-  role: RoleType;
+  alerts: AlertType[];
+  description: string;
+  editPermissions: boolean;
+  errorMessages: Record<string, string>;
+  inputText: string;
+  itemCount: number;
+  name: string;
+  nameError: boolean;
+  notFound: boolean;
+  options: { id: number; name: string }[];
+  originalPermissions: string[];
   params: {
     id: string;
   };
-  itemCount: number;
-  alerts: AlertType[];
-  options: { id: number; name: string }[];
-  selected: { id: number; name: string }[];
-  editPermissions: boolean;
-
-  showDeleteModal: boolean;
-  saving: boolean;
   permissions: string[];
-  originalPermissions: string[];
   redirect?: string;
-  unauthorized: boolean;
-  inputText: string;
-  name: string;
-  description: string;
+  role: RoleType;
   roleError: ErrorMessagesType;
-  nameError: boolean;
-  errorMessages: Record<string, string>;
+  saving: boolean;
+  selected: { id: number; name: string }[];
+  showDeleteModal: boolean;
+  unauthorized: boolean;
 }
 
 class EditRole extends Component<RouteProps, IState> {
@@ -59,27 +60,27 @@ class EditRole extends Component<RouteProps, IState> {
     const id = this.props.routeParams.role;
 
     this.state = {
-      role: null,
-
+      alerts: [],
+      description: null,
+      editPermissions: false,
+      errorMessages: {},
+      inputText: '',
+      itemCount: 0,
+      name: null,
+      nameError: false,
+      notFound: false,
+      options: undefined,
+      originalPermissions: [],
       params: {
         id,
       },
-      itemCount: 0,
-      alerts: [],
-      roleError: null,
-      options: undefined,
-      selected: [],
-      editPermissions: false,
-      showDeleteModal: false,
-      nameError: false,
       permissions: [],
-      originalPermissions: [],
-      unauthorized: false,
-      inputText: '',
-      name: null,
-      description: null,
-      errorMessages: {},
+      role: null,
+      roleError: null,
       saving: false,
+      selected: [],
+      showDeleteModal: false,
+      unauthorized: false,
     };
   }
 
@@ -102,7 +103,7 @@ class EditRole extends Component<RouteProps, IState> {
         })
         .catch((e) => {
           const { status, statusText } = e.response;
-          this.setState({ redirect: formatPath(Paths.meta.not_found) });
+          this.setState({ notFound: true });
           this.addAlert(
             t`Role "${this.state.role.name}" could not be displayed.`,
             'danger',
@@ -118,15 +119,15 @@ class EditRole extends Component<RouteProps, IState> {
     }
 
     const {
-      name,
-
-      description,
       alerts,
+      description,
       editPermissions,
-      role,
       errorMessages,
-      unauthorized,
+      name,
+      notFound,
+      role,
       saving,
+      unauthorized,
     } = this.state;
 
     if (!role && alerts && alerts.length) {
@@ -141,6 +142,10 @@ class EditRole extends Component<RouteProps, IState> {
           }
         />
       );
+    }
+
+    if (notFound) {
+      return <NotFound />;
     }
 
     if (!role) {

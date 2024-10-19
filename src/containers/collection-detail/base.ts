@@ -6,7 +6,6 @@ import {
   type CollectionVersionSearch,
 } from 'src/api';
 import { type AlertType } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
 import { repositoryBasePath } from 'src/utilities';
 
 export interface IBaseCollectionState {
@@ -17,6 +16,7 @@ export interface IBaseCollectionState {
   collectionsCount?: number;
   content?: CollectionVersionContentType;
   distroBasePath?: string;
+  notFound?: boolean;
   params: {
     version?: string;
     showing?: string;
@@ -41,8 +41,8 @@ const cache = {
 export function loadCollection({
   forceReload,
   matchParams,
-  navigate,
   setCollection,
+  setNotFound,
   stateParams,
 }) {
   const { version } = stateParams;
@@ -87,7 +87,7 @@ export function loadCollection({
       ),
     )
     .then(({ data: { results } }) => results[0])
-    .catch(() => navigate(formatPath(Paths.meta.not_found)));
+    .catch(() => setNotFound(true));
 
   // Note: this only provides the first page - containing the latest version, and all items for the version *selector*,
   // but the version *modal* is using a separate call, in CollectionHeader updatePaginationParams
