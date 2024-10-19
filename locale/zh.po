@@ -2780,12 +2780,12 @@ msgid "Free"
 msgstr ""
 
 #: src/components/pulp-about-modal.tsx
-msgid "Galaxy Importer"
-msgstr ""
+#~ msgid "Galaxy Importer"
+#~ msgstr ""
 
 #: src/components/pulp-about-modal.tsx
-msgid "Galaxy Logo"
-msgstr "Galaxy 徽标"
+#~ msgid "Galaxy Logo"
+#~ msgstr "Galaxy 徽标"
 
 #: src/containers/role-management/role-list.tsx
 #~ msgid "Galaxy only"
@@ -4401,8 +4401,8 @@ msgid "Pull this image"
 msgstr "拉取此镜像"
 
 #: src/components/pulp-about-modal.tsx
-msgid "Pulp Ansible Version"
-msgstr "Pulp Ansible 版本"
+#~ msgid "Pulp Ansible Version"
+#~ msgstr "Pulp Ansible 版本"
 
 #: src/constants.tsx
 #~ msgid "Pulp ansible: collection sync"
@@ -4429,8 +4429,8 @@ msgstr "Pulp Ansible 版本"
 #~ msgstr "Pulp ansible：更新集合远程"
 
 #: src/components/pulp-about-modal.tsx
-msgid "Pulp Container Version"
-msgstr ""
+#~ msgid "Pulp Container Version"
+#~ msgstr ""
 
 #: src/constants.tsx
 #~ msgid "Pulp container: Build image from containerfile"
@@ -4470,6 +4470,10 @@ msgstr ""
 
 #: src/utilities/translate-task.ts
 msgid "Pulp import"
+msgstr ""
+
+#: src/components/pulp-about-modal.tsx
+msgid "Pulp Logo"
 msgstr ""
 
 #: src/containers/ansible-repository/tab-repository-versions.tsx
@@ -5319,8 +5323,8 @@ msgstr "服务器错误。请稍后返回。"
 #~ msgstr "Server URL could not be displayed."
 
 #: src/components/pulp-about-modal.tsx
-msgid "Server version"
-msgstr "服务器版本"
+#~ msgid "Server version"
+#~ msgstr "服务器版本"
 
 #: src/components/ansible-repository-form.tsx
 msgid "Setting a remote allows a repository to sync from elsewhere."

@@ -2781,12 +2781,12 @@ msgid "Free"
 msgstr "Free"
 
 #: src/components/pulp-about-modal.tsx
-msgid "Galaxy Importer"
-msgstr "Galaxy Importer"
+#~ msgid "Galaxy Importer"
+#~ msgstr "Galaxy Importer"
 
 #: src/components/pulp-about-modal.tsx
-msgid "Galaxy Logo"
-msgstr "Galaxy Logo"
+#~ msgid "Galaxy Logo"
+#~ msgstr "Galaxy Logo"
 
 #: src/containers/role-management/role-list.tsx
 #~ msgid "Galaxy only"
@@ -4402,8 +4402,8 @@ msgid "Pull this image"
 msgstr "Pull this image"
 
 #: src/components/pulp-about-modal.tsx
-msgid "Pulp Ansible Version"
-msgstr "Pulp Ansible Version"
+#~ msgid "Pulp Ansible Version"
+#~ msgstr "Pulp Ansible Version"
 
 #: src/constants.tsx
 #~ msgid "Pulp ansible: collection sync"
@@ -4430,8 +4430,8 @@ msgstr "Pulp Ansible Version"
 #~ msgstr "Pulp ansible: Update collection remote"
 
 #: src/components/pulp-about-modal.tsx
-msgid "Pulp Container Version"
-msgstr "Pulp Container Version"
+#~ msgid "Pulp Container Version"
+#~ msgstr "Pulp Container Version"
 
 #: src/constants.tsx
 #~ msgid "Pulp container: Build image from containerfile"
@@ -4472,6 +4472,10 @@ msgstr "Pulp export"
 #: src/utilities/translate-task.ts
 msgid "Pulp import"
 msgstr "Pulp import"
+
+#: src/components/pulp-about-modal.tsx
+msgid "Pulp Logo"
+msgstr "Pulp Logo"
 
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Pulp type"
@@ -5320,8 +5324,8 @@ msgstr "Server error. Please come back later."
 #~ msgstr "Server URL could not be displayed."
 
 #: src/components/pulp-about-modal.tsx
-msgid "Server version"
-msgstr "Server version"
+#~ msgid "Server version"
+#~ msgstr "Server version"
 
 #: src/components/ansible-repository-form.tsx
 msgid "Setting a remote allows a repository to sync from elsewhere."
