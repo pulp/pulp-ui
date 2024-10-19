@@ -32,7 +32,7 @@ function filterListItem(item: CollectionListType) {
   };
 }
 
-export class API extends HubAPI {
+class API extends HubAPI {
   apiPath = '_ui/v1/repo/';
   cachedCollection: CollectionDetailType;
 

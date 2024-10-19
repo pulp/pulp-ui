@@ -1,6 +1,6 @@
 import { PulpAPI } from './pulp';
 
-export class API extends PulpAPI {
+class API extends PulpAPI {
   apiPath = 'tasks/purge/';
 }
 

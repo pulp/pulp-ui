@@ -1,7 +1,7 @@
 import { config } from 'src/ui-config';
 import { PulpAPI } from './pulp';
 
-export class API extends PulpAPI {
+class API extends PulpAPI {
   apiPath = 'roles/';
 
   updatePermissions(id, data: unknown) {

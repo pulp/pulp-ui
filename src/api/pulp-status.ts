@@ -1,6 +1,6 @@
 import { PulpAPI } from './pulp';
 
-export class API extends PulpAPI {
+class API extends PulpAPI {
   last_status = null;
   last_status_time = 0;
 

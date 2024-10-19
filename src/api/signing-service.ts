@@ -9,7 +9,7 @@ export class SigningServiceType {
   script: string;
 }
 
-export class API extends PulpAPI {
+class API extends PulpAPI {
   apiPath = 'signing-services/';
 
   // list(params?)
