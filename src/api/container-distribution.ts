@@ -1,9 +1,8 @@
 import { PulpAPI } from './pulp';
 
-class API extends PulpAPI {
-  apiPath = 'distributions/container/container/';
+const base = new PulpAPI();
+base.apiPath = 'distributions/container/container/';
 
-  // patch(id, data)
-}
-
-export const ContainerDistributionAPI = new API();
+export const ContainerDistributionAPI = {
+  patch: (id, data) => base.patch(id, data),
+};

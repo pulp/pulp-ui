@@ -1,9 +1,7 @@
 import { PulpAPI } from './pulp';
 
-class API extends PulpAPI {
-  get() {
-    return this.http.get('status/');
-  }
-}
+const base = new PulpAPI();
 
-export const PulpStatusAPI = new API();
+export const PulpStatusAPI = {
+  get: () => base.http.get('status/'),
+};

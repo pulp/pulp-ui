@@ -1,20 +1,17 @@
 import { PulpAPI } from './pulp';
 
-class API extends PulpAPI {
-  apiPath = 'repositories/container/container-push/';
+const base = new PulpAPI();
+base.apiPath = 'repositories/container/container-push/';
 
-  tag(repositoryID: string, tag: string, digest: string) {
-    return this.http.post(this.apiPath + `${repositoryID}/tag/`, {
+export const ContainerTagAPI = {
+  tag: (repositoryID: string, tag: string, digest: string) =>
+    base.http.post(base.apiPath + `${repositoryID}/tag/`, {
       digest,
       tag,
-    });
-  }
+    }),
 
-  untag(repositoryID: string, tag: string) {
-    return this.http.post(this.apiPath + `${repositoryID}/untag/`, {
+  untag: (repositoryID: string, tag: string) =>
+    base.http.post(base.apiPath + `${repositoryID}/untag/`, {
       tag,
-    });
-  }
-}
-
-export const ContainerTagAPI = new API();
+    }),
+};

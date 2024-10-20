@@ -1,7 +1,8 @@
 import { PulpAPI } from './pulp';
 
-class API extends PulpAPI {
-  apiPath = 'repair/';
-}
+const base = new PulpAPI();
+base.apiPath = 'repair/';
 
-export const RepairAPI = new API();
+export const RepairAPI = {
+  create: (data) => base.create(data),
+};

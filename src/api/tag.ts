@@ -1,15 +1,10 @@
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
-class API extends HubAPI {
-  apiPath = '_ui/v1/tags/';
+const base = new PulpAPI();
+base.apiPath = '_ui/v1/tags/';
 
-  listCollections(params) {
-    return this.list(params, this.apiPath + 'collections/');
-  }
+export const TagAPI = {
+  listCollections: (params) => base.list(params, base.apiPath + 'collections/'),
 
-  listRoles(params) {
-    return this.list(params, this.apiPath + 'roles/');
-  }
-}
-
-export const TagAPI = new API();
+  listRoles: (params) => base.list(params, base.apiPath + 'roles/'),
+};

@@ -1,43 +1,42 @@
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
-class API extends HubAPI {
-  apiPath = 'v3/plugin/ansible/search/collection-versions/';
-  sortParam = 'order_by';
+const base = new PulpAPI();
+base.apiPath = 'v3/plugin/ansible/search/collection-versions/';
+base.sortParam = 'order_by'; // FIXME
 
-  move(
+export const CollectionVersionAPI = {
+  copy: (
     namespace: string,
     name: string,
     version: string,
     source_base_path: string,
     destination_base_path: string,
-  ) {
-    const path = `v3/collections/${namespace}/${name}/versions/${version}/move/${source_base_path}/${destination_base_path}/`;
-    return this.create({}, path);
-  }
+  ) =>
+    base.create(
+      {},
+      `v3/collections/${namespace}/${name}/versions/${version}/copy/${source_base_path}/${destination_base_path}/`,
+    ),
 
-  copy(
+  get: (id: string) =>
+    base.get(id, 'pulp/api/v3/content/ansible/collection_versions/'),
+
+  getUsedDependenciesByCollection: (namespace, collection, params = {}) =>
+    base.http.get(
+      base.apiPath + `?dependency=${namespace}.${collection}`,
+      base.mapParams(params),
+    ),
+
+  list: (params?) => base.list(params),
+
+  move: (
     namespace: string,
     name: string,
     version: string,
     source_base_path: string,
     destination_base_path: string,
-  ) {
-    const path = `v3/collections/${namespace}/${name}/versions/${version}/copy/${source_base_path}/${destination_base_path}/`;
-    return this.create({}, path);
-  }
-
-  get(id: string) {
-    return super.get(id, 'pulp/api/v3/content/ansible/collection_versions/');
-  }
-
-  getUsedDependenciesByCollection(namespace, collection, params = {}) {
-    return this.http.get(
-      this.apiPath + `?dependency=${namespace}.${collection}`,
-      this.mapParams(params),
-    );
-  }
-
-  // list(params?)
-}
-
-export const CollectionVersionAPI = new API();
+  ) =>
+    base.create(
+      {},
+      `v3/collections/${namespace}/${name}/versions/${version}/move/${source_base_path}/${destination_base_path}/`,
+    ),
+};

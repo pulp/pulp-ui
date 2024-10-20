@@ -1,11 +1,12 @@
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
-class API extends HubAPI {
-  apiPath = 'v3/plugin/execution-environments/repositories/';
+const base = new PulpAPI();
 
-  list(id, page) {
-    return super.list({ page: page }, this.apiPath + id + '/_content/history/');
-  }
-}
-
-export const ActivitiesAPI = new API();
+// FIXME pulp
+export const ActivitiesAPI = {
+  listRepo: (id, params?) =>
+    base.list(
+      params,
+      `v3/plugin/execution-environments/repositories/${id}/_content/history/`,
+    ),
+};

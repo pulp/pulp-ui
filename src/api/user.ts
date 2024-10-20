@@ -1,16 +1,20 @@
 import { PulpAPI } from './pulp';
 
-class API extends PulpAPI {
-  apiPath = 'users/';
+const base = new PulpAPI();
+base.apiPath = 'users/';
 
-  // create(user)
-  // delete(id)
-  // get(id)
-  // list(params)
-  // patch(id, user)
-  // update(id, user)
+export const UserAPI = {
+  create: (user) => base.create(user),
 
-  saveUser(user) {
+  delete: (id) => base.delete(id),
+
+  get: (id) => base.get(id),
+
+  list: (params?) => base.list(params),
+
+  patch: (id, user) => base.patch(id, user),
+
+  saveUser: (user) => {
     const newUser = { ...user };
 
     // do not reset password when not trying to change it
@@ -27,8 +31,8 @@ class API extends PulpAPI {
     delete newUser.prn;
     delete newUser.pulp_href;
 
-    return UserAPI.patch(user.id, newUser);
-  }
-}
+    return base.patch(user.id, newUser);
+  },
 
-export const UserAPI = new API();
+  update: (id, user) => base.update(id, user),
+};

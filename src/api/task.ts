@@ -1,7 +1,8 @@
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
-class API extends HubAPI {
-  apiPath = 'v3/tasks/';
-}
+const base = new PulpAPI();
+base.apiPath = 'v3/tasks/';
 
-export const TaskAPI = new API();
+export const TaskAPI = {
+  get: (id) => base.get(id),
+};

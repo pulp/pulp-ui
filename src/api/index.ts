@@ -12,6 +12,7 @@ export { ExecutionEnvironmentNamespaceAPI } from './execution-environment-namesp
 export { ExecutionEnvironmentRegistryAPI } from './execution-environment-registry';
 export { ExecutionEnvironmentRemoteAPI } from './execution-environment-remote';
 export { GenericPulpAPI } from './generic-pulp';
+export { getCancelToken } from './get-cancel-token';
 export { GroupAPI } from './group';
 export { GroupRoleAPI } from './group-role';
 export { ImportAPI } from './import';

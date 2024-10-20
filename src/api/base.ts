@@ -5,8 +5,7 @@ import { ParamHelper } from 'src/utilities';
 
 export class BaseAPI {
   apiPath: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  http: any;
+  http;
   sortParam: string; // translate ?sort into sortParam in list()
   mapPageToOffset: boolean;
 
@@ -29,7 +28,7 @@ export class BaseAPI {
     this.http.interceptors.request.use((request) => this.authHandler(request));
   }
 
-  public mapParams(params) {
+  mapParams(params) {
     const newParams = { ...params };
 
     if (this.mapPageToOffset) {
@@ -83,11 +82,11 @@ export class BaseAPI {
     return this.http.patch(this.getPath(apiPath) + id + '/', data);
   }
 
-  private getPath(apiPath?: string) {
+  getPath(apiPath?: string) {
     return apiPath || this.apiPath || '';
   }
 
-  private async authHandler(request) {
+  authHandler(request) {
     if (!request.auth) {
       request.auth = JSON.parse(
         window.sessionStorage.credentials ||

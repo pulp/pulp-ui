@@ -296,12 +296,9 @@ export class NamespaceList extends Component<IProps, IState> {
   }
 
   private loadNamespaces() {
-    //const { filterOwner } = this.props;
-    const api = NamespaceAPI; // filterOwner ? MyNamespaceAPI : NamespaceAPI;
-
     this.setState({ loading: true }, () => {
-      api
-        .list(this.state.params)
+      // FIXME props.filterOwner ? MyNamespaceAPI : NamespaceAPI
+      NamespaceAPI.list(this.state.params)
         .then((results) => {
           this.setState({
             namespaces: results.data.data,

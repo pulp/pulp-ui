@@ -1,43 +1,36 @@
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
-class API extends HubAPI {
-  apiPath = 'v3/plugin/execution-environments/repositories/';
+const base = new PulpAPI();
+base.apiPath = 'v3/plugin/execution-environments/repositories/';
 
-  readme(name) {
-    return this.http.get(this.apiPath + `${name}/_content/readme/`);
-  }
+export const ExecutionEnvironmentAPI = {
+  deleteExecutionEnvironment: (name) =>
+    base.http.delete(base.apiPath + `${name}/`),
 
-  saveReadme(name, readme) {
-    return this.http.put(this.apiPath + `${name}/_content/readme/`, readme);
-  }
+  deleteImage: (name, manifest) =>
+    base.http.delete(base.apiPath + `${name}/_content/images/${manifest}/`),
 
-  images(name, params) {
-    return this.http.get(
-      this.apiPath + `${name}/_content/images/`,
-      this.mapParams(params),
-    );
-  }
+  get: (id) => base.get(id),
 
-  image(name, digest) {
-    return this.http.get(this.apiPath + `${name}/_content/images/${digest}/`);
-  }
+  image: (name, digest) =>
+    base.http.get(base.apiPath + `${name}/_content/images/${digest}/`),
 
-  tags(name, params) {
-    return this.http.get(
-      this.apiPath + `${name}/_content/tags/`,
-      this.mapParams(params),
-    );
-  }
+  images: (name, params) =>
+    base.http.get(
+      base.apiPath + `${name}/_content/images/`,
+      base.mapParams(params),
+    ),
 
-  deleteImage(name, manifest) {
-    return this.http.delete(
-      this.apiPath + `${name}/_content/images/${manifest}/`,
-    );
-  }
+  list: (params?) => base.list(params),
 
-  deleteExecutionEnvironment(name) {
-    return this.http.delete(this.apiPath + `${name}/`);
-  }
-}
+  readme: (name) => base.http.get(base.apiPath + `${name}/_content/readme/`),
 
-export const ExecutionEnvironmentAPI = new API();
+  saveReadme: (name, readme) =>
+    base.http.put(base.apiPath + `${name}/_content/readme/`, readme),
+
+  tags: (name, params) =>
+    base.http.get(
+      base.apiPath + `${name}/_content/tags/`,
+      base.mapParams(params),
+    ),
+};

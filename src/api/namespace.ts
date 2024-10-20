@@ -1,11 +1,17 @@
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
-class API extends HubAPI {
-  apiPath = '_ui/v1/namespaces/';
+const base = new PulpAPI();
+base.apiPath = '_ui/v1/namespaces/';
 
-  get(id: string, params = {}) {
-    return this.http.get(this.apiPath + id + '/', { params });
-  }
-}
+export const NamespaceAPI = {
+  create: (data) => base.create(data),
 
-export const NamespaceAPI = new API();
+  delete: (id) => base.delete(id),
+
+  get: (id: string, params = {}) =>
+    base.http.get(base.apiPath + id + '/', { params }),
+
+  list: (params?) => base.list(params),
+
+  update: (id, data) => base.update(id, data),
+};

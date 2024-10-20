@@ -8,11 +8,12 @@ interface UploadProps {
   signed_collection: string;
 }
 
-class API extends PulpAPI {
-  apiPath = 'content/ansible/collection_signatures/';
+const base = new PulpAPI();
+base.apiPath = 'content/ansible/collection_signatures/';
 
+export const CertificateUploadAPI = {
   // Returns /pulp/api/v3/tasks/0be64cb4-3b7e-4a6b-b35d-c3b589923a90/
-  upload(data: UploadProps): Promise<{ data: { task: string } }> {
+  upload: (data: UploadProps): Promise<{ data: { task: string } }> => {
     const formData = new FormData();
     formData.append('file', data.file);
     formData.append('repository', data.repository);
@@ -23,8 +24,7 @@ class API extends PulpAPI {
         'Content-Type': 'multipart/form-data',
       },
     };
-    return this.http.post(this.apiPath, formData, config);
-  }
-}
 
-export const CertificateUploadAPI = new API();
+    return base.http.post(base.apiPath, formData, config);
+  },
+};

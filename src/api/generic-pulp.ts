@@ -1,10 +1,7 @@
 import { PulpAPI } from './pulp';
 
-class API extends PulpAPI {
-  // base get adds a trailing slash
-  get(url: string, params = {}) {
-    return this.http.get(url, this.mapParams(params));
-  }
-}
+const base = new PulpAPI();
 
-export const GenericPulpAPI = new API();
+export const GenericPulpAPI = {
+  get: (url: string, params = {}) => base.http.get(url, base.mapParams(params)),
+};

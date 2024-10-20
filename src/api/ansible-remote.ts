@@ -28,37 +28,29 @@ function smartUpdate(
   return remote;
 }
 
-class API extends PulpAPI {
-  apiPath = 'remotes/ansible/collection/';
+const base = new PulpAPI();
+base.apiPath = 'remotes/ansible/collection/';
 
-  // create(data)
-  // delete(uuid)
-  // list(params?)
+export const AnsibleRemoteAPI = {
+  addRole: (id, role) => base.create(role, base.apiPath + id + '/add_role/'),
 
-  smartUpdate(pk, newValue: AnsibleRemoteType, oldValue: AnsibleRemoteType) {
-    const reducedData = smartUpdate(newValue, oldValue);
-    return super.update(pk, reducedData);
-  }
+  create: (data) => base.create(data),
 
-  update(_id, _obj) {
-    throw 'use smartUpdate()';
-  }
+  delete: (id) => base.delete(id),
 
-  listRoles(id, params?) {
-    return super.list(params, this.apiPath + id + '/list_roles/');
-  }
+  get: (id) => base.get(id),
 
-  addRole(id, role) {
-    return super.create(role, this.apiPath + id + '/add_role/');
-  }
+  list: (params?) => base.list(params),
 
-  myPermissions(id, params?) {
-    return super.list(params, this.apiPath + id + '/my_permissions/');
-  }
+  listRoles: (id, params?) =>
+    base.list(params, base.apiPath + id + '/list_roles/'),
 
-  removeRole(id, role) {
-    return super.create(role, this.apiPath + id + '/remove_role/');
-  }
-}
+  myPermissions: (id, params?) =>
+    base.list(params, base.apiPath + id + '/my_permissions/'),
 
-export const AnsibleRemoteAPI = new API();
+  removeRole: (id, role) =>
+    base.create(role, base.apiPath + id + '/remove_role/'),
+
+  smartUpdate: (id, newValue: AnsibleRemoteType, oldValue: AnsibleRemoteType) =>
+    base.update(id, smartUpdate(newValue, oldValue)),
+};

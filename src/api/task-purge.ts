@@ -1,7 +1,8 @@
 import { PulpAPI } from './pulp';
 
-class API extends PulpAPI {
-  apiPath = 'tasks/purge/';
-}
+const base = new PulpAPI();
+base.apiPath = 'tasks/purge/';
 
-export const TaskPurgeAPI = new API();
+export const TaskPurgeAPI = {
+  create: (data) => base.create(data),
+};

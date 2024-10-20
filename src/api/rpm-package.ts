@@ -1,9 +1,8 @@
 import { PulpAPI } from './pulp';
 
-class API extends PulpAPI {
-  apiPath = 'content/rpm/packages/';
+const base = new PulpAPI();
+base.apiPath = 'content/rpm/packages/';
 
-  // list(params?)
-}
-
-export const RPMPackageAPI = new API();
+export const RPMPackageAPI = {
+  list: (params?) => base.list(params),
+};
