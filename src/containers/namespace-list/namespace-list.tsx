@@ -202,13 +202,11 @@ export class NamespaceList extends Component<IProps, IState> {
           }
         />
         <BaseHeader title={t`Namespaces`}>
-          {!(this.context as IAppContextType).user.is_anonymous && (
-            <div className='pulp-tab-link-container'>
-              <div className='tabs'>
-                <LinkTabs tabs={tabs} />
-              </div>
+          <div className='pulp-tab-link-container'>
+            <div className='tabs'>
+              <LinkTabs tabs={tabs} />
             </div>
-          )}
+          </div>
         </BaseHeader>
         {noData ? null : (
           <PulpListToolbar

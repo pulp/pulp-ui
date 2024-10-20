@@ -121,7 +121,7 @@ class GroupDetail extends Component<RouteProps, IState> {
 
   componentDidMount() {
     const { user, hasPermission } = this.context as IAppContextType;
-    if (!user || user.is_anonymous || !hasPermission('galaxy.view_group')) {
+    if (!user || !hasPermission('galaxy.view_group')) {
       this.setState({ unauthorized: true });
     } else {
       this.queryGroup();

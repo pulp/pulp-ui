@@ -8,10 +8,7 @@ class MyNamespaces extends Component<RouteProps> {
   static contextType = AppContext;
 
   render() {
-    if (
-      !(this.context as IAppContextType).user ||
-      (this.context as IAppContextType).user.is_anonymous
-    ) {
+    if (!(this.context as IAppContextType).user) {
       return <EmptyStateUnauthorized />;
     }
 

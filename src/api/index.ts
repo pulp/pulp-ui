@@ -2,7 +2,6 @@ export { ActivitiesAPI } from './activities';
 export { AnsibleDistributionAPI } from './ansible-distribution';
 export { AnsibleRemoteAPI } from './ansible-remote';
 export { AnsibleRepositoryAPI } from './ansible-repository';
-export { ApplicationInfoAPI } from './application-info';
 export { CertificateUploadAPI } from './certificate-upload';
 export { CollectionAPI } from './collection';
 export { CollectionVersionAPI } from './collection-version';

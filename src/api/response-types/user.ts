@@ -23,7 +23,6 @@ export class UserType {
   hidden_fields?;
   id?: number;
   is_active?: boolean;
-  is_anonymous?: boolean;
   is_staff?: boolean;
   last_name?: string;
   model_permissions?: ModelPermissionsType;

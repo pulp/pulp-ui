@@ -113,10 +113,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    if (
-      !(this.context as IAppContextType).user ||
-      (this.context as IAppContextType).user.is_anonymous
-    ) {
+    if (!(this.context as IAppContextType).user) {
       this.setState({ unauthorized: true, loading: false });
     } else {
       this.queryEnvironments();

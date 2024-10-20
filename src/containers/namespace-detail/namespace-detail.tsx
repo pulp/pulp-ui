@@ -796,16 +796,6 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
       /*MyNamespaceAPI.get(this.props.routeParams.namespace, {
         include_related: 'my_permissions',
       }).catch((e) => {
-        // this needs fixing on backend to return nothing in these cases with 200 status
-        // if view only mode is enabled disregard errors and hope
-        if (
-          (this.context as IAppContextType).user.is_anonymous &&
-          (this.context as IAppContextType).settings
-            .GALAXY_ENABLE_UNAUTHENTICATED_COLLECTION_ACCESS
-        ) {
-          return null;
-        }
-
         // expecting 404 - it just means we can not edit the namespace (unless both NamespaceAPI and MyNamespaceAPI fail)
         return e.response && e.response.status === 404
           ? null

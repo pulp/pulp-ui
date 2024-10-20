@@ -2,7 +2,6 @@ import axios from 'axios';
 import { repositoryBasePath } from 'src/utilities';
 import { HubAPI } from './hub';
 import {
-  type CollectionDetailType,
   type CollectionUploadType,
   type CollectionVersion,
   type CollectionVersionSearch,
@@ -51,7 +50,6 @@ function filterListItem(item: CollectionListType) {
 
 class API extends HubAPI {
   apiPath = '_ui/v1/repo/';
-  cachedCollection: CollectionDetailType;
 
   list(params?, repo?: string) {
     const path = this.apiPath + repo + '/';
