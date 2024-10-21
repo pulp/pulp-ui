@@ -3,6 +3,7 @@ import { i18n } from '@lingui/core';
 import { t } from '@lingui/macro';
 import { I18nProvider } from '@lingui/react';
 import '@patternfly/patternfly/patternfly.scss';
+import { Button } from '@patternfly/react-core';
 import React, { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -12,12 +13,14 @@ import { AppRoutes } from './app-routes';
 import './darkmode';
 import './l10n';
 import { StandaloneLayout } from './layout';
-import { configPromise } from './ui-config';
+import { configFallback, configPromise } from './ui-config';
 import { UserContextProvider } from './user-context';
 
 // App entrypoint
 
-configPromise.then(({ UI_BASE_PATH }) => {
+// redirect to UI_BASE_PATH when outside
+// and strip ?lang= and ?pseudolocalization=
+function redirect(UI_BASE_PATH) {
   const searchParams = new URLSearchParams(window.location.search);
   if (!window.location.pathname.startsWith(UI_BASE_PATH)) {
     // react-router v6 won't redirect to base path by default
@@ -36,7 +39,9 @@ configPromise.then(({ UI_BASE_PATH }) => {
         (searchParams.toString() ? '?' + searchParams.toString() : ''),
     );
   }
-});
+}
+
+configPromise.then(({ UI_BASE_PATH }) => redirect(UI_BASE_PATH));
 
 const root = createRoot(document.getElementById('root'));
 root.render(
@@ -62,7 +67,7 @@ function LoadConfig(_props) {
         setLoading(false);
         setError(err);
       });
-  });
+  }, []);
 
   if (loading) {
     return <LoadingSpinner />;
@@ -75,7 +80,16 @@ function LoadConfig(_props) {
         isInline
         title={t`Error loading /pulp-ui-config.json`}
       >
-        {error}
+        {error.toString()}
+        <Button
+          variant='link'
+          onClick={() => {
+            const c = configFallback();
+            redirect(c.UI_BASE_PATH);
+            setConfig(c);
+            setError(null);
+          }}
+        >{t`Fall back to defaults`}</Button>
       </Alert>
     );
   }
