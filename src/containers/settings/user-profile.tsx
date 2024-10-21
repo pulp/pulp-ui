@@ -1,16 +1,15 @@
 import { Trans, t } from '@lingui/macro';
 import { Button } from '@patternfly/react-core';
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import { UserAPI, type UserType } from 'src/api';
 import {
   AlertList,
   type AlertType,
   LoadingPage,
+  NotFound,
   UserFormPage,
   closeAlert,
 } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
 import { useUserContext } from 'src/user-context';
 import {
   type ErrorMessagesType,
@@ -24,7 +23,7 @@ function UserProfile(_props: RouteProps) {
   const [errorMessages, setErrorMessages] = useState<ErrorMessagesType>({});
   const [inEditMode, setInEditMode] = useState<boolean>(false);
   const [initialState, setInitialState] = useState<UserType>();
-  const [redirect, setRedirect] = useState<string>();
+  const [notFound, setNotFound] = useState<boolean>(false);
   const [user, setUser] = useState<UserType>();
 
   const {
@@ -55,7 +54,7 @@ function UserProfile(_props: RouteProps) {
           setUser(extendedResult);
         },
       )
-      .catch(() => setRedirect(formatPath(Paths.meta.not_found)));
+      .catch(() => setNotFound(true));
   }, []);
 
   const saveUser = () =>
@@ -77,8 +76,8 @@ function UserProfile(_props: RouteProps) {
       })
       .catch((err) => setErrorMessages(mapErrorMessages(err)));
 
-  if (redirect) {
-    return <Navigate to={redirect} />;
+  if (notFound) {
+    return <NotFound />;
   }
 
   if (!user) {

@@ -16,6 +16,7 @@ import {
   ExecutionEnvironmentHeader,
   LoadingPage,
   Main,
+  NotFound,
   RepositoryForm,
   StatefulDropdown,
   closeAlert,
@@ -31,17 +32,19 @@ import {
 } from 'src/utilities';
 
 interface IState {
-  repo: ContainerRepositoryType;
-  loading: boolean;
-  redirect: string;
-  editing: boolean;
   alerts: AlertType[];
+  editing: boolean;
+  loading: boolean;
+  notFound: boolean;
+  redirect: string;
+  repo: ContainerRepositoryType;
   showDeleteModal: boolean;
 }
 
 export interface IDetailSharedProps extends RouteProps {
   containerRepository: ContainerRepositoryType;
   addAlert: (alert: AlertType) => void;
+  setNotFound: (value: boolean) => void;
 }
 
 // opposite of formatEEPath - converts routeParams from {namespace, container} to "namespace/container"
@@ -63,11 +66,12 @@ export function withContainerRepo(WrappedComponent) {
       super(props);
 
       this.state = {
-        repo: undefined,
-        loading: true,
-        redirect: undefined,
-        editing: false,
         alerts: [],
+        editing: false,
+        loading: true,
+        notFound: false,
+        redirect: undefined,
+        repo: undefined,
         showDeleteModal: false,
       };
     }
@@ -84,20 +88,26 @@ export function withContainerRepo(WrappedComponent) {
     }
 
     render() {
+      const { alerts, editing, loading, notFound, repo, showDeleteModal } =
+        this.state;
+
       const redirect = {
         list: formatPath(Paths.container.repository.list),
-        notFound: formatPath(Paths.meta.not_found),
       }[this.state.redirect];
 
       if (redirect) {
         return <Navigate to={redirect} />;
       }
 
-      if (this.state.loading) {
+      if (notFound) {
+        return <NotFound />;
+      }
+
+      if (loading) {
         return <LoadingPage />;
       }
 
-      const permissions = this.state.repo.namespace.my_permissions;
+      const permissions = repo.namespace.my_permissions;
       const showEdit =
         permissions.includes(
           'container.namespace_change_containerdistribution',
@@ -107,12 +117,12 @@ export function withContainerRepo(WrappedComponent) {
       );
       const { hasPermission } = this.context as IAppContextType;
       const dropdownItems = [
-        this.state.repo.pulp.repository.remote && canSync && (
+        repo.pulp.repository.remote && canSync && (
           <DropdownItem
             key='sync'
-            onClick={() => this.sync(this.state.repo.name)}
+            onClick={() => this.sync(repo.name)}
             isDisabled={['running', 'waiting'].includes(
-              this.state.repo.pulp.repository.remote?.last_sync_task?.state,
+              repo.pulp.repository.remote?.last_sync_task?.state,
             )}
           >
             {t`Sync from registry`}
@@ -128,20 +138,17 @@ export function withContainerRepo(WrappedComponent) {
             {t`Delete`}
           </DropdownItem>
         ),
-        this.state.repo &&
-          canSignEE(this.context as IAppContextType, this.state.repo) && (
-            <DropdownItem
-              key='sign'
-              onClick={() => {
-                this.sign();
-              }}
-            >
-              {t`Sign`}
-            </DropdownItem>
-          ),
+        repo && canSignEE(this.context as IAppContextType, repo) && (
+          <DropdownItem
+            key='sign'
+            onClick={() => {
+              this.sign();
+            }}
+          >
+            {t`Sign`}
+          </DropdownItem>
+        ),
       ].filter((truthy) => truthy);
-
-      const { alerts, repo, showDeleteModal } = this.state;
 
       // move to Owner tab when it can have its own breadcrumbs
       const { group: groupId } = ParamHelper.parseParamString(
@@ -164,7 +171,7 @@ export function withContainerRepo(WrappedComponent) {
               selectedItem={repo.name}
               closeAction={() => this.setState({ showDeleteModal: false })}
               afterDelete={() => {
-                (this.context as IAppContextType).setAlerts(this.state.alerts);
+                (this.context as IAppContextType).setAlerts(alerts);
                 this.setState({ redirect: 'list' });
               }}
               addAlert={(text, variant, description = undefined) =>
@@ -175,7 +182,7 @@ export function withContainerRepo(WrappedComponent) {
           <ExecutionEnvironmentHeader
             tab={this.getTab()}
             groupId={groupId}
-            container={this.state.repo}
+            container={repo}
             displaySignatures={
               (this.context as IAppContextType).featureFlags.container_signing
             }
@@ -195,11 +202,11 @@ export function withContainerRepo(WrappedComponent) {
             }
           />
           <Main>
-            {this.state.editing && (
+            {editing && (
               <RepositoryForm
-                name={this.state.repo.name}
-                namespace={this.state.repo.namespace.name}
-                description={this.state.repo.description}
+                name={repo.name}
+                namespace={repo.namespace.name}
+                description={repo.description}
                 permissions={permissions}
                 onSave={(promise) => {
                   promise.then((results) => {
@@ -212,7 +219,7 @@ export function withContainerRepo(WrappedComponent) {
                         title: (
                           <Trans>
                             Saved changes to container &quot;
-                            {this.state.repo.name}&quot;.
+                            {repo.name}&quot;.
                           </Trans>
                         ),
                       }),
@@ -229,27 +236,22 @@ export function withContainerRepo(WrappedComponent) {
                   });
                 }}
                 onCancel={() => this.setState({ editing: false })}
-                distributionPulpId={this.state.repo.pulp.distribution.id}
-                isRemote={!!this.state.repo.pulp.repository.remote}
-                upstreamName={
-                  this.state.repo.pulp.repository.remote?.upstream_name
-                }
-                registry={this.state.repo.pulp.repository.remote?.registry}
-                excludeTags={
-                  this.state.repo.pulp.repository.remote?.exclude_tags || []
-                }
-                includeTags={
-                  this.state.repo.pulp.repository.remote?.include_tags || []
-                }
-                remoteId={this.state.repo.pulp.repository.remote?.id}
+                distributionPulpId={repo.pulp.distribution.id}
+                isRemote={!!repo.pulp.repository.remote}
+                upstreamName={repo.pulp.repository.remote?.upstream_name}
+                registry={repo.pulp.repository.remote?.registry}
+                excludeTags={repo.pulp.repository.remote?.exclude_tags || []}
+                includeTags={repo.pulp.repository.remote?.include_tags || []}
+                remoteId={repo.pulp.repository.remote?.id}
               />
             )}
             <WrappedComponent
-              containerRepository={this.state.repo}
-              editing={this.state.editing}
+              containerRepository={repo}
+              editing={editing}
               addAlert={({ title, variant, description = null }) =>
                 this.addAlert(title, variant, description)
               }
+              setNotFound={(notFound) => this.setState({ notFound })}
               {...this.props}
             />
           </Main>
@@ -276,7 +278,7 @@ export function withContainerRepo(WrappedComponent) {
             setTimeout(() => this.loadRepo(), 10000);
           }
         })
-        .catch(() => this.setState({ redirect: 'notFound' }));
+        .catch(() => this.setState({ notFound: true }));
     }
 
     private getTab() {

@@ -6,6 +6,7 @@ import {
   CollectionHeader,
   LoadingPage,
   Main,
+  NotFound,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import { ParamHelper, type RouteProps, withRouter } from 'src/utilities';
@@ -26,6 +27,7 @@ class CollectionContent extends Component<RouteProps, IBaseCollectionState> {
       collections: [],
       collectionsCount: 0,
       content: null,
+      notFound: false,
       params,
     };
   }
@@ -41,8 +43,13 @@ class CollectionContent extends Component<RouteProps, IBaseCollectionState> {
       collections,
       collectionsCount,
       content,
+      notFound,
       params,
     } = this.state;
+
+    if (notFound) {
+      return <NotFound />;
+    }
 
     if (collections.length <= 0) {
       return <LoadingPage />;
@@ -103,7 +110,6 @@ class CollectionContent extends Component<RouteProps, IBaseCollectionState> {
     loadCollection({
       forceReload,
       matchParams: this.props.routeParams,
-      navigate: this.props.navigate,
       setCollection: (
         collections,
         collection,
@@ -118,6 +124,7 @@ class CollectionContent extends Component<RouteProps, IBaseCollectionState> {
           collectionsCount,
           actuallyCollection,
         }),
+      setNotFound: (notFound) => this.setState({ notFound }),
       stateParams: this.state.params,
     });
   }

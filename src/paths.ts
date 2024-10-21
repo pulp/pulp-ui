@@ -123,7 +123,6 @@ export const Paths = {
   meta: {
     about: '/about-project',
     login: '/login',
-    not_found: '/not-found', // FIXME: don't redirect
     search: '/search',
   },
   rpm: {

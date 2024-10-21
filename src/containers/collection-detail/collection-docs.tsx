@@ -11,6 +11,7 @@ import {
   ExternalLink,
   LoadingPage,
   Main,
+  NotFound,
   TableOfContents,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
@@ -35,6 +36,7 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
       collections: [],
       collectionsCount: 0,
       content: null,
+      notFound: false,
       params,
     };
     this.docsRef = createRef();
@@ -52,9 +54,14 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
       collections,
       collectionsCount,
       content,
+      notFound,
       params,
     } = this.state;
     const urlFields = this.props.routeParams;
+
+    if (notFound) {
+      return <NotFound />;
+    }
 
     if (!collection || !content) {
       return <LoadingPage />;
@@ -242,7 +249,6 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
     loadCollection({
       forceReload,
       matchParams: this.props.routeParams,
-      navigate: this.props.navigate,
       setCollection: (
         collections,
         collection,
@@ -257,6 +263,7 @@ class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
           collectionsCount,
           actuallyCollection,
         }),
+      setNotFound: (notFound) => this.setState({ notFound }),
       stateParams: this.state.params,
     });
   }

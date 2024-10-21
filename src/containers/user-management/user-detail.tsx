@@ -10,6 +10,7 @@ import {
   DeleteUserModal,
   EmptyStateUnauthorized,
   LoadingPage,
+  NotFound,
   UserFormPage,
   closeAlert,
 } from 'src/components';
@@ -21,12 +22,13 @@ import {
 } from 'src/utilities';
 
 interface IState {
-  userDetail: UserType;
-  errorMessages: ErrorMessagesType;
-  showDeleteModal: boolean;
   alerts: AlertType[];
+  errorMessages: ErrorMessagesType;
+  notFound: boolean;
   redirect?: string;
+  showDeleteModal: boolean;
   unauthorized: boolean;
+  userDetail: UserType;
 }
 
 class UserDetail extends Component<RouteProps, IState> {
@@ -36,11 +38,12 @@ class UserDetail extends Component<RouteProps, IState> {
     super(props);
 
     this.state = {
-      userDetail: undefined,
-      errorMessages: {},
       alerts: [],
+      errorMessages: {},
+      notFound: false,
       showDeleteModal: false,
       unauthorized: false,
+      userDetail: undefined,
     };
   }
 
@@ -52,9 +55,7 @@ class UserDetail extends Component<RouteProps, IState> {
     } else {
       UserAPI.get(id)
         .then((result) => this.setState({ userDetail: result.data }))
-        .catch(() =>
-          this.setState({ redirect: formatPath(Paths.meta.not_found) }),
-        );
+        .catch(() => this.setState({ notFound: true }));
     }
   }
 
@@ -63,13 +64,25 @@ class UserDetail extends Component<RouteProps, IState> {
       return <Navigate to={this.state.redirect} />;
     }
 
-    const { userDetail, errorMessages, alerts, showDeleteModal, unauthorized } =
-      this.state;
+    const {
+      alerts,
+      errorMessages,
+      notFound,
+      showDeleteModal,
+      unauthorized,
+      userDetail,
+    } = this.state;
+
     const { user, hasPermission } = this.context as IAppContextType;
 
     if (unauthorized) {
       return <EmptyStateUnauthorized />;
     }
+
+    if (notFound) {
+      return <NotFound />;
+    }
+
     if (!userDetail) {
       return <LoadingPage />;
     }

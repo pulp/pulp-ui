@@ -1,5 +1,6 @@
 import React, { Component, type ElementType } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { NotFound } from 'src/components';
 import {
   AboutProject,
   AnsibleRemoteDetail,
@@ -32,7 +33,6 @@ import {
   MyImports,
   MyNamespaces,
   NamespaceDetail,
-  NotFound,
   Partners,
   PulpStatus,
   RPMPackageList,
@@ -156,7 +156,6 @@ export class AppRoutes extends Component {
       { component: UserDetail, path: Paths.core.user.detail },
       { component: UserList, path: Paths.core.user.list },
       { component: Approvals, path: Paths.ansible.approvals },
-      { component: NotFound, path: Paths.meta.not_found },
       { component: Partners, path: Paths.ansible.namespace.list },
       { component: EditNamespace, path: Paths.ansible.namespace.edit },
       { component: MyNamespaces, path: Paths.ansible.namespace.mine },
@@ -216,10 +215,7 @@ export class AppRoutes extends Component {
           path={'/'}
           element={<Navigate to={formatPath(Paths.core.status)} />}
         />
-        <Route
-          path='*'
-          element={<AuthHandler component={NotFound} noAuth path={null} />}
-        />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     );
   }

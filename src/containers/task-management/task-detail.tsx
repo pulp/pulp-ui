@@ -13,7 +13,7 @@ import {
 import CubesIcon from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
 import { capitalize } from 'lodash';
 import React, { Component, Fragment } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { GenericPulpAPI, TaskManagementAPI, type TaskType } from 'src/api';
 import {
   AlertList,
@@ -25,6 +25,7 @@ import {
   EmptyStateCustom,
   LoadingSpinner,
   Main,
+  NotFound,
   StatusIndicator,
   closeAlert,
 } from 'src/components';
@@ -43,9 +44,9 @@ interface IState {
   cancelModalVisible: boolean;
   childTasks: TaskType[];
   loading: boolean;
+  notFound: boolean;
   parentTask: TaskType;
   polling: ReturnType<typeof setInterval>;
-  redirect: string;
   resources: {
     name?: string;
     pluginName?: string;
@@ -63,9 +64,9 @@ class TaskDetail extends Component<RouteProps, IState> {
       cancelModalVisible: false,
       childTasks: [],
       loading: true,
+      notFound: false,
       parentTask: null,
       polling: null,
-      redirect: null,
       resources: [],
       task: null,
       taskName: '',
@@ -95,8 +96,8 @@ class TaskDetail extends Component<RouteProps, IState> {
       cancelModalVisible,
       childTasks,
       loading,
+      notFound,
       parentTask,
-      redirect,
       resources,
       task,
       taskName,
@@ -110,8 +111,8 @@ class TaskDetail extends Component<RouteProps, IState> {
       ? parsePulpIDFromURL(parentTask.pulp_href)
       : null;
 
-    if (redirect) {
-      return <Navigate to={redirect} />;
+    if (notFound) {
+      return <NotFound />;
     }
 
     return loading ? (
@@ -442,9 +443,7 @@ class TaskDetail extends Component<RouteProps, IState> {
               .then((result) => {
                 parentTask = result.data;
               })
-              .catch(() => {
-                return true;
-              }),
+              .catch(() => true),
           );
         }
         if (result.data.child_tasks.length) {
@@ -455,9 +454,7 @@ class TaskDetail extends Component<RouteProps, IState> {
                 .then((result) => {
                   childTasks.push(result.data);
                 })
-                .catch(() => {
-                  return true;
-                }),
+                .catch(() => true),
             );
           });
         }
@@ -493,9 +490,7 @@ class TaskDetail extends Component<RouteProps, IState> {
                       pluginName,
                     });
                   })
-                  .catch(() => {
-                    return true;
-                  }),
+                  .catch(() => true),
               );
             } else {
               resources.push({ type: resourceType });
@@ -513,9 +508,7 @@ class TaskDetail extends Component<RouteProps, IState> {
           });
         });
       })
-      .catch(() => {
-        this.setState({ redirect: formatPath(Paths.meta.not_found) });
-      });
+      .catch(() => this.setState({ notFound: true }));
   }
 }
 

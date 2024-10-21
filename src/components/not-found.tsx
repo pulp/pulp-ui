@@ -2,11 +2,10 @@ import { t } from '@lingui/macro';
 import { Bullseye } from '@patternfly/react-core';
 import React from 'react';
 import { BaseHeader, Main } from 'src/components';
-import { withRouter } from 'src/utilities';
 import PulpLogo from 'static/images/pulp_logo.png';
 import './not-found.scss';
 
-export const NotFound = (_props) => (
+export const NotFound = () => (
   <>
     <BaseHeader title={t`404 - Page not found`} />
     <Main>
@@ -24,5 +23,3 @@ export const NotFound = (_props) => (
     </Main>
   </>
 );
-
-export default withRouter(NotFound);

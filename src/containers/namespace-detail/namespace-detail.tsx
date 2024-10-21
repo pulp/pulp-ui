@@ -30,6 +30,7 @@ import {
   ImportModal,
   LoadingPage,
   Main,
+  NotFound,
   PartnerHeader,
   PulpListToolbar,
   SignAllCertificatesModal,
@@ -70,6 +71,7 @@ interface IState {
   isOpenNamespaceModal: boolean;
   isOpenSignModal: boolean;
   namespace: NamespaceType;
+  notFound: boolean;
   params: {
     group?: string;
     keywords?: string;
@@ -128,6 +130,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
       isOpenNamespaceModal: false,
       isOpenSignModal: false,
       namespace: null,
+      notFound: false,
       params,
       redirect: null,
       showControls: false, // becomes true when my-namespaces doesn't 404
@@ -240,6 +243,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
       isNamespacePending,
       isOpenNamespaceModal,
       namespace,
+      notFound,
       params,
       redirect,
       showControls,
@@ -251,6 +255,10 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
 
     if (redirect) {
       return <Navigate to={redirect} />;
+    }
+
+    if (notFound) {
+      return <NotFound />;
     }
 
     if (!namespace) {
@@ -839,7 +847,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
         },
       )
       .catch(() => {
-        this.setState({ redirect: formatPath(Paths.meta.not_found) });
+        this.setState({ notFound: true });
       });
   }
 

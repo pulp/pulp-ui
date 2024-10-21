@@ -76,6 +76,7 @@ export { NamespaceCard, NamespaceNextPageCard } from './namespace-card';
 export { NamespaceForm, validateName, validateURL } from './namespace-form';
 export { NamespaceListItem } from './namespace-list-item';
 export { NamespaceModal } from './namespace-modal';
+export { NotFound } from './not-found';
 export { CollectionNumericLabel } from './numeric-label';
 export { Page } from './page';
 export { PageWithTabs } from './page-with-tabs';

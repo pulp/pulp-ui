@@ -15,6 +15,7 @@ import {
   EmptyStateNoData,
   LoadingPage,
   Main,
+  NotFound,
   closeAlert,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
@@ -64,6 +65,7 @@ class CollectionDependencies extends Component<RouteProps, IState> {
       collectionsCount: 0,
       content: null,
       dependencies_repos: [],
+      notFound: false,
       params,
       usedByDependencies: [],
       usedByDependenciesCount: 0,
@@ -83,11 +85,16 @@ class CollectionDependencies extends Component<RouteProps, IState> {
       collections,
       collectionsCount,
       content,
+      notFound,
       params,
       usedByDependencies,
       usedByDependenciesCount,
       usedByDependenciesLoading,
     } = this.state;
+
+    if (notFound) {
+      return <NotFound />;
+    }
 
     if (collections.length <= 0) {
       return <LoadingPage />;
@@ -278,7 +285,6 @@ class CollectionDependencies extends Component<RouteProps, IState> {
     loadCollection({
       forceReload,
       matchParams: this.props.routeParams,
-      navigate: this.props.navigate,
       setCollection: (
         collections,
         collection,
@@ -296,6 +302,7 @@ class CollectionDependencies extends Component<RouteProps, IState> {
           },
           callback,
         ),
+      setNotFound: (notFound) => this.setState({ notFound }),
       stateParams: this.state.params.version
         ? { version: this.state.params.version }
         : {},

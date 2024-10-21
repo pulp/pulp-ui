@@ -173,7 +173,7 @@ class ExecutionEnvironmentDetail extends Component<IDetailSharedProps, IState> {
             loading: false,
           });
         })
-        .catch(() => this.setState({ redirect: 'notFound' })),
+        .catch(() => this.props.setNotFound(true)),
     );
   }
 
