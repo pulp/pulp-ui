@@ -3,10 +3,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { type AnsibleRemoteType, type AnsibleRepositoryType } from 'src/api';
 import {
+  CopyURL,
   Details,
   PulpLabels,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
+import { getRepoURL } from 'src/utilities';
 
 interface TabProps {
   item: AnsibleRepositoryType & {
@@ -25,6 +27,14 @@ export const DetailsTab = ({ item }: TabProps) => {
         {
           label: t`Retained version count`,
           value: item?.retain_repo_versions ?? t`All`,
+        },
+        {
+          label: t`Repository URL`,
+          value: item?.distroBasePath ? (
+            <CopyURL url={getRepoURL(item.distroBasePath)} />
+          ) : (
+            '---'
+          ),
         },
         {
           label: t`Labels`,
