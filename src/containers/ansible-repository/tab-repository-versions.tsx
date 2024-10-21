@@ -68,7 +68,7 @@ const VersionContent = ({
 
   // @ts-expect-error: TS2339: Property 'params' does not exist on type '{}'.
   const query = ({ params } = {}) =>
-    GenericPulpAPI.get(href.replace(config.API_BASE_PATH, ''), params);
+    GenericPulpAPI.list(href.replace(config.API_BASE_PATH, ''), params);
 
   const renderTableRow = ({
     manifest: {
