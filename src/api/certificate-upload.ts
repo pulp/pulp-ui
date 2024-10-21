@@ -9,7 +9,6 @@ interface UploadProps {
 }
 
 const base = new PulpAPI();
-base.apiPath = 'content/ansible/collection_signatures/';
 
 export const CertificateUploadAPI = {
   // Returns /pulp/api/v3/tasks/0be64cb4-3b7e-4a6b-b35d-c3b589923a90/
@@ -25,6 +24,10 @@ export const CertificateUploadAPI = {
       },
     };
 
-    return base.http.post(base.apiPath, formData, config);
+    return base.http.post(
+      `content/ansible/collection_signatures/`,
+      formData,
+      config,
+    );
   },
 };

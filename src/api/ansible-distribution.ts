@@ -1,12 +1,11 @@
 import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
-base.apiPath = 'distributions/ansible/ansible/';
 
 export const AnsibleDistributionAPI = {
-  create: (data) => base.create(data),
+  create: (data) => base.http.post(`distributions/ansible/ansible/`, data),
 
-  delete: (id) => base.delete(id),
+  delete: (id) => base.http.delete(`distributions/ansible/ansible/${id}/`),
 
-  list: (params?) => base.list(params),
+  list: (params?) => base.list(`distributions/ansible/ansible/`, params),
 };

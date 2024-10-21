@@ -29,28 +29,31 @@ function smartUpdate(
 }
 
 const base = new PulpAPI();
-base.apiPath = 'remotes/ansible/collection/';
 
 export const AnsibleRemoteAPI = {
-  addRole: (id, role) => base.create(role, base.apiPath + id + '/add_role/'),
+  addRole: (id, role) =>
+    base.http.post(`remotes/ansible/collection/${id}/add_role/`, role),
 
-  create: (data) => base.create(data),
+  create: (data) => base.http.post(`remotes/ansible/collection/`, data),
 
-  delete: (id) => base.delete(id),
+  delete: (id) => base.http.delete(`remotes/ansible/collection/${id}/`),
 
-  get: (id) => base.get(id),
+  get: (id) => base.http.get(`remotes/ansible/collection/${id}/`),
 
-  list: (params?) => base.list(params),
+  list: (params?) => base.list(`remotes/ansible/collection/`, params),
 
   listRoles: (id, params?) =>
-    base.list(params, base.apiPath + id + '/list_roles/'),
+    base.list(`remotes/ansible/collection/${id}/list_roles/`, params),
 
   myPermissions: (id, params?) =>
-    base.list(params, base.apiPath + id + '/my_permissions/'),
+    base.list(`remotes/ansible/collection/${id}/my_permissions/`, params),
 
   removeRole: (id, role) =>
-    base.create(role, base.apiPath + id + '/remove_role/'),
+    base.http.post(`remotes/ansible/collection/${id}/remove_role/`, role),
 
   smartUpdate: (id, newValue: AnsibleRemoteType, oldValue: AnsibleRemoteType) =>
-    base.update(id, smartUpdate(newValue, oldValue)),
+    base.http.put(
+      `remotes/ansible/collection/${id}/`,
+      smartUpdate(newValue, oldValue),
+    ),
 };

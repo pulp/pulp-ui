@@ -1,10 +1,9 @@
 import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
-base.apiPath = '_ui/v1/tags/';
 
 export const TagAPI = {
-  listCollections: (params) => base.list(params, base.apiPath + 'collections/'),
+  listCollections: (params) => base.list(`_ui/v1/tags/collections/`, params),
 
-  listRoles: (params) => base.list(params, base.apiPath + 'roles/'),
+  listRoles: (params) => base.list(`_ui/v1/tags/roles/`, params),
 };

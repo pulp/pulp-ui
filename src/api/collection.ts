@@ -6,7 +6,6 @@ import {
 } from './response-types/collection';
 
 const base = new PulpAPI();
-base.apiPath = '_ui/v1/repo/';
 
 export const CollectionAPI = {
   deleteCollection: ({
@@ -32,14 +31,11 @@ export const CollectionAPI = {
     ),
 
   getContent: (namespace, name, version) =>
-    base.list(
-      {
-        namespace,
-        name,
-        version,
-      },
-      `pulp/api/v3/content/ansible/collection_versions/`,
-    ),
+    base.list(`pulp/api/v3/content/ansible/collection_versions/`, {
+      namespace,
+      name,
+      version,
+    }),
 
   getDetail: (distroBasePath, namespace, name) =>
     base.http.get(
@@ -66,13 +62,12 @@ export const CollectionAPI = {
     ),
 
   getUsedDependenciesByCollection: (namespace, collection, params = {}) =>
-    base.http.get(
+    base.list(
       `_ui/v1/collection-versions/?dependency=${namespace}.${collection}`,
-      base.mapParams(params),
+      params,
     ),
 
-  list: (params?, repo?: string) =>
-    base.list(params, base.apiPath + repo + '/'),
+  list: (params?, repo?: string) => base.list(`_ui/v1/repo/${repo}/`, params),
 
   setDeprecation: ({
     collection_version: { namespace, name },
@@ -81,12 +76,11 @@ export const CollectionAPI = {
   }: CollectionVersionSearch): Promise<{ data: { task: string } }> =>
     repositoryBasePath(repository.name, repository.pulp_href).then(
       (distroBasePath) =>
-        base.patch(
-          `${namespace}/${name}`,
+        base.http.patch(
+          `v3/plugin/ansible/content/${distroBasePath}/collections/index/${namespace}/${name}/`,
           {
             deprecated: !is_deprecated,
           },
-          `v3/plugin/ansible/content/${distroBasePath}/collections/index/`,
         ),
     ),
 
@@ -116,7 +110,7 @@ export const CollectionAPI = {
         config,
       );
     } else {
-      return base.http.post('v3/artifacts/collections/', formData, config);
+      return base.http.post(`v3/artifacts/collections/`, formData, config);
     }
   },
 };

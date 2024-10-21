@@ -32,21 +32,28 @@ function smartUpdate(remote: RemoteType, unmodifiedRemote: RemoteType) {
 }
 
 const base = new PulpAPI();
-base.apiPath = '_ui/v1/execution-environments/registries/';
 
 export const ExecutionEnvironmentRegistryAPI = {
-  create: (data) => base.create(data),
+  create: (data) =>
+    base.http.post(`_ui/v1/execution-environments/registries/`, data),
 
-  delete: (name) => base.delete(name),
+  delete: (id) =>
+    base.http.delete(`_ui/v1/execution-environments/registries/${id}/`),
 
-  get: (name) => base.get(name),
+  get: (id) => base.http.get(`_ui/v1/execution-environments/registries/${id}/`),
 
-  index: (id) => base.http.post(base.apiPath + id + '/index/', {}),
+  index: (id) =>
+    base.http.post(`_ui/v1/execution-environments/registries/${id}/index/`, {}),
 
-  list: (params?) => base.list(params),
+  list: (params?) =>
+    base.list(`_ui/v1/execution-environments/registries/`, params),
 
   smartUpdate: (id, newValue: RemoteType, oldValue: RemoteType) =>
-    base.update(id, smartUpdate(newValue, oldValue)),
+    base.http.put(
+      `_ui/v1/execution-environments/registries/${id}/`,
+      smartUpdate(newValue, oldValue),
+    ),
 
-  sync: (id) => base.http.post(base.apiPath + id + '/sync/', {}),
+  sync: (id) =>
+    base.http.post(`_ui/v1/execution-environments/registries/${id}/sync/`, {}),
 };

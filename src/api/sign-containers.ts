@@ -4,7 +4,7 @@ const base = new PulpAPI();
 
 export const SignContainersAPI = {
   getSigningService: (serviceName: string) =>
-    base.http.get(`/signing-services/?name=${serviceName}`),
+    base.http.get(`signing-services/?name=${serviceName}`),
 
   sign: (
     containerId: string,
@@ -18,7 +18,7 @@ export const SignContainersAPI = {
     }
 
     return base.http.post(
-      `/repositories/container/${pulp_type}/${containerId}/sign/`,
+      `repositories/container/${pulp_type}/${containerId}/sign/`,
       postObj,
     );
   },

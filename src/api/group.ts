@@ -1,7 +1,6 @@
 import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
-base.apiPath = 'groups/';
 
 export const GroupAPI = {
   addUserToGroup: (id, username) =>
@@ -9,15 +8,15 @@ export const GroupAPI = {
       username: username,
     }),
 
-  create: (data) => base.create(data),
+  create: (data) => base.http.post(`groups/`, data),
 
-  delete: (id) => base.delete(id),
+  delete: (id) => base.http.delete(`groups/${id}/`),
 
-  get: (id) => base.get(id),
+  get: (id) => base.http.get(`groups/${id}/`),
 
   getUsers: (id) => base.http.get(`groups/${id}/users/`),
 
-  list: (params?) => base.list(params),
+  list: (params?) => base.list(`groups/`, params),
 
-  update: (id, data) => base.update(id, data),
+  update: (id, data) => base.http.put(`groups/${id}/`, data),
 };

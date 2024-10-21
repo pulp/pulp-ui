@@ -1,12 +1,11 @@
 import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
-base.apiPath = 'tasks/';
 
 export const TaskManagementAPI = {
-  get: (id) => base.get(id),
+  get: (id) => base.http.get(`tasks/${id}/`),
 
-  list: (params?) => base.list(params),
+  list: (params?) => base.list(`tasks/`, params),
 
-  patch: (id, data) => base.patch(id, data),
+  patch: (id, data) => base.http.patch(`tasks/${id}/`, data),
 };

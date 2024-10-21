@@ -1,18 +1,17 @@
 import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
-base.apiPath = 'users/';
 
 export const UserAPI = {
-  create: (user) => base.create(user),
+  create: (user) => base.http.post(`users/`, user),
 
-  delete: (id) => base.delete(id),
+  delete: (id) => base.http.delete(`users/${id}/`),
 
-  get: (id) => base.get(id),
+  get: (id) => base.http.get(`users/${id}/`),
 
-  list: (params?) => base.list(params),
+  list: (params?) => base.list(`users/`, params),
 
-  patch: (id, user) => base.patch(id, user),
+  patch: (id, user) => base.http.patch(`users/${id}/`, user),
 
   saveUser: (user) => {
     const newUser = { ...user };
@@ -31,8 +30,8 @@ export const UserAPI = {
     delete newUser.prn;
     delete newUser.pulp_href;
 
-    return base.patch(user.id, newUser);
+    return base.http.patch(`users/${user.id}/`, newUser);
   },
 
-  update: (id, user) => base.update(id, user),
+  update: (id, user) => base.http.put(`users/${id}/`, user),
 };

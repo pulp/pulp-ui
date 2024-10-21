@@ -1,14 +1,15 @@
 import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
-base.apiPath = '_ui/v1/execution-environments/remotes/';
 
 export const ExecutionEnvironmentRemoteAPI = {
-  create: (data) => base.create(data),
+  create: (data) =>
+    base.http.post(`_ui/v1/execution-environments/remotes/`, data),
 
-  get: (id) => base.get(id),
+  get: (id) => base.http.get(`_ui/v1/execution-environments/remotes/${id}/`),
 
-  list: (params?) => base.list(params),
+  list: (params?) =>
+    base.list(`_ui/v1/execution-environments/remotes/`, params),
 
   sync: (name) =>
     base.http.post(
@@ -16,5 +17,6 @@ export const ExecutionEnvironmentRemoteAPI = {
       {},
     ),
 
-  update: (id, data) => base.update(id, data),
+  update: (id, data) =>
+    base.http.put(`_ui/v1/execution-environments/remotes/${id}/`, data),
 };

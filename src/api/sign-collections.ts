@@ -20,7 +20,6 @@ interface SignCollectionVersion extends SignCollection {
 type SignProps = SignNamespace | SignCollection | SignCollectionVersion;
 
 const base = new PulpAPI();
-base.apiPath = '_ui/v1/collection_signing/';
 
 export const SignCollectionAPI = {
   sign: ({ repository, repository_name: name, ...args }: SignProps) =>
@@ -31,7 +30,7 @@ export const SignCollectionAPI = {
         }),
       )
       .then((distro_base_path) =>
-        base.http.post(base.apiPath, {
+        base.http.post(`_ui/v1/collection_signing/`, {
           distro_base_path,
           ...args,
         }),

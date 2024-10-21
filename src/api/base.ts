@@ -2,7 +2,6 @@ import axios from 'axios';
 import { ParamHelper } from 'src/utilities';
 
 export class BaseAPI {
-  apiPath: string;
   http: { delete; get; interceptors; patch; post; put };
   sortParam: string; // translate ?sort into sortParam in list()
   mapPageToOffset: boolean;
@@ -50,31 +49,7 @@ export class BaseAPI {
     };
   }
 
-  list(params?: object, apiPath?: string) {
-    return this.http.get(this.getPath(apiPath), this.mapParams(params));
-  }
-
-  get(id: string, apiPath?: string) {
-    return this.http.get(this.getPath(apiPath) + id + '/');
-  }
-
-  update(id: string | number, data, apiPath?: string) {
-    return this.http.put(this.getPath(apiPath) + id + '/', data);
-  }
-
-  create(data, apiPath?: string) {
-    return this.http.post(this.getPath(apiPath), data);
-  }
-
-  delete(id: string | number, apiPath?: string) {
-    return this.http.delete(this.getPath(apiPath) + id + '/');
-  }
-
-  patch(id: string | number, data, apiPath?: string) {
-    return this.http.patch(this.getPath(apiPath) + id + '/', data);
-  }
-
-  getPath(apiPath?: string) {
-    return apiPath || this.apiPath || '';
+  list(url: string, params?) {
+    return this.http.get(url, this.mapParams(params));
   }
 }

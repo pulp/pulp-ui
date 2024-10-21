@@ -1,8 +1,7 @@
 import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
-base.apiPath = 'orphans/cleanup/';
 
 export const OrphanCleanupAPI = {
-  create: (data) => base.create(data),
+  create: (data) => base.http.post(`orphans/cleanup/`, data),
 };

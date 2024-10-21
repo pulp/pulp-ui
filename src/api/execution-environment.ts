@@ -1,36 +1,47 @@
 import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
-base.apiPath = 'v3/plugin/execution-environments/repositories/';
 
 export const ExecutionEnvironmentAPI = {
   deleteExecutionEnvironment: (name) =>
-    base.http.delete(base.apiPath + `${name}/`),
+    base.http.delete(`v3/plugin/execution-environments/repositories/${name}/`),
 
   deleteImage: (name, manifest) =>
-    base.http.delete(base.apiPath + `${name}/_content/images/${manifest}/`),
-
-  get: (id) => base.get(id),
-
-  image: (name, digest) =>
-    base.http.get(base.apiPath + `${name}/_content/images/${digest}/`),
-
-  images: (name, params) =>
-    base.http.get(
-      base.apiPath + `${name}/_content/images/`,
-      base.mapParams(params),
+    base.http.delete(
+      `v3/plugin/execution-environments/repositories/${name}/_content/images/${manifest}/`,
     ),
 
-  list: (params?) => base.list(params),
+  get: (id) =>
+    base.http.get(`v3/plugin/execution-environments/repositories/${id}/`),
 
-  readme: (name) => base.http.get(base.apiPath + `${name}/_content/readme/`),
+  image: (name, digest) =>
+    base.http.get(
+      `v3/plugin/execution-environments/repositories/${name}/_content/images/${digest}/`,
+    ),
+
+  images: (name, params) =>
+    base.list(
+      `v3/plugin/execution-environments/repositories/${name}/_content/images/`,
+      params,
+    ),
+
+  list: (params?) =>
+    base.list(`v3/plugin/execution-environments/repositories/`, params),
+
+  readme: (name) =>
+    base.http.get(
+      `v3/plugin/execution-environments/repositories/${name}/_content/readme/`,
+    ),
 
   saveReadme: (name, readme) =>
-    base.http.put(base.apiPath + `${name}/_content/readme/`, readme),
+    base.http.put(
+      `v3/plugin/execution-environments/repositories/${name}/_content/readme/`,
+      readme,
+    ),
 
   tags: (name, params) =>
-    base.http.get(
-      base.apiPath + `${name}/_content/tags/`,
-      base.mapParams(params),
+    base.list(
+      `v3/plugin/execution-environments/repositories/${name}/_content/tags/`,
+      params,
     ),
 };
