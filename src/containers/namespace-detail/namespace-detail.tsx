@@ -220,19 +220,12 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
 
   hasPerm(permission) {
     const { namespace } = this.state;
-    const {
-      hasPermission,
-      user: { is_superuser },
-    } = this.context as IAppContextType;
+    const { hasPermission } = this.context as IAppContextType;
 
     const hasObjectPermission = (permission) =>
       namespace?.related_fields?.my_permissions?.includes?.(permission);
 
-    return (
-      hasPermission(permission) ||
-      hasObjectPermission(permission) ||
-      is_superuser
-    );
+    return hasPermission(permission) || hasObjectPermission(permission);
   }
 
   render() {

@@ -724,6 +724,7 @@ class GroupDetail extends Component<RouteProps, IState> {
       return group.id != this.state.params.id;
     });
     const { name } = this.state.group;
+    // FIXME: patch
     UserAPI.update(user.id, user)
       .then(() => {
         this.setState({

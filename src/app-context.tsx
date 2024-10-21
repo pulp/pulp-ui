@@ -78,7 +78,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
           ? {
               username: credentials.username,
               groups: [],
-              is_superuser: true,
               is_anonymous: false,
               model_permissions: {},
             }

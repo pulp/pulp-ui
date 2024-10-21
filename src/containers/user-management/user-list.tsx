@@ -8,7 +8,6 @@ import {
   ToolbarItem,
 } from '@patternfly/react-core';
 import { DropdownItem } from '@patternfly/react-core/deprecated';
-import UserPlusIcon from '@patternfly/react-icons/dist/esm/icons/user-plus-icon';
 import { Table, Tbody, Td, Tr } from '@patternfly/react-table';
 import React, { Component } from 'react';
 import { Link, Navigate } from 'react-router-dom';
@@ -31,7 +30,6 @@ import {
   Main,
   PulpPagination,
   SortTable,
-  Tooltip,
   closeAlert,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
@@ -350,19 +348,6 @@ class UserList extends Component<RouteProps, IState> {
           <Link to={formatPath(Paths.core.user.detail, { user_id: user.id })}>
             {user.username}
           </Link>
-
-          {user.is_superuser && (
-            <>
-              {' '}
-              <Tooltip
-                content={t`Super users have all system permissions regardless of what groups they are in.`}
-              >
-                <Label icon={<UserPlusIcon />} color='orange'>
-                  {t`Super user`}
-                </Label>
-              </Tooltip>
-            </>
-          )}
         </Td>
         <Td>{user.first_name}</Td>
         <Td>{user.last_name}</Td>

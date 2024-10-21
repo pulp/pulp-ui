@@ -1,8 +1,7 @@
 import { t } from '@lingui/macro';
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { UserAPI, type UserType } from 'src/api';
-import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   BaseHeader,
   EmptyStateUnauthorized,
@@ -10,6 +9,7 @@ import {
   UserFormPage,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
+import { useUserContext } from 'src/user-context';
 import {
   type ErrorMessagesType,
   type RouteProps,
@@ -17,97 +17,88 @@ import {
   withRouter,
 } from 'src/utilities';
 
-interface IState {
-  user: UserType;
-  errorMessages: ErrorMessagesType;
-  unauthorized: boolean;
-  redirect?: string;
-}
+function UserEdit(props: RouteProps) {
+  const [errorMessages, setErrorMessages] = useState<ErrorMessagesType>({});
+  const [initialState, setInitialState] = useState<UserType>();
+  const [redirect, setRedirect] = useState<string>();
+  const [unauthorized, setUnauthorized] = useState<boolean>(false);
+  const [user, setUser] = useState<UserType>();
 
-class UserEdit extends Component<RouteProps, IState> {
-  static contextType = AppContext;
+  const {
+    credentials: { username },
+    updateUsername,
+    updatePassword,
+  } = useUserContext();
 
-  constructor(props) {
-    super(props);
-
-    this.state = { user: undefined, errorMessages: {}, unauthorized: false };
-  }
-
-  componentDidMount() {
-    const id = this.props.routeParams.user_id;
-
+  const id = props.routeParams.user_id;
+  useEffect(() => {
     UserAPI.get(id)
-      .then((result) =>
-        this.setState({ user: result.data, unauthorized: false }),
-      )
-      .catch(() => this.setState({ unauthorized: true }));
+      .then(({ data: result }) => {
+        const extendedResult = { ...result, password: '' };
+        setInitialState({ ...extendedResult });
+        setUser(extendedResult);
+        setUnauthorized(false);
+      })
+      .catch(() => setUnauthorized(true));
+  }, [id]);
+
+  const saveUser = () =>
+    UserAPI.saveUser(user)
+      .then(() => {
+        // update saved credentials when password of logged user is changed
+        if (initialState.username === username && user.password) {
+          updatePassword(user.password);
+        }
+        if (initialState.username === username && username !== user.username) {
+          updateUsername(user.username);
+        }
+
+        setRedirect(formatPath(Paths.core.user.list));
+      })
+      .catch((err) => setErrorMessages(mapErrorMessages(err)));
+
+  if (redirect) {
+    return <Navigate to={redirect} />;
   }
 
-  render() {
-    if (this.state.redirect) {
-      return <Navigate to={this.state.redirect} />;
-    }
+  const title = t`Edit user`;
 
-    const { user, errorMessages, unauthorized } = this.state;
-    const title = t`Edit user`;
-
-    if (unauthorized) {
-      return (
-        <>
-          <BaseHeader title={title} />
-          <EmptyStateUnauthorized />
-        </>
-      );
-    }
-
-    if (!user) {
-      return <LoadingPage />;
-    }
-
-    const breadcrumbs = [
-      { url: formatPath(Paths.core.user.list), name: t`Users` },
-      {
-        url: formatPath(Paths.core.user.detail, { user_id: user.id }),
-        name: user.username,
-      },
-      { name: t`Edit` },
-    ];
-
+  if (unauthorized) {
     return (
-      <UserFormPage
-        user={user}
-        breadcrumbs={breadcrumbs}
-        title={title}
-        errorMessages={errorMessages}
-        updateUser={(user, errorMessages) =>
-          this.setState({ user: user, errorMessages: errorMessages })
-        }
-        saveUser={this.saveUser}
-        onCancel={() =>
-          this.setState({ redirect: formatPath(Paths.core.user.list) })
-        }
-      />
+      <>
+        <BaseHeader title={title} />
+        <EmptyStateUnauthorized />
+      </>
     );
   }
-  private saveUser = () => {
-    const { user } = this.state;
-    UserAPI.update(user.id.toString(), user)
-      .then(() => {
-        // redirect to login page when password of logged user is changed
-        // SSO not relevant, user-edit disabled
-        if (
-          (this.context as IAppContextType).user.id === user.id &&
-          user.password
-        ) {
-          this.setState({ redirect: formatPath(Paths.meta.login) });
-        } else {
-          this.setState({ redirect: formatPath(Paths.core.user.list) });
-        }
-      })
-      .catch((err) => {
-        this.setState({ errorMessages: mapErrorMessages(err) });
-      });
-  };
+
+  if (!user) {
+    return <LoadingPage />;
+  }
+
+  const breadcrumbs = [
+    { url: formatPath(Paths.core.user.list), name: t`Users` },
+    {
+      url: formatPath(Paths.core.user.detail, { user_id: user.id }),
+      name: user.username,
+    },
+    { name: t`Edit` },
+  ];
+
+  return (
+    <UserFormPage
+      breadcrumbs={breadcrumbs}
+      errorMessages={errorMessages}
+      onCancel={() => setRedirect(formatPath(Paths.core.user.list))}
+      saveUser={saveUser}
+      title={title}
+      updateUser={(user, errorMessages) => {
+        setErrorMessages(errorMessages);
+        setUser(user);
+      }}
+      user={user}
+    />
+  );
 }
 
 export default withRouter(UserEdit);

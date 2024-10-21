@@ -1,9 +1,8 @@
-import { t } from '@lingui/macro';
+import { Trans, t } from '@lingui/macro';
 import { Button } from '@patternfly/react-core';
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { ActiveUserAPI, type UserType } from 'src/api';
-import { AppContext, type IAppContextType } from 'src/app-context';
+import { UserAPI, type UserType } from 'src/api';
 import {
   AlertList,
   type AlertType,
@@ -12,141 +11,122 @@ import {
   closeAlert,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
+import { useUserContext } from 'src/user-context';
 import {
   type ErrorMessagesType,
   type RouteProps,
+  mapErrorMessages,
   withRouter,
 } from 'src/utilities';
 
-interface IState {
-  user: UserType;
-  errorMessages: ErrorMessagesType;
-  inEditMode: boolean;
-  alerts: AlertType[];
-  redirect?: string;
-}
+function UserProfile(_props: RouteProps) {
+  const [alerts, setAlerts] = useState<AlertType[]>([]);
+  const [errorMessages, setErrorMessages] = useState<ErrorMessagesType>({});
+  const [inEditMode, setInEditMode] = useState<boolean>(false);
+  const [initialState, setInitialState] = useState<UserType>();
+  const [redirect, setRedirect] = useState<string>();
+  const [user, setUser] = useState<UserType>();
 
-class UserProfile extends Component<RouteProps, IState> {
-  static contextType = AppContext;
+  const {
+    credentials: { username },
+    updateUsername,
+    updatePassword,
+  } = useUserContext();
 
-  private initialState: UserType;
+  const addAlert = (alert: AlertType) => {
+    setAlerts([...alerts, alert]);
+  };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      user: undefined,
-      errorMessages: {},
-      inEditMode: false,
-      alerts: [],
-    };
-  }
-
-  componentDidMount() {
-    ActiveUserAPI.getUser()
-      .then((result) => {
-        // The api doesn't return a value for the password, so set a blank one here
-        // to keep react from getting confused
-        const extendedResult = { ...result, password: '' };
-        this.initialState = { ...extendedResult };
-        this.setState({ user: extendedResult });
-      })
-      .catch(() =>
-        this.setState({ redirect: formatPath(Paths.meta.not_found) }),
-      );
-  }
-
-  render() {
-    if (this.state.redirect) {
-      return <Navigate to={this.state.redirect} />;
-    }
-
-    const { user, errorMessages, inEditMode, alerts } = this.state;
-    const { featureFlags } = this.context as IAppContextType;
-    const isUserMgmtDisabled = featureFlags.external_authentication;
-
-    if (!user) {
-      return <LoadingPage />;
-    }
-    return (
-      <>
-        <AlertList
-          alerts={alerts}
-          closeAlert={(i) =>
-            closeAlert(i, {
-              alerts,
-              setAlerts: (alerts) => this.setState({ alerts }),
-            })
-          }
-        />
-        <UserFormPage
-          isMe
-          user={user}
-          breadcrumbs={[{ name: t`Settings` }, { name: t`My profile` }]}
-          title={t`My profile`}
-          errorMessages={errorMessages}
-          updateUser={(user) => this.setState({ user: user })}
-          saveUser={this.saveUser}
-          isReadonly={!inEditMode}
-          onCancel={() =>
-            this.setState({
-              user: this.initialState,
-              inEditMode: false,
-              errorMessages: {},
-            })
-          }
-          extraControls={
-            !inEditMode &&
-            !isUserMgmtDisabled && (
-              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <div>
-                  <Button
-                    onClick={() => this.setState({ inEditMode: true })}
-                  >{t`Edit`}</Button>
-                </div>
-              </div>
-            )
-          }
-        />
-      </>
-    );
-  }
-
-  private saveUser = () => {
-    /* FIXME
-    const {
-      user,
-      user: { username },
-      alerts,
-    } = this.state;
-    ActiveUserAPI.saveUser(user)
-      .then((result) => {
-        this.setState(
-          {
-            inEditMode: false,
-            alerts: alerts.concat([
-              {
-                variant: 'success',
-                title: (
-                  <Trans>Saved changes to user &quot;{username}&quot;.</Trans>
-                ),
-              },
-            ]),
+  useEffect(() => {
+    UserAPI.list({
+      username,
+      page_size: 1,
+    })
+      .then(
+        ({
+          data: {
+            results: [result],
           },
-          // FIXME creds
-          () => (this.context as IAppContextType).setUser(result.data),
-        );
-        // redirect to login page when password is changed
-        // SSO not relevant, user edit disabled
+        }) => {
+          // The api doesn't return a value for the password, so set a blank one here
+          // to keep react from getting confused
+          const extendedResult = { ...result, password: '' };
+          setInitialState({ ...extendedResult });
+          setUser(extendedResult);
+        },
+      )
+      .catch(() => setRedirect(formatPath(Paths.meta.not_found)));
+  }, []);
+
+  const saveUser = () =>
+    UserAPI.saveUser(user)
+      .then(() => {
+        setInEditMode(false);
+        addAlert({
+          variant: 'success',
+          title: <Trans>Saved changes to user &quot;{username}&quot;.</Trans>,
+        });
+
+        // update saved credentials when password of logged user is changed
         if (user.password) {
-          this.setState({ redirect: formatPath(Paths.meta.login) });
+          updatePassword(user.password);
+        }
+        if (username !== user.username) {
+          updateUsername(user.username);
         }
       })
-      .catch((err) => {
-        this.setState({ errorMessages: mapErrorMessages(err) });
-      });
-      */
-  };
+      .catch((err) => setErrorMessages(mapErrorMessages(err)));
+
+  if (redirect) {
+    return <Navigate to={redirect} />;
+  }
+
+  if (!user) {
+    return <LoadingPage />;
+  }
+
+  const breadcrumbs = [{ name: t`Settings` }, { name: t`My profile` }];
+  const title = t`My profile`;
+  const extraControls = !inEditMode && (
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div>
+        <Button onClick={() => setInEditMode(true)}>{t`Edit`}</Button>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      <AlertList
+        alerts={alerts}
+        closeAlert={(i) =>
+          closeAlert(i, {
+            alerts,
+            setAlerts,
+          })
+        }
+      />
+      <UserFormPage
+        breadcrumbs={breadcrumbs}
+        errorMessages={errorMessages}
+        extraControls={extraControls}
+        isMe
+        isReadonly={!inEditMode}
+        onCancel={() => {
+          setUser(initialState);
+          setInEditMode(false);
+          setErrorMessages({});
+        }}
+        saveUser={saveUser}
+        title={title}
+        updateUser={(user, errorMessages) => {
+          setErrorMessages(errorMessages);
+          setUser(user);
+        }}
+        user={user}
+      />
+    </>
+  );
 }
 
 export default withRouter(UserProfile);
