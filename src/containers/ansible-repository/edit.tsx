@@ -67,9 +67,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
       return null;
     }
 
-    const saveRepository = ({
-      createDistribution,
-    }) => {
+    const saveRepository = ({ createDistribution }) => {
       const { repositoryToEdit } = state;
 
       const data = { ...repositoryToEdit };

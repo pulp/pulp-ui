@@ -106,7 +106,9 @@ export const AnsibleRepositoryForm = ({
   const loadRemotes = (name?) => {
     setRemotesError(null);
     AnsibleRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
-      .then(({ data }) => setRemotes(data.results.map((r) => ({...r, id: r.pulp_href}))))
+      .then(({ data }) =>
+        setRemotes(data.results.map((r) => ({ ...r, id: r.pulp_href }))),
+      )
       .catch((e) => {
         const { status, statusText } = e.response;
         setRemotes([]);
