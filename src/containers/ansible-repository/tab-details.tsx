@@ -5,7 +5,6 @@ import { type AnsibleRemoteType, type AnsibleRepositoryType } from 'src/api';
 import {
   CopyURL,
   Details,
-  LazyDistributions,
   PulpLabels,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
@@ -28,10 +27,6 @@ export const DetailsTab = ({ item }: TabProps) => {
         {
           label: t`Retained version count`,
           value: item?.retain_repo_versions ?? t`All`,
-        },
-        {
-          label: t`Distribution`,
-          value: <LazyDistributions repositoryHref={item?.pulp_href} />,
         },
         {
           label: t`Repository URL`,

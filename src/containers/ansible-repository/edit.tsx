@@ -69,8 +69,6 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
 
     const saveRepository = ({
       createDistribution,
-      hideFromSearch,
-      pipeline,
     }) => {
       const { repositoryToEdit } = state;
 
@@ -95,16 +93,6 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
       delete data.my_permissions;
 
       data.pulp_labels ||= {};
-      if (hideFromSearch) {
-        data.pulp_labels.hide_from_search = '';
-      } else {
-        delete data.pulp_labels.hide_from_search;
-      }
-      if (pipeline) {
-        data.pulp_labels.pipeline = pipeline;
-      } else {
-        delete data.pulp_labels.pipeline;
-      }
 
       let promise = !item
         ? AnsibleRepositoryAPI.create(data).then(({ data: newData }) => {
