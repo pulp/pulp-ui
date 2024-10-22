@@ -2,6 +2,7 @@ import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
 
+// FIXME HubAPI
 export const ImportAPI = {
   get: (id) => base.http.get(`_ui/v1/imports/collections/${id}/`),
 

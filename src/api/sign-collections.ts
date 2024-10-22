@@ -21,6 +21,7 @@ type SignProps = SignNamespace | SignCollection | SignCollectionVersion;
 
 const base = new PulpAPI();
 
+// FIXME HubAPI
 export const SignCollectionAPI = {
   sign: ({ repository, repository_name: name, ...args }: SignProps) =>
     repositoryBasePath(name, repository?.pulp_href)

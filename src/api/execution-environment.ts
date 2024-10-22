@@ -2,6 +2,7 @@ import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
 
+// FIXME HubAPI
 export const ExecutionEnvironmentAPI = {
   deleteExecutionEnvironment: (name) =>
     base.http.delete(`v3/plugin/execution-environments/repositories/${name}/`),

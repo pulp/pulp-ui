@@ -33,6 +33,7 @@ function smartUpdate(remote: RemoteType, unmodifiedRemote: RemoteType) {
 
 const base = new PulpAPI();
 
+// FIXME HubAPI
 export const ExecutionEnvironmentRegistryAPI = {
   create: (data) =>
     base.http.post(`_ui/v1/execution-environments/registries/`, data),

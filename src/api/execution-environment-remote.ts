@@ -2,6 +2,7 @@ import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
 
+// FIXME HubAPI
 export const ExecutionEnvironmentRemoteAPI = {
   create: (data) =>
     base.http.post(`_ui/v1/execution-environments/remotes/`, data),

@@ -3,6 +3,7 @@ import { PulpAPI } from './pulp';
 const base = new PulpAPI();
 base.sortParam = 'order_by'; // FIXME
 
+// FIXME HubAPI
 export const CollectionVersionAPI = {
   copy: (
     namespace: string,

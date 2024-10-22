@@ -2,6 +2,7 @@ import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
 
+// FIXME HubAPI
 export const NamespaceAPI = {
   create: (data) => base.http.post(`_ui/v1/namespaces/`, data),
 

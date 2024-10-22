@@ -7,6 +7,7 @@ import {
 
 const base = new PulpAPI();
 
+// FIXME HubAPI
 export const CollectionAPI = {
   deleteCollection: ({
     collection_version: { namespace, name },
