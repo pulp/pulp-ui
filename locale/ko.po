@@ -271,7 +271,7 @@ msgstr "<0>역할 <1>{0}</1>은 영구적으로 삭제됩니다.</0>이 역할 �
 #~ msgid "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
 #~ msgstr "<0>역할 및 컬렉션은 Ansible 자동화 콘텐츠 권장 사항을 제공하는 머신 학습 모델의 교육 데이터로 사용할 수 있습니다.</0><1>문제가 있는 경우 <2>ansible-content-ai@redhat.com</2>에 문의하십시오.</1>"
 
-#: src/containers/not-found/not-found.tsx
+#: src/components/not-found.tsx
 msgid "404 - Page not found"
 msgstr "404 - 페이지를 찾을 수 없음"
 
@@ -611,9 +611,7 @@ msgstr "원격에서 컬렉션을 승인, 거부 및 동기화합니다."
 msgid "approved"
 msgstr "승인됨"
 
-#: src/components/ansible-repository-form.tsx
 #: src/components/approval-row.tsx
-#: src/containers/ansible-repository/list.tsx
 #: src/containers/approvals/approvals.tsx
 #: src/containers/approvals/approvals.tsx
 msgid "Approved"
@@ -664,8 +662,8 @@ msgid "Are you sure you want to revert this repository to the version below?"
 msgstr "이 리포지토리를 아래 버전으로 되돌리시겠습니까?"
 
 #: src/components/user-form.tsx
-msgid "Authentication provider"
-msgstr "인증 제공자"
+#~ msgid "Authentication provider"
+#~ msgstr "인증 제공자"
 
 #: src/components/role-import-form.tsx
 #~ msgid "Automatic"
@@ -1227,6 +1225,7 @@ msgstr "명령"
 #~ msgstr ""
 
 #: src/components/repository-badge.tsx
+#: src/containers/about-project.tsx
 msgid "Community"
 msgstr "커뮤니티"
 
@@ -1858,8 +1857,8 @@ msgid "Deleting <0>{selectedItem}</0> and its data will be lost."
 msgstr "<0>{selectedItem}</0>을/를 삭제하면 해당 데이터가 손실됩니다."
 
 #: src/components/delete-user-modal.tsx
-msgid "Deleting super users is not allowed."
-msgstr "수퍼 유저를 삭제하는 것은 허용되지 않습니다."
+#~ msgid "Deleting super users is not allowed."
+#~ msgstr "수퍼 유저를 삭제하는 것은 허용되지 않습니다."
 
 #: src/components/delete-group-modal.tsx
 msgid "Deleting this group will affect {count} users."
@@ -1969,8 +1968,8 @@ msgid "Disabled"
 msgstr "비활성화됨"
 
 #: src/containers/ansible-repository/tab-details.tsx
-msgid "Distribution"
-msgstr "배포"
+#~ msgid "Distribution"
+#~ msgstr "배포"
 
 #: src/components/repositories/local-repository-table.tsx
 #~ msgid "Distribution name"
@@ -2035,6 +2034,10 @@ msgstr "다운로드"
 #: src/containers/ansible-role/role-detail.tsx
 #~ msgid "Download {0} tarball"
 #~ msgstr ""
+
+#: src/components/pulp-download-button.tsx
+msgid "Download {filename}"
+msgstr ""
 
 #: src/actions/ansible-remote-download-ca.tsx
 msgid "Download CA certificate"
@@ -2807,6 +2810,10 @@ msgstr ""
 msgid "General update"
 msgstr ""
 
+#: src/containers/about-project.tsx
+msgid "Get involved"
+msgstr ""
+
 #: src/containers/landing/landing-page.tsx
 #~ msgid "Get the trial"
 #~ msgstr ""
@@ -2815,13 +2822,17 @@ msgstr ""
 #~ msgid "Get token"
 #~ msgstr "Get token"
 
+#: src/containers/about-project.tsx
+msgid "GitHub issues"
+msgstr ""
+
 #: src/components/role-import-form.tsx
 #~ msgid "GitHub ref (a commit, branch or tag)"
 #~ msgstr ""
 
-#: src/components/role-import-form.tsx
-#~ msgid "GitHub repository"
-#~ msgstr ""
+#: src/containers/about-project.tsx
+msgid "GitHub repository"
+msgstr ""
 
 #: src/containers/ansible-role/role-detail.tsx
 #~ msgid "GitHub Repository"
@@ -2996,8 +3007,8 @@ msgid "Hide advanced options"
 msgstr "고급 옵션 숨기기"
 
 #: src/components/ansible-repository-form.tsx
-msgid "Hide from search"
-msgstr "검색에서 숨기기"
+#~ msgid "Hide from search"
+#~ msgstr "검색에서 숨기기"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Hide password"
@@ -3025,6 +3036,10 @@ msgstr "선택한 경우 TLS 피어 유효성 검사를 수행해야 합니다."
 #: src/components/publish-to-controller-modal.tsx
 #~ msgid "If the Controller is not listed in the table, check settings.py."
 #~ msgstr "컨트롤러가 표에 나열되지 않은 경우 settings.py를 확인합니다."
+
+#: src/containers/about-project.tsx
+msgid "If you find a bug or have an idea for enhancement, please feel free to file a Github issue. Thank you for contributing to improvement of the project."
+msgstr ""
 
 #: src/components/remote-form.tsx
 msgid "If you populate this requirements file, this remote will only sync collections from this file, otherwise all collections will be synchronized."
@@ -3194,6 +3209,7 @@ msgid "Invalid login credentials."
 msgstr "잘못된 로그인 자격 증명입니다."
 
 #: src/components/collection-header.tsx
+#: src/containers/about-project.tsx
 msgid "Issue tracker"
 msgstr "문제 추적기"
 
@@ -3211,6 +3227,10 @@ msgstr "이 창을 닫는 것이 안전합니다. 이러한 작업은 백그라�
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Items per page"
+msgstr ""
+
+#: src/containers/about-project.tsx
+msgid "Join our communication channels and get to know the contributors and users of Pulp's strong ecosystem."
 msgstr ""
 
 #: src/containers/pulp-status.tsx
@@ -3245,7 +3265,6 @@ msgstr "키워드"
 msgid "Keywords"
 msgstr "키워드"
 
-#: src/components/ansible-repository-form.tsx
 #: src/containers/ansible-repository/list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 msgid "Labels"
@@ -3662,7 +3681,6 @@ msgstr "생성된 네임스페이스가 나타납니다"
 msgid "Needs review"
 msgstr "검토 필요"
 
-#: src/containers/ansible-repository/list.tsx
 #: src/containers/approvals/approvals.tsx
 #: src/containers/approvals/approvals.tsx
 msgid "Needs Review"
@@ -3941,13 +3959,10 @@ msgstr "{version_range}과 일치하는 {fqn} 버전이 없습니다."
 #~ msgstr "버전이 없음"
 
 #: src/components/ansible-repository-form.tsx
-#: src/components/ansible-repository-form.tsx
 #: src/components/copy-url.tsx
 #: src/components/pulp-labels.tsx
 #: src/components/repository-form.tsx
 #: src/components/repository-form.tsx
-#: src/containers/ansible-remote/tab-details.tsx
-#: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
@@ -3962,8 +3977,8 @@ msgstr "없음"
 
 #: src/components/user-form.tsx
 #: src/components/user-form.tsx
-msgid "Not a super user"
-msgstr "슈퍼 유저가 아닙니다"
+#~ msgid "Not a super user"
+#~ msgstr "슈퍼 유저가 아닙니다"
 
 #: src/containers/pulp-status.tsx
 msgid "Not enabled"
@@ -4237,12 +4252,12 @@ msgstr "그룹 \"{0}\"에 대한 권한을 표시할 수 없습니다."
 
 #: src/components/ansible-repository-form.tsx
 #: src/containers/ansible-repository/list.tsx
-msgid "Pipeline"
-msgstr "파이프라인"
+#~ msgid "Pipeline"
+#~ msgstr "파이프라인"
 
 #: src/components/ansible-repository-form.tsx
-msgid "Pipeline adds repository labels with pre-defined meanings:<0><1><2>None</2> - users require permissions to modify content in this repository to upload collection.</1><3><4>Approved</4> - collections can be moved here on approval. Publishing directly to this repository is disabled.</3><5><6>Staging</6> - collections uploaded here require approval before showing up on the search page. Anyone with upload permissions for a namespace can upload collections to this repository.</5></0>"
-msgstr "파이프라인은 미리 정의된 의미가 있는 리포지토리 레이블을 추가합니다:<0><1><2>없음(None)</2> - 사용자가 컬렉션을 업로드하려면 이 리포지토리의 콘텐츠를 수정하는 권한이 필요합니다.</1><3><4>승인됨(Approved)</4>- 컬렉션은 승인 후 여기로 이동할 수 있습니다. 이 리포지토리에 직접 게시할 수 없습니다. .</3><5><6>준비(Staging)</6> - 업로드된 컬렉션은 검색 페이지에 표시되기 전에 승인이 필요합니다. 네임스페이스 업로드 권한이 있는 사용자는 누구나 컬렉션을 이 리포지토리에 업로드할 수 있습니다.</5></0>"
+#~ msgid "Pipeline adds repository labels with pre-defined meanings:<0><1><2>None</2> - users require permissions to modify content in this repository to upload collection.</1><3><4>Approved</4> - collections can be moved here on approval. Publishing directly to this repository is disabled.</3><5><6>Staging</6> - collections uploaded here require approval before showing up on the search page. Anyone with upload permissions for a namespace can upload collections to this repository.</5></0>"
+#~ msgstr "파이프라인은 미리 정의된 의미가 있는 리포지토리 레이블을 추가합니다:<0><1><2>없음(None)</2> - 사용자가 컬렉션을 업로드하려면 이 리포지토리의 콘텐츠를 수정하는 권한이 필요합니다.</1><3><4>승인됨(Approved)</4>- 컬렉션은 승인 후 여기로 이동할 수 있습니다. 이 리포지토리에 직접 게시할 수 없습니다. .</3><5><6>준비(Staging)</6> - 업로드된 컬렉션은 검색 페이지에 표시되기 전에 승인이 필요합니다. 네임스페이스 업로드 권한이 있는 사용자는 누구나 컬렉션을 이 리포지토리에 업로드할 수 있습니다.</5></0>"
 
 #: src/containers/group-management/group-detail-role-management/group-detail-role-management.tsx
 #: src/containers/role-management/role-list.tsx
@@ -4472,6 +4487,18 @@ msgstr ""
 msgid "Pulp import"
 msgstr ""
 
+#: src/containers/about-project.tsx
+msgid "Pulp is an open source project that makes it easy for developers to fetch, upload, and distribute Software Packages on-prem or in the cloud."
+msgstr ""
+
+#: src/containers/ansible-repository/list.tsx
+msgid "Pulp Label"
+msgstr ""
+
+#: src/containers/about-project.tsx
+msgid "Pulp logo"
+msgstr ""
+
 #: src/components/pulp-about-modal.tsx
 msgid "Pulp Logo"
 msgstr ""
@@ -4671,7 +4698,6 @@ msgstr "거부됨"
 
 #: src/components/approval-row.tsx
 #: src/components/repository-badge.tsx
-#: src/containers/ansible-repository/list.tsx
 #: src/containers/approvals/approvals.tsx
 #: src/containers/approvals/approvals.tsx
 msgid "Rejected"
@@ -4893,8 +4919,8 @@ msgid "Repository could not be displayed."
 msgstr "리포지토리를 표시할 수 없습니다."
 
 #: src/components/ansible-repository-form.tsx
-msgid "Repository labels can change the context in which a repository is seen.<0><1><2>Hide from search</2> (<3>hide_from_search</3>) - prevent collections in this repository from showing up on the home page</1><4>(<5>pipeline: *</5>) - see Pipeline above</4></0>"
-msgstr "리포지터리 레이블은 리포지토리가 표시되는 컨텍스트를 변경할 수 있습니다.<0><1><2>검색에서 숨기기</2> (<3>hide_from_search</3>) -이 리포지토리의 컬렉션이 홈 페이지에 표시되지 않도록 합니다. </1><4>(<5>파이프라인: *</5> 위의 파이프라인을 참조하십시오</4></0>"
+#~ msgid "Repository labels can change the context in which a repository is seen.<0><1><2>Hide from search</2> (<3>hide_from_search</3>) - prevent collections in this repository from showing up on the home page</1><4>(<5>pipeline: *</5>) - see Pipeline above</4></0>"
+#~ msgstr "리포지터리 레이블은 리포지토리가 표시되는 컨텍스트를 변경할 수 있습니다.<0><1><2>검색에서 숨기기</2> (<3>hide_from_search</3>) -이 리포지토리의 컬렉션이 홈 페이지에 표시되지 않도록 합니다. </1><4>(<5>파이프라인: *</5> 위의 파이프라인을 참조하십시오</4></0>"
 
 #: src/loaders/standalone/menu.tsx
 #~ msgid "Repository Management"
@@ -4939,8 +4965,8 @@ msgid "Requires Ansible"
 msgstr "Ansible 필요"
 
 #: src/components/user-form.tsx
-msgid "Requires super user permissions to edit."
-msgstr "편집하려면 슈퍼 사용자 권한이 필요합니다."
+#~ msgid "Requires super user permissions to edit."
+#~ msgstr "편집하려면 슈퍼 사용자 권한이 필요합니다."
 
 #: src/containers/task-management/task-detail.tsx
 msgid "Reserve resources"
@@ -5147,8 +5173,8 @@ msgid "Saved changes to namespace \"{0}\"."
 msgstr "네임스페이스 \"{0}\"에 변경 사항을 저장했습니다."
 
 #: src/containers/settings/user-profile.tsx
-#~ msgid "Saved changes to user \"{username}\"."
-#~ msgstr "사용자 \"{username}\"에 변경 사항을 저장했습니다."
+msgid "Saved changes to user \"{username}\"."
+msgstr "사용자 \"{username}\"에 변경 사항을 저장했습니다."
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Scroll back"
@@ -5383,10 +5409,18 @@ msgstr ""
 msgid "Show content"
 msgstr ""
 
+#: src/components/pulp-code-block.tsx
+msgid "Show less"
+msgstr ""
+
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Show Less"
 msgstr "더 적은 수를 표시"
+
+#: src/components/pulp-code-block.tsx
+msgid "Show more"
+msgstr ""
 
 #: src/containers/search/multi-search.tsx
 msgid "Show more collections"
@@ -5571,7 +5605,6 @@ msgstr "결과 정렬"
 msgid "SSO URL"
 msgstr "SSO URL"
 
-#: src/components/ansible-repository-form.tsx
 #: src/components/repository-badge.tsx
 msgid "Staging"
 msgstr "스테이징"
@@ -5724,17 +5757,17 @@ msgstr "리포지토리가 성공적으로 생성됨 {0}"
 #: src/components/user-form.tsx
 #: src/components/user-form.tsx
 #: src/containers/user-management/user-list.tsx
-msgid "Super user"
-msgstr "슈퍼유저"
+#~ msgid "Super user"
+#~ msgstr "슈퍼유저"
 
 #: src/components/user-form.tsx
-msgid "Super users can't disable themselves."
-msgstr "슈퍼유저는 자신을 비활성화할 수 없습니다."
+#~ msgid "Super users can't disable themselves."
+#~ msgstr "슈퍼유저는 자신을 비활성화할 수 없습니다."
 
 #: src/components/user-form.tsx
 #: src/containers/user-management/user-list.tsx
-msgid "Super users have all system permissions regardless of what groups they are in."
-msgstr "슈퍼유저는 어떤 그룹에 있는지에 관계없이 모든 시스템 권한을 갖습니다."
+#~ msgid "Super users have all system permissions regardless of what groups they are in."
+#~ msgstr "슈퍼유저는 어떤 그룹에 있는지에 관계없이 모든 시스템 권한을 갖습니다."
 
 #: src/components/darkmode-switcher.tsx
 msgid "Switch to dark mode"
@@ -6193,6 +6226,10 @@ msgstr "이 그룹에는 사용자가 포함될 수 있습니다"
 #~ msgid "This is the rating from old-galaxy.ansible.com. We are working on redoing the rating for the new version of galaxy."
 #~ msgstr ""
 
+#: src/containers/about-project.tsx
+msgid "This project is an attempt to up-cycle the Ansible Galaxy UI codebase. The first version contains mostly saved code with minor fixes. In the future more types of content will be added. We welcome kindly any contributions."
+msgstr ""
+
 #: src/components/tag-manifest-modal.tsx
 msgid "This tag already exists on another image. Do you want to move it to this image?"
 msgstr "이 태그는 다른 이미지에 이미 존재합니다. 이 이미지로 이동하시겠습니까?"
@@ -6611,8 +6648,8 @@ msgid "User list"
 msgstr "사용자 목록"
 
 #: src/components/user-form.tsx
-msgid "User type"
-msgstr "사용자 유형"
+#~ msgid "User type"
+#~ msgstr "사용자 유형"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/pulp-about-modal.tsx
@@ -6808,7 +6845,7 @@ msgstr "가져오기가 완료될 때까지 대기 중"
 msgid "Warning"
 msgstr "경고"
 
-#: src/containers/not-found/not-found.tsx
+#: src/components/not-found.tsx
 msgid "We couldn't find the page you're looking for!"
 msgstr "페이지를 찾을 수 없습니다!"
 

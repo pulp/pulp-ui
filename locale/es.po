@@ -271,7 +271,7 @@ msgstr "<0>El rol <1>{0}</1> se eliminará permanentemente.</0><2>Esto también 
 #~ msgid "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
 #~ msgstr "<0>Sus funciones y colecciones pueden utilizarse como datos de entrenamiento para un modelo de aprendizaje automático que proporciona recomendaciones de contenido de automatización de Ansible.</0><1>Si tiene alguna duda, póngase en contacto con el equipo de Ansible en <2>ansible-content-ai@redhat.com</2>.</1>"
 
-#: src/containers/not-found/not-found.tsx
+#: src/components/not-found.tsx
 msgid "404 - Page not found"
 msgstr "404 - Página no encontrada"
 
@@ -611,9 +611,7 @@ msgstr "Aprueba, rechaza y sincroniza las colecciones desde los mandos a distanc
 msgid "approved"
 msgstr "aprobado"
 
-#: src/components/ansible-repository-form.tsx
 #: src/components/approval-row.tsx
-#: src/containers/ansible-repository/list.tsx
 #: src/containers/approvals/approvals.tsx
 #: src/containers/approvals/approvals.tsx
 msgid "Approved"
@@ -664,8 +662,8 @@ msgid "Are you sure you want to revert this repository to the version below?"
 msgstr "¿Está seguro de que desea revertir este repositorio a la versión anterior?"
 
 #: src/components/user-form.tsx
-msgid "Authentication provider"
-msgstr "Proveedor de autenticación"
+#~ msgid "Authentication provider"
+#~ msgstr "Proveedor de autenticación"
 
 #: src/components/role-import-form.tsx
 #~ msgid "Automatic"
@@ -1227,6 +1225,7 @@ msgstr "Comando"
 #~ msgstr ""
 
 #: src/components/repository-badge.tsx
+#: src/containers/about-project.tsx
 msgid "Community"
 msgstr "Comunidad"
 
@@ -1858,8 +1857,8 @@ msgid "Deleting <0>{selectedItem}</0> and its data will be lost."
 msgstr "Al eliminar <0>{selectedItem}</0>, se perderán sus datos."
 
 #: src/components/delete-user-modal.tsx
-msgid "Deleting super users is not allowed."
-msgstr "No está permitido eliminar súper usuarios."
+#~ msgid "Deleting super users is not allowed."
+#~ msgstr "No está permitido eliminar súper usuarios."
 
 #: src/components/delete-group-modal.tsx
 msgid "Deleting this group will affect {count} users."
@@ -1969,8 +1968,8 @@ msgid "Disabled"
 msgstr "Deshabilitados"
 
 #: src/containers/ansible-repository/tab-details.tsx
-msgid "Distribution"
-msgstr "Distribución"
+#~ msgid "Distribution"
+#~ msgstr "Distribución"
 
 #: src/components/repositories/local-repository-table.tsx
 #~ msgid "Distribution name"
@@ -2035,6 +2034,10 @@ msgstr "Descargar"
 #: src/containers/ansible-role/role-detail.tsx
 #~ msgid "Download {0} tarball"
 #~ msgstr ""
+
+#: src/components/pulp-download-button.tsx
+msgid "Download {filename}"
+msgstr ""
 
 #: src/actions/ansible-remote-download-ca.tsx
 msgid "Download CA certificate"
@@ -2807,6 +2810,10 @@ msgstr ""
 msgid "General update"
 msgstr ""
 
+#: src/containers/about-project.tsx
+msgid "Get involved"
+msgstr ""
+
 #: src/containers/landing/landing-page.tsx
 #~ msgid "Get the trial"
 #~ msgstr ""
@@ -2815,13 +2822,17 @@ msgstr ""
 #~ msgid "Get token"
 #~ msgstr "Get token"
 
+#: src/containers/about-project.tsx
+msgid "GitHub issues"
+msgstr ""
+
 #: src/components/role-import-form.tsx
 #~ msgid "GitHub ref (a commit, branch or tag)"
 #~ msgstr ""
 
-#: src/components/role-import-form.tsx
-#~ msgid "GitHub repository"
-#~ msgstr ""
+#: src/containers/about-project.tsx
+msgid "GitHub repository"
+msgstr ""
 
 #: src/containers/ansible-role/role-detail.tsx
 #~ msgid "GitHub Repository"
@@ -2996,8 +3007,8 @@ msgid "Hide advanced options"
 msgstr "Ocultar las opciones avanzadas"
 
 #: src/components/ansible-repository-form.tsx
-msgid "Hide from search"
-msgstr "Ocultar de la búsqueda"
+#~ msgid "Hide from search"
+#~ msgstr "Ocultar de la búsqueda"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Hide password"
@@ -3025,6 +3036,10 @@ msgstr "Si se selecciona, se debe realizar la validación de pares TLS."
 #: src/components/publish-to-controller-modal.tsx
 #~ msgid "If the Controller is not listed in the table, check settings.py."
 #~ msgstr "Si el controlador no aparece en la tabla, compruebe el archivo settings.py."
+
+#: src/containers/about-project.tsx
+msgid "If you find a bug or have an idea for enhancement, please feel free to file a Github issue. Thank you for contributing to improvement of the project."
+msgstr ""
 
 #: src/components/remote-form.tsx
 msgid "If you populate this requirements file, this remote will only sync collections from this file, otherwise all collections will be synchronized."
@@ -3194,6 +3209,7 @@ msgid "Invalid login credentials."
 msgstr "Credenciales de acceso no válidas."
 
 #: src/components/collection-header.tsx
+#: src/containers/about-project.tsx
 msgid "Issue tracker"
 msgstr "Seguimiento de problemas"
 
@@ -3211,6 +3227,10 @@ msgstr "Es seguro cerrar esta ventana. Estas tareas terminarán en segundo plano
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Items per page"
+msgstr ""
+
+#: src/containers/about-project.tsx
+msgid "Join our communication channels and get to know the contributors and users of Pulp's strong ecosystem."
 msgstr ""
 
 #: src/containers/pulp-status.tsx
@@ -3245,7 +3265,6 @@ msgstr "palabras clave"
 msgid "Keywords"
 msgstr "Palabras clave"
 
-#: src/components/ansible-repository-form.tsx
 #: src/containers/ansible-repository/list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 msgid "Labels"
@@ -3662,7 +3681,6 @@ msgstr "Los espacios de nombres aparecerán una vez creados"
 msgid "Needs review"
 msgstr "Revisión de necesidades"
 
-#: src/containers/ansible-repository/list.tsx
 #: src/containers/approvals/approvals.tsx
 #: src/containers/approvals/approvals.tsx
 msgid "Needs Review"
@@ -3941,13 +3959,10 @@ msgstr "No existe ninguna versión de {fqn} que coincida con {version_range}."
 #~ msgstr "No hay versiones"
 
 #: src/components/ansible-repository-form.tsx
-#: src/components/ansible-repository-form.tsx
 #: src/components/copy-url.tsx
 #: src/components/pulp-labels.tsx
 #: src/components/repository-form.tsx
 #: src/components/repository-form.tsx
-#: src/containers/ansible-remote/tab-details.tsx
-#: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
@@ -3962,8 +3977,8 @@ msgstr "Ninguno"
 
 #: src/components/user-form.tsx
 #: src/components/user-form.tsx
-msgid "Not a super user"
-msgstr "No es un súper usuario"
+#~ msgid "Not a super user"
+#~ msgstr "No es un súper usuario"
 
 #: src/containers/pulp-status.tsx
 msgid "Not enabled"
@@ -4237,12 +4252,12 @@ msgstr "No se pudieron mostrar los permisos para el grupo \"{0}\"."
 
 #: src/components/ansible-repository-form.tsx
 #: src/containers/ansible-repository/list.tsx
-msgid "Pipeline"
-msgstr "Tuberías"
+#~ msgid "Pipeline"
+#~ msgstr "Tuberías"
 
 #: src/components/ansible-repository-form.tsx
-msgid "Pipeline adds repository labels with pre-defined meanings:<0><1><2>None</2> - users require permissions to modify content in this repository to upload collection.</1><3><4>Approved</4> - collections can be moved here on approval. Publishing directly to this repository is disabled.</3><5><6>Staging</6> - collections uploaded here require approval before showing up on the search page. Anyone with upload permissions for a namespace can upload collections to this repository.</5></0>"
-msgstr "Pipeline añade etiquetas de repositorio con significados predefinidos:<0><1><2>Ninguno</2>: los usuarios necesitan permisos para modificar el contenido de este repositorio para subir una colección.</1><3><4>Aprobado</4>: las colecciones se pueden mover aquí una vez aprobadas. La publicación directa en este repositorio está desactivada.</3><5><6>Puesta en escena</6>: las colecciones subidas aquí requieren aprobación antes de aparecer en la página de búsqueda. Cualquiera con permisos de carga para un espacio de nombres puede subir colecciones a este repositorio.</5></0>"
+#~ msgid "Pipeline adds repository labels with pre-defined meanings:<0><1><2>None</2> - users require permissions to modify content in this repository to upload collection.</1><3><4>Approved</4> - collections can be moved here on approval. Publishing directly to this repository is disabled.</3><5><6>Staging</6> - collections uploaded here require approval before showing up on the search page. Anyone with upload permissions for a namespace can upload collections to this repository.</5></0>"
+#~ msgstr "Pipeline añade etiquetas de repositorio con significados predefinidos:<0><1><2>Ninguno</2>: los usuarios necesitan permisos para modificar el contenido de este repositorio para subir una colección.</1><3><4>Aprobado</4>: las colecciones se pueden mover aquí una vez aprobadas. La publicación directa en este repositorio está desactivada.</3><5><6>Puesta en escena</6>: las colecciones subidas aquí requieren aprobación antes de aparecer en la página de búsqueda. Cualquiera con permisos de carga para un espacio de nombres puede subir colecciones a este repositorio.</5></0>"
 
 #: src/containers/group-management/group-detail-role-management/group-detail-role-management.tsx
 #: src/containers/role-management/role-list.tsx
@@ -4472,6 +4487,18 @@ msgstr ""
 msgid "Pulp import"
 msgstr ""
 
+#: src/containers/about-project.tsx
+msgid "Pulp is an open source project that makes it easy for developers to fetch, upload, and distribute Software Packages on-prem or in the cloud."
+msgstr ""
+
+#: src/containers/ansible-repository/list.tsx
+msgid "Pulp Label"
+msgstr ""
+
+#: src/containers/about-project.tsx
+msgid "Pulp logo"
+msgstr ""
+
 #: src/components/pulp-about-modal.tsx
 msgid "Pulp Logo"
 msgstr ""
@@ -4671,7 +4698,6 @@ msgstr "rechazado"
 
 #: src/components/approval-row.tsx
 #: src/components/repository-badge.tsx
-#: src/containers/ansible-repository/list.tsx
 #: src/containers/approvals/approvals.tsx
 #: src/containers/approvals/approvals.tsx
 msgid "Rejected"
@@ -4893,8 +4919,8 @@ msgid "Repository could not be displayed."
 msgstr "No se ha podido visualizar el repositorio."
 
 #: src/components/ansible-repository-form.tsx
-msgid "Repository labels can change the context in which a repository is seen.<0><1><2>Hide from search</2> (<3>hide_from_search</3>) - prevent collections in this repository from showing up on the home page</1><4>(<5>pipeline: *</5>) - see Pipeline above</4></0>"
-msgstr "Las etiquetas de los repositorios pueden cambiar el contexto en el que se ve un repositorio.<0><1><2>Ocultar de la búsqueda</2> (<3>hide_from_search</3>): evita que las colecciones de este repositorio aparezcan en la página de inicio</1><4>(<5>pipeline: *</5>): ver Pipeline arriba</4></0>"
+#~ msgid "Repository labels can change the context in which a repository is seen.<0><1><2>Hide from search</2> (<3>hide_from_search</3>) - prevent collections in this repository from showing up on the home page</1><4>(<5>pipeline: *</5>) - see Pipeline above</4></0>"
+#~ msgstr "Las etiquetas de los repositorios pueden cambiar el contexto en el que se ve un repositorio.<0><1><2>Ocultar de la búsqueda</2> (<3>hide_from_search</3>): evita que las colecciones de este repositorio aparezcan en la página de inicio</1><4>(<5>pipeline: *</5>): ver Pipeline arriba</4></0>"
 
 #: src/loaders/standalone/menu.tsx
 #~ msgid "Repository Management"
@@ -4939,8 +4965,8 @@ msgid "Requires Ansible"
 msgstr "Requiere Ansible"
 
 #: src/components/user-form.tsx
-msgid "Requires super user permissions to edit."
-msgstr "Requiere permisos de súper usuario para su edición."
+#~ msgid "Requires super user permissions to edit."
+#~ msgstr "Requiere permisos de súper usuario para su edición."
 
 #: src/containers/task-management/task-detail.tsx
 msgid "Reserve resources"
@@ -5147,8 +5173,8 @@ msgid "Saved changes to namespace \"{0}\"."
 msgstr "Se guardaron los cambios en el espacio de nombres \"{0}\"."
 
 #: src/containers/settings/user-profile.tsx
-#~ msgid "Saved changes to user \"{username}\"."
-#~ msgstr "Se guardaron los cambios en el usuario \"{username}\"."
+msgid "Saved changes to user \"{username}\"."
+msgstr "Se guardaron los cambios en el usuario \"{username}\"."
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Scroll back"
@@ -5383,10 +5409,18 @@ msgstr ""
 msgid "Show content"
 msgstr ""
 
+#: src/components/pulp-code-block.tsx
+msgid "Show less"
+msgstr ""
+
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Show Less"
 msgstr "Mostrar menos"
+
+#: src/components/pulp-code-block.tsx
+msgid "Show more"
+msgstr ""
 
 #: src/containers/search/multi-search.tsx
 msgid "Show more collections"
@@ -5571,7 +5605,6 @@ msgstr "Ordenar resultados"
 msgid "SSO URL"
 msgstr "SSO URL"
 
-#: src/components/ansible-repository-form.tsx
 #: src/components/repository-badge.tsx
 msgid "Staging"
 msgstr "Puesta en escena"
@@ -5724,17 +5757,17 @@ msgstr "Repositorio creado con éxito {0}"
 #: src/components/user-form.tsx
 #: src/components/user-form.tsx
 #: src/containers/user-management/user-list.tsx
-msgid "Super user"
-msgstr "Súper usuario"
+#~ msgid "Super user"
+#~ msgstr "Súper usuario"
 
 #: src/components/user-form.tsx
-msgid "Super users can't disable themselves."
-msgstr "Los súper usuarios no pueden desactivarse a sí mismos."
+#~ msgid "Super users can't disable themselves."
+#~ msgstr "Los súper usuarios no pueden desactivarse a sí mismos."
 
 #: src/components/user-form.tsx
 #: src/containers/user-management/user-list.tsx
-msgid "Super users have all system permissions regardless of what groups they are in."
-msgstr "Los súper usuarios tienen todos los permisos del sistema independientemente de los grupos a los que pertenezcan."
+#~ msgid "Super users have all system permissions regardless of what groups they are in."
+#~ msgstr "Los súper usuarios tienen todos los permisos del sistema independientemente de los grupos a los que pertenezcan."
 
 #: src/components/darkmode-switcher.tsx
 msgid "Switch to dark mode"
@@ -6193,6 +6226,10 @@ msgstr "Este grupo puede incluir usuarios"
 #~ msgid "This is the rating from old-galaxy.ansible.com. We are working on redoing the rating for the new version of galaxy."
 #~ msgstr ""
 
+#: src/containers/about-project.tsx
+msgid "This project is an attempt to up-cycle the Ansible Galaxy UI codebase. The first version contains mostly saved code with minor fixes. In the future more types of content will be added. We welcome kindly any contributions."
+msgstr ""
+
 #: src/components/tag-manifest-modal.tsx
 msgid "This tag already exists on another image. Do you want to move it to this image?"
 msgstr "Esta etiqueta ya existe en otra imagen. ¿Quiere moverla a esta imagen?"
@@ -6611,8 +6648,8 @@ msgid "User list"
 msgstr "Lista de usuarios"
 
 #: src/components/user-form.tsx
-msgid "User type"
-msgstr "Tipo de usuario"
+#~ msgid "User type"
+#~ msgstr "Tipo de usuario"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/pulp-about-modal.tsx
@@ -6808,7 +6845,7 @@ msgstr "esperando a que termine la importación"
 msgid "Warning"
 msgstr "Advertencia"
 
-#: src/containers/not-found/not-found.tsx
+#: src/components/not-found.tsx
 msgid "We couldn't find the page you're looking for!"
 msgstr "¡No hemos podido encontrar la página que busca!"
 

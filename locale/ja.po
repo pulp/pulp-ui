@@ -271,7 +271,7 @@ msgstr "<0>ロール<1>{0}</1> は永久に削除されます。</0><2>また、
 #~ msgid "<0>Your roles and collections may be used as training data for a machine learning model that provides Ansible automation content recommendations.</0><1>If you have concerns, please contact the Ansible team at <2>ansible-content-ai@redhat.com</2>.</1>"
 #~ msgstr "<0>お使いのロールとコレクションは、Ansible Automation コンテンツの推奨事項を提供する機械学習モデルのトレーニングデータとして使用される場合があります。</0><1> ご不明な点がございましたら、Ansible チーム (<2>ansible-content-ai@redhat.com</2>) までお問い合わせください。</1>"
 
-#: src/containers/not-found/not-found.tsx
+#: src/components/not-found.tsx
 msgid "404 - Page not found"
 msgstr "404 - ページが見つかりません"
 
@@ -611,9 +611,7 @@ msgstr "リモートからのコレクションを承認、拒否、同期しま
 msgid "approved"
 msgstr "承認"
 
-#: src/components/ansible-repository-form.tsx
 #: src/components/approval-row.tsx
-#: src/containers/ansible-repository/list.tsx
 #: src/containers/approvals/approvals.tsx
 #: src/containers/approvals/approvals.tsx
 msgid "Approved"
@@ -664,8 +662,8 @@ msgid "Are you sure you want to revert this repository to the version below?"
 msgstr "このリポジトリーを以下のバージョンに戻してもよろしいですか?"
 
 #: src/components/user-form.tsx
-msgid "Authentication provider"
-msgstr "認証プロバイダー"
+#~ msgid "Authentication provider"
+#~ msgstr "認証プロバイダー"
 
 #: src/components/role-import-form.tsx
 #~ msgid "Automatic"
@@ -1227,6 +1225,7 @@ msgstr "コマンド"
 #~ msgstr ""
 
 #: src/components/repository-badge.tsx
+#: src/containers/about-project.tsx
 msgid "Community"
 msgstr "コミュニティー"
 
@@ -1858,8 +1857,8 @@ msgid "Deleting <0>{selectedItem}</0> and its data will be lost."
 msgstr "<0>{selectedItem}</0> を削除すると、そのデータが失われます。"
 
 #: src/components/delete-user-modal.tsx
-msgid "Deleting super users is not allowed."
-msgstr "スーパーユーザーは削除できません。"
+#~ msgid "Deleting super users is not allowed."
+#~ msgstr "スーパーユーザーは削除できません。"
 
 #: src/components/delete-group-modal.tsx
 msgid "Deleting this group will affect {count} users."
@@ -1969,8 +1968,8 @@ msgid "Disabled"
 msgstr "無効化"
 
 #: src/containers/ansible-repository/tab-details.tsx
-msgid "Distribution"
-msgstr "ディストリビューション"
+#~ msgid "Distribution"
+#~ msgstr "ディストリビューション"
 
 #: src/components/repositories/local-repository-table.tsx
 #~ msgid "Distribution name"
@@ -2035,6 +2034,10 @@ msgstr "Download"
 #: src/containers/ansible-role/role-detail.tsx
 #~ msgid "Download {0} tarball"
 #~ msgstr ""
+
+#: src/components/pulp-download-button.tsx
+msgid "Download {filename}"
+msgstr ""
 
 #: src/actions/ansible-remote-download-ca.tsx
 msgid "Download CA certificate"
@@ -2807,6 +2810,10 @@ msgstr ""
 msgid "General update"
 msgstr ""
 
+#: src/containers/about-project.tsx
+msgid "Get involved"
+msgstr ""
+
 #: src/containers/landing/landing-page.tsx
 #~ msgid "Get the trial"
 #~ msgstr ""
@@ -2815,13 +2822,17 @@ msgstr ""
 #~ msgid "Get token"
 #~ msgstr "Get token"
 
+#: src/containers/about-project.tsx
+msgid "GitHub issues"
+msgstr ""
+
 #: src/components/role-import-form.tsx
 #~ msgid "GitHub ref (a commit, branch or tag)"
 #~ msgstr ""
 
-#: src/components/role-import-form.tsx
-#~ msgid "GitHub repository"
-#~ msgstr ""
+#: src/containers/about-project.tsx
+msgid "GitHub repository"
+msgstr ""
 
 #: src/containers/ansible-role/role-detail.tsx
 #~ msgid "GitHub Repository"
@@ -2996,8 +3007,8 @@ msgid "Hide advanced options"
 msgstr "詳細オプションの非表示"
 
 #: src/components/ansible-repository-form.tsx
-msgid "Hide from search"
-msgstr "検索からの非表示"
+#~ msgid "Hide from search"
+#~ msgstr "検索からの非表示"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Hide password"
@@ -3025,6 +3036,10 @@ msgstr "選択されている場合は、TLS ピア検証を行う必要があ�
 #: src/components/publish-to-controller-modal.tsx
 #~ msgid "If the Controller is not listed in the table, check settings.py."
 #~ msgstr "コントローラーが表に記載されていない場合は、settings.py を確認してください。"
+
+#: src/containers/about-project.tsx
+msgid "If you find a bug or have an idea for enhancement, please feel free to file a Github issue. Thank you for contributing to improvement of the project."
+msgstr ""
 
 #: src/components/remote-form.tsx
 msgid "If you populate this requirements file, this remote will only sync collections from this file, otherwise all collections will be synchronized."
@@ -3194,6 +3209,7 @@ msgid "Invalid login credentials."
 msgstr "ログイン認証情報が無効です。"
 
 #: src/components/collection-header.tsx
+#: src/containers/about-project.tsx
 msgid "Issue tracker"
 msgstr "問題トラッカー"
 
@@ -3211,6 +3227,10 @@ msgstr "このウィンドウを安全に閉じることができます。この
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Items per page"
+msgstr ""
+
+#: src/containers/about-project.tsx
+msgid "Join our communication channels and get to know the contributors and users of Pulp's strong ecosystem."
 msgstr ""
 
 #: src/containers/pulp-status.tsx
@@ -3245,7 +3265,6 @@ msgstr "キーワード"
 msgid "Keywords"
 msgstr "キーワード"
 
-#: src/components/ansible-repository-form.tsx
 #: src/containers/ansible-repository/list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 msgid "Labels"
@@ -3662,7 +3681,6 @@ msgstr "名前空間は作成後に表示されます"
 msgid "Needs review"
 msgstr "レビューが必要"
 
-#: src/containers/ansible-repository/list.tsx
 #: src/containers/approvals/approvals.tsx
 #: src/containers/approvals/approvals.tsx
 msgid "Needs Review"
@@ -3941,13 +3959,10 @@ msgstr "{version_range} に一致する {fqn} のバージョンはありませ�
 #~ msgstr "バージョンなし"
 
 #: src/components/ansible-repository-form.tsx
-#: src/components/ansible-repository-form.tsx
 #: src/components/copy-url.tsx
 #: src/components/pulp-labels.tsx
 #: src/components/repository-form.tsx
 #: src/components/repository-form.tsx
-#: src/containers/ansible-remote/tab-details.tsx
-#: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
@@ -3962,8 +3977,8 @@ msgstr "なし"
 
 #: src/components/user-form.tsx
 #: src/components/user-form.tsx
-msgid "Not a super user"
-msgstr "スーパーユーザーではありません"
+#~ msgid "Not a super user"
+#~ msgstr "スーパーユーザーではありません"
 
 #: src/containers/pulp-status.tsx
 msgid "Not enabled"
@@ -4237,12 +4252,12 @@ msgstr "グループ \"{0}\" のパーミッションを表示できませんで
 
 #: src/components/ansible-repository-form.tsx
 #: src/containers/ansible-repository/list.tsx
-msgid "Pipeline"
-msgstr "パイプライン"
+#~ msgid "Pipeline"
+#~ msgstr "パイプライン"
 
 #: src/components/ansible-repository-form.tsx
-msgid "Pipeline adds repository labels with pre-defined meanings:<0><1><2>None</2> - users require permissions to modify content in this repository to upload collection.</1><3><4>Approved</4> - collections can be moved here on approval. Publishing directly to this repository is disabled.</3><5><6>Staging</6> - collections uploaded here require approval before showing up on the search page. Anyone with upload permissions for a namespace can upload collections to this repository.</5></0>"
-msgstr "Pipeline は、事前定義済みの意味を持つリポジトリーラベルを追加します:<0><1><2>なし</2> - ユーザーがコレクションをアップロードするには、このリポジトリーのコンテンツを変更するパーミッションが必要です。</1><3><4>承認済み</4> - コレクションは、承認後にここに移動できます。このリポジトリーへの直接公開は無効になっています。</3><5><6>ステージング</6> - ここにアップロードされたコレクションは、検索ページに表示される前に承認が必要です。名前空間のアップロードパーミッションを持つユーザーは誰でも、コレクションをこのリポジトリーにアップロードできます。</5></0>"
+#~ msgid "Pipeline adds repository labels with pre-defined meanings:<0><1><2>None</2> - users require permissions to modify content in this repository to upload collection.</1><3><4>Approved</4> - collections can be moved here on approval. Publishing directly to this repository is disabled.</3><5><6>Staging</6> - collections uploaded here require approval before showing up on the search page. Anyone with upload permissions for a namespace can upload collections to this repository.</5></0>"
+#~ msgstr "Pipeline は、事前定義済みの意味を持つリポジトリーラベルを追加します:<0><1><2>なし</2> - ユーザーがコレクションをアップロードするには、このリポジトリーのコンテンツを変更するパーミッションが必要です。</1><3><4>承認済み</4> - コレクションは、承認後にここに移動できます。このリポジトリーへの直接公開は無効になっています。</3><5><6>ステージング</6> - ここにアップロードされたコレクションは、検索ページに表示される前に承認が必要です。名前空間のアップロードパーミッションを持つユーザーは誰でも、コレクションをこのリポジトリーにアップロードできます。</5></0>"
 
 #: src/containers/group-management/group-detail-role-management/group-detail-role-management.tsx
 #: src/containers/role-management/role-list.tsx
@@ -4472,6 +4487,18 @@ msgstr ""
 msgid "Pulp import"
 msgstr ""
 
+#: src/containers/about-project.tsx
+msgid "Pulp is an open source project that makes it easy for developers to fetch, upload, and distribute Software Packages on-prem or in the cloud."
+msgstr ""
+
+#: src/containers/ansible-repository/list.tsx
+msgid "Pulp Label"
+msgstr ""
+
+#: src/containers/about-project.tsx
+msgid "Pulp logo"
+msgstr ""
+
 #: src/components/pulp-about-modal.tsx
 msgid "Pulp Logo"
 msgstr ""
@@ -4671,7 +4698,6 @@ msgstr "拒否"
 
 #: src/components/approval-row.tsx
 #: src/components/repository-badge.tsx
-#: src/containers/ansible-repository/list.tsx
 #: src/containers/approvals/approvals.tsx
 #: src/containers/approvals/approvals.tsx
 msgid "Rejected"
@@ -4893,8 +4919,8 @@ msgid "Repository could not be displayed."
 msgstr "リポジトリーを表示できませんでした。"
 
 #: src/components/ansible-repository-form.tsx
-msgid "Repository labels can change the context in which a repository is seen.<0><1><2>Hide from search</2> (<3>hide_from_search</3>) - prevent collections in this repository from showing up on the home page</1><4>(<5>pipeline: *</5>) - see Pipeline above</4></0>"
-msgstr "リポジトリーラベルは、リポジトリーが表示されるコンテキストを変更できます。<0><1><2>検索からの非表示</2> (<3> hide_from_search</3>) - このリポジトリーのコレクションがホームページに表示されないようにします</1><4>(<5>パイプライン: *</5>) - 上記のパイプラインを参照してください</4></0>"
+#~ msgid "Repository labels can change the context in which a repository is seen.<0><1><2>Hide from search</2> (<3>hide_from_search</3>) - prevent collections in this repository from showing up on the home page</1><4>(<5>pipeline: *</5>) - see Pipeline above</4></0>"
+#~ msgstr "リポジトリーラベルは、リポジトリーが表示されるコンテキストを変更できます。<0><1><2>検索からの非表示</2> (<3> hide_from_search</3>) - このリポジトリーのコレクションがホームページに表示されないようにします</1><4>(<5>パイプライン: *</5>) - 上記のパイプラインを参照してください</4></0>"
 
 #: src/loaders/standalone/menu.tsx
 #~ msgid "Repository Management"
@@ -4939,8 +4965,8 @@ msgid "Requires Ansible"
 msgstr "Ansible が必要です"
 
 #: src/components/user-form.tsx
-msgid "Requires super user permissions to edit."
-msgstr "編集にはスーパーユーザー権限が必要です。"
+#~ msgid "Requires super user permissions to edit."
+#~ msgstr "編集にはスーパーユーザー権限が必要です。"
 
 #: src/containers/task-management/task-detail.tsx
 msgid "Reserve resources"
@@ -5147,8 +5173,8 @@ msgid "Saved changes to namespace \"{0}\"."
 msgstr "名前空間 \"{0}\" への変更を保存しました。"
 
 #: src/containers/settings/user-profile.tsx
-#~ msgid "Saved changes to user \"{username}\"."
-#~ msgstr "ユーザー \"{username}\" への変更を保存しました。"
+msgid "Saved changes to user \"{username}\"."
+msgstr "ユーザー \"{username}\" への変更を保存しました。"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Scroll back"
@@ -5383,10 +5409,18 @@ msgstr ""
 msgid "Show content"
 msgstr ""
 
+#: src/components/pulp-code-block.tsx
+msgid "Show less"
+msgstr ""
+
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "Show Less"
 msgstr "簡易表示"
+
+#: src/components/pulp-code-block.tsx
+msgid "Show more"
+msgstr ""
 
 #: src/containers/search/multi-search.tsx
 msgid "Show more collections"
@@ -5571,7 +5605,6 @@ msgstr "結果のソート"
 msgid "SSO URL"
 msgstr "SSO URL"
 
-#: src/components/ansible-repository-form.tsx
 #: src/components/repository-badge.tsx
 msgid "Staging"
 msgstr "ステージング"
@@ -5724,17 +5757,17 @@ msgstr "リポジトリーが正常に作成されました {0}"
 #: src/components/user-form.tsx
 #: src/components/user-form.tsx
 #: src/containers/user-management/user-list.tsx
-msgid "Super user"
-msgstr "スーパーユーザー"
+#~ msgid "Super user"
+#~ msgstr "スーパーユーザー"
 
 #: src/components/user-form.tsx
-msgid "Super users can't disable themselves."
-msgstr "スーパーユーザーは、自分自身を無効にできません。"
+#~ msgid "Super users can't disable themselves."
+#~ msgstr "スーパーユーザーは、自分自身を無効にできません。"
 
 #: src/components/user-form.tsx
 #: src/containers/user-management/user-list.tsx
-msgid "Super users have all system permissions regardless of what groups they are in."
-msgstr "スーパーユーザーには、所属するグループに関係なく、すべてのシステムパーミッションが割り当てられています。"
+#~ msgid "Super users have all system permissions regardless of what groups they are in."
+#~ msgstr "スーパーユーザーには、所属するグループに関係なく、すべてのシステムパーミッションが割り当てられています。"
 
 #: src/components/darkmode-switcher.tsx
 msgid "Switch to dark mode"
@@ -6193,6 +6226,10 @@ msgstr "このグループにはユーザーを含めることができます"
 #~ msgid "This is the rating from old-galaxy.ansible.com. We are working on redoing the rating for the new version of galaxy."
 #~ msgstr ""
 
+#: src/containers/about-project.tsx
+msgid "This project is an attempt to up-cycle the Ansible Galaxy UI codebase. The first version contains mostly saved code with minor fixes. In the future more types of content will be added. We welcome kindly any contributions."
+msgstr ""
+
 #: src/components/tag-manifest-modal.tsx
 msgid "This tag already exists on another image. Do you want to move it to this image?"
 msgstr "このタグは別のイメージにすでに存在します。このイメージに移動してもよろしいですか?"
@@ -6611,8 +6648,8 @@ msgid "User list"
 msgstr "ユーザーリスト"
 
 #: src/components/user-form.tsx
-msgid "User type"
-msgstr "ユーザータイプ"
+#~ msgid "User type"
+#~ msgstr "ユーザータイプ"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/pulp-about-modal.tsx
@@ -6808,7 +6845,7 @@ msgstr "インポートの完了を待機中"
 msgid "Warning"
 msgstr "警告"
 
-#: src/containers/not-found/not-found.tsx
+#: src/components/not-found.tsx
 msgid "We couldn't find the page you're looking for!"
 msgstr "お探しのページは見つかりませんでした!"
 
