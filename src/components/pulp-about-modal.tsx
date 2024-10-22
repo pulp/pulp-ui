@@ -79,11 +79,6 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
 
           <Label>{t`UI Version`}</Label>
           <Value>
-            <ExternalLink
-              href={`https://github.com/pulp/pulp-ui/commit/${ui_sha}`}
-            >
-              {ui_sha}
-            </ExternalLink>{' '}
             {ui_version ? (
               <>
                 <ExternalLink
@@ -93,7 +88,15 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
                 </ExternalLink>{' '}
               </>
             ) : null}
+            {ui_version ? '(' : null}
+            <ExternalLink
+              href={`https://github.com/pulp/pulp-ui/commit/${ui_sha}`}
+            >
+              {ui_sha}
+            </ExternalLink>
+            {', '}
             <DateComponent date={ui_date} />
+            {ui_version ? ')' : null}
           </Value>
 
           <Label>{t`Username`}</Label>
