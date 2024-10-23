@@ -39,6 +39,10 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: 'Install moreutils'
+        run: |
+          apt-get -y install moreutils
+
       # FIXME: reuse pr-checks.yml?
       - name: 'Checks'
         run: |
@@ -98,3 +102,19 @@ jobs:
           gh release upload v"$NPM_VERSION" "$TARBALL" --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'Update CHANGES.md'
+        run: |
+          (
+            curl -s https://api.github.com/repos/pulp/pulp-ui/releases/latest | \
+            jq -r '.name,"",.body' | \
+            sed -e 's/^## /### /' -e 's/^pulp-ui \(.*\) \(.*\)/## \1 (\2) {: #\1 }/' | \
+            grep -v '^\* Bump .* by @dependabot in '
+            echo
+            echo '---'
+            echo
+            cat CHANGES.md
+          ) | sponge CHANGES.md
+          git add CHANGES.md
+          git commit -m "changelog update for $NPM_VERSION"
+          git push
