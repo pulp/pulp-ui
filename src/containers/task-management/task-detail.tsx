@@ -30,6 +30,7 @@ import {
   closeAlert,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
+import { config } from 'src/ui-config';
 import {
   type RouteProps,
   jsxErrorMessage,
@@ -460,7 +461,7 @@ class TaskDetail extends Component<RouteProps, IState> {
         }
         if (result.data.reserved_resources_record.length) {
           result.data.reserved_resources_record.forEach((resource) => {
-            const url = resource.replace(API_BASE_PATH, '');
+            const url = resource.replace(config.API_BASE_PATH, '');
             const id = parsePulpIDFromURL(url);
             const urlParts = url.split('/');
             let resourceType = '';

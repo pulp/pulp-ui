@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { config } from 'src/ui-config';
 import { ParamHelper } from 'src/utilities';
 
 export class BaseAPI {
@@ -10,17 +11,16 @@ export class BaseAPI {
   mapPageToOffset: boolean;
 
   // a request URL is created from:
-  // * API_HOST - optional, for use with different hostname
-  // * apiBaseUrl - api/pulp prefix, ends in trailing slash
+  // * API_BASE_PATH - pulp api prefix, ends in trailing slash
   // * apiPath - set by leaf API classes
   // any extra id or params added by custom methods
-  constructor(apiBaseUrl) {
+  constructor() {
     this.http = axios.create({
       // adapter + withCredentials ensures no popup on http basic auth fail
       adapter: 'fetch',
       withCredentials: false,
 
-      baseURL: API_HOST + apiBaseUrl,
+      // baseURL set to API_BASE_PATH in authHandler
       paramsSerializer: {
         serialize: (params) => ParamHelper.getQueryString(params),
       },
@@ -88,7 +88,6 @@ export class BaseAPI {
   }
 
   private async authHandler(request) {
-    request.headers['X-CSRFToken'] = Cookies.get('csrftoken');
     if (!request.auth) {
       request.auth = JSON.parse(
         window.sessionStorage.credentials ||
@@ -96,6 +95,8 @@ export class BaseAPI {
           '{}',
       );
     }
+    request.baseURL = config.API_BASE_PATH;
+    request.headers['X-CSRFToken'] = Cookies.get('csrftoken');
     return request;
   }
 }
