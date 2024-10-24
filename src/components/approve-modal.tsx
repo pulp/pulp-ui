@@ -36,7 +36,7 @@ export const ApproveModal = ({
         destination_repositories: selectedRepos.map((repo) => repo.pulp_href),
       };
 
-      if (settings.GALAXY_AUTO_SIGN_COLLECTIONS) {
+      if (settings.GALAXY_COLLECTION_SIGNING_SERVICE) {
         const signingServiceName = settings.GALAXY_COLLECTION_SIGNING_SERVICE;
 
         error = t`Signing service ${signingServiceName} not found`;

@@ -142,7 +142,6 @@ export const PageWithTabs = function <
         queueAlert: (this.context as IAppContextType).queueAlert,
         setState: (state) => this.setState(state),
         state: this.state,
-        user: (this.context as IAppContextType).user,
       };
 
       const name = item?.name || routeParams.name;

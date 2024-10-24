@@ -33,14 +33,16 @@ function knownPermissionsAndCategories(
   return Object.values(categories);
 }
 
+// FIXME
+const model_permissions = {};
+
 export const PermissionCategories = ({
   permissions,
   setSelected,
   showCustom,
   showEmpty,
 }: IProps) => {
-  const { featureFlags, user } = useAppContext();
-  const { model_permissions } = user;
+  const { featureFlags } = useAppContext();
   const showUserManagement = !featureFlags.external_authentication;
 
   // show user/group permissions by default

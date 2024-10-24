@@ -9,7 +9,6 @@ import {
   CollectionVersionAPI,
   type CollectionVersionSearch,
   type GroupType,
-  MyNamespaceAPI,
   NamespaceAPI,
   type NamespaceType,
   type RoleType,
@@ -197,7 +196,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
     stateUpdate,
   }) {
     const { name } = this.state.namespace;
-    MyNamespaceAPI.update(name, {
+    NamespaceAPI.update(name, {
       ...this.state.namespace,
       users: users || this.state.namespace.users,
       groups: groups || this.state.namespace.groups,
@@ -767,9 +766,9 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
   private loadAllCollections(params) {
     return CollectionVersionAPI.list({
       ...params,
-      is_highest: true,
+      //is_highest: true,
       namespace: this.props.routeParams.namespace,
-      repository_label: '!hide_from_search',
+      //repository_label: '!hide_from_search',
     });
   }
 
@@ -778,8 +777,8 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
       ParamHelper.getReduced(this.state.params, ['tab', 'group', 'user']),
     ).then((result) => {
       this.setState({
-        collections: result.data.data,
-        filteredCount: result.data.meta.count,
+        collections: result.data.results,
+        filteredCount: result.data.count,
       });
     });
   }
@@ -794,40 +793,28 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
       NamespaceAPI.get(this.props.routeParams.namespace, {
         include_related: 'my_permissions',
       }),
-      MyNamespaceAPI.get(this.props.routeParams.namespace, {
+      /*MyNamespaceAPI.get(this.props.routeParams.namespace, {
         include_related: 'my_permissions',
       }).catch((e) => {
-        // this needs fixing on backend to return nothing in these cases with 200 status
-        // if view only mode is enabled disregard errors and hope
-        if (
-          (this.context as IAppContextType).user.is_anonymous &&
-          (this.context as IAppContextType).settings
-            .GALAXY_ENABLE_UNAUTHENTICATED_COLLECTION_ACCESS
-        ) {
-          return null;
-        }
-
         // expecting 404 - it just means we can not edit the namespace (unless both NamespaceAPI and MyNamespaceAPI fail)
         return e.response && e.response.status === 404
           ? null
           : Promise.reject(e);
-      }),
+      }),*/
     ])
       .then(
         ([
           _collections,
           {
-            data: {
-              meta: { count: unfilteredCount },
-            },
+            data: { count: unfilteredCount },
           },
           { data: namespace },
-          myNamespace,
+          //myNamespace,
         ]) => {
           this.setState({
             canSign: canSignNamespace(
               this.context as IAppContextType,
-              myNamespace?.data,
+              {}, //  myNamespace?.data,
             ),
             group: this.filterGroup(this.state.params.group, namespace.groups),
             user: this.filterUser(this.state.params.user, namespace.users),
@@ -841,7 +828,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
                   }))
                 : [],
             },
-            showControls: !!myNamespace,
+            showControls: true, //!!myNamespace,
             unfilteredCount,
           });
         },

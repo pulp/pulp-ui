@@ -124,7 +124,6 @@ export const Page = function <
         queueAlert: (this.context as IAppContextType).queueAlert,
         setState: (s) => this.setState(s),
         state: this.state,
-        user: (this.context as IAppContextType).user,
       };
 
       const name = item?.name || transformParams(routeParams)?.name || null;

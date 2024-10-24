@@ -1,7 +1,7 @@
 import { PulpAPI } from './pulp';
 
-export class API extends PulpAPI {
-  apiPath = 'tasks/purge/';
-}
+const base = new PulpAPI();
 
-export const TaskPurgeAPI = new API();
+export const TaskPurgeAPI = {
+  create: (data) => base.http.post(`tasks/purge/`, data),
+};

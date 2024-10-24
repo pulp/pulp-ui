@@ -47,7 +47,6 @@ export const CollectionDropdown = ({
       display_repositories,
     },
     hasPermission,
-    user: { is_anonymous },
   } = useAppContext();
 
   const hasObjectPermission = (permission) =>
@@ -56,7 +55,7 @@ export const CollectionDropdown = ({
   const hasPerm = (permission) =>
     hasPermission(permission) || hasObjectPermission(permission);
 
-  const canCopy = display_repositories && !is_anonymous;
+  const canCopy = display_repositories;
   const canDelete =
     hasPerm('ansible.delete_collection') || hasPerm('galaxy.change_namespace');
   const canDeprecate = hasPerm('galaxy.change_namespace');

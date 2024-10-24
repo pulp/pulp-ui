@@ -22,7 +22,6 @@ import {
   DeleteModal,
   EmptyStateFilter,
   EmptyStateNoData,
-  EmptyStateUnauthorized,
   ListItemActions,
   LoadingSpinner,
   Main,
@@ -118,10 +117,6 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
     } = this.state;
     const noData =
       items.length === 0 && !filterIsSet(params, ['name__icontains']);
-
-    if ((this.context as IAppContextType).user.is_anonymous) {
-      return <EmptyStateUnauthorized />;
-    }
 
     const { hasPermission } = this.context as IAppContextType;
     const addButton = hasPermission('galaxy.add_containerregistryremote') ? (
