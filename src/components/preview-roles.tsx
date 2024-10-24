@@ -2,7 +2,6 @@ import { Trans } from '@lingui/macro';
 import { Divider, Flex, FlexItem, Label } from '@patternfly/react-core';
 import React, { Fragment } from 'react';
 import { type RoleType } from 'src/api';
-import { useAppContext } from 'src/app-context';
 import { Tooltip } from 'src/components';
 import { translateLockedRole } from 'src/utilities';
 
@@ -16,6 +15,9 @@ interface IProps {
   };
 }
 
+// FIXME
+const model_permissions = {};
+
 const splitByDot = (perm: string) => {
   const [category, permission] = perm.split('.', 2);
   const catTitle = category.charAt(0).toUpperCase() + category.slice(1);
@@ -27,8 +29,6 @@ const splitByDot = (perm: string) => {
 };
 
 export const PreviewRoles = ({ user, group, selectedRoles }: IProps) => {
-  const { model_permissions } = useAppContext().user;
-
   return (
     <div className='pulp-custom-wizard-layout'>
       <p>

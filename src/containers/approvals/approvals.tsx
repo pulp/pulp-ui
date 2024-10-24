@@ -113,20 +113,20 @@ class Approvals extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    const { user, hasPermission } = this.context as IAppContextType;
-    if (!user || !hasPermission('ansible.modify_ansible_repo_content')) {
+    const { hasPermission } = this.context as IAppContextType;
+    if (!hasPermission('ansible.modify_ansible_repo_content')) {
       this.setState({ unauthorized: true });
-    } else {
-      this.setState({ loading: true });
+      return;
+    }
 
-      Promise.all([
-        this.queryCollections(false),
-        this.queryRepositories(),
-      ]).then(() => {
+    this.setState({ loading: true });
+
+    Promise.all([this.queryCollections(false), this.queryRepositories()]).then(
+      () => {
         this.setState({ loading: false });
         this.setState({ updatingVersions: [] });
-      });
-    }
+      },
+    );
   }
 
   private queryRepositories() {

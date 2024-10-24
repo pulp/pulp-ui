@@ -16,7 +16,6 @@ import {
   TaskPurgeAPI,
   type TaskType,
 } from 'src/api';
-import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -27,7 +26,6 @@ import {
   DateComponent,
   EmptyStateFilter,
   EmptyStateNoData,
-  EmptyStateUnauthorized,
   LoadingSpinner,
   Main,
   PulpPagination,
@@ -58,13 +56,10 @@ interface IState {
   alerts: AlertType[];
   cancelModalVisible: boolean;
   selectedTask: TaskType;
-  unauthorized: boolean;
   inputText: string;
 }
 
 export class TaskListView extends Component<RouteProps, IState> {
-  static contextType = AppContext;
-
   constructor(props) {
     super(props);
 
@@ -89,30 +84,17 @@ export class TaskListView extends Component<RouteProps, IState> {
       alerts: [],
       cancelModalVisible: false,
       selectedTask: null,
-      unauthorized: false,
       inputText: '',
     };
   }
 
   componentDidMount() {
-    const { user } = this.context as IAppContextType;
-    if (!user) {
-      this.setState({ loading: false, unauthorized: true });
-    } else {
-      this.queryTasks();
-    }
+    this.queryTasks();
   }
 
   render() {
-    const {
-      params,
-      itemCount,
-      loading,
-      items,
-      alerts,
-      cancelModalVisible,
-      unauthorized,
-    } = this.state;
+    const { alerts, cancelModalVisible, itemCount, items, loading, params } =
+      this.state;
 
     const noData =
       items.length === 0 && !filterIsSet(params, ['name__contains', 'state']);
@@ -150,9 +132,7 @@ export class TaskListView extends Component<RouteProps, IState> {
         />
         {cancelModalVisible ? this.renderCancelModal() : null}
         <BaseHeader title={t`Task management`} />
-        {unauthorized ? (
-          <EmptyStateUnauthorized />
-        ) : noData && !loading ? (
+        {noData && !loading ? (
           <EmptyStateNoData
             title={t`No tasks yet`}
             description={t`Tasks will appear once created.`}

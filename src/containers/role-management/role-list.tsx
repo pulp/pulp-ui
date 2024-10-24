@@ -22,7 +22,6 @@ import {
   DeleteModal,
   EmptyStateFilter,
   EmptyStateNoData,
-  EmptyStateUnauthorized,
   ExpandableRow,
   ListItemActions,
   LoadingSpinner,
@@ -55,7 +54,6 @@ interface IState {
     page?: number;
     page_size?: number;
   };
-  unauthorized: boolean;
   selectedRole: RoleType[];
   expandedRoleNames: string[];
   roleToEdit: RoleType;
@@ -89,7 +87,6 @@ export class RoleList extends Component<RouteProps, IState> {
       inputText: '',
       params,
       roleCount: 0,
-      unauthorized: false,
       selectedRole: null,
       expandedRoleNames: [],
       roleToEdit: null,
@@ -98,11 +95,7 @@ export class RoleList extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    if (!(this.context as IAppContextType).user) {
-      this.setState({ loading: false, unauthorized: true });
-    } else {
-      this.queryRoles();
-    }
+    this.queryRoles();
   }
 
   render() {
@@ -112,7 +105,6 @@ export class RoleList extends Component<RouteProps, IState> {
       loading,
       roleCount,
       alerts,
-      unauthorized,
       showDeleteModal,
       roleToEdit,
       roles,
@@ -196,9 +188,7 @@ export class RoleList extends Component<RouteProps, IState> {
           </DeleteModal>
         )}
         <BaseHeader title={t`Roles`} />
-        {unauthorized ? (
-          <EmptyStateUnauthorized />
-        ) : noData && !loading ? (
+        {noData && !loading ? (
           <EmptyStateNoData
             title={t`There are currently no roles`}
             description={t`Please add a role by using the button below.`}
