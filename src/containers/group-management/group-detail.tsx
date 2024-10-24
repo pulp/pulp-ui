@@ -120,8 +120,8 @@ class GroupDetail extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    const { user, hasPermission } = this.context as IAppContextType;
-    if (!user || !hasPermission('galaxy.view_group')) {
+    const { hasPermission } = this.context as IAppContextType;
+    if (!hasPermission('galaxy.view_group')) {
       this.setState({ unauthorized: true });
     } else {
       this.queryGroup();
@@ -165,7 +165,7 @@ class GroupDetail extends Component<RouteProps, IState> {
       unauthorized,
       users,
     } = this.state;
-    const { user, hasPermission } = this.context as IAppContextType;
+    const { hasPermission } = this.context as IAppContextType;
 
     if (!group && alerts && alerts.length) {
       return (
@@ -208,16 +208,15 @@ class GroupDetail extends Component<RouteProps, IState> {
           { tab: 'access' },
         ),
       },
-      !!user &&
-        hasPermission('galaxy.view_user') && {
-          active: params.tab === 'users',
-          title: t`Users`,
-          link: formatPath(
-            Paths.core.group.detail,
-            { group: group.id },
-            { tab: 'users' },
-          ),
-        },
+      hasPermission('galaxy.view_user') && {
+        active: params.tab === 'users',
+        title: t`Users`,
+        link: formatPath(
+          Paths.core.group.detail,
+          { group: group.id },
+          { tab: 'users' },
+        ),
+      },
     ];
 
     return (
@@ -261,9 +260,9 @@ class GroupDetail extends Component<RouteProps, IState> {
   }
 
   private renderControls() {
-    const { hasPermission, user } = this.context as IAppContextType;
+    const { hasPermission } = this.context as IAppContextType;
 
-    if (!user || !hasPermission('galaxy.delete_group')) {
+    if (!hasPermission('galaxy.delete_group')) {
       return null;
     }
 
@@ -299,8 +298,6 @@ class GroupDetail extends Component<RouteProps, IState> {
   }
 
   private renderAddModal() {
-    console.log('HERE');
-    console.log(this.state.options);
     if (this.state.options === undefined) {
       this.loadOptions();
       return null;
@@ -473,7 +470,6 @@ class GroupDetail extends Component<RouteProps, IState> {
   }
 
   private addUserToGroup(selectedUsers, group) {
-    console.log('addUserToGroup');
     return Promise.all(
       selectedUsers.map(({ id }) => {
         const user = this.state.allUsers.find((x) => x.id === id);
@@ -530,8 +526,7 @@ class GroupDetail extends Component<RouteProps, IState> {
 
   private renderUsers(users) {
     const { itemCount, params } = this.state;
-    const { user, featureFlags, hasPermission } = this
-      .context as IAppContextType;
+    const { featureFlags, hasPermission } = this.context as IAppContextType;
     const noData =
       itemCount === 0 && !filterIsSet(this.state.params, ['username']);
     const isUserMgmtDisabled = featureFlags.external_authentication;
@@ -542,7 +537,6 @@ class GroupDetail extends Component<RouteProps, IState> {
           title={t`No users yet`}
           description={t`Users will appear once added to this group`}
           button={
-            !!user &&
             hasPermission('galaxy.change_group') &&
             !isUserMgmtDisabled && (
               <Button
@@ -583,20 +577,18 @@ class GroupDetail extends Component<RouteProps, IState> {
                   />
                 </ToolbarItem>
               </ToolbarGroup>
-              {!!user &&
-                hasPermission('galaxy.change_group') &&
-                !isUserMgmtDisabled && (
-                  <ToolbarGroup>
-                    <ToolbarItem>
-                      <Button
-                        onClick={() => {
-                          this.setState({ addModalVisible: true });
-                          console.log(this.state.addModalVisible);
-                        }}
-                      >{t`Add`}</Button>
-                    </ToolbarItem>
-                  </ToolbarGroup>
-                )}
+              {hasPermission('galaxy.change_group') && !isUserMgmtDisabled && (
+                <ToolbarGroup>
+                  <ToolbarItem>
+                    <Button
+                      onClick={() => {
+                        this.setState({ addModalVisible: true });
+                        console.log(this.state.addModalVisible);
+                      }}
+                    >{t`Add`}</Button>
+                  </ToolbarItem>
+                </ToolbarGroup>
+              )}
             </ToolbarContent>
           </Toolbar>
 
@@ -665,20 +657,17 @@ class GroupDetail extends Component<RouteProps, IState> {
   }
 
   private renderTableRow(user: UserType, index: number) {
-    const currentUser = (this.context as IAppContextType).user;
     const { featureFlags, hasPermission } = this.context as IAppContextType;
     const isUserMgmtDisabled = featureFlags.external_authentication;
     const dropdownItems = [
-      !!currentUser &&
-        hasPermission('galaxy.change_group') &&
-        !isUserMgmtDisabled && (
-          <DropdownItem
-            key='delete'
-            onClick={() => this.setState({ showUserRemoveModal: user })}
-          >
-            {t`Remove`}
-          </DropdownItem>
-        ),
+      hasPermission('galaxy.change_group') && !isUserMgmtDisabled && (
+        <DropdownItem
+          key='delete'
+          onClick={() => this.setState({ showUserRemoveModal: user })}
+        >
+          {t`Remove`}
+        </DropdownItem>
+      ),
     ];
     return (
       <Tr data-cy={`GroupDetail-users-${user.username}`} key={index}>

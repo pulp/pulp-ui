@@ -230,7 +230,7 @@ export const ListPage = function <T>({
         queueAlert: (this.context as IAppContextType).queueAlert,
         setState: (state) => this.setState(state),
         state: this.state,
-        user: (this.context as IAppContextType).user,
+        user: (this.context as IAppContextType).user, // FIXME
       };
 
       const resetCompoundFilter = () =>
