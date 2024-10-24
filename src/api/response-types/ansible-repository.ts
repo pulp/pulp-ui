@@ -18,24 +18,3 @@ export class AnsibleRepositoryType {
 
   my_permissions?: string[];
 }
-
-type ContentSummary = Record<
-  string,
-  {
-    count: number;
-    href: string;
-  }
->;
-
-export class AnsibleRepositoryVersionType {
-  pulp_href: string;
-  pulp_created: string;
-  number: number;
-  repository: string;
-  base_version: null;
-  content_summary: {
-    added: ContentSummary;
-    removed: ContentSummary;
-    present: ContentSummary;
-  };
-}

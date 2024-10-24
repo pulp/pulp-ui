@@ -1,13 +1,10 @@
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
-export class API extends HubAPI {
-  apiPath = '_ui/v1/imports/collections/';
+const base = new PulpAPI();
 
-  get(id, path?) {
-    // call this to generate more task messages
-    // this.mock.updateImportDetail();
-    return super.get(id, path);
-  }
-}
+// FIXME HubAPI
+export const ImportAPI = {
+  get: (id) => base.http.get(`_ui/v1/imports/collections/${id}/`),
 
-export const ImportAPI = new API();
+  list: (params?) => base.list(`_ui/v1/imports/collections/`, params),
+};

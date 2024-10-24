@@ -29,7 +29,7 @@ class RenderedFile {
   html: string;
 }
 
-export class CollectionVersionDetail extends CollectionVersion {
+class CollectionVersionDetail extends CollectionVersion {
   metadata: {
     contents: ContentSummaryType[];
     description: string;
@@ -111,24 +111,7 @@ export class CollectionVersionContentType {
   requires_ansible: string;
 }
 
-export class CollectionListType {
-  id: string;
-  name: string;
-  description: string;
-  deprecated: boolean;
-  latest_version: CollectionVersion;
-  sign_state: SignState;
-
-  namespace: {
-    id: number;
-    description: string;
-    name: string;
-    avatar_url: string;
-    company: string;
-  };
-}
-
-export class PluginOption {
+class PluginOption {
   name: string;
   description: string[];
   type: string;
@@ -138,7 +121,7 @@ export class PluginOption {
   suboptions?: PluginOption[];
 }
 
-export class PluginDoc {
+class PluginDoc {
   short_description: string;
   description: string[];
   options?: PluginOption[];
@@ -151,7 +134,7 @@ export class PluginDoc {
   };
 }
 
-export class ReturnedValue {
+class ReturnedValue {
   name: string;
   description: string[];
   returned: string;
@@ -161,7 +144,7 @@ export class ReturnedValue {
   contains: ReturnedValue[];
 }
 
-export class PluginContentType {
+class PluginContentType {
   content_type: string;
   content_name: string;
   readme_filename: string;
@@ -231,6 +214,6 @@ export class CollectionUsedByDependencies extends CollectionDetailType {
   repository_list: string[];
 }
 
-export class DependencyType {
+class DependencyType {
   [namespaceCollection: string]: string;
 }

@@ -1,5 +1,5 @@
 import { repositoryBasePath } from 'src/utilities';
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 import { type CollectionVersionSearch } from './response-types/collection';
 
 interface SignNamespace {
@@ -19,26 +19,21 @@ interface SignCollectionVersion extends SignCollection {
 
 type SignProps = SignNamespace | SignCollection | SignCollectionVersion;
 
-class API extends HubAPI {
-  apiPath = '_ui/v1/collection_signing/';
+const base = new PulpAPI();
 
-  async sign({ repository, repository_name: name, ...args }: SignProps) {
-    const distroBasePath = await repositoryBasePath(
-      name,
-      repository?.pulp_href,
-    ).catch((status) =>
-      Promise.reject({
-        response: { status },
-      }),
-    );
-
-    const updatedData = {
-      distro_base_path: distroBasePath,
-      ...args,
-    };
-
-    return this.http.post(this.apiPath, updatedData);
-  }
-}
-
-export const SignCollectionAPI = new API();
+// FIXME HubAPI
+export const SignCollectionAPI = {
+  sign: ({ repository, repository_name: name, ...args }: SignProps) =>
+    repositoryBasePath(name, repository?.pulp_href)
+      .catch((status) =>
+        Promise.reject({
+          response: { status },
+        }),
+      )
+      .then((distro_base_path) =>
+        base.http.post(`_ui/v1/collection_signing/`, {
+          distro_base_path,
+          ...args,
+        }),
+      ),
+};

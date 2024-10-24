@@ -90,8 +90,8 @@ class UserList extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    const { user, hasPermission } = this.context as IAppContextType;
-    if (!user || !hasPermission('galaxy.view_user')) {
+    const { hasPermission } = this.context as IAppContextType;
+    if (!hasPermission('galaxy.view_user')) {
       this.setState({ unauthorized: true });
     } else {
       this.queryUsers();
@@ -110,7 +110,7 @@ class UserList extends Component<RouteProps, IState> {
       unauthorized,
     } = this.state;
 
-    const { user, hasPermission } = this.context as IAppContextType;
+    const { hasPermission } = this.context as IAppContextType;
 
     if (redirect) {
       return <Navigate to={redirect} />;
@@ -180,7 +180,7 @@ class UserList extends Component<RouteProps, IState> {
                         />
                       </ToolbarItem>
                     </ToolbarGroup>
-                    {!!user && hasPermission('galaxy.add_user') ? (
+                    {hasPermission('galaxy.add_user') ? (
                       <ToolbarGroup>
                         <ToolbarItem>
                           <Link to={formatPath(Paths.core.user.create)}>
@@ -313,10 +313,8 @@ class UserList extends Component<RouteProps, IState> {
   private renderTableRow(user: UserType, index: number) {
     const dropdownItems = [];
     const { hasPermission } = this.context as IAppContextType;
-    if (
-      !!(this.context as IAppContextType).user &&
-      hasPermission('galaxy.change_user')
-    ) {
+
+    if (hasPermission('galaxy.change_user')) {
       dropdownItems.push(
         <DropdownItem
           key='edit'
@@ -332,16 +330,15 @@ class UserList extends Component<RouteProps, IState> {
         />,
       );
     }
-    if (
-      !!(this.context as IAppContextType).user &&
-      hasPermission('galaxy.delete_user')
-    ) {
+
+    if (hasPermission('galaxy.delete_user')) {
       dropdownItems.push(
         <DropdownItem key='delete' onClick={() => this.deleteUser(user)}>
           {t`Delete`}
         </DropdownItem>,
       );
     }
+
     return (
       <Tr data-cy={`UserList-row-${user.username}`} key={index}>
         <Td>

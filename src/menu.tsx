@@ -28,7 +28,7 @@ const menuSection = (name, options = {}, items = []) => ({
 const altPath = (p) => formatPath(p, {}, null, { ignoreMissing: true });
 
 // condition: loggedIn OR condition: and(loggedIn, hasPlugin('rpm'))
-const loggedIn = ({ user }) => !!user;
+const loggedIn = ({ isLoggedIn }) => isLoggedIn();
 const hasPlugin =
   (name) =>
   ({ plugins }) =>
@@ -284,7 +284,7 @@ export const StandaloneMenu = () => {
   const location = useLocation();
   const [menu, setMenu] = useState([]);
 
-  const { credentials } = useUserContext();
+  const { isLoggedIn } = useUserContext();
 
   const plugins = usePlugins();
 
@@ -312,7 +312,7 @@ export const StandaloneMenu = () => {
       <NavList>
         <Menu
           items={menu}
-          context={{ user: credentials, plugins }}
+          context={{ isLoggedIn, plugins }}
           expandedSections={expandedSections}
         />
       </NavList>

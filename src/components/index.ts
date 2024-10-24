@@ -102,7 +102,6 @@ export { Tooltip } from './patternfly-wrappers/tooltip';
 export { PermissionCategories } from './permission-categories';
 export { PermissionChipSelector } from './permission-chip-selector';
 export { PreviewRoles } from './preview-roles';
-export { ProviderLink } from './provider-link';
 export { PulpAboutModal } from './pulp-about-modal';
 export { PulpCopyButton } from './pulp-copy-button';
 export { PulpCodeBlock } from './pulp-code-block';

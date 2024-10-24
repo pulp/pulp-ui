@@ -1,81 +1,73 @@
 import { PulpAPI } from './pulp';
 
-class API extends PulpAPI {
-  apiPath = 'repositories/ansible/ansible/';
+const base = new PulpAPI();
 
-  // list(params?)
-
-  listVersions(pulp_id: string, params?) {
-    return this.list(params, this.apiPath + pulp_id + '/versions/');
-  }
-
-  // delete(pulp_id: string)
-
-  sync(pulp_id: string, body = {}) {
-    return this.http.post(this.apiPath + pulp_id + '/sync/', body);
-  }
-
-  revert(pulp_id: string, version_href) {
-    return this.http.post(this.apiPath + pulp_id + '/modify/', {
-      base_version: version_href,
-    });
-  }
-
-  addContent(pulp_id: string, collection_version_hrefs) {
-    return this.http.post(this.apiPath + pulp_id + '/modify/', {
+export const AnsibleRepositoryAPI = {
+  addContent: (id: string, collection_version_hrefs) =>
+    base.http.post(`repositories/ansible/ansible/${id}/modify/`, {
       add_content_units: collection_version_hrefs,
-    });
-  }
+    }),
 
-  removeContent(pulp_id: string, collection_version_href) {
-    return this.http.post(this.apiPath + pulp_id + '/modify/', {
+  addRole: (id: string, role) =>
+    base.http.post(`repositories/ansible/ansible/${id}/add_role/`, role),
+
+  copyCollectionVersion: (
+    id: string,
+    body: {
+      collection_versions: string[];
+      destination_repositories: string[];
+      signing_service?: string;
+    },
+  ) =>
+    base.http.post(
+      `repositories/ansible/ansible/${id}/copy_collection_version/`,
+      body,
+    ),
+
+  create: (data) => base.http.post(`repositories/ansible/ansible/`, data),
+
+  delete: (id) => base.http.delete(`repositories/ansible/ansible/${id}/`),
+
+  list: (params?) => base.list(`repositories/ansible/ansible/`, params),
+
+  listRoles: (id: string, params?) =>
+    base.list(`repositories/ansible/ansible/${id}/list_roles/`, params),
+
+  listVersions: (id: string, params?) =>
+    base.list(`repositories/ansible/ansible/${id}/versions/`, params),
+
+  moveCollectionVersion: (
+    id: string,
+    body: {
+      collection_versions: string[];
+      destination_repositories: string[];
+      signing_service?: string;
+    },
+  ) =>
+    base.http.post(
+      `repositories/ansible/ansible/${id}/move_collection_version/`,
+      body,
+    ),
+
+  myPermissions: (id: string, params?) =>
+    base.list(`repositories/ansible/ansible/${id}/my_permissions/`, params),
+
+  removeContent: (id: string, collection_version_href) =>
+    base.http.post(`repositories/ansible/ansible/${id}/modify/`, {
       remove_content_units: [collection_version_href],
-    });
-  }
+    }),
 
-  listRoles(pulp_id: string, params?) {
-    return super.list(params, this.apiPath + pulp_id + '/list_roles/');
-  }
+  removeRole: (id: string, role) =>
+    base.http.post(`repositories/ansible/ansible/${id}/remove_role/`, role),
 
-  addRole(pulp_id: string, role) {
-    return super.create(role, this.apiPath + pulp_id + '/add_role/');
-  }
+  revert: (id: string, version_href) =>
+    base.http.post(`repositories/ansible/ansible/${id}/modify/`, {
+      base_version: version_href,
+    }),
 
-  myPermissions(pulp_id: string, params?) {
-    return super.list(params, this.apiPath + pulp_id + '/my_permissions/');
-  }
+  sync: (id: string, body = {}) =>
+    base.http.post(`repositories/ansible/ansible/${id}/sync/`, body),
 
-  removeRole(pulp_id: string, role) {
-    return super.create(role, this.apiPath + pulp_id + '/remove_role/');
-  }
-
-  copyCollectionVersion(
-    pulp_id: string,
-    body: {
-      collection_versions: string[];
-      destination_repositories: string[];
-      signing_service?: string;
-    },
-  ) {
-    return this.http.post(
-      this.apiPath + pulp_id + '/copy_collection_version/',
-      body,
-    );
-  }
-
-  moveCollectionVersion(
-    pulp_id: string,
-    body: {
-      collection_versions: string[];
-      destination_repositories: string[];
-      signing_service?: string;
-    },
-  ) {
-    return this.http.post(
-      this.apiPath + pulp_id + '/move_collection_version/',
-      body,
-    );
-  }
-}
-
-export const AnsibleRepositoryAPI = new API();
+  update: (id: string, data) =>
+    base.http.put(`repositories/ansible/ansible/${id}/`, data),
+};

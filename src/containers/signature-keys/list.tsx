@@ -9,7 +9,6 @@ import { DropdownItem } from '@patternfly/react-core/deprecated';
 import { Table, Tbody, Td, Tr } from '@patternfly/react-table';
 import React, { Component } from 'react';
 import { SigningServiceAPI, type SigningServiceType } from 'src/api';
-import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -20,7 +19,6 @@ import {
   DateComponent,
   EmptyStateFilter,
   EmptyStateNoData,
-  EmptyStateUnauthorized,
   ListItemActions,
   LoadingSpinner,
   Main,
@@ -45,13 +43,10 @@ interface IState {
   items: SigningServiceType[];
   itemCount: number;
   alerts: AlertType[];
-  unauthorized: boolean;
   inputText: string;
 }
 
 export class SignatureKeysList extends Component<RouteProps, IState> {
-  static contextType = AppContext;
-
   constructor(props) {
     super(props);
 
@@ -70,25 +65,16 @@ export class SignatureKeysList extends Component<RouteProps, IState> {
       loading: true,
       itemCount: 0,
       alerts: [],
-      unauthorized: false,
       inputText: '',
     };
   }
 
   componentDidMount() {
-    if (
-      !(this.context as IAppContextType).user ||
-      (this.context as IAppContextType).user.is_anonymous
-    ) {
-      this.setState({ loading: false, unauthorized: true });
-    } else {
-      this.query();
-    }
+    this.query();
   }
 
   render() {
-    const { params, itemCount, loading, items, alerts, unauthorized } =
-      this.state;
+    const { params, itemCount, loading, items, alerts } = this.state;
 
     const noData = items.length === 0 && !filterIsSet(params, ['name']);
 
@@ -104,9 +90,7 @@ export class SignatureKeysList extends Component<RouteProps, IState> {
           }
         />
         <BaseHeader title={t`Signature keys`} />
-        {unauthorized ? (
-          <EmptyStateUnauthorized />
-        ) : noData && !loading ? (
+        {noData && !loading ? (
           <EmptyStateNoData
             title={t`No signature keys yet`}
             description={t`Signature keys will appear once created.`}

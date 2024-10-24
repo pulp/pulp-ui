@@ -2,11 +2,9 @@ import { t } from '@lingui/macro';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import { RoleAPI, type RoleType } from 'src/api';
-import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
-  EmptyStateUnauthorized,
   LoadingPage,
   Main,
   NotFound,
@@ -48,12 +46,9 @@ interface IState {
   saving: boolean;
   selected: { id: number; name: string }[];
   showDeleteModal: boolean;
-  unauthorized: boolean;
 }
 
 class EditRole extends Component<RouteProps, IState> {
-  static contextType = AppContext;
-
   constructor(props) {
     super(props);
 
@@ -80,37 +75,30 @@ class EditRole extends Component<RouteProps, IState> {
       saving: false,
       selected: [],
       showDeleteModal: false,
-      unauthorized: false,
     };
   }
 
   componentDidMount() {
     this.setState({ editPermissions: true });
-    if (
-      !(this.context as IAppContextType).user ||
-      (this.context as IAppContextType).user.is_anonymous
-    ) {
-      this.setState({ unauthorized: true });
-    } else {
-      RoleAPI.get(this.state.params.id)
-        .then((result) => {
-          this.setState({
-            role: result.data,
-            description: result.data.description,
-            name: result.data.name,
-            originalPermissions: result.data.permissions,
-          });
-        })
-        .catch((e) => {
-          const { status, statusText } = e.response;
-          this.setState({ notFound: true });
-          this.addAlert(
-            t`Role "${this.state.role.name}" could not be displayed.`,
-            'danger',
-            jsxErrorMessage(status, statusText),
-          );
+
+    RoleAPI.get(this.state.params.id)
+      .then((result) => {
+        this.setState({
+          role: result.data,
+          description: result.data.description,
+          name: result.data.name,
+          originalPermissions: result.data.permissions,
         });
-    }
+      })
+      .catch((e) => {
+        const { status, statusText } = e.response;
+        this.setState({ notFound: true });
+        this.addAlert(
+          t`Role "${this.state.role.name}" could not be displayed.`,
+          'danger',
+          jsxErrorMessage(status, statusText),
+        );
+      });
   }
 
   render() {
@@ -127,7 +115,6 @@ class EditRole extends Component<RouteProps, IState> {
       notFound,
       role,
       saving,
-      unauthorized,
     } = this.state;
 
     if (!role && alerts && alerts.length) {
@@ -173,40 +160,36 @@ class EditRole extends Component<RouteProps, IState> {
           subTitle={translateLockedRole(role.name, role.description)}
           breadcrumbs={breadcrumbs}
         />
-        {unauthorized ? (
-          <EmptyStateUnauthorized />
-        ) : (
-          <Main>
-            <section className='pulp-section'>
-              <RoleForm
-                {...this.state}
-                name={name}
-                nameDisabled
-                description={description}
-                descriptionHelperText={errorMessages['description']}
-                descriptionValidated={
-                  errorMessages['description'] ? 'error' : null
-                }
-                onDescriptionChange={(value) => {
-                  this.setState({ description: value }, () => {
-                    const errors = validateInput(
-                      value,
-                      'description',
-                      this.state.errorMessages,
-                    );
-                    this.setState({ errorMessages: errors });
-                  });
-                }}
-                saving={saving}
-                saveRole={this.editRole}
-                isSavingDisabled={
-                  'description' in errorMessages || 'name' in errorMessages
-                }
-                cancelRole={this.cancelRole}
-              />
-            </section>
-          </Main>
-        )}
+        <Main>
+          <section className='pulp-section'>
+            <RoleForm
+              {...this.state}
+              name={name}
+              nameDisabled
+              description={description}
+              descriptionHelperText={errorMessages['description']}
+              descriptionValidated={
+                errorMessages['description'] ? 'error' : null
+              }
+              onDescriptionChange={(value) => {
+                this.setState({ description: value }, () => {
+                  const errors = validateInput(
+                    value,
+                    'description',
+                    this.state.errorMessages,
+                  );
+                  this.setState({ errorMessages: errors });
+                });
+              }}
+              saving={saving}
+              saveRole={this.editRole}
+              isSavingDisabled={
+                'description' in errorMessages || 'name' in errorMessages
+              }
+              cancelRole={this.cancelRole}
+            />
+          </section>
+        </Main>
       </>
     );
   }

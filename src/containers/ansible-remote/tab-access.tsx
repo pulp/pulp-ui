@@ -28,7 +28,6 @@ interface TabProps {
     featureFlags;
     hasPermission;
     state: { params };
-    user;
   };
 }
 

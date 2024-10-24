@@ -18,6 +18,7 @@ import {
   CollectionAPI,
   type CollectionUploadType,
   type CollectionVersionSearch,
+  getCancelToken,
 } from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {
@@ -61,7 +62,7 @@ export class ImportModal extends Component<IProps, IState> {
   static contextType = AppContext;
 
   acceptedFileTypes = ['application/x-gzip', 'application/gzip'];
-  cancelToken: ReturnType<typeof CollectionAPI.getCancelToken>;
+  cancelToken: ReturnType<typeof getCancelToken>;
   COLLECTION_NAME_REGEX = /[0-9a-z_]+-[0-9a-z_]+-[0-9A-Za-z.+-]+/;
 
   constructor(props) {
@@ -407,7 +408,7 @@ export class ImportModal extends Component<IProps, IState> {
       distro_base_path,
     } as CollectionUploadType;
 
-    this.cancelToken = CollectionAPI.getCancelToken();
+    this.cancelToken = getCancelToken();
 
     CollectionAPI.upload(
       artifact,

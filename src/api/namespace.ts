@@ -1,11 +1,17 @@
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
-class API extends HubAPI {
-  apiPath = '_ui/v1/namespaces/';
+const base = new PulpAPI();
 
-  get(id: string, params = {}) {
-    return this.http.get(this.apiPath + id + '/', { params });
-  }
-}
+// FIXME HubAPI
+export const NamespaceAPI = {
+  create: (data) => base.http.post(`_ui/v1/namespaces/`, data),
 
-export const NamespaceAPI = new API();
+  delete: (id) => base.http.delete(`_ui/v1/namespaces/${id}/`),
+
+  get: (id: string, params = {}) =>
+    base.http.get(`_ui/v1/namespaces/${id}/`, { params }),
+
+  list: (params?) => base.list(`_ui/v1/namespaces/`, params),
+
+  update: (id, data) => base.http.put(`_ui/v1/namespaces/${id}/`, data),
+};

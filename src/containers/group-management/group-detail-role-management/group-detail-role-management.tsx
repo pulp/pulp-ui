@@ -12,7 +12,6 @@ import React, { type FunctionComponent, useEffect, useState } from 'react';
 import {
   type GroupObjectPermissionType,
   GroupRoleAPI,
-  type GroupRoleType,
   type RoleType,
 } from 'src/api';
 import {
@@ -40,6 +39,15 @@ import {
   translateLockedRole,
 } from 'src/utilities';
 import './group-detail-role-management.scss';
+
+interface GroupRoleType {
+  pulp_href: string;
+  pulp_created: string;
+  role: string;
+  description: string;
+  permissions?: string[];
+  content_object: string;
+}
 
 interface IProps {
   addAlert: (title, variant, description?) => void;

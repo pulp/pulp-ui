@@ -1,7 +1,7 @@
 import { PulpAPI } from './pulp';
 
-export class API extends PulpAPI {
-  apiPath = 'orphans/cleanup/';
-}
+const base = new PulpAPI();
 
-export const OrphanCleanupAPI = new API();
+export const OrphanCleanupAPI = {
+  create: (data) => base.http.post(`orphans/cleanup/`, data),
+};
