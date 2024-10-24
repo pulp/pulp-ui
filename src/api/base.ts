@@ -10,7 +10,7 @@ export class BaseAPI {
     this.http = axios.create({
       // adapter + withCredentials ensures no popup on http basic auth fail
       adapter: 'fetch',
-      withCredentials: false,
+      //withCredentials: false,
 
       // baseURL gets set in PulpAPI
       paramsSerializer: {

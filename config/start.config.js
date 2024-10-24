@@ -15,6 +15,7 @@ module.exports = webpackBase({
   DEV_PROXY: {
     '/api/': proxyTarget,
     '/assets/': proxyTarget,
+    '/auth/': proxyTarget,
     '/extensions/': proxyTarget,
     '/pulp/': proxyTarget,
     '/static/rest_framework/': proxyTarget,

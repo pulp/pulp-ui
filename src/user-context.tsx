@@ -7,15 +7,18 @@ import React, {
 } from 'react';
 
 interface IUserContextType {
+  clearCredentials: () => void;
   credentials: { username: string; password: string; remember: boolean };
+  getUsername: () => string;
+  hasPermission: (name: string) => boolean;
+  isLoggedIn: () => boolean;
   setCredentials: (
     username: string,
     password: string,
     remember?: boolean,
   ) => void;
-  clearCredentials: () => void;
-  updateUsername: (username: string) => void;
   updatePassword: (password: string) => void;
+  updateUsername: (username: string) => void;
 }
 
 const UserContext = createContext<IUserContextType>(undefined);
@@ -47,19 +50,30 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
       window.localStorage.removeItem('credentials');
       window.sessionStorage.removeItem('credentials');
     }
+
+    // if (!credentials) {
+    //   setCredentials({ username: 'HACK' });
+    // }
   }, [credentials]);
+
+  const getUsername = () => credentials?.username;
+  const isLoggedIn = () => !!credentials?.username;
+  const hasPermission = (_name) => true; // FIXME: permission handling
 
   return (
     <UserContext.Provider
       value={{
+        clearCredentials: () => setCredentials(null),
         credentials,
+        getUsername,
+        hasPermission,
+        isLoggedIn,
         setCredentials: (username, password, remember = false) =>
           setCredentials({ username, password, remember }),
-        clearCredentials: () => setCredentials(null),
-        updateUsername: (username) =>
-          setCredentials((credentials) => ({ ...credentials, username })),
         updatePassword: (password) =>
           setCredentials((credentials) => ({ ...credentials, password })),
+        updateUsername: (username) =>
+          setCredentials((credentials) => ({ ...credentials, username })),
       }}
     >
       {children}

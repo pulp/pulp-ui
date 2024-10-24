@@ -33,16 +33,14 @@ import { useUserContext } from './user-context';
 
 export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
   const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
-  const { credentials, clearCredentials } = useUserContext();
+  const { getUsername, clearCredentials } = useUserContext();
 
+  const userName = getUsername();
   let aboutModal = null;
   let docsDropdownItems = [];
   let userDropdownItems = [];
-  let userName: string;
 
-  if (credentials) {
-    userName = credentials.username;
-
+  if (userName) {
     userDropdownItems = [
       <DropdownItem isDisabled key='username'>
         <Trans>Username: {userName}</Trans>

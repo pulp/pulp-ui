@@ -11,11 +11,14 @@ export class PulpAPI extends BaseAPI {
 
     this.http.interceptors.request.use((request) => {
       if (!request.auth) {
-        request.auth = JSON.parse(
+        const credentials = JSON.parse(
           window.sessionStorage.credentials ||
             window.localStorage.credentials ||
             '{}',
         );
+        if (credentials?.username !== 'HACK') {
+          request.auth = credentials;
+        }
       }
 
       request.baseURL = config.API_BASE_PATH;
