@@ -12,10 +12,8 @@ export interface IAppContextType {
   featureFlags; // deprecated
   hasPermission: (name: string) => boolean;
   queueAlert: (alert: AlertType) => void;
-  selectedRepo?: string; // deprecated
   setAlerts: (alerts: AlertType[]) => void;
   settings; // deprecated
-  updateTitle: (title: string) => void; // deprecated
   user; // deprecated
 }
 
@@ -46,11 +44,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
   const queueAlert = (alert) => setAlerts((alerts) => [...alerts, alert]);
   const hasPermission = (_name) => true; // FIXME: permission handling
-  const updateTitle = (title) => {
-    document.title = title
-      ? `${APPLICATION_NAME} - ${title}`
-      : APPLICATION_NAME;
-  };
 
   return (
     <AppContext.Provider
@@ -61,7 +54,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         queueAlert,
         setAlerts,
         settings,
-        updateTitle,
         // FIXME: hack
         user: credentials
           ? {
