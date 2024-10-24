@@ -5,7 +5,7 @@ import { PulpAPI } from './pulp';
 // removes unchanged values and write only fields before updating
 function smartUpdate(remote: RemoteType, unmodifiedRemote: RemoteType) {
   // Deletes any write only fields from the object that are market as is_set.
-  // base is to prevent accidentally clearing fields that weren't updated.
+  // This is to prevent accidentally clearing fields that weren't updated.
 
   // TODO: clearing set fields from the response will be unnecesary if the API
   // stops returning field: null on write only fields
@@ -16,7 +16,7 @@ function smartUpdate(remote: RemoteType, unmodifiedRemote: RemoteType) {
 
   // Pulp complains if auth_url gets sent with a request that doesn't include a
   // valid token, even if the token exists in the database and isn't being changed.
-  // To solve base issue, simply delete auth_url from the request if it hasn't
+  // To solve this issue, simply delete auth_url from the request if it hasn't
   // been updated by the user.
   if (reducedData.auth_url === unmodifiedRemote.auth_url) {
     delete reducedData['auth_url'];
