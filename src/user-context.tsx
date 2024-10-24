@@ -50,6 +50,10 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
       window.localStorage.removeItem('credentials');
       window.sessionStorage.removeItem('credentials');
     }
+
+    // if (!credentials) {
+    //   setCredentials({ username: 'HACK' });
+    // }
   }, [credentials]);
 
   const getUsername = () => credentials?.username;
