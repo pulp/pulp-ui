@@ -41,7 +41,7 @@ jobs:
 
       - name: 'Install moreutils'
         run: |
-          apt-get -y install moreutils
+          sudo apt-get -y install moreutils
 
       # FIXME: reuse pr-checks.yml?
       - name: 'Checks'
