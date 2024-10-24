@@ -75,8 +75,8 @@ export function loadCollection({
   const currentVersion = (
     version
       ? CollectionVersionAPI.list({ ...requestParams, version })
-      : CollectionVersionAPI.list({ ...requestParams, is_highest: true })
-  ).then(({ data }) => data.data[0]);
+      : CollectionVersionAPI.list({ ...requestParams /* is_highest: true */ })
+  ).then(({ data }) => data.results[0]);
 
   const content = currentVersion
     .then((collection) =>
@@ -97,7 +97,7 @@ export function loadCollection({
     page_size: 10,
   })
     .then(({ data }) => data)
-    .catch(() => ({ data: [], meta: { count: 0 } }));
+    .catch(() => ({ results: [], count: 0 }));
 
   const actuallyCollection = repositoryBasePath(repo)
     .then((basePath) => CollectionAPI.getDetail(basePath, namespace, name))
@@ -110,10 +110,7 @@ export function loadCollection({
     actuallyCollection,
   ]).then(
     ([
-      {
-        data: collections,
-        meta: { count: collectionsCount },
-      },
+      { results: collections, count: collectionsCount },
       collection,
       content,
       actuallyCollection,

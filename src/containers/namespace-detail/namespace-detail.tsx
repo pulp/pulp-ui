@@ -766,9 +766,9 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
   private loadAllCollections(params) {
     return CollectionVersionAPI.list({
       ...params,
-      is_highest: true,
+      //is_highest: true,
       namespace: this.props.routeParams.namespace,
-      repository_label: '!hide_from_search',
+      //repository_label: '!hide_from_search',
     });
   }
 
@@ -777,8 +777,8 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
       ParamHelper.getReduced(this.state.params, ['tab', 'group', 'user']),
     ).then((result) => {
       this.setState({
-        collections: result.data.data,
-        filteredCount: result.data.meta.count,
+        collections: result.data.results,
+        filteredCount: result.data.count,
       });
     });
   }
@@ -806,9 +806,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
         ([
           _collections,
           {
-            data: {
-              meta: { count: unfilteredCount },
-            },
+            data: { count: unfilteredCount },
           },
           { data: namespace },
           //myNamespace,

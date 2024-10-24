@@ -653,8 +653,8 @@ export const CollectionHeader = ({
       ...modalPagination,
     })
       .then(({ data }) => data)
-      .catch(() => ({ data: [] }))
-      .then(({ data: modalCollections }) =>
+      .catch(() => ({ results: [] }))
+      .then(({ results: modalCollections }) =>
         setModalCollections(modalCollections),
       );
   }

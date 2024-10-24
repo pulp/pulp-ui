@@ -32,7 +32,8 @@ export const CollectionAPI = {
     ),
 
   getContent: (namespace, name, version) =>
-    base.list(`pulp/api/v3/content/ansible/collection_versions/`, {
+    // pulp
+    base.list(`content/ansible/collection_versions/`, {
       namespace,
       name,
       version,
@@ -77,6 +78,7 @@ export const CollectionAPI = {
   }: CollectionVersionSearch): Promise<{ data: { task: string } }> =>
     repositoryBasePath(repository.name, repository.pulp_href).then(
       (distroBasePath) =>
+        // FIXME content/ansible/collection_deprecations/...
         base.http.patch(
           `v3/plugin/ansible/content/${distroBasePath}/collections/index/${namespace}/${name}/`,
           {

@@ -51,22 +51,15 @@ export const MultiRepoModal = ({
       page_size: 100,
       ...(pipeline ? { repository_label: pipeline } : {}),
     })
-      .then(
-        ({
-          data: {
-            data,
-            meta: { count },
-          },
-        }) => {
-          setDisabledRepos(data.map(({ repository: { name } }) => name));
-          if (count > 100) {
-            addAlert({
-              variant: 'warning',
-              title: t`The collection exists in too many repositories. Some repositories may not be disabled and preselected correctly.`,
-            });
-          }
-        },
-      )
+      .then(({ data: { results: data, count } }) => {
+        setDisabledRepos(data.map(({ repository: { name } }) => name));
+        if (count > 100) {
+          addAlert({
+            variant: 'warning',
+            title: t`The collection exists in too many repositories. Some repositories may not be disabled and preselected correctly.`,
+          });
+        }
+      })
       .catch(() =>
         addAlert({
           variant: 'danger',

@@ -85,8 +85,8 @@ const MultiSearch = (props: RouteProps) => {
     const shared = { page_size: 10 };
 
     setCollections(loading);
-    CollectionVersionAPI.list({ ...shared, keywords, is_highest: true })
-      .then(({ data: { data } }) => setCollections(data || []))
+    CollectionVersionAPI.list({ ...shared, keywords /* is_highest: true */ })
+      .then(({ data: { results } }) => setCollections(results || []))
       .catch(
         handleHttpError(
           t`Failed to search collections (${keywords})`,

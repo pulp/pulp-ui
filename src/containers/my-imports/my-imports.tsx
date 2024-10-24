@@ -322,9 +322,9 @@ class MyImports extends Component<RouteProps, IState> {
                 version,
               })
                 .then((result) => {
-                  if (result.data.meta.count === 1) {
+                  if (result.data.count === 1) {
                     this.setState({
-                      collection: result.data.data[0],
+                      collection: result.data.results[0],
                     });
                   }
                 })

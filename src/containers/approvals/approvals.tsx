@@ -567,7 +567,7 @@ class Approvals extends Component<RouteProps, IState> {
       repository: parsePulpIDFromURL(repositories.rejected.pulp_href),
       version,
     })
-      .then((result) => !!result.data.meta.count)
+      .then((result) => !!result.data.count)
       .catch(() => false);
   }
 
@@ -587,8 +587,8 @@ class Approvals extends Component<RouteProps, IState> {
     return CollectionVersionAPI.list(updatedParams)
       .then((result) => {
         this.setState({
-          versions: result.data.data,
-          itemCount: result.data.meta.count,
+          versions: result.data.results,
+          itemCount: result.data.count,
         });
         if (handleLoading) {
           this.setState({
