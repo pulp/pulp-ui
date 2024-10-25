@@ -2290,6 +2290,10 @@ msgstr "Fout bij ophalen import uit API"
 #~ msgid "Error getting collection's dependencies."
 #~ msgstr "Error getting collection's dependencies."
 
+#: src/entrypoint.tsx
+msgid "Error loading /pulp-ui-config.json"
+msgstr ""
+
 #: src/containers/edit-namespace/edit-namespace.tsx
 #~ msgid "Error loading active user."
 #~ msgstr "Error loading active user."
@@ -2699,6 +2703,10 @@ msgstr "Kan repository \"{name}\" niet synchroniseren"
 #: src/components/role-sync-form.tsx
 #~ msgid "Failed to sync role"
 #~ msgstr ""
+
+#: src/entrypoint.tsx
+msgid "Fall back to defaults"
+msgstr ""
 
 #: src/containers/landing/landing-page.tsx
 #~ msgid "Featured"
@@ -3427,6 +3435,7 @@ msgstr "Inloggen"
 #~ msgid "Log in to your account"
 #~ msgstr "Log in op uw account"
 
+#: src/components/login-link.tsx
 #: src/components/login-link.tsx
 #: src/containers/login/login.tsx
 #: src/menu.tsx

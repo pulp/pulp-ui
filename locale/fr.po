@@ -2290,6 +2290,10 @@ msgstr "Erreur lors de la récupération de l'importation à partir de l'API"
 #~ msgid "Error getting collection's dependencies."
 #~ msgstr "Error getting collection's dependencies."
 
+#: src/entrypoint.tsx
+msgid "Error loading /pulp-ui-config.json"
+msgstr ""
+
 #: src/containers/edit-namespace/edit-namespace.tsx
 #~ msgid "Error loading active user."
 #~ msgstr "Error loading active user."
@@ -2699,6 +2703,10 @@ msgstr "Échec de la synchronisation du référentiel \"{name}\""
 #: src/components/role-sync-form.tsx
 #~ msgid "Failed to sync role"
 #~ msgstr ""
+
+#: src/entrypoint.tsx
+msgid "Fall back to defaults"
+msgstr ""
 
 #: src/containers/landing/landing-page.tsx
 #~ msgid "Featured"
@@ -3427,6 +3435,7 @@ msgstr "Connexion"
 #~ msgid "Log in to your account"
 #~ msgstr "Connectez-vous à votre compte"
 
+#: src/components/login-link.tsx
 #: src/components/login-link.tsx
 #: src/containers/login/login.tsx
 #: src/menu.tsx
