@@ -1,16 +1,22 @@
 import { PulpAPI } from './pulp';
 
-class API extends PulpAPI {
-  apiPath = 'groups/';
+const base = new PulpAPI();
 
-  getUsers(id) {
-    return this.http.get(`groups/${id}/users/`);
-  }
-  addUserToGroup(id, username) {
-    return this.http.post(`groups/${id}/users/`, {
+export const GroupAPI = {
+  addUserToGroup: (id, username) =>
+    base.http.post(`groups/${id}/users/`, {
       username: username,
-    });
-  }
-}
+    }),
 
-export const GroupAPI = new API();
+  create: (data) => base.http.post(`groups/`, data),
+
+  delete: (id) => base.http.delete(`groups/${id}/`),
+
+  get: (id) => base.http.get(`groups/${id}/`),
+
+  getUsers: (id) => base.http.get(`groups/${id}/users/`),
+
+  list: (params?) => base.list(`groups/`, params),
+
+  update: (id, data) => base.http.put(`groups/${id}/`, data),
+};

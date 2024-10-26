@@ -1,17 +1,23 @@
-import { HubAPI } from './hub';
+import { PulpAPI } from './pulp';
 
-class API extends HubAPI {
-  apiPath = '_ui/v1/execution-environments/remotes/';
+const base = new PulpAPI();
 
-  // list(params?)
-  // create(data)
-  // get(pk)
-  // update(pk, data)
+// FIXME HubAPI
+export const ExecutionEnvironmentRemoteAPI = {
+  create: (data) =>
+    base.http.post(`_ui/v1/execution-environments/remotes/`, data),
 
-  sync(name) {
-    const apiPath = 'v3/plugin/execution-environments/repositories/';
-    return this.http.post(apiPath + name + '/_content/sync/', {});
-  }
-}
+  get: (id) => base.http.get(`_ui/v1/execution-environments/remotes/${id}/`),
 
-export const ExecutionEnvironmentRemoteAPI = new API();
+  list: (params?) =>
+    base.list(`_ui/v1/execution-environments/remotes/`, params),
+
+  sync: (name) =>
+    base.http.post(
+      `v3/plugin/execution-environments/repositories/${name}/_content/sync/`,
+      {},
+    ),
+
+  update: (id, data) =>
+    base.http.put(`_ui/v1/execution-environments/remotes/${id}/`, data),
+};

@@ -1,6 +1,5 @@
 import { Title } from '@patternfly/react-core';
 import React, { type ReactNode, useEffect } from 'react';
-import { useAppContext } from 'src/app-context';
 import './header.scss';
 
 interface IProps {
@@ -28,9 +27,10 @@ export const BaseHeader = ({
   status,
   subTitle,
 }: IProps) => {
-  const { updateTitle } = useAppContext();
   useEffect(() => {
-    updateTitle(title);
+    document.title = title
+      ? `${APPLICATION_NAME} - ${title}`
+      : APPLICATION_NAME;
   }, [title]);
 
   return (

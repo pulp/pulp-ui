@@ -14,13 +14,10 @@ import {
   type CollectionVersionContentType,
   type CollectionVersionSearch,
 } from 'src/api';
-import { useAppContext } from 'src/app-context';
 import {
-  Alert,
   CopyURL,
   DownloadSignatureGridItem,
   LoadingSpinner,
-  LoginLink,
   Tag,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
@@ -44,7 +41,6 @@ export const CollectionInfo = ({
   addAlert,
 }: IProps) => {
   const downloadLinkRef = useRef<HTMLAnchorElement>(null);
-  const { user, settings } = useAppContext();
 
   let installCommand = `ansible-galaxy collection install ${collection_version.namespace}.${collection_version.name}`;
 
@@ -94,58 +90,43 @@ export const CollectionInfo = ({
         <GridItem>
           <Split hasGutter>
             <SplitItem className='install-title'>{t`Download`}</SplitItem>
-            {user.is_anonymous &&
-            !settings.GALAXY_ENABLE_UNAUTHENTICATED_COLLECTION_DOWNLOAD ? (
-              <Alert
-                className={'pulp-collection-download-alert'}
-                isInline
-                variant='warning'
-                title={
-                  <>
-                    {t`You have to be logged in to be able to download the tarball.`}{' '}
-                    <LoginLink />
-                  </>
+            <SplitItem isFilled>
+              <div>
+                <Trans>
+                  To download this collection, configure your client to connect
+                  to one of the{' '}
+                  <Link
+                    to={formatPath(Paths.ansible.collection.distributions, {
+                      repo: repository.name,
+                      namespace: collection_version.namespace,
+                      collection: collection_version.name,
+                    })}
+                  >
+                    distributions
+                  </Link>{' '}
+                  of this repository.
+                </Trans>
+              </div>
+              <a ref={downloadLinkRef} style={{ display: 'none' }} />
+              <Button
+                style={{ paddingLeft: 0 }}
+                variant='link'
+                data-cy='download-collection-tarball-button'
+                icon={<DownloadIcon />}
+                onClick={() =>
+                  download(
+                    repository,
+                    collection_version.namespace,
+                    collection_version.name,
+                    collection_version.version,
+                    downloadLinkRef,
+                    addAlert,
+                  )
                 }
-              />
-            ) : (
-              <SplitItem isFilled>
-                <div>
-                  <Trans>
-                    To download this collection, configure your client to
-                    connect to one of the{' '}
-                    <Link
-                      to={formatPath(Paths.ansible.collection.distributions, {
-                        repo: repository.name,
-                        namespace: collection_version.namespace,
-                        collection: collection_version.name,
-                      })}
-                    >
-                      distributions
-                    </Link>{' '}
-                    of this repository.
-                  </Trans>
-                </div>
-                <a ref={downloadLinkRef} style={{ display: 'none' }} />
-                <Button
-                  style={{ paddingLeft: 0 }}
-                  variant='link'
-                  data-cy='download-collection-tarball-button'
-                  icon={<DownloadIcon />}
-                  onClick={() =>
-                    download(
-                      repository,
-                      collection_version.namespace,
-                      collection_version.name,
-                      collection_version.version,
-                      downloadLinkRef,
-                      addAlert,
-                    )
-                  }
-                >
-                  {t`Download tarball`}
-                </Button>
-              </SplitItem>
-            )}
+              >
+                {t`Download tarball`}
+              </Button>
+            </SplitItem>
           </Split>
         </GridItem>
         <DownloadSignatureGridItem

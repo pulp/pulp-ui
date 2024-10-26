@@ -1,23 +1,18 @@
 import { PulpAPI } from './pulp';
 
-class API extends PulpAPI {
-  apiPath = 'groups/';
+const base = new PulpAPI();
 
-  listRoles(groupId, params?) {
-    return super.list(params, this.apiPath + `${groupId}/roles/`);
-  }
-
-  removeRole(groupId, roleId) {
-    return this.http.delete(this.apiPath + `${groupId}/roles/${roleId}/`);
-  }
-
-  addRoleToGroup(groupId, role) {
-    return this.http.post(this.apiPath + `${groupId}/roles/`, {
+export const GroupRoleAPI = {
+  addRoleToGroup: (groupId, role) =>
+    base.http.post(`groups/${groupId}/roles/`, {
       role: role.name,
       // required field, can be empty
       content_object: null,
-    });
-  }
-}
+    }),
 
-export const GroupRoleAPI = new API();
+  listRoles: (groupId, params?) =>
+    base.list(`groups/${groupId}/roles/`, params),
+
+  removeRole: (groupId, roleId) =>
+    base.http.delete(`groups/${groupId}/roles/${roleId}/`),
+};

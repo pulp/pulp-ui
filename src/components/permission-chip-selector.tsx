@@ -6,7 +6,6 @@ import {
   SelectVariant,
 } from '@patternfly/react-core/deprecated';
 import React, { useState } from 'react';
-import { useAppContext } from 'src/app-context';
 import { LabelGroup } from 'src/components';
 
 interface IProps {
@@ -18,6 +17,9 @@ interface IProps {
   selectedPermissions: string[];
 }
 
+// FIXME
+const model_permissions = {};
+
 export const PermissionChipSelector = ({
   availablePermissions,
   isDisabled,
@@ -27,7 +29,6 @@ export const PermissionChipSelector = ({
   selectedPermissions,
 }: IProps) => {
   const [isOpen, setOpen] = useState(false);
-  const { model_permissions } = useAppContext().user;
 
   if (isViewOnly) {
     const items = selectedPermissions.map((permission) => ({

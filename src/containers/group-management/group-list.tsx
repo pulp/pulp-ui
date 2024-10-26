@@ -103,8 +103,8 @@ class GroupList extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    const { user, hasPermission } = this.context as IAppContextType;
-    if (!user || !hasPermission('galaxy.view_group')) {
+    const { hasPermission } = this.context as IAppContextType;
+    if (!hasPermission('galaxy.view_group')) {
       this.setState({ unauthorized: true });
     } else {
       this.queryGroups();
@@ -125,7 +125,7 @@ class GroupList extends Component<RouteProps, IState> {
       unauthorized,
     } = this.state;
 
-    const { user, hasPermission } = this.context as IAppContextType;
+    const { hasPermission } = this.context as IAppContextType;
     const noData =
       groups.length === 0 && !filterIsSet(params, ['name__icontains']);
 
@@ -157,7 +157,6 @@ class GroupList extends Component<RouteProps, IState> {
             title={t`No groups yet`}
             description={t`Groups will appear once created`}
             button={
-              !!user &&
               hasPermission('galaxy.add_group') && (
                 <Button
                   variant='primary'
@@ -192,7 +191,7 @@ class GroupList extends Component<RouteProps, IState> {
                         />
                       </ToolbarItem>
                     </ToolbarGroup>
-                    {!!user && hasPermission('galaxy.add_group') && (
+                    {hasPermission('galaxy.add_group') && (
                       <ToolbarGroup>
                         <ToolbarItem>
                           <Button
@@ -405,9 +404,9 @@ class GroupList extends Component<RouteProps, IState> {
   }
 
   private renderTableRow(group, index: number) {
-    const { user, hasPermission } = this.context as IAppContextType;
+    const { hasPermission } = this.context as IAppContextType;
     const dropdownItems = [
-      !!user && hasPermission('galaxy.delete_group') && (
+      hasPermission('galaxy.delete_group') && (
         <DropdownItem
           aria-label='Delete'
           key='delete'

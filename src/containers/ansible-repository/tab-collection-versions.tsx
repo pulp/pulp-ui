@@ -38,16 +38,9 @@ export const CollectionVersionsTab = ({
     return CollectionVersionAPI.list({
       repository,
       ...newParams,
-    }).then(
-      ({
-        data: {
-          meta: { count },
-          data: results,
-        },
-      }) => ({
-        data: { count, results },
-      }),
-    );
+    }).then(({ data: { count, results } }) => ({
+      data: { count, results },
+    }));
   };
 
   const [modalState, setModalState] = useState({ repository: item });

@@ -1,24 +1,18 @@
 import { PulpAPI } from './pulp';
 
-class API extends PulpAPI {
-  apiPath = 'pulp_container/namespaces/';
-  sortParam = 'sort';
+const base = new PulpAPI();
+base.sortParam = 'sort'; // FIXME
 
-  listRoles(id, params?) {
-    return super.list(params, this.apiPath + id + '/list_roles/');
-  }
+export const ExecutionEnvironmentNamespaceAPI = {
+  addRole: (id, role) =>
+    base.http.post(`pulp_container/namespaces/${id}/add_role/`, role),
 
-  addRole(id, role) {
-    return super.create(role, this.apiPath + id + '/add_role/');
-  }
+  listRoles: (id, params?) =>
+    base.list(`pulp_container/namespaces/${id}/list_roles/`, params),
 
-  myPermissions(id, params?) {
-    return super.list(params, this.apiPath + id + '/my_permissions/');
-  }
+  myPermissions: (id, params?) =>
+    base.list(`pulp_container/namespaces/${id}/my_permissions/`, params),
 
-  removeRole(id, role) {
-    return super.create(role, this.apiPath + id + '/remove_role/');
-  }
-}
-
-export const ExecutionEnvironmentNamespaceAPI = new API();
+  removeRole: (id, role) =>
+    base.http.post(`pulp_container/namespaces/${id}/remove_role/`, role),
+};

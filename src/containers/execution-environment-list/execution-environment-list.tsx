@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom';
 import {
   ExecutionEnvironmentAPI,
   ExecutionEnvironmentRemoteAPI,
-  type ExecutionEnvironmentType,
 } from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {
@@ -28,7 +27,6 @@ import {
   DeleteExecutionEnvironmentModal,
   EmptyStateFilter,
   EmptyStateNoData,
-  EmptyStateUnauthorized,
   ExternalLink,
   HelpButton,
   ListItemActions,
@@ -51,6 +49,17 @@ import {
 } from 'src/utilities';
 import './execution-environment.scss';
 
+interface ExecutionEnvironmentType {
+  created_at: string;
+  name: string;
+  description: string;
+  updated_at: string;
+  pulp: {
+    distribution: { base_path: string };
+    repository: { pulp_id: string; version: string };
+  };
+}
+
 interface IState {
   alerts: AlertType[];
   itemCount: number;
@@ -62,7 +71,6 @@ interface IState {
     page_size?: number;
   };
   showRemoteModal: boolean;
-  unauthorized: boolean;
   showDeleteModal: boolean;
   selectedItem: ExecutionEnvironmentType;
   inputText: string;
@@ -95,7 +103,6 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
       loading: true,
       params,
       showRemoteModal: false,
-      unauthorized: false,
       showDeleteModal: false,
       selectedItem: null,
       inputText: '',
@@ -103,15 +110,8 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    if (
-      !(this.context as IAppContextType).user ||
-      (this.context as IAppContextType).user.is_anonymous
-    ) {
-      this.setState({ unauthorized: true, loading: false });
-    } else {
-      this.queryEnvironments();
-      this.setState({ alerts: (this.context as IAppContextType).alerts });
-    }
+    this.queryEnvironments();
+    this.setState({ alerts: (this.context as IAppContextType).alerts });
   }
 
   componentWillUnmount() {
@@ -127,7 +127,6 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
       loading,
       params,
       showRemoteModal,
-      unauthorized,
       showDeleteModal,
       selectedItem,
     } = this.state;
@@ -212,9 +211,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
             }
           />
         )}
-        {unauthorized ? (
-          <EmptyStateUnauthorized />
-        ) : noData && !loading ? (
+        {noData && !loading ? (
           <EmptyStateNoData
             title={t`No container repositories yet`}
             description={t`You currently have no container repositories. Add a container repository via the CLI to get started.`}

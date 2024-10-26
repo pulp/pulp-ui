@@ -1,7 +1,5 @@
-import { type FeatureFlagsType } from 'src/api';
-
 export const canSignNamespace = (
-  { featureFlags }: { featureFlags: FeatureFlagsType },
+  { featureFlags }: { featureFlags },
   namespace,
 ) => {
   const { can_create_signatures } = featureFlags;
@@ -15,10 +13,7 @@ export const canSignNamespace = (
   );
 };
 
-export const canSignEE = (
-  { featureFlags }: { featureFlags: FeatureFlagsType },
-  container,
-) => {
+export const canSignEE = ({ featureFlags }: { featureFlags }, container) => {
   const { container_signing } = featureFlags;
   const permissions = container.namespace.my_permissions;
 

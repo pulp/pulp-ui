@@ -48,9 +48,9 @@ class UserDetail extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    const { hasPermission, user } = this.context as IAppContextType;
+    const { hasPermission } = this.context as IAppContextType;
     const id = this.props.routeParams.user_id;
-    if (!user || user.is_anonymous || !hasPermission('galaxy.view_user')) {
+    if (!hasPermission('galaxy.view_user')) {
       this.setState({ unauthorized: true });
     } else {
       UserAPI.get(id)
@@ -73,7 +73,7 @@ class UserDetail extends Component<RouteProps, IState> {
       userDetail,
     } = this.state;
 
-    const { user, hasPermission } = this.context as IAppContextType;
+    const { hasPermission } = this.context as IAppContextType;
 
     if (unauthorized) {
       return <EmptyStateUnauthorized />;
@@ -125,7 +125,7 @@ class UserDetail extends Component<RouteProps, IState> {
           isReadonly
           extraControls={
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              {!!user && hasPermission('galaxy.change_user') ? (
+              {hasPermission('galaxy.change_user') ? (
                 <div>
                   <Link
                     to={formatPath(Paths.core.user.edit, {
@@ -136,7 +136,7 @@ class UserDetail extends Component<RouteProps, IState> {
                   </Link>
                 </div>
               ) : null}
-              {!!user && hasPermission('galaxy.delete_user') ? (
+              {hasPermission('galaxy.delete_user') ? (
                 <div style={{ marginLeft: '8px' }}>
                   <Button
                     variant='secondary'

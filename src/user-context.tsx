@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 
-export interface IUserContextType {
+interface IUserContextType {
   credentials: { username: string; password: string; remember: boolean };
   setCredentials: (
     username: string,
@@ -18,7 +18,7 @@ export interface IUserContextType {
   updatePassword: (password: string) => void;
 }
 
-export const UserContext = createContext<IUserContextType>(undefined);
+const UserContext = createContext<IUserContextType>(undefined);
 export const useUserContext = () => useContext(UserContext);
 
 function cachedCredentials() {

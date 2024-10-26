@@ -2,14 +2,7 @@ import { t } from '@lingui/macro';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import { RoleAPI } from 'src/api';
-import { AppContext, type IAppContextType } from 'src/app-context';
-import {
-  type AlertType,
-  EmptyStateUnauthorized,
-  Main,
-  RoleForm,
-  RoleHeader,
-} from 'src/components';
+import { type AlertType, Main, RoleForm, RoleHeader } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import {
   type RouteProps,
@@ -32,8 +25,6 @@ interface IState {
 }
 
 class RoleCreate extends Component<RouteProps, IState> {
-  static contextType = AppContext;
-
   constructor(props) {
     super(props);
 
@@ -56,9 +47,6 @@ class RoleCreate extends Component<RouteProps, IState> {
 
     const { errorMessages, description, name, saving } = this.state;
 
-    const notAuthorised =
-      !(this.context as IAppContextType).user ||
-      (this.context as IAppContextType).user.is_anonymous;
     const breadcrumbs = [
       { url: formatPath(Paths.core.role.list), name: t`Roles` },
       { name: t`Create new role` },
@@ -67,50 +55,46 @@ class RoleCreate extends Component<RouteProps, IState> {
     return (
       <>
         <RoleHeader title={t`Create a new role`} breadcrumbs={breadcrumbs} />
-        {notAuthorised ? (
-          <EmptyStateUnauthorized />
-        ) : (
-          <Main>
-            <section className='pulp-section'>
-              <RoleForm
-                nameValidated={errorMessages['name'] ? 'error' : null}
-                nameHelperText={errorMessages['name']}
-                name={name}
-                onNameChange={(value) => {
-                  this.setState({ name: value }, () => {
-                    const errors = validateInput(
-                      value,
-                      'name',
-                      this.state.errorMessages,
-                    );
-                    this.setState({ errorMessages: errors });
-                  });
-                }}
-                description={description}
-                descriptionValidated={
-                  errorMessages['description'] ? 'error' : null
-                }
-                descriptionHelperText={errorMessages['description']}
-                onDescriptionChange={(value) => {
-                  this.setState({ description: value }, () => {
-                    const errors = validateInput(
-                      value,
-                      'description',
-                      this.state.errorMessages,
-                    );
-                    this.setState({ errorMessages: errors });
-                  });
-                }}
-                saveRole={this.createRole}
-                isSavingDisabled={
-                  'description' in errorMessages || 'name' in errorMessages
-                }
-                cancelRole={this.cancelRole}
-                saving={saving}
-              />
-            </section>
-          </Main>
-        )}
+        <Main>
+          <section className='pulp-section'>
+            <RoleForm
+              nameValidated={errorMessages['name'] ? 'error' : null}
+              nameHelperText={errorMessages['name']}
+              name={name}
+              onNameChange={(value) => {
+                this.setState({ name: value }, () => {
+                  const errors = validateInput(
+                    value,
+                    'name',
+                    this.state.errorMessages,
+                  );
+                  this.setState({ errorMessages: errors });
+                });
+              }}
+              description={description}
+              descriptionValidated={
+                errorMessages['description'] ? 'error' : null
+              }
+              descriptionHelperText={errorMessages['description']}
+              onDescriptionChange={(value) => {
+                this.setState({ description: value }, () => {
+                  const errors = validateInput(
+                    value,
+                    'description',
+                    this.state.errorMessages,
+                  );
+                  this.setState({ errorMessages: errors });
+                });
+              }}
+              saveRole={this.createRole}
+              isSavingDisabled={
+                'description' in errorMessages || 'name' in errorMessages
+              }
+              cancelRole={this.cancelRole}
+              saving={saving}
+            />
+          </section>
+        </Main>
       </>
     );
   }

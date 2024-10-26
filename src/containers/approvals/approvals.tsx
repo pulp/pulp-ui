@@ -113,24 +113,20 @@ class Approvals extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    const { user, hasPermission } = this.context as IAppContextType;
-    if (
-      !user ||
-      user.is_anonymous ||
-      !hasPermission('ansible.modify_ansible_repo_content')
-    ) {
+    const { hasPermission } = this.context as IAppContextType;
+    if (!hasPermission('ansible.modify_ansible_repo_content')) {
       this.setState({ unauthorized: true });
-    } else {
-      this.setState({ loading: true });
+      return;
+    }
 
-      Promise.all([
-        this.queryCollections(false),
-        this.queryRepositories(),
-      ]).then(() => {
+    this.setState({ loading: true });
+
+    Promise.all([this.queryCollections(false), this.queryRepositories()]).then(
+      () => {
         this.setState({ loading: false });
         this.setState({ updatingVersions: [] });
-      });
-    }
+      },
+    );
   }
 
   private queryRepositories() {
@@ -571,7 +567,7 @@ class Approvals extends Component<RouteProps, IState> {
       repository: parsePulpIDFromURL(repositories.rejected.pulp_href),
       version,
     })
-      .then((result) => !!result.data.meta.count)
+      .then((result) => !!result.data.count)
       .catch(() => false);
   }
 
@@ -591,8 +587,8 @@ class Approvals extends Component<RouteProps, IState> {
     return CollectionVersionAPI.list(updatedParams)
       .then((result) => {
         this.setState({
-          versions: result.data.data,
-          itemCount: result.data.meta.count,
+          versions: result.data.results,
+          itemCount: result.data.count,
         });
         if (handleLoading) {
           this.setState({

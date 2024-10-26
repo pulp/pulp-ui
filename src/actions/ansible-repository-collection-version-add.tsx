@@ -94,24 +94,7 @@ const AddCollectionVersionModal = ({
   };
 
   // @ts-expect-error: TS2525: Initializer provides no value for this binding element and the binding element has no default value.
-  const query = ({ params } = {}) => {
-    const newParams = { ...params };
-    newParams.ordering = newParams.sort;
-    delete newParams.sort;
-
-    return CollectionVersionAPI.list({
-      ...newParams,
-    }).then(
-      ({
-        data: {
-          meta: { count },
-          data: results,
-        },
-      }) => ({
-        data: { count, results },
-      }),
-    );
-  };
+  const query = ({ params } = {}) => CollectionVersionAPI.list(params);
 
   const [modalState, setModalState] = useState({});
 

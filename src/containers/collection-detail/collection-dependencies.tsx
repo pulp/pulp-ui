@@ -230,7 +230,7 @@ class CollectionDependencies extends Component<RouteProps, IState> {
       page_size: 1,
     })
       .then((result) => {
-        const [collection] = result.data.data;
+        const [collection] = result.data.results;
 
         dependency_repo.repo = collection.repository.name;
         dependency_repo.path = formatPath(Paths.ansible.collection.detail, {

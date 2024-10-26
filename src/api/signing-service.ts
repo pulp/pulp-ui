@@ -9,10 +9,8 @@ export class SigningServiceType {
   script: string;
 }
 
-export class API extends PulpAPI {
-  apiPath = 'signing-services/';
+const base = new PulpAPI();
 
-  // list(params?)
-}
-
-export const SigningServiceAPI = new API();
+export const SigningServiceAPI = {
+  list: (params?) => base.list(`signing-services/`, params),
+};

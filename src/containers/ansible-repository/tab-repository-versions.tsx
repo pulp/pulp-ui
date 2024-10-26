@@ -6,8 +6,7 @@ import { ansibleRepositoryVersionRevertAction } from 'src/actions';
 import {
   AnsibleRepositoryAPI,
   type AnsibleRepositoryType,
-  type AnsibleRepositoryVersionType,
-  PulpAPI,
+  GenericPulpAPI,
 } from 'src/api';
 import {
   DateComponent,
@@ -30,10 +29,26 @@ interface TabProps {
   };
 }
 
-const AnyAPI = (href) =>
-  new (class extends PulpAPI {
-    apiPath = href.replace(config.API_BASE_PATH, '');
-  })();
+type ContentSummary = Record<
+  string,
+  {
+    count: number;
+    href: string;
+  }
+>;
+
+interface AnsibleRepositoryVersionType {
+  pulp_href: string;
+  pulp_created: string;
+  number: number;
+  repository: string;
+  base_version: null;
+  content_summary: {
+    added: ContentSummary;
+    removed: ContentSummary;
+    present: ContentSummary;
+  };
+}
 
 const VersionContent = ({
   href,
@@ -51,9 +66,10 @@ const VersionContent = ({
     return null;
   }
 
-  const API = AnyAPI(href);
-  // @ts-expect-error: TS2525: Initializer provides no value for this binding element and the binding element has no default value.
-  const query = ({ params } = {}) => API.list(params);
+  // @ts-expect-error: TS2339: Property 'params' does not exist on type '{}'.
+  const query = ({ params } = {}) =>
+    GenericPulpAPI.list(href.replace(config.API_BASE_PATH, ''), params);
+
   const renderTableRow = ({
     manifest: {
       collection_info: { namespace, name, version },

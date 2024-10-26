@@ -6,7 +6,7 @@ import {
   CollectionAPI,
   CollectionVersionAPI,
   type CollectionVersionSearch,
-  MyNamespaceAPI,
+  NamespaceAPI,
 } from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {
@@ -427,7 +427,7 @@ class Search extends Component<RouteProps, IState> {
       });
     };
 
-    MyNamespaceAPI.get(collection.collection_version.namespace, {
+    NamespaceAPI.get(collection.collection_version.namespace, {
       include_related: 'my_permissions',
     })
       .then((value) => {
@@ -476,13 +476,13 @@ class Search extends Component<RouteProps, IState> {
     this.setState({ loading: true }, () => {
       CollectionVersionAPI.list({
         ...ParamHelper.getReduced(this.state.params, ['view_type']),
-        is_deprecated: false,
-        repository_label: '!hide_from_search',
-        is_highest: true,
+        //is_deprecated: false,
+        //repository_label: '!hide_from_search',
+        //is_highest: true,
       }).then((result) => {
         this.setState({
-          collections: result.data.data,
-          count: result.data.meta.count,
+          collections: result.data.results,
+          count: result.data.count,
           loading: false,
         });
       });
