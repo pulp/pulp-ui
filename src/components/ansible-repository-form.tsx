@@ -13,6 +13,7 @@ import {
   FormFieldHelper,
   HelpButton,
   LazyDistributions,
+  PulpLabels,
   Spinner,
   Typeahead,
 } from 'src/components';
@@ -161,6 +162,28 @@ export const AnsibleRepositoryForm = ({
             label={t`Create a "${repository.name}" distribution`}
             id='create_distribution'
           />
+        </>,
+      )}
+
+      {formGroup(
+        'pulp_labels',
+        t`Labels`,
+        t`Pulp Labels in the form of 'key:value'.`,
+        <>
+          <div
+            // prevents "N more" clicks from submitting the form
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            <PulpLabels
+              labels={repository.pulp_labels}
+              updateLabels={(labels) =>
+                updateRepository({ ...repository, pulp_labels: labels })
+              }
+            />
+          </div>
         </>,
       )}
 
