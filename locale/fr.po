@@ -3273,6 +3273,7 @@ msgstr "mots clés"
 msgid "Keywords"
 msgstr "Mots clés"
 
+#: src/components/ansible-repository-form.tsx
 #: src/containers/ansible-repository/list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 msgid "Labels"
@@ -3674,7 +3675,6 @@ msgstr "Espaces de noms"
 
 #: src/components/import-list.tsx
 #: src/containers/namespace-list/namespace-list.tsx
-#: src/containers/namespace-list/namespace-list.tsx
 msgid "Namespaces list could not be displayed."
 msgstr "La liste d’espace-noms n’a pas pu être affichée."
 
@@ -3969,6 +3969,7 @@ msgstr "Il n'existe aucune version de {fqn} qui corresponde à {version_range}."
 
 #: src/components/ansible-repository-form.tsx
 #: src/components/copy-url.tsx
+#: src/components/pulp-labels.tsx
 #: src/components/pulp-labels.tsx
 #: src/components/repository-form.tsx
 #: src/components/repository-form.tsx
@@ -4373,8 +4374,8 @@ msgstr "Les référentiels protégés ne peuvent pas être supprimés."
 #~ msgstr "Fourni par <0>{company}</0>"
 
 #: src/components/provider-link.tsx
-msgid "Provided by <0>{name}</0>"
-msgstr ""
+#~ msgid "Provided by <0>{name}</0>"
+#~ msgstr ""
 
 #: src/components/collection-card.tsx
 #: src/components/collection-list-item.tsx
@@ -4502,6 +4503,10 @@ msgstr ""
 
 #: src/containers/ansible-repository/list.tsx
 msgid "Pulp Label"
+msgstr ""
+
+#: src/components/ansible-repository-form.tsx
+msgid "Pulp Labels in the form of 'key:value'."
 msgstr ""
 
 #: src/containers/about-project.tsx
@@ -7015,8 +7020,8 @@ msgid "You don't have rights to do this operation."
 msgstr "Vous n'avez pas le droit de faire cette opération."
 
 #: src/components/collection-info.tsx
-msgid "You have to be logged in to be able to download the tarball."
-msgstr "Vous devez être connecté pour pouvoir télécharger l'archive tarball."
+#~ msgid "You have to be logged in to be able to download the tarball."
+#~ msgstr "Vous devez être connecté pour pouvoir télécharger l'archive tarball."
 
 #: src/containers/edit-namespace/edit-namespace.tsx
 msgid "You have unsaved changes"

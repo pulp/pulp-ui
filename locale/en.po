@@ -3274,6 +3274,7 @@ msgstr "keywords"
 msgid "Keywords"
 msgstr "Keywords"
 
+#: src/components/ansible-repository-form.tsx
 #: src/containers/ansible-repository/list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 msgid "Labels"
@@ -3675,7 +3676,6 @@ msgstr "Namespaces"
 
 #: src/components/import-list.tsx
 #: src/containers/namespace-list/namespace-list.tsx
-#: src/containers/namespace-list/namespace-list.tsx
 msgid "Namespaces list could not be displayed."
 msgstr "Namespaces list could not be displayed."
 
@@ -3970,6 +3970,7 @@ msgstr "No version of {fqn} exists that matches {version_range}."
 
 #: src/components/ansible-repository-form.tsx
 #: src/components/copy-url.tsx
+#: src/components/pulp-labels.tsx
 #: src/components/pulp-labels.tsx
 #: src/components/repository-form.tsx
 #: src/components/repository-form.tsx
@@ -4374,8 +4375,8 @@ msgstr "Protected repositories cannot be deleted."
 #~ msgstr "Provided by <0>{company}</0>"
 
 #: src/components/provider-link.tsx
-msgid "Provided by <0>{name}</0>"
-msgstr "Provided by <0>{name}</0>"
+#~ msgid "Provided by <0>{name}</0>"
+#~ msgstr "Provided by <0>{name}</0>"
 
 #: src/components/collection-card.tsx
 #: src/components/collection-list-item.tsx
@@ -4504,6 +4505,10 @@ msgstr "Pulp is an open source project that makes it easy for developers to fetc
 #: src/containers/ansible-repository/list.tsx
 msgid "Pulp Label"
 msgstr "Pulp Label"
+
+#: src/components/ansible-repository-form.tsx
+msgid "Pulp Labels in the form of 'key:value'."
+msgstr "Pulp Labels in the form of 'key:value'."
 
 #: src/containers/about-project.tsx
 msgid "Pulp logo"
@@ -7016,8 +7021,8 @@ msgid "You don't have rights to do this operation."
 msgstr "You don't have rights to do this operation."
 
 #: src/components/collection-info.tsx
-msgid "You have to be logged in to be able to download the tarball."
-msgstr "You have to be logged in to be able to download the tarball."
+#~ msgid "You have to be logged in to be able to download the tarball."
+#~ msgstr "You have to be logged in to be able to download the tarball."
 
 #: src/containers/edit-namespace/edit-namespace.tsx
 msgid "You have unsaved changes"

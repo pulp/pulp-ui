@@ -3273,6 +3273,7 @@ msgstr "trefwoorden"
 msgid "Keywords"
 msgstr "Trefwoorden"
 
+#: src/components/ansible-repository-form.tsx
 #: src/containers/ansible-repository/list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 msgid "Labels"
@@ -3674,7 +3675,6 @@ msgstr "Namespaces"
 
 #: src/components/import-list.tsx
 #: src/containers/namespace-list/namespace-list.tsx
-#: src/containers/namespace-list/namespace-list.tsx
 msgid "Namespaces list could not be displayed."
 msgstr "Namespaces-lijst kon niet worden weergegeven."
 
@@ -3969,6 +3969,7 @@ msgstr "Er is geen versie van {fqn} die overeenkomt met {version_range}."
 
 #: src/components/ansible-repository-form.tsx
 #: src/components/copy-url.tsx
+#: src/components/pulp-labels.tsx
 #: src/components/pulp-labels.tsx
 #: src/components/repository-form.tsx
 #: src/components/repository-form.tsx
@@ -4373,8 +4374,8 @@ msgstr "Beveiligde repository's kunnen niet worden verwijderd."
 #~ msgstr "Geleverd door <0>{company}</0>"
 
 #: src/components/provider-link.tsx
-msgid "Provided by <0>{name}</0>"
-msgstr ""
+#~ msgid "Provided by <0>{name}</0>"
+#~ msgstr ""
 
 #: src/components/collection-card.tsx
 #: src/components/collection-list-item.tsx
@@ -4502,6 +4503,10 @@ msgstr ""
 
 #: src/containers/ansible-repository/list.tsx
 msgid "Pulp Label"
+msgstr ""
+
+#: src/components/ansible-repository-form.tsx
+msgid "Pulp Labels in the form of 'key:value'."
 msgstr ""
 
 #: src/containers/about-project.tsx
@@ -7015,8 +7020,8 @@ msgid "You don't have rights to do this operation."
 msgstr "U hebt geen rechten om deze operatie uit te voeren."
 
 #: src/components/collection-info.tsx
-msgid "You have to be logged in to be able to download the tarball."
-msgstr "U moet ingelogd zijn om de tarball te kunnen downloaden."
+#~ msgid "You have to be logged in to be able to download the tarball."
+#~ msgstr "U moet ingelogd zijn om de tarball te kunnen downloaden."
 
 #: src/containers/edit-namespace/edit-namespace.tsx
 msgid "You have unsaved changes"

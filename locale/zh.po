@@ -3273,6 +3273,7 @@ msgstr "关键字"
 msgid "Keywords"
 msgstr "关键字"
 
+#: src/components/ansible-repository-form.tsx
 #: src/containers/ansible-repository/list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 msgid "Labels"
@@ -3674,7 +3675,6 @@ msgstr "命名空间"
 
 #: src/components/import-list.tsx
 #: src/containers/namespace-list/namespace-list.tsx
-#: src/containers/namespace-list/namespace-list.tsx
 msgid "Namespaces list could not be displayed."
 msgstr "无法显示命名空间列表。"
 
@@ -3969,6 +3969,7 @@ msgstr "不存在与 {version_range} 匹配的 {fqn} 版本。"
 
 #: src/components/ansible-repository-form.tsx
 #: src/components/copy-url.tsx
+#: src/components/pulp-labels.tsx
 #: src/components/pulp-labels.tsx
 #: src/components/repository-form.tsx
 #: src/components/repository-form.tsx
@@ -4373,8 +4374,8 @@ msgstr "无法删除受保护的仓库。"
 #~ msgstr "由 <0>{company}</0> 提供"
 
 #: src/components/provider-link.tsx
-msgid "Provided by <0>{name}</0>"
-msgstr ""
+#~ msgid "Provided by <0>{name}</0>"
+#~ msgstr ""
 
 #: src/components/collection-card.tsx
 #: src/components/collection-list-item.tsx
@@ -4502,6 +4503,10 @@ msgstr ""
 
 #: src/containers/ansible-repository/list.tsx
 msgid "Pulp Label"
+msgstr ""
+
+#: src/components/ansible-repository-form.tsx
+msgid "Pulp Labels in the form of 'key:value'."
 msgstr ""
 
 #: src/containers/about-project.tsx
@@ -7015,8 +7020,8 @@ msgid "You don't have rights to do this operation."
 msgstr "您没有执行此操作的权限。"
 
 #: src/components/collection-info.tsx
-msgid "You have to be logged in to be able to download the tarball."
-msgstr "您必须登录才能下载 tar 包。"
+#~ msgid "You have to be logged in to be able to download the tarball."
+#~ msgstr "您必须登录才能下载 tar 包。"
 
 #: src/containers/edit-namespace/edit-namespace.tsx
 msgid "You have unsaved changes"
