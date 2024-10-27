@@ -1,0 +1,141 @@
+import { t } from '@lingui/macro';
+import {
+  Button,
+  Checkbox,
+  DatePicker,
+  Form,
+  FormGroup,
+  Modal,
+} from '@patternfly/react-core';
+import React from 'react';
+
+interface IProps {
+  cancelAction: () => void;
+  confirmAction?: () => void;
+  taskValue: { finished_before: string; states: string[] };
+  updateTask: (t) => void;
+}
+
+export const PurgeTaskModal = (props: IProps) => {
+  const { cancelAction, confirmAction, taskValue, updateTask } = props;
+
+  return (
+    <Modal
+      actions={[
+        <Button key='confirm' onClick={confirmAction} variant='primary'>
+          {t`Yes`}
+        </Button>,
+        <Button key='cancel' onClick={cancelAction} variant='link'>
+          {t`Cancel`}
+        </Button>,
+      ]}
+      isOpen
+      onClose={cancelAction}
+      title={t`Purge task`}
+      titleIconVariant='info'
+      variant='medium'
+      description={t`Trigger an asynchronous task that deletes completed tasks that finished prior to a specified timestamp.`}
+    >
+      <Form>
+        <FormGroup fieldId={'finished_before'} label={t`Finished before:`}>
+          <DatePicker
+            value={taskValue.finished_before}
+            onChange={(_, value) =>
+              updateTask({ ...taskValue, finished_before: value })
+            }
+          />
+        </FormGroup>
+        <FormGroup fieldId={'states'} label={t`States:`}>
+          <Checkbox
+            id={'completed'}
+            isValid={taskValue.states.length > 0}
+            isChecked={taskValue.states.includes('completed')}
+            onChange={(_, value) => {
+              if (value) {
+                updateTask({
+                  ...taskValue,
+                  states: taskValue.states.concat(['completed']),
+                });
+              } else {
+                updateTask({
+                  ...taskValue,
+                  states: taskValue.states.filter(
+                    (state) => state !== 'completed',
+                  ),
+                });
+              }
+            }}
+            label={t`Completed`}
+          />{' '}
+          <br />
+          <Checkbox
+            id={'skipped'}
+            isValid={taskValue.states.length > 0}
+            isChecked={taskValue.states.includes('skipped')}
+            onChange={(_, value) => {
+              if (value) {
+                updateTask({
+                  ...taskValue,
+                  states: taskValue.states.concat(['skipped']),
+                });
+              } else {
+                updateTask({
+                  ...taskValue,
+                  states: taskValue.states.filter(
+                    (state) => state !== 'skipped',
+                  ),
+                });
+              }
+            }}
+            label={t`Skipped`}
+          />
+          <br />
+          <Checkbox
+            id={'failed'}
+            isValid={taskValue.states.length > 0}
+            isChecked={taskValue.states.includes('failed')}
+            onChange={(_, value) => {
+              if (value) {
+                updateTask({
+                  ...taskValue,
+                  states: taskValue.states.concat(['failed']),
+                });
+              } else {
+                updateTask({
+                  ...taskValue,
+                  states: taskValue.states.filter(
+                    (state) => state !== 'failed',
+                  ),
+                });
+              }
+            }}
+            label={t`Failed`}
+          />
+          <br />
+          <Checkbox
+            id={'canceled'}
+            isValid={taskValue.states.length > 0}
+            isChecked={taskValue.states.includes('canceled')}
+            onChange={(_, value) => {
+              if (value) {
+                updateTask({
+                  ...taskValue,
+                  states: taskValue.states.concat(['canceled']),
+                });
+              } else {
+                updateTask({
+                  ...taskValue,
+                  states: taskValue.states.filter(
+                    (state) => state !== 'canceled',
+                  ),
+                });
+              }
+            }}
+            label={t`Canceled`}
+          />
+          <br />
+        </FormGroup>
+      </Form>
+    </Modal>
+  );
+};

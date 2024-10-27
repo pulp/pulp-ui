@@ -33,6 +33,9 @@ import {
   StatusIndicator,
   closeAlert,
 } from 'src/components';
+import { OrphanCleanupTaskModal } from 'src/components/orphan-cleanup-task-modal';
+import { PurgeTaskModal } from 'src/components/purge-task-modal';
+import { RepairTaskModal } from 'src/components/repair-task-modal';
 import { Paths, formatPath } from 'src/paths';
 import {
   ParamHelper,
@@ -55,8 +58,14 @@ interface IState {
   itemCount: number;
   alerts: AlertType[];
   cancelModalVisible: boolean;
+  purgeTaskModalVisible: boolean;
+  orphanCleanupTaskModalVisible: boolean;
+  repairTaskModalVisible: boolean;
   selectedTask: TaskType;
   inputText: string;
+  purgeTask: { finished_before: string; states: string[] };
+  orphanCleanupTask: { orphan_protection_time: number };
+  repairTask: { verify_checksums: boolean };
 }
 
 export class TaskListView extends Component<RouteProps, IState> {
@@ -75,6 +84,7 @@ export class TaskListView extends Component<RouteProps, IState> {
     if (!params['sort']) {
       params['sort'] = '-pulp_created';
     }
+    const today = new Date();
 
     this.state = {
       params,
@@ -83,8 +93,17 @@ export class TaskListView extends Component<RouteProps, IState> {
       itemCount: 0,
       alerts: [],
       cancelModalVisible: false,
+      purgeTaskModalVisible: false,
+      orphanCleanupTaskModalVisible: false,
+      repairTaskModalVisible: false,
       selectedTask: null,
       inputText: '',
+      purgeTask: {
+        finished_before: `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`,
+        states: ['completed'],
+      },
+      orphanCleanupTask: { orphan_protection_time: 0 },
+      repairTask: { verify_checksums: true },
     };
   }
 
@@ -93,8 +112,17 @@ export class TaskListView extends Component<RouteProps, IState> {
   }
 
   render() {
-    const { alerts, cancelModalVisible, itemCount, items, loading, params } =
-      this.state;
+    const {
+      params,
+      itemCount,
+      loading,
+      items,
+      alerts,
+      cancelModalVisible,
+      purgeTaskModalVisible,
+      orphanCleanupTaskModalVisible,
+      repairTaskModalVisible,
+    } = this.state;
 
     const noData =
       items.length === 0 && !filterIsSet(params, ['name__contains', 'state']);
@@ -102,20 +130,20 @@ export class TaskListView extends Component<RouteProps, IState> {
     const orphansCleanup = (
       <Button
         variant={'primary'}
-        onClick={() => this.orphanCleanup()}
+        onClick={() => this.setState({ orphanCleanupTaskModalVisible: true })}
       >{t`Orphan cleanup`}</Button>
     );
     const repair = (
       <Button
         variant={'primary'}
-        onClick={() => this.repair()}
+        onClick={() => this.setState({ repairTaskModalVisible: true })}
       >{t`Repair`}</Button>
     );
 
     const purgeTasks = (
       <Button
         variant={'primary'}
-        onClick={() => this.purge()}
+        onClick={() => this.setState({ purgeTaskModalVisible: true })}
       >{t`Purge tasks`}</Button>
     );
 
@@ -131,6 +159,11 @@ export class TaskListView extends Component<RouteProps, IState> {
           }
         />
         {cancelModalVisible ? this.renderCancelModal() : null}
+        {purgeTaskModalVisible ? this.renderPurgeTaskModal() : null}
+        {orphanCleanupTaskModalVisible
+          ? this.renderOrphanCleanupTaskModal()
+          : null}
+        {repairTaskModalVisible ? this.renderRepairTaskModal() : null}
         <BaseHeader title={t`Task management`} />
         {noData && !loading ? (
           <EmptyStateNoData
@@ -369,6 +402,56 @@ export class TaskListView extends Component<RouteProps, IState> {
       >{t`${name} will be cancelled.`}</ConfirmModal>
     );
   }
+  private renderPurgeTaskModal() {
+    const { purgeTask } = this.state;
+    return (
+      <PurgeTaskModal
+        taskValue={purgeTask}
+        cancelAction={() => this.setState({ purgeTaskModalVisible: false })}
+        confirmAction={() => {
+          this.purge(purgeTask);
+          this.setState({ purgeTaskModalVisible: false });
+        }}
+        updateTask={(task) => {
+          this.setState({ purgeTask: task });
+        }}
+      ></PurgeTaskModal>
+    );
+  }
+  private renderOrphanCleanupTaskModal() {
+    const { orphanCleanupTask } = this.state;
+
+    return (
+      <OrphanCleanupTaskModal
+        taskValue={orphanCleanupTask}
+        cancelAction={() =>
+          this.setState({ orphanCleanupTaskModalVisible: false })
+        }
+        confirmAction={() => {
+          this.orphanCleanup(orphanCleanupTask);
+          this.setState({ orphanCleanupTaskModalVisible: false });
+        }}
+        updateTask={(task) => {
+          this.setState({ orphanCleanupTask: task });
+        }}
+      ></OrphanCleanupTaskModal>
+    );
+  }
+  private renderRepairTaskModal() {
+    const { repairTask } = this.state;
+
+    return (
+      <RepairTaskModal
+        taskValue={repairTask}
+        cancelAction={() => this.setState({ repairTaskModalVisible: false })}
+        confirmAction={() => {
+          this.repair(repairTask);
+          this.setState({ repairTaskModalVisible: false });
+        }}
+        updateTask={(task) => this.setState({ repairTask: task })}
+      ></RepairTaskModal>
+    );
+  }
 
   private selectedTask({ pulp_href }, name) {
     TaskManagementAPI.patch(parsePulpIDFromURL(pulp_href), {
@@ -451,9 +534,8 @@ export class TaskListView extends Component<RouteProps, IState> {
     });
   }
 
-  // TODO add possibility to set optional params
-  private orphanCleanup() {
-    OrphanCleanupAPI.create({})
+  private orphanCleanup(task: { orphan_protection_time: number }) {
+    OrphanCleanupAPI.create(task)
       .then(() => {
         this.addAlert(t`Orphan cleanup started`, 'success');
         this.queryTasks();
@@ -463,9 +545,8 @@ export class TaskListView extends Component<RouteProps, IState> {
       );
   }
 
-  // TODO add possibility to set optional params
-  private repair() {
-    RepairAPI.create({})
+  private repair(task: { verify_checksums: boolean }) {
+    RepairAPI.create(task)
       .then(() => {
         this.addAlert(t`Repair Artifact Storage started`, 'success');
         this.queryTasks();
@@ -478,13 +559,8 @@ export class TaskListView extends Component<RouteProps, IState> {
       );
   }
 
-  // TODO add possibility to set optional params
-  private purge() {
-    TaskPurgeAPI.create({
-      finished_before: '2024-09-13',
-      // enum "skipped" "completed" "failed" "canceled"
-      states: ['completed'],
-    })
+  private purge(task: { finished_before: string; states: string[] }) {
+    TaskPurgeAPI.create(task)
       .then(() => {
         this.addAlert(t`Purge Tasks started`, 'success');
         this.queryTasks();
