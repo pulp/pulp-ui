@@ -7,3 +7,4 @@
 .*.sw[po]
 .DS_Store
 cypress/fixtures/
+locale/

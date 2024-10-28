@@ -1,4 +1,4 @@
-const po = require("@lingui/format-po").formatter({ lineNumbers: false });
+const po = require('@lingui/format-po').formatter({ lineNumbers: false });
 
 export default {
   catalogs: [
