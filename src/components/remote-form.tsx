@@ -36,11 +36,11 @@ interface IProps {
   allowEditName?: boolean;
   closeModal: () => void;
   errorMessages: ErrorMessagesType;
+  plugin: 'ansible' | 'container' | 'file';
   remote: RemoteType;
-  remoteType: 'registry' | 'ansible-remote';
   saveRemote: () => void;
-  showModal?: boolean;
   showMain?: boolean;
+  showModal?: boolean;
   title?: string;
   updateRemote: (remote) => void;
 }
@@ -145,7 +145,7 @@ export class RemoteForm extends Component<IProps, IState> {
 
     // Shim in a default concurrency value to pass form validation
     if (
-      this.props.remoteType !== 'registry' &&
+      this.props.plugin !== 'container' &&
       this.props.remote.download_concurrency === null
     ) {
       this.updateRemote(10, 'download_concurrency');
@@ -156,11 +156,11 @@ export class RemoteForm extends Component<IProps, IState> {
     const {
       allowEditName,
       closeModal,
+      plugin,
       remote,
       saveRemote,
       showMain,
       showModal,
-      remoteType,
       title,
     } = this.props;
 
@@ -172,15 +172,15 @@ export class RemoteForm extends Component<IProps, IState> {
     let disabledFields = allowEditName ? [] : ['name'];
 
     const isCommunityRemote =
-      remoteType === 'ansible-remote' &&
-      remote?.url === 'https://galaxy.ansible.com/api/';
+      plugin === 'ansible' && remote?.url === 'https://galaxy.ansible.com/api/';
 
-    switch (remoteType) {
-      case 'ansible-remote':
-        // require only name, url; nothing disabled
+    switch (plugin) {
+      case 'ansible':
+        // nothing disabled
         break;
 
-      case 'registry':
+      case 'container':
+      case 'file':
         disabledFields = disabledFields.concat([
           'auth_url',
           'token',
@@ -929,7 +929,7 @@ export class RemoteForm extends Component<IProps, IState> {
   }
 
   private isValid(requiredFields) {
-    const { remote, remoteType } = this.props;
+    const { plugin, remote } = this.props;
 
     for (const field of requiredFields) {
       if (!remote[field] || remote[field] === '') {
@@ -937,7 +937,7 @@ export class RemoteForm extends Component<IProps, IState> {
       }
     }
 
-    if (remoteType === 'ansible-remote') {
+    if (plugin !== 'container') {
       // only required in remotes, not registries
       if (remote.download_concurrency < 1) {
         return false;

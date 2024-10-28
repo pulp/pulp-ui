@@ -31,20 +31,10 @@ export const RepositoryBadge = ({
     return null;
   }
 
-  const repoName =
-    {
-      certified: t`Certified`,
-      community: t`Community`,
-      published: t`Published`,
-      rejected: t`Rejected`,
-      staging: t`Staging`,
-      validated: t`Validated`,
-    }[name] || name;
-
   const label = (
     <Label variant='outline' isCompact={isTextContent} title={name}>
       <Link to={formatPath(Paths.ansible.repository.detail, { name })}>
-        {repoName}
+        {name}
       </Link>
     </Label>
   );

@@ -153,13 +153,13 @@ const AnsibleRemoteEdit = Page<AnsibleRemoteType>({
     return (
       <RemoteForm
         allowEditName={!item}
-        remote={remoteToEdit}
-        updateRemote={(r) => setState({ remoteToEdit: r })}
-        remoteType='ansible-remote'
-        showMain
-        saveRemote={saveRemote}
-        errorMessages={errorMessages}
         closeModal={closeModal}
+        errorMessages={errorMessages}
+        plugin='ansible'
+        remote={remoteToEdit}
+        saveRemote={saveRemote}
+        showMain
+        updateRemote={(r) => setState({ remoteToEdit: r })}
       />
     );
   },

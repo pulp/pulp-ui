@@ -214,7 +214,6 @@ const routes: IRouteConfig[] = [
     component: LoginPage,
     path: Paths.meta.login,
     noAuth: true,
-    beta: true,
   },
   {
     component: CollectionDocs,
@@ -275,7 +274,6 @@ const routes: IRouteConfig[] = [
     component: PulpStatus,
     path: Paths.core.status,
     noAuth: true,
-    beta: true,
   },
   {
     component: MultiSearch,

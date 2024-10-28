@@ -5,7 +5,7 @@ import {
   AnsibleRepositoryAPI,
   type AnsibleRepositoryType,
 } from 'src/api';
-import { AnsibleRepositoryForm, Page } from 'src/components';
+import { Page, RepositoryForm } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import { parsePulpIDFromURL, taskAlert } from 'src/utilities';
 
@@ -180,11 +180,12 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
     };
 
     return (
-      <AnsibleRepositoryForm
+      <RepositoryForm
         allowEditName={!item}
         errorMessages={errorMessages}
         onCancel={closeModal}
         onSave={saveRepository}
+        plugin='ansible'
         repository={repositoryToEdit}
         updateRepository={(r) => setState({ repositoryToEdit: r })}
       />

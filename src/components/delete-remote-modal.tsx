@@ -9,7 +9,7 @@ interface IProps {
   name: string;
 }
 
-export const DeleteAnsibleRemoteModal = ({
+export const DeleteRemoteModal = ({
   closeAction,
   deleteAction,
   name,
