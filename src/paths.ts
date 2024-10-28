@@ -135,7 +135,7 @@ export const Paths = {
     },
   },
   meta: {
-    about: '/about-project',
+    about: '/about',
     login: '/login',
     search: '/search',
   },

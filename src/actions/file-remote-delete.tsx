@@ -1,6 +1,6 @@
 import { msg, t } from '@lingui/macro';
 import React from 'react';
-import { AnsibleRemoteAPI } from 'src/api';
+import { FileRemoteAPI } from 'src/api';
 import { DeleteRemoteModal } from 'src/components';
 import {
   handleHttpError,
@@ -10,7 +10,7 @@ import {
 } from 'src/utilities';
 import { Action } from './action';
 
-export const ansibleRemoteDeleteAction = Action({
+export const fileRemoteDeleteAction = Action({
   title: msg`Delete`,
   modal: ({ addAlert, listQuery, setState, state }) =>
     state.deleteModalOpen ? (
@@ -32,7 +32,7 @@ export const ansibleRemoteDeleteAction = Action({
 });
 
 function deleteRemote({ name, pulpId }, { addAlert, setState, listQuery }) {
-  return AnsibleRemoteAPI.delete(pulpId)
+  return FileRemoteAPI.delete(pulpId)
     .then(({ data }) => {
       addAlert(taskAlert(data.task, t`Removal started for remote ${name}`));
       setState({ deleteModalOpen: null });
