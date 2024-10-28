@@ -45,6 +45,7 @@ export const PurgeTaskModal = (props: IProps) => {
       <Form>
         <FormGroup fieldId={'finished_before'} label={t`Finished before:`}>
           <DatePicker
+            appendTo={document.body}
             validators={[
               (value: Date) => {
                 const today = new Date();
