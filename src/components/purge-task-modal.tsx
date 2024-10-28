@@ -8,6 +8,7 @@ import {
   Modal,
 } from '@patternfly/react-core';
 import React from 'react';
+import { Alert } from 'src/components/patternfly-wrappers/l10n';
 
 interface IProps {
   cancelAction: () => void;
@@ -22,7 +23,12 @@ export const PurgeTaskModal = (props: IProps) => {
   return (
     <Modal
       actions={[
-        <Button key='confirm' onClick={confirmAction} variant='primary'>
+        <Button
+          key='confirm'
+          onClick={confirmAction}
+          variant='primary'
+          isDisabled={taskValue.states.length === 0}
+        >
           {t`Yes`}
         </Button>,
         <Button key='cancel' onClick={cancelAction} variant='link'>
@@ -39,6 +45,16 @@ export const PurgeTaskModal = (props: IProps) => {
       <Form>
         <FormGroup fieldId={'finished_before'} label={t`Finished before:`}>
           <DatePicker
+            validators={[
+              (value: Date) => {
+                const today = new Date();
+                //do not allow dates after today
+                if (value > today) {
+                  return t`Latest allowed date is today.`;
+                }
+                return null;
+              },
+            ]}
             value={taskValue.finished_before}
             onChange={(_, value) =>
               updateTask({ ...taskValue, finished_before: value })
@@ -46,9 +62,16 @@ export const PurgeTaskModal = (props: IProps) => {
           />
         </FormGroup>
         <FormGroup fieldId={'states'} label={t`States:`}>
+          {taskValue.states.length === 0 && (
+            <Alert
+              variant='danger'
+              isInline
+              title={t`At least one state has to be selected.`}
+              ouiaId='DangerAlert'
+            />
+          )}
           <Checkbox
             id={'completed'}
-            isValid={taskValue.states.length > 0}
             isChecked={taskValue.states.includes('completed')}
             onChange={(_, value) => {
               if (value) {
@@ -70,7 +93,6 @@ export const PurgeTaskModal = (props: IProps) => {
           <br />
           <Checkbox
             id={'skipped'}
-            isValid={taskValue.states.length > 0}
             isChecked={taskValue.states.includes('skipped')}
             onChange={(_, value) => {
               if (value) {
@@ -92,7 +114,6 @@ export const PurgeTaskModal = (props: IProps) => {
           <br />
           <Checkbox
             id={'failed'}
-            isValid={taskValue.states.length > 0}
             isChecked={taskValue.states.includes('failed')}
             onChange={(_, value) => {
               if (value) {
@@ -114,7 +135,6 @@ export const PurgeTaskModal = (props: IProps) => {
           <br />
           <Checkbox
             id={'canceled'}
-            isValid={taskValue.states.length > 0}
             isChecked={taskValue.states.includes('canceled')}
             onChange={(_, value) => {
               if (value) {
