@@ -1,10 +1,10 @@
 import { msg, t } from '@lingui/core/macro';
-import { AnsibleRemoteAPI, type AnsibleRemoteType } from 'src/api';
+import { FileRemoteAPI, type FileRemoteType } from 'src/api';
 import { Page, RemoteForm } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import { parsePulpIDFromURL, taskAlert } from 'src/utilities';
 
-const initialRemote: AnsibleRemoteType = {
+const initialRemote: FileRemoteType = {
   name: '',
   url: '',
   ca_cert: null,
@@ -27,33 +27,19 @@ const initialRemote: AnsibleRemoteType = {
   ].map((name) => ({ name, is_set: false })),
 };
 
-const AnsibleRemoteEdit = Page<AnsibleRemoteType>({
+const FileRemoteEdit = Page<FileRemoteType>({
   breadcrumbs: ({ name }) =>
     [
-      { url: formatPath(Paths.ansible.remote.list), name: t`Remotes` },
-      name && { url: formatPath(Paths.ansible.remote.detail, { name }), name },
+      { url: formatPath(Paths.file.remote.list), name: t`Remotes` },
+      name && { url: formatPath(Paths.file.remote.detail, { name }), name },
       name ? { name: t`Edit` } : { name: t`Add` },
     ].filter(Boolean),
 
-  displayName: 'AnsibleRemoteEdit',
+  displayName: 'FileRemoteEdit',
   errorTitle: msg`Remote could not be displayed.`,
-  listUrl: formatPath(Paths.ansible.remote.list),
-  query: ({ name }) => {
-    return AnsibleRemoteAPI.list({ name })
-      .then(({ data: { results } }) => results[0])
-      .then((remote) => {
-        return AnsibleRemoteAPI.myPermissions(
-          parsePulpIDFromURL(remote.pulp_href),
-        )
-          .then(({ data: { permissions } }) => permissions)
-          .catch((e) => {
-            console.error(e);
-            return [];
-          })
-          .then((my_permissions) => ({ ...remote, my_permissions }));
-      });
-  },
-
+  listUrl: formatPath(Paths.file.remote.list),
+  query: ({ name }) =>
+    FileRemoteAPI.list({ name }).then(({ data: { results } }) => results[0]),
   title: ({ name }) => name || t`Add new remote`,
   transformParams: ({ name, ...rest }) => ({
     ...rest,
@@ -92,6 +78,7 @@ const AnsibleRemoteEdit = Page<AnsibleRemoteType>({
       }
 
       delete data.my_permissions;
+      delete data.signed_only;
 
       // api requires traling slash, fix the trivial case
       if (data.url && !data.url.includes('?') && !data.url.endsWith('/')) {
@@ -99,12 +86,8 @@ const AnsibleRemoteEdit = Page<AnsibleRemoteType>({
       }
 
       const promise = !item
-        ? AnsibleRemoteAPI.create(data)
-        : AnsibleRemoteAPI.smartUpdate(
-            parsePulpIDFromURL(item.pulp_href),
-            data,
-            item,
-          );
+        ? FileRemoteAPI.create(data)
+        : FileRemoteAPI.patch(parsePulpIDFromURL(item.pulp_href), data);
 
       promise
         .then(({ data: task }) => {
@@ -123,7 +106,7 @@ const AnsibleRemoteEdit = Page<AnsibleRemoteType>({
           );
 
           navigate(
-            formatPath(Paths.ansible.remote.detail, {
+            formatPath(Paths.file.remote.detail, {
               name: data.name,
             }),
           );
@@ -142,10 +125,10 @@ const AnsibleRemoteEdit = Page<AnsibleRemoteType>({
       setState({ errorMessages: {}, remoteToEdit: undefined });
       navigate(
         item
-          ? formatPath(Paths.ansible.remote.detail, {
+          ? formatPath(Paths.file.remote.detail, {
               name: item.name,
             })
-          : formatPath(Paths.ansible.remote.list),
+          : formatPath(Paths.file.remote.list),
       );
     };
 
@@ -154,7 +137,7 @@ const AnsibleRemoteEdit = Page<AnsibleRemoteType>({
         allowEditName={!item}
         closeModal={closeModal}
         errorMessages={errorMessages}
-        plugin='ansible'
+        plugin='file'
         remote={remoteToEdit}
         saveRemote={saveRemote}
         showMain
@@ -164,4 +147,4 @@ const AnsibleRemoteEdit = Page<AnsibleRemoteType>({
   },
 });
 
-export default AnsibleRemoteEdit;
+export default FileRemoteEdit;

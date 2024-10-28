@@ -8,7 +8,11 @@ import {
   TextInput,
 } from '@patternfly/react-core';
 import { useEffect, useState } from 'react';
-import { AnsibleRemoteAPI, type AnsibleRepositoryType } from 'src/api';
+import {
+  AnsibleRemoteAPI,
+  type AnsibleRepositoryType,
+  FileRemoteAPI,
+} from 'src/api';
 import {
   FormFieldHelper,
   HelpButton,
@@ -20,7 +24,7 @@ import {
 import {
   type ErrorMessagesType,
   errorMessage,
-  repositoryBasePath,
+  pluginRepositoryBasePath,
 } from 'src/utilities';
 
 interface IProps {
@@ -28,6 +32,7 @@ interface IProps {
   errorMessages: ErrorMessagesType;
   onCancel: () => void;
   onSave: ({ createDistribution }) => void;
+  plugin: 'ansible' | 'file';
   repository: AnsibleRepositoryType;
   updateRepository: (r) => void;
 }
@@ -37,6 +42,7 @@ export const RepositoryForm = ({
   errorMessages,
   onCancel,
   onSave,
+  plugin,
   repository,
   updateRepository,
 }: IProps) => {
@@ -106,7 +112,12 @@ export const RepositoryForm = ({
   const [remotesError, setRemotesError] = useState(null);
   const loadRemotes = (name?) => {
     setRemotesError(null);
-    AnsibleRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
+    (plugin === 'ansible'
+      ? AnsibleRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
+      : plugin === 'file'
+        ? FileRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
+        : Promise.reject(plugin)
+    )
       .then(({ data }) =>
         setRemotes(data.results.map((r) => ({ ...r, id: r.pulp_href }))),
       )
@@ -126,7 +137,7 @@ export const RepositoryForm = ({
       return;
     }
 
-    repositoryBasePath(repository.name, repository.pulp_href)
+    pluginRepositoryBasePath(plugin, repository.name, repository.pulp_href)
       .catch(() => null)
       .then(onDistributionsLoad);
   }, [repository?.pulp_href]);

@@ -1,14 +1,14 @@
 import { msg, t } from '@lingui/core/macro';
 import {
-  AnsibleDistributionAPI,
-  AnsibleRepositoryAPI,
-  type AnsibleRepositoryType,
+  FileDistributionAPI,
+  FileRepositoryAPI,
+  type FileRepositoryType,
 } from 'src/api';
 import { Page, RepositoryForm } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import { parsePulpIDFromURL, taskAlert } from 'src/utilities';
 
-const initialRepository: AnsibleRepositoryType = {
+const initialRepository: FileRepositoryType = {
   name: '',
   description: '',
   retain_repo_versions: 1,
@@ -16,36 +16,24 @@ const initialRepository: AnsibleRepositoryType = {
   remote: null,
 };
 
-const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
+const FileRepositoryEdit = Page<FileRepositoryType>({
   breadcrumbs: ({ name }) =>
     [
-      { url: formatPath(Paths.ansible.repository.list), name: t`Repositories` },
+      { url: formatPath(Paths.file.repository.list), name: t`Repositories` },
       name && {
-        url: formatPath(Paths.ansible.repository.detail, { name }),
+        url: formatPath(Paths.file.repository.detail, { name }),
         name,
       },
       name ? { name: t`Edit` } : { name: t`Add` },
     ].filter(Boolean),
 
-  displayName: 'AnsibleRepositoryEdit',
+  displayName: 'FileRepositoryEdit',
   errorTitle: msg`Repository could not be displayed.`,
-  listUrl: formatPath(Paths.ansible.repository.list),
-  query: ({ name }) => {
-    return AnsibleRepositoryAPI.list({ name })
-      .then(({ data: { results } }) => results[0])
-      .then((repository) => {
-        return AnsibleRepositoryAPI.myPermissions(
-          parsePulpIDFromURL(repository.pulp_href),
-        )
-          .then(({ data: { permissions } }) => permissions)
-          .catch((e) => {
-            console.error(e);
-            return [];
-          })
-          .then((my_permissions) => ({ ...repository, my_permissions }));
-      });
-  },
-
+  listUrl: formatPath(Paths.file.repository.list),
+  query: ({ name }) =>
+    FileRepositoryAPI.list({ name }).then(
+      ({ data: { results } }) => results[0],
+    ),
   title: ({ name }) => name || t`Add new repository`,
   transformParams: ({ name, ...rest }) => ({
     ...rest,
@@ -87,12 +75,10 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
         delete data.versions_href;
       }
 
-      delete data.my_permissions;
-
       data.pulp_labels ||= {};
 
       let promise = !item
-        ? AnsibleRepositoryAPI.create(data).then(({ data: newData }) => {
+        ? FileRepositoryAPI.create(data).then(({ data: newData }) => {
             queueAlert({
               variant: 'success',
               title: t`Successfully created repository ${data.name}`,
@@ -100,7 +86,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
 
             return newData.pulp_href;
           })
-        : AnsibleRepositoryAPI.update(
+        : FileRepositoryAPI.update(
             parsePulpIDFromURL(item.pulp_href),
             data,
           ).then(({ data: task }) => {
@@ -119,7 +105,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
 
         promise = promise
           .then((pulp_href) =>
-            AnsibleDistributionAPI.create({
+            FileDistributionAPI.create({
               name: distributionName,
               base_path: basePathTransform(distributionName),
               repository: pulp_href,
@@ -127,7 +113,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
               // if distribution already exists, try a numeric suffix to name & base_path
               distributionName =
                 data.name + Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
-              return AnsibleDistributionAPI.create({
+              return FileDistributionAPI.create({
                 name: distributionName,
                 base_path: basePathTransform(distributionName),
                 repository: pulp_href,
@@ -152,7 +138,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
           });
 
           navigate(
-            formatPath(Paths.ansible.repository.detail, {
+            formatPath(Paths.file.repository.detail, {
               name: data.name,
             }),
           );
@@ -171,10 +157,10 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
       setState({ errorMessages: {}, repositoryToEdit: undefined });
       navigate(
         item
-          ? formatPath(Paths.ansible.repository.detail, {
+          ? formatPath(Paths.file.repository.detail, {
               name: item.name,
             })
-          : formatPath(Paths.ansible.repository.list),
+          : formatPath(Paths.file.repository.list),
       );
     };
 
@@ -184,7 +170,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
         errorMessages={errorMessages}
         onCancel={closeModal}
         onSave={saveRepository}
-        plugin='ansible'
+        plugin='file'
         repository={repositoryToEdit}
         updateRepository={(r) => setState({ repositoryToEdit: r })}
       />
@@ -192,4 +178,4 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
   },
 });
 
-export default AnsibleRepositoryEdit;
+export default FileRepositoryEdit;

@@ -29,6 +29,12 @@ import {
   ExecutionEnvironmentList,
   ExecutionEnvironmentManifest,
   ExecutionEnvironmentRegistryList,
+  FileRemoteDetail,
+  FileRemoteEdit,
+  FileRemoteList,
+  FileRepositoryDetail,
+  FileRepositoryEdit,
+  FileRepositoryList,
   GroupDetail,
   GroupList,
   LoginPage,
@@ -159,6 +165,36 @@ const routes: IRouteConfig[] = [
   {
     component: AnsibleRepositoryList,
     path: Paths.ansible.repository.list,
+    beta: true,
+  },
+  {
+    component: FileRemoteDetail,
+    path: Paths.file.remote.detail,
+    beta: true,
+  },
+  {
+    component: FileRemoteEdit,
+    path: Paths.file.remote.edit,
+    beta: true,
+  },
+  {
+    component: FileRemoteList,
+    path: Paths.file.remote.list,
+    beta: true,
+  },
+  {
+    component: FileRepositoryDetail,
+    path: Paths.file.repository.detail,
+    beta: true,
+  },
+  {
+    component: FileRepositoryEdit,
+    path: Paths.file.repository.edit,
+    beta: true,
+  },
+  {
+    component: FileRepositoryList,
+    path: Paths.file.repository.list,
     beta: true,
   },
   {
