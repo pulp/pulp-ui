@@ -90,8 +90,8 @@
     "lint:ts": "tsc",
     "lint:yaml": "yamllint .",
     "lint:yaml:setup": "pip install --upgrade yamllint",
-    "prettier": "prettier --write 'src/**' 'config/**' 'cypress/**'",
-    "prettier:check": "prettier -l 'src/**' 'config/**' 'cypress/**'",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier -l .",
     "sort-exports": "perl -i -pe 's/^export/import/' src/**/index.ts ; npm run prettier ; perl -i -pe 's/^import/export/' src/**/index.ts",
     "start": "NODE_ENV=development webpack serve --config config/start.config.js",
     "test": "true"

@@ -7,24 +7,34 @@ updates:
     groups:
       babel:
         patterns:
-          - "@babel/*"
-          - "babel-loader"
+          - '@babel/*'
+          - 'babel-loader'
       eslint:
         patterns:
-          - "eslint"
-          - "eslint-config-*"
-          - "eslint-plugin-*"
-          - "typescript-eslint"
+          - 'eslint'
+          - 'eslint-config-*'
+          - 'eslint-plugin-*'
+          - 'typescript-eslint'
       lingui:
         patterns:
-          - "@lingui/*"
+          - '@lingui/*'
       patternfly:
         patterns:
-          - "@patternfly/*"
+          - '@patternfly/*'
       react:
         patterns:
-          - "react"
-          - "react-dom"
+          - 'react'
+          - 'react-dom'
+    ignore:
+      - dependency-name: '@patternfly/patternfly'
+        update-types:
+          - 'version-update:semver-major'
+      - dependency-name: '@patternfly/react-core'
+        update-types:
+          - 'version-update:semver-major'
+      - dependency-name: '@patternfly/react-table'
+        update-types:
+          - 'version-update:semver-major'
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
