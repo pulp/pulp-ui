@@ -353,8 +353,12 @@ msgid "Add a role description here"
 msgstr "Add a role description here"
 
 #: src/utilities/translate-task.ts
-msgid "Add and remove repository"
-msgstr "Add and remove repository"
+msgid "Add and remove content"
+msgstr "Add and remove content"
+
+#: src/utilities/translate-task.ts
+#~ msgid "Add and remove repository"
+#~ msgstr "Add and remove repository"
 
 #: src/constants.tsx
 #~ msgid "Add Ansible distribution"
@@ -411,8 +415,12 @@ msgid "Add new tag to image"
 msgstr "Add new tag to image"
 
 #: src/utilities/translate-task.ts
-msgid "Add or remove"
-msgstr "Add or remove"
+#~ msgid "Add or remove"
+#~ msgstr "Add or remove"
+
+#: src/utilities/translate-task.ts
+msgid "Add or remove content"
+msgstr "Add or remove content"
 
 #: src/actions/ansible-remote-create.tsx
 msgid "Add remote"
@@ -518,6 +526,10 @@ msgstr "Already the current version"
 #: src/loaders/standalone/layout.tsx
 #~ msgid "Ansible Community Forum"
 #~ msgstr "Ansible Community Forum"
+
+#: src/utilities/translate-task.ts
+msgid "Ansible copy content"
+msgstr "Ansible copy content"
 
 #: src/containers/landing/landing-page.tsx
 #~ msgid "Ansible Lightspeed"
@@ -1429,8 +1441,8 @@ msgstr "Copy CLI configuration"
 #~ msgstr "Copy code to clipboard"
 
 #: src/utilities/translate-task.ts
-msgid "Copy content"
-msgstr "Copy content"
+#~ msgid "Copy content"
+#~ msgstr "Copy content"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/pulp-copy-button.tsx
@@ -1649,6 +1661,22 @@ msgstr "Date"
 #: src/containers/approvals/approvals.tsx
 msgid "Date created"
 msgstr "Date created"
+
+#: src/utilities/translate-task.ts
+msgid "Debian copy content"
+msgstr "Debian copy content"
+
+#: src/utilities/translate-task.ts
+msgid "Debian publish"
+msgstr "Debian publish"
+
+#: src/utilities/translate-task.ts
+msgid "Debian sync"
+msgstr "Debian sync"
+
+#: src/utilities/translate-task.ts
+msgid "Debian verbatim publish"
+msgstr "Debian verbatim publish"
 
 #: src/components/render-plugin-doc.tsx
 #~ msgid "default"
@@ -2718,6 +2746,14 @@ msgstr "Fall back to defaults"
 #~ msgid "Field is required."
 #~ msgstr "Field is required."
 
+#: src/utilities/translate-task.ts
+msgid "File content publish"
+msgstr "File content publish"
+
+#: src/utilities/translate-task.ts
+msgid "File content sync"
+msgstr "File content sync"
+
 #: src/components/patternfly-wrappers/l10n.tsx
 msgid "File upload"
 msgstr "File upload"
@@ -3104,8 +3140,8 @@ msgstr "Import log"
 #~ msgstr "Import new version"
 
 #: src/utilities/translate-task.ts
-msgid "Import repository version"
-msgstr "Import repository version"
+#~ msgid "Import repository version"
+#~ msgstr "Import repository version"
 
 #: src/components/role-namespace-item.tsx
 #: src/containers/ansible-role/namespace-detail.tsx
@@ -4111,6 +4147,22 @@ msgstr "Orphan cleanup started"
 msgid "OS / Arch"
 msgstr "OS / Arch"
 
+#: src/utilities/translate-task.ts
+msgid "Ostree child upload"
+msgstr "Ostree child upload"
+
+#: src/utilities/translate-task.ts
+msgid "Ostree full upload"
+msgstr "Ostree full upload"
+
+#: src/utilities/translate-task.ts
+msgid "Ostree modify content"
+msgstr "Ostree modify content"
+
+#: src/utilities/translate-task.ts
+msgid "Ostree sync"
+msgstr "Ostree sync"
+
 #: src/components/role-import-form.tsx
 #~ msgid "Overrides any galaxy_info.namespace metadata"
 #~ msgstr "Overrides any galaxy_info.namespace metadata"
@@ -4578,6 +4630,10 @@ msgstr "Pulp UI is currently using HTTP Basic Authentication. Your credentials w
 #~ msgid "Pulpcore: Upload commit"
 #~ msgstr "Pulpcore: Upload commit"
 
+#: src/utilities/translate-task.ts
+msgid "Purge all tasks"
+msgstr "Purge all tasks"
+
 #: src/containers/task-management/task-list-view.tsx
 msgid "Purge tasks"
 msgstr "Purge tasks"
@@ -4634,6 +4690,22 @@ msgstr "Push, delete and change containers. Create, delete and change remote reg
 #: src/constants.tsx
 #~ msgid "Push, delete, and change execution environments. Create, delete and change remote registries."
 #~ msgstr "Push, delete, and change execution environments. Create, delete and change remote registries."
+
+#: src/utilities/translate-task.ts
+msgid "Python package group upload"
+msgstr "Python package group upload"
+
+#: src/utilities/translate-task.ts
+msgid "Python package publish"
+msgstr "Python package publish"
+
+#: src/utilities/translate-task.ts
+msgid "Python package sync"
+msgstr "Python package sync"
+
+#: src/utilities/translate-task.ts
+msgid "Python package upload"
+msgstr "Python package upload"
 
 #: src/components/ratings.tsx
 #~ msgid "Quality of docs"
@@ -4694,6 +4766,10 @@ msgstr "Registries list could not be displayed."
 #: src/components/repository-form.tsx
 msgid "Registry"
 msgstr "Registry"
+
+#: src/utilities/translate-task.ts
+msgid "Registry sync"
+msgstr "Registry sync"
 
 #: src/containers/execution-environment/registry-list.tsx
 msgid "Registry sync status"
@@ -5135,17 +5211,53 @@ msgid "Roles list could not be displayed."
 msgstr "Roles list could not be displayed."
 
 #: src/utilities/translate-task.ts
-msgid "Roles synchronize"
-msgstr "Roles synchronize"
+msgid "Roles sync"
+msgstr "Roles sync"
+
+#: src/utilities/translate-task.ts
+#~ msgid "Roles synchronize"
+#~ msgstr "Roles synchronize"
 
 #: src/containers/ansible-role/namespace-detail.tsx
 #: src/containers/ansible-role/role-list.tsx
 #~ msgid "Roles will appear once imported"
 #~ msgstr "Roles will appear once imported"
 
+#: src/utilities/translate-task.ts
+msgid "RPM comps upload"
+msgstr "RPM comps upload"
+
+#: src/utilities/translate-task.ts
+msgid "RPM copy package"
+msgstr "RPM copy package"
+
+#: src/utilities/translate-task.ts
+msgid "RPM package publish"
+msgstr "RPM package publish"
+
+#: src/utilities/translate-task.ts
+msgid "RPM package sync"
+msgstr "RPM package sync"
+
+#: src/utilities/translate-task.ts
+msgid "RPM package upload & sign"
+msgstr "RPM package upload & sign"
+
+#: src/utilities/translate-task.ts
+msgid "RPM prune packages"
+msgstr "RPM prune packages"
+
 #: src/menu.tsx
 msgid "RPMs"
 msgstr "RPMs"
+
+#: src/utilities/translate-task.ts
+msgid "Ruby Gems publish"
+msgstr "Ruby Gems publish"
+
+#: src/utilities/translate-task.ts
+msgid "Ruby Gems sync"
+msgstr "Ruby Gems sync"
 
 #: src/components/import-list.tsx
 #: src/components/status-indicator.tsx
@@ -5857,8 +5969,8 @@ msgid "Sync will only add missing content"
 msgstr "Sync will only add missing content"
 
 #: src/utilities/translate-task.ts
-msgid "Synchronize"
-msgstr "Synchronize"
+#~ msgid "Synchronize"
+#~ msgstr "Synchronize"
 
 #: src/containers/token/token-insights.tsx
 #~ msgid "Synclist distribution was not found."
