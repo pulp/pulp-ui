@@ -673,6 +673,10 @@ msgstr "您确定要从 <1>{repositoryName}</1> 仓库中删除集合版本 <0>{
 msgid "Are you sure you want to revert this repository to the version below?"
 msgstr "您确定要将此存储库恢复到以下版本吗？"
 
+#: src/components/purge-task-modal.tsx
+msgid "At least one state has to be selected."
+msgstr ""
+
 #: src/components/user-form.tsx
 #~ msgid "Authentication provider"
 #~ msgstr "身份验证供应商"
@@ -790,7 +794,10 @@ msgstr "CA 证书"
 #: src/components/import-modal.tsx
 #: src/components/multi-repo-modal.tsx
 #: src/components/namespace-modal.tsx
+#: src/components/orphan-cleanup-task-modal.tsx
+#: src/components/purge-task-modal.tsx
 #: src/components/remote-form.tsx
+#: src/components/repair-task-modal.tsx
 #: src/components/repository-form.tsx
 #: src/components/role-form.tsx
 #: src/components/sign-all-certificates-modal.tsx
@@ -805,6 +812,7 @@ msgstr "CA 证书"
 msgid "Cancel"
 msgstr "取消"
 
+#: src/components/purge-task-modal.tsx
 #: src/components/status-indicator.tsx
 msgid "Canceled"
 msgstr "已取消"
@@ -1267,6 +1275,7 @@ msgid "Company name"
 msgstr "公司名称"
 
 #: src/components/import-list.tsx
+#: src/components/purge-task-modal.tsx
 #: src/components/status-indicator.tsx
 #: src/containers/task-management/task-list-view.tsx
 msgid "Completed"
@@ -2511,6 +2520,7 @@ msgstr ""
 
 #: src/components/import-console.tsx
 #: src/components/import-list.tsx
+#: src/components/purge-task-modal.tsx
 #: src/components/status-indicator.tsx
 #: src/containers/task-management/task-list-view.tsx
 msgid "Failed"
@@ -2798,6 +2808,10 @@ msgstr "查找内容"
 #: src/containers/task-management/task-list-view.tsx
 msgid "Finished at"
 msgstr "完成于"
+
+#: src/components/purge-task-modal.tsx
+msgid "Finished before:"
+msgstr ""
 
 #: src/components/user-form.tsx
 #: src/containers/user-management/user-list.tsx
@@ -3353,6 +3367,10 @@ msgstr "最后更新 <0/>"
 #: src/containers/ansible-repository/detail.tsx
 msgid "Last updated from registry {0}"
 msgstr "最后从注册表 {0} 更新"
+
+#: src/components/purge-task-modal.tsx
+msgid "Latest allowed date is today."
+msgstr ""
 
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
 msgid "Layers"
@@ -4142,6 +4160,14 @@ msgstr ""
 msgid "Orphan cleanup started"
 msgstr ""
 
+#: src/components/orphan-cleanup-task-modal.tsx
+msgid "Orphan cleanup task"
+msgstr ""
+
+#: src/components/orphan-cleanup-task-modal.tsx
+msgid "Orphan protection time:"
+msgstr ""
+
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
 msgid "OS / Arch"
 msgstr "OS/ Arch"
@@ -4633,6 +4659,10 @@ msgstr ""
 msgid "Purge all tasks"
 msgstr ""
 
+#: src/components/purge-task-modal.tsx
+msgid "Purge task"
+msgstr ""
+
 #: src/containers/task-management/task-list-view.tsx
 msgid "Purge tasks"
 msgstr ""
@@ -4953,6 +4983,10 @@ msgstr ""
 
 #: src/utilities/translate-task.ts
 msgid "Repair repository version"
+msgstr ""
+
+#: src/components/repair-task-modal.tsx
+msgid "Repair task"
 msgstr ""
 
 #: src/components/collection-header.tsx
@@ -5723,6 +5757,10 @@ msgstr "大小"
 msgid "Size: {size}"
 msgstr "大小：{size}"
 
+#: src/components/purge-task-modal.tsx
+msgid "Skipped"
+msgstr ""
+
 #: src/components/sort.tsx
 msgid "Sort results"
 msgstr "对结果进行排序"
@@ -5770,6 +5808,10 @@ msgstr "开始于"
 #: src/containers/task-management/task-detail.tsx
 msgid "State"
 msgstr "状态"
+
+#: src/components/purge-task-modal.tsx
+msgid "States:"
+msgstr ""
 
 #: src/components/import-list.tsx
 #: src/components/import-list.tsx
@@ -6433,6 +6475,18 @@ msgstr "追溯"
 #~ msgid "Training <0/>"
 #~ msgstr "培训 <0/>"
 
+#: src/components/orphan-cleanup-task-modal.tsx
+msgid "Trigger an asynchronous orphan cleanup operation."
+msgstr ""
+
+#: src/components/repair-task-modal.tsx
+msgid "Trigger an asynchronous task that checks for missing or corrupted artifacts, and attempts to redownload them."
+msgstr ""
+
+#: src/components/purge-task-modal.tsx
+msgid "Trigger an asynchronous task that deletes completed tasks that finished prior to a specified timestamp."
+msgstr ""
+
 #: src/containers/role-management/role-list.tsx
 #~ msgid "true"
 #~ msgstr "true"
@@ -6835,6 +6889,10 @@ msgstr "验证的"
 #~ msgid "var"
 #~ msgstr ""
 
+#: src/components/repair-task-modal.tsx
+msgid "Verify checksums"
+msgstr ""
+
 #: src/components/collection-filter.ts
 #: src/components/collection-header.tsx
 #: src/containers/approvals/approvals.tsx
@@ -7003,6 +7061,10 @@ msgstr "网站"
 #~ msgid "Will sync <0>{link}</0>"
 #~ msgstr ""
 
+#: src/components/repair-task-modal.tsx
+msgid "Will verify that the checksum of all stored files matches what saved in the database. Otherwise only the existence of the files will be checked. Enabled by default."
+msgstr ""
+
 #: src/components/wisdom-modal/wisdom-modal.tsx
 #: src/containers/legacy-namespaces/legacy-namespace.tsx
 #: src/containers/namespace-detail/namespace-detail.tsx
@@ -7031,6 +7093,9 @@ msgid "YAML requirements are required to sync from Galaxy. You can <0>edit the {
 msgstr ""
 
 #: src/components/confirm-modal.tsx
+#: src/components/orphan-cleanup-task-modal.tsx
+#: src/components/purge-task-modal.tsx
+#: src/components/repair-task-modal.tsx
 #: src/components/tag-manifest-modal.tsx
 #: src/containers/ansible-repository/list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
