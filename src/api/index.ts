@@ -37,44 +37,47 @@ export { OrphanCleanupAPI } from './orphan-cleanup';
 export { PulpLoginAPI } from './pulp-login';
 export { PulpStatusAPI } from './pulp-status';
 export { RepairAPI } from './repair';
-export { AnsibleRemoteType } from './response-types/ansible-remote';
-export { AnsibleRepositoryType } from './response-types/ansible-repository';
+export { type AnsibleRemoteType } from './response-types/ansible-remote';
+export { type AnsibleRepositoryType } from './response-types/ansible-repository';
 export {
-  CollectionDetailType,
-  CollectionUploadType,
-  CollectionUsedByDependencies,
-  CollectionVersion,
-  CollectionVersionContentType,
-  CollectionVersionSearch,
-  ContentSummaryType,
-  DocsBlobType,
+  type CollectionDetailType,
+  type CollectionUploadType,
+  type CollectionUsedByDependencies,
+  type CollectionVersion,
+  type CollectionVersionContentType,
+  type CollectionVersionSearch,
+  type ContentSummaryType,
+  type DocsBlobType,
 } from './response-types/collection';
 export {
-  ContainerManifestType,
-  ContainerRepositoryType,
+  type ContainerManifestType,
+  type ContainerRepositoryType,
 } from './response-types/execution-environment';
-export { ImportDetailType, ImportListType } from './response-types/import';
 export {
-  NamespaceLinkType,
-  NamespaceListType,
-  NamespaceType,
+  type ImportDetailType,
+  type ImportListType,
+} from './response-types/import';
+export {
+  type NamespaceLinkType,
+  type NamespaceListType,
+  type NamespaceType,
 } from './response-types/namespace';
-export { GroupObjectPermissionType } from './response-types/permissions';
+export { type GroupObjectPermissionType } from './response-types/permissions';
 export { PulpStatus } from './response-types/pulp';
-export { RemoteType } from './response-types/remote';
-export { RoleType } from './response-types/role';
-export { TaskType } from './response-types/task';
+export { type RemoteType } from './response-types/remote';
+export { type RoleType } from './response-types/role';
+export { type TaskType } from './response-types/task';
 export {
-  GroupType,
-  ModelPermissionsType,
-  UserType,
+  type GroupType,
+  type ModelPermissionsType,
+  type UserType,
 } from './response-types/user';
 export { RoleAPI } from './role';
 export { RPMPackageAPI } from './rpm-package';
 export { RPMRepositoryAPI } from './rpm-repository';
 export { SignCollectionAPI } from './sign-collections';
 export { SignContainersAPI } from './sign-containers';
-export { SigningServiceAPI, SigningServiceType } from './signing-service';
+export { SigningServiceAPI, type SigningServiceType } from './signing-service';
 export { TagAPI } from './tag';
 export { TaskAPI } from './task';
 export { TaskManagementAPI } from './task-management';
