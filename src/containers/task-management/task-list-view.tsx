@@ -68,6 +68,8 @@ interface IState {
   repairTask: { verify_checksums: boolean };
 }
 
+const ORPHAN_PROTECTION_TIME = 1440;
+
 export class TaskListView extends Component<RouteProps, IState> {
   constructor(props) {
     super(props);
@@ -102,7 +104,7 @@ export class TaskListView extends Component<RouteProps, IState> {
         finished_before: `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`,
         states: ['completed'],
       },
-      orphanCleanupTask: { orphan_protection_time: 0 },
+      orphanCleanupTask: { orphan_protection_time: ORPHAN_PROTECTION_TIME },
       repairTask: { verify_checksums: true },
     };
   }
