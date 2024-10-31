@@ -50,6 +50,7 @@ export const OrphanCleanupTaskModal = (props: IProps) => {
               });
             }}
             onChange={(event) => {
+              // @ts-expect-error:Property 'value' does not exist on type 'EventTarget'.
               const value = Number(event.target.value);
               if (value < 0 || Number.isNaN(value)) {
                 updateTask({
