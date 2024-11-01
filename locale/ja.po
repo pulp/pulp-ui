@@ -6272,6 +6272,10 @@ msgstr "同期時に認証に使用するユーザー名。"
 msgid "The username to be used for authentication when syncing. This is not required when using a token."
 msgstr "同期時に認証に使用するユーザー名。トークンを使用する場合は不要です。"
 
+#: src/components/orphan-cleanup-task-modal.tsx
+msgid "The value is in minutes. Usually the default is a day (1440). If set to zero it will clean all orphans."
+msgstr ""
+
 #: src/components/access-tab.tsx
 msgid "There are currently no groups assigned."
 msgstr ""

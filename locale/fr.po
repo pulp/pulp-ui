@@ -6272,6 +6272,10 @@ msgstr "Le nom d'utilisateur à utiliser pour l'authentification lors de la sync
 msgid "The username to be used for authentication when syncing. This is not required when using a token."
 msgstr "Le nom d'utilisateur à utiliser pour l'authentification lors de la synchronisation. Ce n'est pas nécessaire si vous utilisez un jeton."
 
+#: src/components/orphan-cleanup-task-modal.tsx
+msgid "The value is in minutes. Usually the default is a day (1440). If set to zero it will clean all orphans."
+msgstr ""
+
 #: src/components/access-tab.tsx
 msgid "There are currently no groups assigned."
 msgstr ""
