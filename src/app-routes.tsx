@@ -1,6 +1,9 @@
+import { t } from '@lingui/macro';
+import { Banner, Flex, FlexItem } from '@patternfly/react-core';
+import WrenchIcon from '@patternfly/react-icons/dist/esm/icons/wrench-icon';
 import React, { Component, type ElementType } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { NotFound } from 'src/components';
+import { ExternalLink, NotFound } from 'src/components';
 import {
   AboutProject,
   AnsibleRemoteDetail,
@@ -84,7 +87,31 @@ const AuthHandler = ({
     );
   }
 
-  return <Component path={path} />;
+  return (
+    <>
+      {![
+        Paths.core.task.list,
+        Paths.core.task.detail,
+        Paths.meta.about,
+        Paths.core.signature_keys,
+      ].includes(path) && (
+        <Banner variant='blue'>
+          <Flex spaceItems={{ default: 'spaceItemsSm' }}>
+            <FlexItem>
+              <WrenchIcon />
+            </FlexItem>
+            <FlexItem>
+              {t`This page is under construction and some features may be broken. You can contribute at `}{' '}
+              <ExternalLink href={'https://github.com/pulp/pulp-ui'}>
+                Pulp UI{' '}
+              </ExternalLink>{' '}
+            </FlexItem>
+          </Flex>
+        </Banner>
+      )}
+      <Component path={path} />
+    </>
+  );
 };
 
 export class AppRoutes extends Component {
