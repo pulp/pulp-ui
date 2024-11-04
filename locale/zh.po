@@ -6398,6 +6398,10 @@ msgstr "这个组可以包括用户"
 #~ msgid "This is the rating from old-galaxy.ansible.com. We are working on redoing the rating for the new version of galaxy."
 #~ msgstr ""
 
+#: src/app-routes.tsx
+msgid "This page is under construction and some features may be broken. You can contribute at"
+msgstr ""
+
 #: src/containers/about-project.tsx
 msgid "This project is an attempt to up-cycle the Ansible Galaxy UI codebase. The first version contains mostly saved code with minor fixes. In the future more types of content will be added. We welcome kindly any contributions."
 msgstr ""
