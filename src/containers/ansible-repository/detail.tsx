@@ -9,6 +9,7 @@ import {
   ansibleRepositorySyncAction,
 } from 'src/actions';
 import {
+  AnsibleDistributionAPI,
   AnsibleRemoteAPI,
   type AnsibleRemoteType,
   AnsibleRepositoryAPI,
@@ -20,7 +21,7 @@ import {
   lastSyncStatus,
   lastSynced,
   parsePulpIDFromURL,
-  repositoryBasePath,
+  repositoryDistro,
 } from 'src/utilities';
 import { RepositoryAccessTab } from './tab-access';
 import { CollectionVersionsTab } from './tab-collection-versions';
@@ -86,9 +87,11 @@ const AnsibleRepositoryDetail = PageWithTabs<
         };
 
         return Promise.all([
-          repositoryBasePath(repository.name, repository.pulp_href).catch(
-            err(null),
-          ),
+          repositoryDistro(
+            repository.name,
+            repository.pulp_href,
+            AnsibleDistributionAPI,
+          ).catch(err(null)),
           AnsibleRepositoryAPI.myPermissions(
             parsePulpIDFromURL(repository.pulp_href),
           )
@@ -99,9 +102,9 @@ const AnsibleRepositoryDetail = PageWithTabs<
                 .then(({ data }) => data)
                 .catch(() => null)
             : null,
-        ]).then(([distroBasePath, my_permissions, remote]) => ({
+        ]).then(([distribution, my_permissions, remote]) => ({
           ...repository,
-          distroBasePath,
+          distribution,
           my_permissions,
           remote,
         }));

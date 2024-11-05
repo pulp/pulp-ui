@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { type AnsibleRemoteType, type AnsibleRepositoryType } from 'src/api';
 import { CopyURL, Details, PulpLabels } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
-import { getRepoURL } from 'src/utilities';
+import { getDistroURL } from 'src/utilities';
 
 interface TabProps {
   item: AnsibleRepositoryType & {
-    distroBasePath?: string;
+    distribution?;
     remote?: AnsibleRemoteType;
   };
   actionContext: { addAlert: (alert) => void; state: { params } };
@@ -26,8 +26,8 @@ export const DetailsTab = ({ item }: TabProps) => {
         },
         {
           label: t`Repository URL`,
-          value: item?.distroBasePath ? (
-            <CopyURL url={getRepoURL(item.distroBasePath)} />
+          value: item?.distribution ? (
+            <CopyURL url={getDistroURL(item.distribution)} />
           ) : (
             '---'
           ),
