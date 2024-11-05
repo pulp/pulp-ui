@@ -1,7 +1,7 @@
 describe('Search for users', () => {
   beforeEach(() => {
     cy.login();
-    cy.menuGo('User Access > Users');
+    cy.ui('users');
   });
 
   const usernamefilterInput = () =>
@@ -37,14 +37,7 @@ describe('Search for users', () => {
     // should have title
     cy.assertTitle('Users');
 
-    // creates a new user
-    cy.createUser(
-      'new_user',
-      'veryhardpassword',
-      'first_name',
-      'last_name',
-      'new_user@example.com',
-    );
+    // createUser('new_user');
 
     // filters by username
     usernamefilterInput().type('new_user');

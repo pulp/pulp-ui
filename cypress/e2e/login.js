@@ -1,30 +1,18 @@
-const apiPrefix = Cypress.env('apiPrefix');
-const uiPrefix = Cypress.env('uiPrefix');
-
 const manualLogin = (username, password) => {
-  cy.intercept('POST', `${apiPrefix}_ui/v1/auth/login/`).as('login');
-  cy.intercept('GET', `${apiPrefix}_ui/v1/feature-flags/`).as('feature-flags');
-
-  cy.visit(`${uiPrefix}login`);
+  cy.ui('login');
   cy.get('#pf-login-username-id').type(username);
   cy.get('#pf-login-password-id').type(`${password}{enter}`);
-
-  cy.wait('@login');
-  cy.wait('@feature-flags');
 
   cy.assertTitle('Collections');
 };
 
 const manualLogout = () => {
-  cy.intercept('GET', `${apiPrefix}_ui/v1/feature-flags/`).as('feature-flags');
-
   cy.get('[data-cy="user-dropdown"] button').click();
   cy.get('[aria-label="logout"]').click();
-
-  cy.wait('@feature-flags');
 };
 
 describe('Login helpers', () => {
+  //FIXME
   const adminUsername = Cypress.env('username');
   const adminPassword = Cypress.env('password');
   const username = 'nopermission';

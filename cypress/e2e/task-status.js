@@ -1,16 +1,8 @@
-const apiPrefix = Cypress.env('apiPrefix');
-const uiPrefix = Cypress.env('uiPrefix');
-
 describe('test status filter label on list view', () => {
-  before(() => {
-    cy.login();
-    cy.visit(`${uiPrefix}tasks`);
-    cy.intercept('GET', `${apiPrefix}tasks/?*`).as('tasks');
-
-    cy.wait('@tasks');
-  });
-
   it('shows nicename status filter label', () => {
+    cy.login();
+    cy.ui('tasks');
+
     // completed
     cy.get(
       '.pf-v5-c-input-group > .pf-v5-c-dropdown > .pf-v5-c-dropdown__toggle',

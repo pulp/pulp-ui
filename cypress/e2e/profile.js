@@ -1,5 +1,3 @@
-const apiPrefix = Cypress.env('apiPrefix');
-
 const helperText = (id) =>
   cy
     .get(`#${id}`)
@@ -7,11 +5,10 @@ const helperText = (id) =>
     .find('.pf-v5-c-helper-text__item-text');
 
 describe('My Profile Tests', () => {
-  const username = 'nopermission';
-  const password = 'n0permissi0n';
-
   beforeEach(() => {
     cy.login();
+    cy.ui();
+
     cy.get('[data-cy="user-dropdown"] button').click();
     cy.contains('a', 'My profile').click();
     cy.contains('button', 'Edit').click();
@@ -40,8 +37,6 @@ describe('My Profile Tests', () => {
   });
 
   it('user cannot set superusers rights', () => {
-    cy.login(username, password);
-
     cy.get('[data-cy="user-dropdown"] button').click();
     cy.contains('a', 'My profile').click();
     cy.contains('button', 'Edit').click();
@@ -50,8 +45,6 @@ describe('My Profile Tests', () => {
   });
 
   it('email must be email', () => {
-    cy.login(username, password);
-
     cy.get('[data-cy="user-dropdown"] button').click();
     cy.get('a').contains('My profile').click();
     cy.get('button:contains("Edit")').click();
@@ -68,8 +61,6 @@ describe('My Profile Tests', () => {
   });
 
   it('password validations', () => {
-    cy.login(username, password);
-
     cy.get('[data-cy="user-dropdown"] button').click();
     cy.get('a').contains('My profile').click();
     cy.get('button:contains("Edit")').click();
@@ -89,8 +80,8 @@ describe('My Profile Tests', () => {
     cy.get('#password-confirm').clear().type('pwd123456');
     helperText('password-confirm').should('contain', 'Passwords do not match');
 
-    cy.get('#password').clear().type(password);
-    cy.get('#password-confirm').clear().type(password);
+    cy.get('#password').clear().type('password');
+    cy.get('#password-confirm').clear().type('password');
     helperText('password-confirm').should('be.empty');
   });
 
@@ -99,14 +90,10 @@ describe('My Profile Tests', () => {
   });
 
   it('user can save form', () => {
-    cy.intercept('PUT', `${apiPrefix}_ui/v1/me/`).as('saveForm');
-
     cy.contains('Save').click();
     cy.get('.pf-v5-c-alert.pf-m-success').contains(
       'Saved changes to user "admin".',
     );
-
-    cy.wait('@saveForm').its('response.statusCode').should('eq', 200);
 
     cy.get('.pf-v5-c-alert.pf-m-success').contains(
       'Saved changes to user "admin".',

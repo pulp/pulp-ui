@@ -1,8 +1,6 @@
-const uiPrefix = Cypress.env('uiPrefix');
-
 function versionCheck(version) {
   cy.login();
-  cy.visit(`${uiPrefix}ansible/repositories/repo1Test/`);
+  cy.ui('ansible/repositories/repo1Test');
   cy.contains('a', 'Versions').click();
   cy.get(
     '[data-cy="PageWithTabs-AnsibleRepositoryDetail-repository-versions"]',
@@ -42,7 +40,7 @@ function versionCheck(version) {
       ).click();
 
       // check if created correctly
-      cy.visit(`${uiPrefix}ansible/repositories/`);
+      cy.ui('ansible/repositories');
       cy.contains('Repositories');
       cy.contains('repo1Test');
       cy.contains('a', 'repo1Test').click();
@@ -80,7 +78,7 @@ function versionCheck(version) {
       ).click();
 
       // check if edited correctly
-      cy.visit(`${uiPrefix}ansible/repositories/repo1Test/`);
+      cy.ui('ansible/repositories/repo1Test');
       cy.contains(
         '[data-cy="PageWithTabs-AnsibleRepositoryDetail-details"]',
         '5',
@@ -107,7 +105,7 @@ function versionCheck(version) {
 
     it('adds collections', () => {
       cy.login();
-      cy.visit(`${uiPrefix}ansible/repositories/repo1Test/`);
+      cy.ui('ansible/repositories/repo1Test');
       cy.contains('a', 'Collection versions').click();
       cy.contains('button', 'Add collection').click();
       cy.contains('Select a collection');
@@ -140,9 +138,7 @@ function versionCheck(version) {
 
     it('removes collections', () => {
       cy.login();
-      cy.visit(
-        `${uiPrefix}ansible/repositories/repo1Test/?tab=collection-versions`,
-      );
+      cy.ui('ansible/repositories/repo1Test?tab=collection-versions');
       cy.contains('repo_test_collection');
       cy.get('[aria-label="Actions"]').click();
       cy.contains('a', 'Remove').click();
@@ -152,9 +148,7 @@ function versionCheck(version) {
 
     it('checks if collection was removed', () => {
       cy.login();
-      cy.visit(
-        `${uiPrefix}ansible/repositories/repo1Test/?tab=collection-versions`,
-      );
+      cy.ui('ansible/repositories/repo1Test?tab=collection-versions');
       cy.contains('repo_test_collection').should('not.exist');
       cy.contains('No collection versions yet');
     });
@@ -172,9 +166,7 @@ function versionCheck(version) {
 
     it('checks if collection is added again', () => {
       cy.login();
-      cy.visit(
-        `${uiPrefix}ansible/repositories/repo1Test/?tab=collection-versions`,
-      );
+      cy.ui('ansible/repositories/repo1Test?tab=collection-versions');
       cy.contains('repo_test_collection');
       cy.contains('No collection versions yet').should('not.exist');
     });

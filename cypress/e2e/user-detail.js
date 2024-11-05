@@ -1,6 +1,3 @@
-const apiPrefix = Cypress.env('apiPrefix');
-const uiPrefix = Cypress.env('uiPrefix');
-
 describe('user detail tests all fields, editing, and deleting', () => {
   const num = (~~(Math.random() * 1000000)).toString();
 
@@ -8,10 +5,10 @@ describe('user detail tests all fields, editing, and deleting', () => {
 
   beforeEach(() => {
     cy.login();
+    cy.ui('users');
   });
 
   it('checks all fields', () => {
-    cy.visit(`${uiPrefix}users`);
     cy.contains('testUser').click();
     cy.contains('Edit').click();
     selectInput('first_name').type('first_name');
@@ -19,10 +16,9 @@ describe('user detail tests all fields, editing, and deleting', () => {
     selectInput('email').type('example@example.com');
     cy.get('button[type=submit]').click();
 
-    cy.visit(`${uiPrefix}users`);
-    cy.intercept('GET', `${apiPrefix}_ui/v1/users/*/`).as('testUser');
+    cy.ui('users');
+
     cy.contains('testUser').click();
-    cy.wait('@testUser');
 
     cy.get('[data-cy="DataForm-field-username"]').contains('testUser');
     cy.get('[data-cy="DataForm-field-first_name"]').contains('first_name');
@@ -32,7 +28,6 @@ describe('user detail tests all fields, editing, and deleting', () => {
   });
 
   it('edits user', () => {
-    cy.visit(`${uiPrefix}users`);
     cy.contains('testUser').click();
 
     // edits some fields
@@ -44,10 +39,10 @@ describe('user detail tests all fields, editing, and deleting', () => {
     cy.reload();
 
     // checks those fields
-    cy.visit(`${uiPrefix}users`);
-    cy.intercept('GET', `${apiPrefix}_ui/v1/users/*/`).as('user');
+    cy.ui('users');
+
     cy.contains('testUser').click();
-    cy.wait('@user');
+
     cy.get('[data-cy="DataForm-field-first_name"]').contains('new_first_name');
     cy.get('[data-cy="DataForm-field-last_name"]').contains('new_last_name');
     cy.get('[data-cy="DataForm-field-email"]').contains(
@@ -56,7 +51,6 @@ describe('user detail tests all fields, editing, and deleting', () => {
   });
 
   it('deletes user', () => {
-    cy.visit(`${uiPrefix}users`);
     cy.contains('testUser').click();
     cy.contains('Delete').click();
     cy.get('[data-cy="delete-button"]').click();

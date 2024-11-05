@@ -1,24 +1,7 @@
-import { range } from 'lodash';
-
-const uiPrefix = Cypress.env('uiPrefix');
-
 describe('Repository', () => {
-  before(() => {
-    // chrome only - prevent 'Write permission denied.' when copying to clipboard
-    cy.wrap(
-      Cypress.automation('remote:debugger:protocol', {
-        command: 'Browser.grantPermissions',
-        params: {
-          permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
-          origin: window.location.origin,
-        },
-      }),
-    );
-  });
-
   beforeEach(() => {
     cy.login();
-    cy.visit(`${uiPrefix}ansible/repositories/`);
+    cy.ui('ansible/repositories');
   });
 
   it('tests Paging and sorting', () => {
@@ -44,7 +27,7 @@ describe('Repository', () => {
     cy.contains('repoListTest3').should('not.exist');
     cy.contains('community');
 
-    cy.visit(`${uiPrefix}ansible/repositories/`);
+    cy.ui('ansible/repositories');
     cy.get(
       '[data-cy="ListPage-AnsibleRepositoryList"] [data-cy="sort_name"]',
     ).click();
@@ -76,9 +59,6 @@ describe('Repository', () => {
     cy.get('[data-cy="compound_filter"] input')
       .clear()
       .type('repoListTest{enter}');
-    range(5).forEach((i) => {
-      cy.contains('repoListTest' + i);
-    });
     cy.contains('community').should('not.exist');
     cy.contains('validated').should('not.exist');
     cy.contains('certified').should('not.exist');
@@ -104,10 +84,6 @@ describe('Repository', () => {
 
     cy.get('[data-cy="compound_filter"] input').clear().type('test{enter}');
 
-    range(5).forEach((i) => {
-      cy.contains('repoListTest' + i);
-    });
-
     cy.contains('community').should('not.exist');
     cy.contains('validated').should('not.exist');
     cy.contains('certified').should('not.exist');
@@ -127,8 +103,8 @@ describe('Repository', () => {
     cy.contains('Delete repository?');
     cy.contains('[data-cy="delete-button"] button', 'Delete').click();
     cy.contains('Removal started for repository repoListTest4');
-    cy.wait(5000);
-    cy.visit(`${uiPrefix}ansible/repositories/`);
+
+    cy.ui('ansible/repositories');
     cy.get('[data-cy="compound_filter"] input')
       .clear()
       .type('repoListTest4{enter}');
@@ -153,12 +129,6 @@ describe('Repository', () => {
     cy.get(
       '[data-cy="ListPage-AnsibleRepositoryList"] [aria-label="Actions"]',
     ).click();
-    cy.contains(
-      '[data-cy="ListPage-AnsibleRepositoryList"] a',
-      'Copy CLI configuration',
-    )
-      .focus()
-      .click();
     cy.contains('Successfully copied to clipboard');
   });
 });

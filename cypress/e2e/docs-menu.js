@@ -1,9 +1,7 @@
-const uiPrefix = Cypress.env('uiPrefix');
-
 describe('Documentation dropdown', () => {
   beforeEach(() => {
-    cy.visit(uiPrefix);
     cy.login();
+    cy.ui();
   });
 
   it('user can open docs dropdown menu', () => {

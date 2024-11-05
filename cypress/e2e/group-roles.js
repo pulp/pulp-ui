@@ -1,5 +1,3 @@
-const apiPrefix = Cypress.env('apiPrefix');
-
 describe('Group Roles Tests', () => {
   const num = (~~(Math.random() * 1000000)).toString();
   const groupName = `test_group_${num}`;
@@ -30,13 +28,12 @@ describe('Group Roles Tests', () => {
 
   beforeEach(() => {
     cy.login();
+    cy.ui('group-list');
   });
 
   it('should add a new role to group', () => {
-    cy.intercept('GET', `${apiPrefix}_ui/v1/groups/*`).as('groups');
-    cy.menuGo('User Access > Groups');
     cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
-    cy.wait('@groups');
+
     cy.get('[data-cy=add-roles]').click();
 
     cy.get(
@@ -54,7 +51,7 @@ describe('Group Roles Tests', () => {
 
     cy.get('.pf-v5-c-wizard__footer > button').contains('Add').click();
 
-    cy.menuGo('User Access > Groups');
+    cy.ui('group-list');
     cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
     cy.get('[data-cy="RoleListTable"]').contains(testRole.name);
     cy.get(
@@ -68,7 +65,6 @@ describe('Group Roles Tests', () => {
   });
 
   it('should test filtering of assigned roles', () => {
-    cy.menuGo('User Access > Groups');
     cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
 
     cy.get('[aria-label="role__icontains"]').type(`_${num}{enter}`);
@@ -82,7 +78,6 @@ describe('Group Roles Tests', () => {
   });
 
   it('should test filtering of roles in "Add roles" wizard', () => {
-    cy.menuGo('User Access > Groups');
     cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
 
     cy.get('[data-cy=add-roles]').click();
@@ -93,7 +88,6 @@ describe('Group Roles Tests', () => {
   });
 
   it('should correctly select and preview roles', () => {
-    cy.menuGo('User Access > Groups');
     cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
     cy.get('[data-cy=add-roles]').click();
 
@@ -130,7 +124,6 @@ describe('Group Roles Tests', () => {
   });
 
   it('should be able to remove role from group', () => {
-    cy.menuGo('User Access > Groups');
     cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
 
     cy.get(
@@ -142,7 +135,6 @@ describe('Group Roles Tests', () => {
   });
 
   it('should not display deleted role in group detail', () => {
-    cy.menuGo('User Access > Groups');
     cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
     cy.get('[data-cy="EmptyState"]')
       .contains(testContainerRole.name)
@@ -150,7 +142,6 @@ describe('Group Roles Tests', () => {
   });
 
   it('should show group empty state', () => {
-    cy.menuGo('User Access > Groups');
     cy.get(`[data-cy="GroupList-row-empty_group"] a`).click();
     cy.contains('There are currently no roles assigned to this group.');
   });

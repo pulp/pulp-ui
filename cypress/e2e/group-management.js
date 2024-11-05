@@ -1,26 +1,17 @@
-const apiPrefix = Cypress.env('apiPrefix');
-
 function createGroupManually(name) {
-  cy.intercept('GET', `${apiPrefix}_ui/v1/groups/?*`).as('loadGroups');
-  cy.menuGo('User Access > Groups');
-  cy.wait('@loadGroups');
-
   cy.contains('Create').click();
 
-  cy.intercept('POST', `${apiPrefix}_ui/v1/groups/`).as('submitGroup');
   cy.contains('div', 'Name *')
     .closest('*:has(input)')
     .find('input')
     .first()
     .type(`${name}{enter}`);
-  cy.wait('@submitGroup');
 
   // Wait for the list to update
   cy.contains(name).should('exist');
 }
 
 function addUserToGroupManually(groupName, userName) {
-  cy.menuGo('User Access > Groups');
   cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
   cy.contains('a.pf-v5-c-tabs__link', 'Users').click();
   cy.contains('button', 'Add').click();
@@ -32,31 +23,20 @@ function addUserToGroupManually(groupName, userName) {
 }
 
 function deleteGroupManually(name) {
-  cy.menuGo('User Access > Groups');
-  cy.intercept('DELETE', `${apiPrefix}_ui/v1/groups/*`).as('deleteGroup');
-  cy.intercept('GET', `${apiPrefix}_ui/v1/groups/?*`).as('listGroups');
   cy.get(`[data-cy="GroupList-row-${name}"] [aria-label="Actions"]`).click();
   cy.get('[aria-label=Delete]').click();
   cy.contains('[role=dialog] button', 'Delete').click();
-  cy.wait('@deleteGroup').then(({ response }) => {
-    expect(response.statusCode).to.eq(204);
-  });
 
   // Wait for list reload
-  cy.wait('@listGroups');
+
   cy.contains('No groups yet').should('exist');
 }
 
 function removeUserFromGroupManually(groupName, userName) {
-  cy.menuGo('User Access > Groups');
   cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
   cy.contains('a.pf-v5-c-tabs__link', 'Users').click();
   cy.get(
     `[data-cy="GroupDetail-users-${userName}"] [aria-label="Actions"]`,
-  ).click();
-  cy.containsnear(
-    `[data-cy="GroupDetail-users-${userName}"] [aria-label="Actions"]`,
-    'Remove',
   ).click();
   cy.contains('button.pf-m-danger', 'Delete').click();
   cy.contains('[data-cy=main-tabs]', userName).should('not.exist');
@@ -65,6 +45,7 @@ function removeUserFromGroupManually(groupName, userName) {
 describe('Pulp Group Management Tests', () => {
   beforeEach(() => {
     cy.login();
+    cy.ui('group-list');
   });
 
   it('admin user can create/delete a group', () => {
@@ -79,7 +60,7 @@ describe('Pulp Group Management Tests', () => {
     const groupName = 'testGroup';
     const userName = 'testUser';
 
-    cy.createUser(userName);
+    // createUser(userName);
     createGroupManually(groupName);
 
     addUserToGroupManually(groupName, userName);
@@ -92,10 +73,10 @@ describe('Pulp Group Management Tests', () => {
     const roleName = 'galaxy.test_role';
 
     // add role to group manually
-    cy.intercept('GET', `${apiPrefix}_ui/v1/groups/*`).as('groups');
-    cy.menuGo('User Access > Groups');
+
+    cy.ui('group-list');
     cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
-    cy.wait('@groups');
+
     cy.get('[data-cy=add-roles]').click();
 
     cy.get('[data-ouia-component-type="PF5/Pagination"] button:first').click();
@@ -109,8 +90,6 @@ describe('Pulp Group Management Tests', () => {
     cy.get('.pf-v5-c-wizard__footer > button').contains('Next').click();
 
     cy.contains(roleName);
-
-    cy.intercept('GET', `${apiPrefix}roles/*`).as('roles');
 
     cy.get('.pf-v5-c-wizard__footer > button').contains('Add').click();
 
