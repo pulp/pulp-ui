@@ -2,7 +2,7 @@ describe('Pulp User Management Tests', () => {
   describe('prevents super-user and self deletion', () => {
     it("the super-user can't delete themselves", () => {
       cy.login();
-      cy.menuGo('User Access > Users');
+      cy.go('users');
 
       const actionsSelector = `[data-cy="UserList-row-admin"] [aria-label="Actions"]`;
       cy.get(actionsSelector).click();

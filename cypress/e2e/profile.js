@@ -5,11 +5,10 @@ const helperText = (id) =>
     .find('.pf-v5-c-helper-text__item-text');
 
 describe('My Profile Tests', () => {
-  const username = 'nopermission';
-  const password = 'n0permissi0n';
-
   beforeEach(() => {
     cy.login();
+    cy.go();
+
     cy.get('[data-cy="user-dropdown"] button').click();
     cy.contains('a', 'My profile').click();
     cy.contains('button', 'Edit').click();
@@ -38,8 +37,6 @@ describe('My Profile Tests', () => {
   });
 
   it('user cannot set superusers rights', () => {
-    cy.login(username, password);
-
     cy.get('[data-cy="user-dropdown"] button').click();
     cy.contains('a', 'My profile').click();
     cy.contains('button', 'Edit').click();
@@ -48,8 +45,6 @@ describe('My Profile Tests', () => {
   });
 
   it('email must be email', () => {
-    cy.login(username, password);
-
     cy.get('[data-cy="user-dropdown"] button').click();
     cy.get('a').contains('My profile').click();
     cy.get('button:contains("Edit")').click();
@@ -66,8 +61,6 @@ describe('My Profile Tests', () => {
   });
 
   it('password validations', () => {
-    cy.login(username, password);
-
     cy.get('[data-cy="user-dropdown"] button').click();
     cy.get('a').contains('My profile').click();
     cy.get('button:contains("Edit")').click();

@@ -1,10 +1,8 @@
 describe('test status filter label on list view', () => {
-  before(() => {
-    cy.login();
-    cy.go(`tasks`);
-  });
-
   it('shows nicename status filter label', () => {
+    cy.login();
+    cy.go('tasks');
+
     // completed
     cy.get(
       '.pf-v5-c-input-group > .pf-v5-c-dropdown > .pf-v5-c-dropdown__toggle',

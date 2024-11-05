@@ -19,6 +19,7 @@ describe('Localization tests with the t`String` format', () => {
 
   beforeEach(() => {
     cy.login();
+    cy.go();
   });
 
   const translations = {
@@ -43,6 +44,7 @@ describe('Localization tests with the <Trans> format', () => {
 
   beforeEach(() => {
     cy.login();
+    cy.go();
   });
 
   const translations = {

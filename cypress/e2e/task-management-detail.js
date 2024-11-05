@@ -1,7 +1,7 @@
 describe('Task detail', () => {
-  before(() => {
+  it('contains correct headers and field names', () => {
     cy.login();
-    cy.go(`ansible/repositories`);
+    cy.go('ansible/repositories');
 
     cy.contains('Repositories');
 
@@ -10,11 +10,8 @@ describe('Task detail', () => {
     cy.get('.pf-v5-c-modal-box__footer .pf-m-primary').contains('Sync').click();
 
     cy.get('.pf-v5-c-alert.pf-m-info');
-  });
 
-  it('contains correct headers and field names', () => {
-    cy.login();
-    cy.go(`tasks`);
+    cy.go('tasks');
     cy.contains('pulp_ansible.app.tasks.collections.sync').click();
 
     cy.contains('h1', 'Collections sync');

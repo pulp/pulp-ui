@@ -5,10 +5,10 @@ describe('user detail tests all fields, editing, and deleting', () => {
 
   beforeEach(() => {
     cy.login();
+    cy.go('users');
   });
 
   it('checks all fields', () => {
-    cy.go(`users`);
     cy.contains('testUser').click();
     cy.contains('Edit').click();
     selectInput('first_name').type('first_name');
@@ -16,7 +16,7 @@ describe('user detail tests all fields, editing, and deleting', () => {
     selectInput('email').type('example@example.com');
     cy.get('button[type=submit]').click();
 
-    cy.go(`users`);
+    cy.go('users');
 
     cy.contains('testUser').click();
 
@@ -28,7 +28,6 @@ describe('user detail tests all fields, editing, and deleting', () => {
   });
 
   it('edits user', () => {
-    cy.go(`users`);
     cy.contains('testUser').click();
 
     // edits some fields
@@ -40,7 +39,7 @@ describe('user detail tests all fields, editing, and deleting', () => {
     cy.reload();
 
     // checks those fields
-    cy.go(`users`);
+    cy.go('users');
 
     cy.contains('testUser').click();
 
@@ -52,7 +51,6 @@ describe('user detail tests all fields, editing, and deleting', () => {
   });
 
   it('deletes user', () => {
-    cy.go(`users`);
     cy.contains('testUser').click();
     cy.contains('Delete').click();
     cy.get('[data-cy="delete-button"]').click();

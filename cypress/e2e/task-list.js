@@ -1,7 +1,7 @@
 describe('Task table contains correct headers and filter', () => {
-  before(() => {
+  it('table contains all columns and filter', () => {
     cy.login();
-    cy.go(`ansible/repositories`);
+    cy.go('ansible/repositories');
 
     cy.contains('Repositories');
 
@@ -10,11 +10,8 @@ describe('Task table contains correct headers and filter', () => {
     cy.get('.pf-v5-c-modal-box__footer .pf-m-primary').contains('Sync').click();
 
     cy.get('.pf-v5-c-alert.pf-m-info');
-  });
 
-  it('table contains all columns and filter', () => {
-    cy.login();
-    cy.go(`tasks`);
+    cy.go('tasks');
     cy.contains('Task Management');
     cy.get('[aria-label="name__contains"]');
     ['Task name', 'Created on', 'Started at', 'Finished at', 'Status'].forEach(

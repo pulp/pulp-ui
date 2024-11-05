@@ -1,7 +1,7 @@
 describe('Group list tests for sorting, paging and filtering', () => {
   beforeEach(() => {
     cy.login();
-    cy.go(`group-list`);
+    cy.go('group-list');
   });
 
   it('table contains all columns', () => {

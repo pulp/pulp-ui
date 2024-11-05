@@ -1,6 +1,4 @@
 function createGroupManually(name) {
-  cy.menuGo('User Access > Groups');
-
   cy.contains('Create').click();
 
   cy.contains('div', 'Name *')
@@ -14,7 +12,6 @@ function createGroupManually(name) {
 }
 
 function addUserToGroupManually(groupName, userName) {
-  cy.menuGo('User Access > Groups');
   cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
   cy.contains('a.pf-v5-c-tabs__link', 'Users').click();
   cy.contains('button', 'Add').click();
@@ -26,8 +23,6 @@ function addUserToGroupManually(groupName, userName) {
 }
 
 function deleteGroupManually(name) {
-  cy.menuGo('User Access > Groups');
-
   cy.get(`[data-cy="GroupList-row-${name}"] [aria-label="Actions"]`).click();
   cy.get('[aria-label=Delete]').click();
   cy.contains('[role=dialog] button', 'Delete').click();
@@ -38,7 +33,6 @@ function deleteGroupManually(name) {
 }
 
 function removeUserFromGroupManually(groupName, userName) {
-  cy.menuGo('User Access > Groups');
   cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
   cy.contains('a.pf-v5-c-tabs__link', 'Users').click();
   cy.get(
@@ -55,6 +49,7 @@ function removeUserFromGroupManually(groupName, userName) {
 describe('Pulp Group Management Tests', () => {
   beforeEach(() => {
     cy.login();
+    cy.go('group-list');
   });
 
   it('admin user can create/delete a group', () => {
@@ -83,7 +78,7 @@ describe('Pulp Group Management Tests', () => {
 
     // add role to group manually
 
-    cy.menuGo('User Access > Groups');
+    cy.go('group-list');
     cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
 
     cy.get('[data-cy=add-roles]').click();

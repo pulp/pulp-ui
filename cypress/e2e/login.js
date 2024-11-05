@@ -1,5 +1,5 @@
 const manualLogin = (username, password) => {
-  cy.go(`login`);
+  cy.go('login');
   cy.get('#pf-login-username-id').type(username);
   cy.get('#pf-login-password-id').type(`${password}{enter}`);
 

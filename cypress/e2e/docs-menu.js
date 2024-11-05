@@ -1,6 +1,7 @@
 describe('Documentation dropdown', () => {
   beforeEach(() => {
     cy.login();
+    cy.go();
   });
 
   it('user can open docs dropdown menu', () => {

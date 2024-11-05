@@ -1,16 +1,12 @@
 describe('screenshots', () => {
-  beforeEach(() => {
-    cy.login();
-  });
-
   it('takes screenshots', () => {
     const screenshot = (path, options = {}) => {
-      const filename = path.replaceAll('/', '__').replace(/^__$/, 'root');
-
+      const filename = path.replaceAll('/', '_').replace(/^$/, 'status');
       cy.go(path);
-
       cy.screenshot(filename, options);
     };
+
+    cy.login();
 
     screenshot('');
 

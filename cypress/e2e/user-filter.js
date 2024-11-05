@@ -1,7 +1,7 @@
 describe('Search for users', () => {
   beforeEach(() => {
     cy.login();
-    cy.menuGo('User Access > Users');
+    cy.go('users');
   });
 
   const usernamefilterInput = () =>
