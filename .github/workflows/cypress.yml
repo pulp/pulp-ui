@@ -92,7 +92,8 @@ jobs:
             --rewrite '/extensions/(.*) -> http://localhost:8080/extensions/$1' \
             --rewrite '/pulp/(.*) -> http://localhost:8080/pulp/$1' \
             --rewrite '/static/rest_framework/(.*) -> http://localhost:8080/static/rest_framework/$1' \
-            --rewrite '/v2/(.*) -> http://localhost:8080/v2/$1' &
+            --rewrite '/v2/(.*) -> http://localhost:8080/v2/$1' \
+            --rewrite '/pulp-ui-config.json -> /static/pulp_ui/pulp-ui-config.json' &
 
       - name: 'Ensure index.html uses the new js'
         run: |
