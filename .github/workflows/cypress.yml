@@ -33,18 +33,22 @@ jobs:
 
       - name: 'backend run'
         run: |
-          podman run --publish 8080:80 \
-             --name pulp --replace \
-             --volume "$(pwd)/settings":/etc/pulp \
-             --volume "$(pwd)/pulp_storage":/var/lib/pulp \
-             --volume "$(pwd)/pgsql":/var/lib/pgsql \
-             --volume "$(pwd)/containers":/var/lib/containers \
-             docker.io/pulp/pulp
+          podman run --publish 8080:80 --name pulp --replace --detach \
+            --volume "$(pwd)/settings":/etc/pulp \
+            --volume "$(pwd)/pulp_storage":/var/lib/pulp \
+            --volume "$(pwd)/pgsql":/var/lib/pgsql \
+            --volume "$(pwd)/containers":/var/lib/containers \
+            docker.io/pulp/pulp
 
       - name: 'Install node 20'
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: 'Install python 3.13'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
 
       - name: 'Cache ~/.npm & ~/.cache/Cypress'
         uses: actions/cache@v4
