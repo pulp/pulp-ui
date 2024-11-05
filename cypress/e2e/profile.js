@@ -80,8 +80,8 @@ describe('My Profile Tests', () => {
     cy.get('#password-confirm').clear().type('pwd123456');
     helperText('password-confirm').should('contain', 'Passwords do not match');
 
-    cy.get('#password').clear().type(password);
-    cy.get('#password-confirm').clear().type(password);
+    cy.get('#password').clear().type('password');
+    cy.get('#password-confirm').clear().type('password');
     helperText('password-confirm').should('be.empty');
   });
 

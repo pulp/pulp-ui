@@ -38,10 +38,6 @@ function removeUserFromGroupManually(groupName, userName) {
   cy.get(
     `[data-cy="GroupDetail-users-${userName}"] [aria-label="Actions"]`,
   ).click();
-  cy.containsnear(
-    `[data-cy="GroupDetail-users-${userName}"] [aria-label="Actions"]`,
-    'Remove',
-  ).click();
   cy.contains('button.pf-m-danger', 'Delete').click();
   cy.contains('[data-cy=main-tabs]', userName).should('not.exist');
 }
@@ -64,7 +60,7 @@ describe('Pulp Group Management Tests', () => {
     const groupName = 'testGroup';
     const userName = 'testUser';
 
-    cy.createUser(userName);
+    // createUser(userName);
     createGroupManually(groupName);
 
     addUserToGroupManually(groupName, userName);
