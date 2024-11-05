@@ -1,7 +1,7 @@
 describe('Repository', () => {
   beforeEach(() => {
     cy.login();
-    cy.go('ansible/repositories');
+    cy.ui('ansible/repositories');
   });
 
   it('tests Paging and sorting', () => {
@@ -27,7 +27,7 @@ describe('Repository', () => {
     cy.contains('repoListTest3').should('not.exist');
     cy.contains('community');
 
-    cy.go('ansible/repositories');
+    cy.ui('ansible/repositories');
     cy.get(
       '[data-cy="ListPage-AnsibleRepositoryList"] [data-cy="sort_name"]',
     ).click();
@@ -104,7 +104,7 @@ describe('Repository', () => {
     cy.contains('[data-cy="delete-button"] button', 'Delete').click();
     cy.contains('Removal started for repository repoListTest4');
 
-    cy.go('ansible/repositories');
+    cy.ui('ansible/repositories');
     cy.get('[data-cy="compound_filter"] input')
       .clear()
       .type('repoListTest4{enter}');

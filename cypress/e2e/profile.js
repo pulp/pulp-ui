@@ -7,7 +7,7 @@ const helperText = (id) =>
 describe('My Profile Tests', () => {
   beforeEach(() => {
     cy.login();
-    cy.go();
+    cy.ui();
 
     cy.get('[data-cy="user-dropdown"] button').click();
     cy.contains('a', 'My profile').click();

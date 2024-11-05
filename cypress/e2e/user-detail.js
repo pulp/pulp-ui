@@ -5,7 +5,7 @@ describe('user detail tests all fields, editing, and deleting', () => {
 
   beforeEach(() => {
     cy.login();
-    cy.go('users');
+    cy.ui('users');
   });
 
   it('checks all fields', () => {
@@ -16,7 +16,7 @@ describe('user detail tests all fields, editing, and deleting', () => {
     selectInput('email').type('example@example.com');
     cy.get('button[type=submit]').click();
 
-    cy.go('users');
+    cy.ui('users');
 
     cy.contains('testUser').click();
 
@@ -39,7 +39,7 @@ describe('user detail tests all fields, editing, and deleting', () => {
     cy.reload();
 
     // checks those fields
-    cy.go('users');
+    cy.ui('users');
 
     cy.contains('testUser').click();
 

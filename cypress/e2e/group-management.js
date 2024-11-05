@@ -45,7 +45,7 @@ function removeUserFromGroupManually(groupName, userName) {
 describe('Pulp Group Management Tests', () => {
   beforeEach(() => {
     cy.login();
-    cy.go('group-list');
+    cy.ui('group-list');
   });
 
   it('admin user can create/delete a group', () => {
@@ -74,7 +74,7 @@ describe('Pulp Group Management Tests', () => {
 
     // add role to group manually
 
-    cy.go('group-list');
+    cy.ui('group-list');
     cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
 
     cy.get('[data-cy=add-roles]').click();

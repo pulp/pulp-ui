@@ -1,7 +1,7 @@
 describe('test status filter label on list view', () => {
   it('shows nicename status filter label', () => {
     cy.login();
-    cy.go('tasks');
+    cy.ui('tasks');
 
     // completed
     cy.get(

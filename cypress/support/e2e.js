@@ -7,7 +7,7 @@ Cypress.Commands.add('assertTitle', {}, (title) => {
   cy.contains('.pf-v5-c-title', title);
 });
 
-Cypress.Commands.add('go', {}, (path = '') => {
+Cypress.Commands.add('ui', {}, (path = '') => {
   cy.visit(ui + path);
 });
 

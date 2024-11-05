@@ -1,7 +1,7 @@
 describe('Task detail', () => {
   it('contains correct headers and field names', () => {
     cy.login();
-    cy.go('ansible/repositories');
+    cy.ui('ansible/repositories');
 
     cy.contains('Repositories');
 
@@ -11,7 +11,7 @@ describe('Task detail', () => {
 
     cy.get('.pf-v5-c-alert.pf-m-info');
 
-    cy.go('tasks');
+    cy.ui('tasks');
     cy.contains('pulp_ansible.app.tasks.collections.sync').click();
 
     cy.contains('h1', 'Collections sync');

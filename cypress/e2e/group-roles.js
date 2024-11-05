@@ -28,7 +28,7 @@ describe('Group Roles Tests', () => {
 
   beforeEach(() => {
     cy.login();
-    cy.go('group-list');
+    cy.ui('group-list');
   });
 
   it('should add a new role to group', () => {
@@ -51,7 +51,7 @@ describe('Group Roles Tests', () => {
 
     cy.get('.pf-v5-c-wizard__footer > button').contains('Add').click();
 
-    cy.go('group-list');
+    cy.ui('group-list');
     cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
     cy.get('[data-cy="RoleListTable"]').contains(testRole.name);
     cy.get(

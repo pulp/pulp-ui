@@ -2,7 +2,7 @@ describe('screenshots', () => {
   it('takes screenshots', () => {
     const screenshot = (path, options = {}) => {
       const filename = path.replaceAll('/', '_').replace(/^$/, 'status');
-      cy.go(path);
+      cy.ui(path);
       cy.screenshot(filename, options);
     };
 

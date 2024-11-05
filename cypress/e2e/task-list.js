@@ -1,7 +1,7 @@
 describe('Task table contains correct headers and filter', () => {
   it('table contains all columns and filter', () => {
     cy.login();
-    cy.go('ansible/repositories');
+    cy.ui('ansible/repositories');
 
     cy.contains('Repositories');
 
@@ -11,7 +11,7 @@ describe('Task table contains correct headers and filter', () => {
 
     cy.get('.pf-v5-c-alert.pf-m-info');
 
-    cy.go('tasks');
+    cy.ui('tasks');
     cy.contains('Task Management');
     cy.get('[aria-label="name__contains"]');
     ['Task name', 'Created on', 'Started at', 'Finished at', 'Status'].forEach(
