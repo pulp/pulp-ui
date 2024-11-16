@@ -6,7 +6,7 @@ export { downloadString } from './download-data';
 export { errorMessage, handleHttpError, jsxErrorMessage } from './fail-alerts';
 export { filterIsSet } from './filter-is-set';
 export { getHumanSize } from './get-human-size';
-export { getContainersURL, getRepoURL } from './get-repo-url';
+export { getContainersURL, getRepoURL, getDistroURL } from './get-repo-url';
 export { lastSyncStatus, lastSynced } from './last-sync-task';
 export { loginURL } from './login-url';
 export {
@@ -17,6 +17,7 @@ export {
   mapErrorMessages,
 } from './map-error-messages';
 export { mapNetworkErrors, validateInput } from './map-role-errors';
+export { ModelToApi } from './model-to-api';
 export { ParamHelper, type ParamType } from './param-helper';
 export {
   parsePulpIDFromURL,
@@ -26,7 +27,7 @@ export {
 } from './parse-pulp-id';
 export { plugin_versions } from './plugin-version';
 export { RepoSigningUtils } from './repo-signing';
-export { repositoryBasePath } from './repository-base-path';
+export { repositoryBasePath, repositoryDistro } from './repository-distro';
 export { repositoryRemoveCollection } from './repository-remove-collection';
 export { taskAlert } from './task-alert';
 export { translateLockedRole } from './translate-locked-role';

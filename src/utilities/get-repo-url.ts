@@ -1,5 +1,22 @@
 import { config } from 'src/ui-config';
+import { parsePulpResource } from 'src/utilities';
+import { ModelToApi } from 'src/utilities';
 
+export function getDistroURL(distribution) {
+  const resource = parsePulpResource(
+    distribution.prn ? distribution.prn : distribution.pulp_href,
+  );
+  let getURL = (data) => data.base_url;
+  if (resource) {
+    const api = ModelToApi[resource.model];
+    if (api && api.url) {
+      getURL = api.url;
+    }
+  }
+  return getURL(distribution);
+}
+
+// These two are specific to GalaxyNG
 // Returns the API path for a specific repository
 export function getRepoURL(distribution_base_path) {
   const host = window.location.origin;

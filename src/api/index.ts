@@ -5,13 +5,24 @@ export { AnsibleRepositoryAPI } from './ansible-repository';
 export { CertificateUploadAPI } from './certificate-upload';
 export { CollectionAPI } from './collection';
 export { CollectionVersionAPI } from './collection-version';
-export { ContainerDistributionAPI } from './container-distribution';
+export {
+  ContainerDistributionAPI,
+  ContainerPullThroughDistributionAPI,
+} from './container-distribution';
 export { ContainerTagAPI } from './container-tag';
 export { ExecutionEnvironmentAPI } from './execution-environment';
 export { ExecutionEnvironmentNamespaceAPI } from './execution-environment-namespace';
 export { ExecutionEnvironmentRegistryAPI } from './execution-environment-registry';
 export { ExecutionEnvironmentRemoteAPI } from './execution-environment-remote';
-export { GenericPulpAPI } from './generic-pulp';
+export {
+  GenericPulpAPI,
+  GenericContentAPI,
+  GenericDistributionAPI,
+  GenericPublicationAPI,
+  GenericRemoteAPI,
+  GenericRepositoryAPI,
+  GenericRepositoryVersionAPI,
+} from './generic-pulp';
 export { getCancelToken } from './get-cancel-token';
 export { GroupAPI } from './group';
 export { GroupRoleAPI } from './group-role';

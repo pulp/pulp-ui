@@ -40,7 +40,7 @@ export function parsePulpResource(value: string): PulpResource {
     resource_label;
   if (value.startsWith(config.API_BASE_PATH)) {
     const url = value.replace(config.API_BASE_PATH, '');
-    id = parsePulpIDFromPRN(url);
+    id = parsePulpIDFromURL(url);
     const transLabel = translateURLToModelLabel(url);
     if (!transLabel) {
       return null;
@@ -75,7 +75,9 @@ export function translatePulpResourceToURL(resource: PulpResource): string {
 
 function translateURLToModelLabel(url: string): string {
   const value = url.replace(config.API_BASE_PATH, '');
-  const urlParts = value.split('/').filter((part) => !part.match(IDRegEx));
+  const urlParts = value
+    .split('/')
+    .filter((part) => part.length && !part.match(IDRegEx));
   const searchUrl = urlParts.join('/');
   return URLToModelLabel[searchUrl];
 }

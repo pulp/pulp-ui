@@ -1,29 +1,31 @@
 import { msg, t } from '@lingui/macro';
 import React from 'react';
-import { getRepoURL, repositoryBasePath } from 'src/utilities';
+import { AnsibleDistributionAPI } from 'src/api';
+import { getDistroURL, repositoryDistro } from 'src/utilities';
 import { Action } from './action';
 
 export const ansibleRepositoryCopyAction = Action({
   title: msg`Copy CLI configuration`,
   onClick: async (item, { addAlert }) => {
-    let distroBasePath = null;
+    let distro = null;
 
-    if (!item.distroBasePath) {
+    if (!item.distro) {
       addAlert({
         id: 'copy-cli-config',
         title: t`Loading distribution...`,
         variant: 'info',
       });
 
-      distroBasePath = await repositoryBasePath(
+      distro = await repositoryDistro(
         item.name,
         item.pulp_href,
+        AnsibleDistributionAPI,
       ).catch(() => null);
     } else {
-      distroBasePath = item.distroBasePath;
+      distro = item.distro;
     }
 
-    if (!distroBasePath) {
+    if (!distro) {
       addAlert({
         id: 'copy-cli-config',
         title: t`There are no distributions associated with this repository.`,
@@ -34,10 +36,10 @@ export const ansibleRepositoryCopyAction = Action({
 
     const cliConfig = [
       '[galaxy]',
-      `server_list = ${distroBasePath}`,
+      `server_list = ${distro.name}`,
       '',
-      `[galaxy_server.${distroBasePath}]`,
-      `url=${getRepoURL(distroBasePath)}`,
+      `[galaxy_server.${distro.name}]`,
+      `url=${getDistroURL(distro)}`,
       'token=<put your token here>',
     ].join('\n');
 
@@ -51,7 +53,7 @@ export const ansibleRepositoryCopyAction = Action({
   },
   disabled: (item) => {
     // disabled check only available on detail screen
-    if ('distroBasePath' in item && !item.distroBasePath) {
+    if ('distro' in item && !item.distro) {
       return t`There are no distributions associated with this repository.`;
     }
 
