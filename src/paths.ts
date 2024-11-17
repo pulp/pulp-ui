@@ -52,72 +52,86 @@ export function formatEEPath(path, data, params?) {
 
 export const Paths = {
   ansible: {
-    approvals: '/approvals',
+    approvals: '/ansible/approvals',
     collection: {
       content_docs:
-        '/ansible/collections/:repo/:namespace/:collection/content/:type/:name',
-      content_list: '/ansible/collections/:repo/:namespace/:collection/content',
+        '/ansible/collections/content_docs/:repo/:namespace/:collection/:type/:name',
+      content_list: '/ansible/collections/content/:repo/:namespace/:collection',
       dependencies:
-        '/ansible/collections/:repo/:namespace/:collection/dependencies',
-      detail: '/ansible/collections/:repo/:namespace/:collection',
+        '/ansible/collections/dependencies/:repo/:namespace/:collection',
+      detail: '/ansible/collections/detail/:repo/:namespace/:collection',
       distributions:
-        '/ansible/collections/:repo/:namespace/:collection/distributions',
-      docs_index: '/ansible/collections/:repo/:namespace/:collection/docs',
-      docs_page: '/ansible/collections/:repo/:namespace/:collection/docs/:page',
-      imports: '/ansible/collections/:repo/:namespace/:collection/import-log',
+        '/ansible/collections/distributions/:repo/:namespace/:collection',
+      docs_index:
+        '/ansible/collections/docs_index/:repo/:namespace/:collection',
+      docs_page:
+        '/ansible/collections/docs_page/:repo/:namespace/:collection/:page',
+      imports: '/ansible/collections/imports/:repo/:namespace/:collection',
       list: '/ansible/collections',
     },
-    imports: '/my-imports',
+    imports: '/ansible/my-imports',
     namespace: {
-      detail: '/ansible/namespaces/:namespace',
-      edit: '/my-namespaces/edit/:namespace',
+      detail: '/ansible/namespaces/detail/:namespace',
+      edit: '/ansible/namespaces/edit/:namespace',
       list: '/ansible/namespaces',
       mine: '/ansible/my-namespaces',
     },
     remote: {
-      detail: '/ansible/remotes/:name',
-      edit: '/ansible/remotes/:name/edit',
+      detail: '/ansible/remotes/detail/:name',
+      edit: '/ansible/remotes/edit/:name',
       list: '/ansible/remotes',
     },
     repository: {
-      detail: '/ansible/repositories/:name',
-      edit: '/ansible/repositories/:name/edit',
+      detail: '/ansible/repositories/detail/:name',
+      edit: '/ansible/repositories/edit/:name',
       list: '/ansible/repositories',
     },
   },
   container: {
-    remote: { list: '/registries' },
+    remote: { list: '/container/remotes' },
     repository: {
-      access: '/containers/:namespace?/:container/_content/access',
-      activities: '/containers/:namespace?/:container/_content/activity',
-      detail: '/containers/:namespace?/:container',
-      images: '/containers/:namespace?/:container/_content/images',
-      list: '/containers',
-      manifest: '/containers/:namespace?/:container/_content/images/:digest',
+      access: '/container/containers/access/:namespace?/:container',
+      activities: '/container/containers/activity/:namespace?/:container',
+      detail: '/container/containers/detail/:namespace?/:container',
+      images: '/container/containers/images/:namespace?/:container',
+      list: '/container/containers',
+      manifest: '/container/containers/manifest/:namespace?/:container/:digest',
     },
   },
   core: {
     group: {
-      detail: '/group/:group',
-      list: '/group-list',
+      detail: '/groups/detail/:group',
+      list: '/groups',
     },
     role: {
       create: '/roles/create',
-      edit: '/role/:role',
+      edit: '/roles/edit/:role',
       list: '/roles',
     },
     signature_keys: '/signature-keys',
     status: '/status',
     task: {
-      detail: '/task/:task',
+      detail: '/tasks/detail/:task',
       list: '/tasks',
     },
     user: {
       create: '/users/create',
-      detail: '/users/:user_id',
-      edit: '/users/:user_id/edit',
+      detail: '/users/detail/:user_id',
+      edit: '/users/edit/:user_id',
       list: '/users',
-      profile: '/settings/user-profile',
+      profile: '/users/profile',
+    },
+  },
+  file: {
+    remote: {
+      detail: '/file/remotes/detail/:name',
+      edit: '/file/remotes/edit/:name',
+      list: '/file/remotes',
+    },
+    repository: {
+      detail: '/file/repositories/detail/:name',
+      edit: '/file/repositories/edit/:name',
+      list: '/file/repositories',
     },
   },
   meta: {
