@@ -1,17 +1,29 @@
-import { clearSetFieldsFromRequest } from 'src/utilities';
 import { type RemoteType } from '.';
 import { PulpAPI } from './pulp';
 
-// removes unchanged values and write only fields before updating
+// Deletes any hidden fields from the object so that they don't get sent to the API
+function clearSetFieldsFromRequest(data, hidden_fields) {
+  const newObj = { ...data };
+
+  for (const field of hidden_fields) {
+    if (field.is_set) {
+      delete newObj[field.name];
+    }
+  }
+
+  return newObj;
+}
+
+// removes unchanged values and hidden fields before updating
 function smartUpdate(remote: RemoteType, unmodifiedRemote: RemoteType) {
-  // Deletes any write only fields from the object that are market as is_set.
+  // Deletes any hidden fields from the object that are market as is_set.
   // This is to prevent accidentally clearing fields that weren't updated.
 
   // TODO: clearing set fields from the response will be unnecesary if the API
-  // stops returning field: null on write only fields
+  // stops returning field: null on hidden fields
   const reducedData: RemoteType = clearSetFieldsFromRequest(
     remote,
-    remote.write_only_fields,
+    remote.hidden_fields,
   ) as RemoteType;
 
   // Pulp complains if auth_url gets sent with a request that doesn't include a

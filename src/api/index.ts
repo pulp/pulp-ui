@@ -15,10 +15,10 @@ export { ExecutionEnvironmentNamespaceAPI } from './execution-environment-namesp
 export { ExecutionEnvironmentRegistryAPI } from './execution-environment-registry';
 export { ExecutionEnvironmentRemoteAPI } from './execution-environment-remote';
 export {
-  GenericPulpAPI,
   GenericContentAPI,
   GenericDistributionAPI,
   GenericPublicationAPI,
+  GenericPulpAPI,
   GenericRemoteAPI,
   GenericRepositoryAPI,
   GenericRepositoryVersionAPI,
@@ -64,7 +64,6 @@ export {
   ModelPermissionsType,
   UserType,
 } from './response-types/user';
-export { WriteOnlyFieldType } from './response-types/write-only-field';
 export { RoleAPI } from './role';
 export { RPMPackageAPI } from './rpm-package';
 export { RPMRepositoryAPI } from './rpm-repository';

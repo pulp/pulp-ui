@@ -6,7 +6,7 @@ export { downloadString } from './download-data';
 export { errorMessage, handleHttpError, jsxErrorMessage } from './fail-alerts';
 export { filterIsSet } from './filter-is-set';
 export { getHumanSize } from './get-human-size';
-export { getContainersURL, getRepoURL, getDistroURL } from './get-repo-url';
+export { getContainersURL, getDistroURL, getRepoURL } from './get-repo-url';
 export { lastSyncStatus, lastSynced } from './last-sync-task';
 export { loginURL } from './login-url';
 export {
@@ -20,8 +20,8 @@ export { mapNetworkErrors, validateInput } from './map-role-errors';
 export { ModelToApi } from './model-to-api';
 export { ParamHelper, type ParamType } from './param-helper';
 export {
-  parsePulpIDFromURL,
   parsePulpIDFromPRN,
+  parsePulpIDFromURL,
   parsePulpResource,
   translatePulpResourceToURL,
 } from './parse-pulp-id';
@@ -36,8 +36,3 @@ export { truncateSha } from './truncate-sha';
 export { validateURLHelper } from './validate-url-helper';
 export { waitForTask, waitForTaskUrl } from './wait-for-task';
 export { RouteProps, useQueryParams, withRouter } from './with-router';
-export {
-  clearSetFieldsFromRequest,
-  isFieldSet,
-  isWriteOnly,
-} from './write-only-fields';
