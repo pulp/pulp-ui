@@ -424,8 +424,17 @@ class TaskDetail extends Component<RouteProps, IState> {
   }
 
   private loadContent() {
+    const setPolling = (polling) => {
+      this.setState(({ polling: old, ...state }) => {
+        if (old) {
+          clearInterval(old);
+        }
+        return { ...state, polling };
+      });
+    };
+
     if (!this.state.polling && !this.state.task) {
-      this.setState({ polling: setInterval(() => this.loadContent(), 10000) });
+      setPolling(setInterval(() => this.loadContent(), 10000));
     }
 
     const taskId = this.props.routeParams.task;
@@ -435,10 +444,11 @@ class TaskDetail extends Component<RouteProps, IState> {
         let parentTask = null;
         const childTasks = [];
         const resources = [];
+
         if (['canceled', 'completed', 'failed'].includes(result.data.state)) {
-          clearInterval(this.state.polling);
-          this.setState({ polling: null });
+          setPolling(null);
         }
+
         if (result.data.parent_task) {
           const parentTaskId = parsePulpIDFromURL(result.data.parent_task);
           allRelatedTasks.push(
@@ -449,6 +459,7 @@ class TaskDetail extends Component<RouteProps, IState> {
               .catch(() => true),
           );
         }
+
         if (result.data.child_tasks.length) {
           result.data.child_tasks.forEach((child) => {
             const childTaskId = parsePulpIDFromURL(child);
@@ -461,6 +472,7 @@ class TaskDetail extends Component<RouteProps, IState> {
             );
           });
         }
+
         if (result.data.reserved_resources_record.length) {
           result.data.reserved_resources_record.forEach((record) => {
             // TODO: Maybe do something special if it is a shared resource
@@ -491,6 +503,7 @@ class TaskDetail extends Component<RouteProps, IState> {
             }
           });
         }
+
         return Promise.all(allRelatedTasks).then(() => {
           this.setState({
             task: result.data,
