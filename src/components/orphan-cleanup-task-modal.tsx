@@ -7,7 +7,7 @@ import {
   NumberInput,
 } from '@patternfly/react-core';
 import React from 'react';
-import { FormFieldHelper } from 'src/components/form-field-helper';
+import { DateComponent, FormFieldHelper } from 'src/components';
 
 interface IProps {
   cancelAction: () => void;
@@ -50,7 +50,7 @@ export const OrphanCleanupTaskModal = (props: IProps) => {
               });
             }}
             onChange={(event) => {
-              // @ts-expect-error:Property 'value' does not exist on type 'EventTarget'.
+              // @ts-expect-error: Property 'value' does not exist on type 'EventTarget'.
               const value = Number(event.target.value);
               if (value < 0 || Number.isNaN(value)) {
                 updateTask({
@@ -69,6 +69,18 @@ export const OrphanCleanupTaskModal = (props: IProps) => {
               });
             }}
           />
+          {taskValue.orphan_protection_time ? (
+            <>
+              {' '}
+              (
+              <DateComponent
+                date={new Date(
+                  Date.now() - taskValue.orphan_protection_time * 60 * 1000,
+                ).toISOString()}
+              />
+              )
+            </>
+          ) : null}
           <FormFieldHelper>
             {t`The value is in minutes. Usually the default is a day (1440). If set to zero it will clean all orphans.`}
           </FormFieldHelper>
