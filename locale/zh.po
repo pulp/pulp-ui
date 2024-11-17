@@ -2555,11 +2555,11 @@ msgstr ""
 #~ msgid "Failed to delete remote registry {name}"
 #~ msgstr "Failed to delete remote registry {name}"
 
-#: src/utilities/repository-base-path.ts
+#: src/utilities/repository-distro.ts
 msgid "Failed to find a distribution for repository {name}"
 msgstr "查找仓库的发布失败 {name}"
 
-#: src/utilities/repository-base-path.ts
+#: src/utilities/repository-distro.ts
 msgid "Failed to find repository {name}"
 msgstr "查找仓库 {name} 失败"
 
