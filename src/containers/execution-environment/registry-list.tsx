@@ -129,7 +129,7 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
               name: '',
               // API defaults to true when not sending anything, make the UI fit
               tls_validation: true,
-              write_only_fields: [
+              hidden_fields: [
                 { name: 'username', is_set: false },
                 { name: 'password', is_set: false },
                 { name: 'proxy_username', is_set: false },
