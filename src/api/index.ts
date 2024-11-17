@@ -14,6 +14,11 @@ export { ExecutionEnvironmentAPI } from './execution-environment';
 export { ExecutionEnvironmentNamespaceAPI } from './execution-environment-namespace';
 export { ExecutionEnvironmentRegistryAPI } from './execution-environment-registry';
 export { ExecutionEnvironmentRemoteAPI } from './execution-environment-remote';
+export { FileContentAPI } from './file-content';
+export { FileDistributionAPI } from './file-distribution';
+export { FilePublicationAPI } from './file-publication';
+export { FileRemoteAPI, type FileRemoteType } from './file-remote';
+export { FileRepositoryAPI, type FileRepositoryType } from './file-repository';
 export {
   GenericContentAPI,
   GenericDistributionAPI,
