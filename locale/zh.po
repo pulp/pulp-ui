@@ -977,7 +977,7 @@ msgstr "子任务"
 #~ msgstr ""
 
 #: src/components/patternfly-wrappers/l10n.tsx
-#: src/components/write-only-field.tsx
+#: src/components/remote-form.tsx
 msgid "Clear"
 msgstr "清除"
 
@@ -3056,7 +3056,7 @@ msgstr ""
 #~ msgid "Help other Ansible users by sharing the awesome roles and collections you create."
 #~ msgstr ""
 
-#: src/components/write-only-field.tsx
+#: src/components/remote-form.tsx
 msgid "hidden value"
 msgstr "隐藏值"
 
@@ -6399,7 +6399,11 @@ msgstr "这个组可以包括用户"
 #~ msgstr ""
 
 #: src/app-routes.tsx
-msgid "This page is under construction and some features may be broken. You can contribute at"
+#~ msgid "This page is under construction and some features may be broken. You can contribute at"
+#~ msgstr ""
+
+#: src/app-routes.tsx
+msgid "This page is under construction and some features may be broken. You can contribute at <0>Pulp UI</0>."
 msgstr ""
 
 #: src/containers/about-project.tsx

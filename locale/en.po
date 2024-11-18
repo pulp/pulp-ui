@@ -978,7 +978,7 @@ msgstr "Child tasks"
 #~ msgstr "Choices:"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-#: src/components/write-only-field.tsx
+#: src/components/remote-form.tsx
 msgid "Clear"
 msgstr "Clear"
 
@@ -3057,7 +3057,7 @@ msgstr "Has words"
 #~ msgid "Help other Ansible users by sharing the awesome roles and collections you create."
 #~ msgstr "Help other Ansible users by sharing the awesome roles and collections you create."
 
-#: src/components/write-only-field.tsx
+#: src/components/remote-form.tsx
 msgid "hidden value"
 msgstr "hidden value"
 
@@ -6400,8 +6400,12 @@ msgstr "This group can include users"
 #~ msgstr "This is the rating from old-galaxy.ansible.com. We are working on redoing the rating for the new version of galaxy."
 
 #: src/app-routes.tsx
-msgid "This page is under construction and some features may be broken. You can contribute at"
-msgstr "This page is under construction and some features may be broken. You can contribute at"
+#~ msgid "This page is under construction and some features may be broken. You can contribute at"
+#~ msgstr "This page is under construction and some features may be broken. You can contribute at"
+
+#: src/app-routes.tsx
+msgid "This page is under construction and some features may be broken. You can contribute at <0>Pulp UI</0>."
+msgstr "This page is under construction and some features may be broken. You can contribute at <0>Pulp UI</0>."
 
 #: src/containers/about-project.tsx
 msgid "This project is an attempt to up-cycle the Ansible Galaxy UI codebase. The first version contains mostly saved code with minor fixes. In the future more types of content will be added. We welcome kindly any contributions."
