@@ -50,7 +50,7 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
-    "sass": "1.80.6",
+    "sass": "1.81.0",
     "sass-loader": "^16.0.3",
     "shell-escape-tag": "^2.0.2",
     "source-map-loader": "^5.0.0",
