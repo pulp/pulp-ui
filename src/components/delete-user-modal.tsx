@@ -19,7 +19,7 @@ export const DeleteUserModal = ({
   user,
 }: IProps) => {
   const [waiting, setWaiting] = useState(false);
-  const { credentials } = useUserContext();
+  const { getUsername } = useUserContext();
 
   if (!user || !isOpen) {
     return null;
@@ -29,11 +29,11 @@ export const DeleteUserModal = ({
     <DeleteModal
       cancelAction={() => closeModal(false)}
       deleteAction={() => deleteUser()}
-      isDisabled={waiting || user.username === credentials.username}
+      isDisabled={waiting || user.username === getUsername()}
       spinner={waiting}
       title={t`Delete user?`}
     >
-      {user.username === credentials.username ? (
+      {user.username === getUsername() ? (
         t`Deleting yourself is not allowed.`
       ) : (
         <Trans>

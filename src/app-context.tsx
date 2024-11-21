@@ -14,15 +14,15 @@ export interface IAppContextType {
   queueAlert: (alert: AlertType) => void;
   setAlerts: (alerts: AlertType[]) => void;
   settings; // deprecated
-  user; // deprecated
 }
 
 export const AppContext = createContext<IAppContextType>(undefined);
 export const useAppContext = () => useContext(AppContext);
 
+// FIXME: rename to AlertContext*; deal with deprecated featureFlags & settings
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [alerts, setAlerts] = useState<AlertType[]>([]);
-  const { credentials } = useUserContext();
+  const { hasPermission } = useUserContext();
 
   // hub compat for now
   const featureFlags = {
@@ -43,7 +43,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const queueAlert = (alert) => setAlerts((alerts) => [...alerts, alert]);
-  const hasPermission = (_name) => true; // FIXME: permission handling
 
   return (
     <AppContext.Provider
@@ -54,14 +53,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         queueAlert,
         setAlerts,
         settings,
-        // FIXME: hack
-        user: credentials
-          ? {
-              username: credentials.username,
-              groups: [],
-              model_permissions: {},
-            }
-          : null,
       }}
     >
       {children}

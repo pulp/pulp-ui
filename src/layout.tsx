@@ -31,40 +31,12 @@ import { StandaloneMenu } from './menu';
 import { Paths, formatPath } from './paths';
 import { useUserContext } from './user-context';
 
-export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
-  const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
-  const { credentials, clearCredentials } = useUserContext();
-
-  let aboutModal = null;
-  let docsDropdownItems = [];
-  let userDropdownItems = [];
-  let userName: string;
-
-  if (credentials) {
-    userName = credentials.username;
-
-    userDropdownItems = [
-      <DropdownItem isDisabled key='username'>
-        <Trans>Username: {userName}</Trans>
-      </DropdownItem>,
-      <DropdownSeparator key='separator' />,
-      <DropdownItem
-        key='profile'
-        component={
-          <Link to={formatPath(Paths.core.user.profile)}>{t`My profile`}</Link>
-        }
-      />,
-
-      <DropdownItem
-        key='logout'
-        aria-label={'logout'}
-        onClick={() => clearCredentials()}
-      >
-        {t`Logout`}
-      </DropdownItem>,
-    ];
-
-    docsDropdownItems = [
+const DocsDropdown = ({ showAbout }: { showAbout: () => void }) => (
+  <StatefulDropdown
+    ariaLabel={t`Docs dropdown`}
+    data-cy='docs-dropdown'
+    defaultText={<QuestionCircleIcon />}
+    items={[
       <DropdownItem
         key='documentation'
         component={
@@ -74,19 +46,56 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
           >{t`Documentation`}</ExternalLink>
         }
       />,
-      <DropdownItem key='about' onClick={() => setAboutModalVisible(true)}>
+      <DropdownItem key='about' onClick={() => showAbout()}>
         {t`About`}
       </DropdownItem>,
-    ].filter(Boolean);
+    ]}
+    toggleType='icon'
+  />
+);
 
-    aboutModal = (
-      <PulpAboutModal
-        isOpen={aboutModalVisible}
-        onClose={() => setAboutModalVisible(false)}
-        userName={userName}
-      />
-    );
-  }
+const UserDropdown = ({
+  username,
+  clearCredentials,
+}: {
+  username?: string;
+  clearCredentials: () => void;
+}) =>
+  username ? (
+    <StatefulDropdown
+      ariaLabel={t`User dropdown`}
+      data-cy='user-dropdown'
+      defaultText={username}
+      items={[
+        <DropdownItem isDisabled key='username'>
+          <Trans>Username: {username}</Trans>
+        </DropdownItem>,
+        <DropdownSeparator key='separator' />,
+        <DropdownItem
+          key='profile'
+          component={
+            <Link
+              to={formatPath(Paths.core.user.profile)}
+            >{t`My profile`}</Link>
+          }
+        />,
+        <DropdownItem
+          key='logout'
+          aria-label={'logout'}
+          onClick={() => clearCredentials()}
+        >
+          {t`Logout`}
+        </DropdownItem>,
+      ]}
+      toggleType='dropdown'
+    />
+  ) : null;
+
+export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
+  const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
+  const { getUsername, clearCredentials } = useUserContext();
+
+  const username = getUsername();
 
   const Header = (
     <Masthead>
@@ -105,7 +114,7 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
               padding: '9px 0 0 4px',
             }}
           >
-            Pulp UI
+            {APPLICATION_NAME}
           </span>
         </MastheadBrand>
       </MastheadMain>
@@ -113,25 +122,14 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
         <span style={{ flexGrow: 1 }} />
         <DarkmodeSwitcher />
         <LanguageSwitcher />
-        {credentials ? (
-          <StatefulDropdown
-            ariaLabel={t`Docs dropdown`}
-            data-cy='docs-dropdown'
-            defaultText={<QuestionCircleIcon />}
-            items={docsDropdownItems}
-            toggleType='icon'
+        <DocsDropdown showAbout={() => setAboutModalVisible(true)} />
+        {username ? (
+          <UserDropdown
+            clearCredentials={clearCredentials}
+            username={username}
           />
-        ) : null}
-        {!credentials ? (
-          <LoginLink />
         ) : (
-          <StatefulDropdown
-            ariaLabel={t`User dropdown`}
-            data-cy='user-dropdown'
-            defaultText={userName}
-            items={userDropdownItems}
-            toggleType='dropdown'
-          />
+          <LoginLink />
         )}
       </MastheadContent>
     </Masthead>
@@ -148,7 +146,13 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
   return (
     <Page isManagedSidebar header={Header} sidebar={Sidebar}>
       {children}
-      {aboutModalVisible && aboutModal}
+      {aboutModalVisible ? (
+        <PulpAboutModal
+          isOpen
+          onClose={() => setAboutModalVisible(false)}
+          username={username}
+        />
+      ) : null}
     </Page>
   );
 };

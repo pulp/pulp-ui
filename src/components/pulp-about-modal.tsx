@@ -26,14 +26,14 @@ const Value = ({ children }: { children: ReactNode }) => (
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
-  userName: string;
+  username: string;
 }
 
 interface IApplicationInfo {
   pulp_core_version?: string;
 }
 
-export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
+export const PulpAboutModal = ({ isOpen, onClose, username }: IProps) => {
   const [applicationInfo, setApplicationInfo] = useState<IApplicationInfo>({});
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
   const ui_extra = config.EXTRA_VERSION;
 
   // FIXME
-  const user = { username: userName, id: null, groups: [] };
+  const user = { username, id: null, groups: [] };
 
   return (
     <AboutModal
@@ -115,10 +115,10 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
                   ? formatPath(Paths.core.user.detail, { user_id: user.id })
                   : null
               }
-              title={userName}
+              title={username}
             >
-              {userName}
-              {user?.username && user.username !== userName ? (
+              {username}
+              {user?.username && user.username !== username ? (
                 <> ({user.username})</>
               ) : null}
             </MaybeLink>
