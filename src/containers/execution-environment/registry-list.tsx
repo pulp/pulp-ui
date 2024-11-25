@@ -159,9 +159,17 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
         />
         {showRemoteFormModal && (
           <RemoteForm
+            allowEditName={remoteFormNew}
+            closeModal={() =>
+              this.setState({
+                remoteToEdit: null,
+                remoteUnmodified: null,
+                showRemoteFormModal: false,
+              })
+            }
+            errorMessages={remoteFormErrors}
+            plugin='container'
             remote={remoteToEdit}
-            remoteType='registry'
-            updateRemote={(r: RemoteType) => this.setState({ remoteToEdit: r })}
             saveRemote={() => {
               const { remoteFormNew, remoteToEdit } = this.state;
               const newRemote = { ...remoteToEdit };
@@ -199,19 +207,11 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
                   this.setState({ remoteFormErrors: mapErrorMessages(err) }),
                 );
             }}
-            errorMessages={remoteFormErrors}
             showModal={showRemoteFormModal}
-            closeModal={() =>
-              this.setState({
-                remoteToEdit: null,
-                remoteUnmodified: null,
-                showRemoteFormModal: false,
-              })
-            }
-            allowEditName={remoteFormNew}
             title={
               remoteFormNew ? t`Add remote registry` : t`Edit remote registry`
             }
+            updateRemote={(r: RemoteType) => this.setState({ remoteToEdit: r })}
           />
         )}
         {showDeleteModal && remoteToEdit && (

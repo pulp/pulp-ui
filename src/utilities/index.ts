@@ -25,6 +25,7 @@ export {
   parsePulpResource,
   translatePulpResourceToURL,
 } from './parse-pulp-id';
+export { pluginRepositoryBasePath } from './plugin-repository-base-path';
 export { plugin_versions } from './plugin-version';
 export { RepoSigningUtils } from './repo-signing';
 export { repositoryBasePath, repositoryDistro } from './repository-distro';

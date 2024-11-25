@@ -20,6 +20,12 @@ export { default as ExecutionEnvironmentDetailImages } from './execution-environ
 export { default as ExecutionEnvironmentList } from './execution-environment-list/execution-environment-list';
 export { default as ExecutionEnvironmentManifest } from './execution-environment-manifest/execution-environment-manifest';
 export { default as ExecutionEnvironmentRegistryList } from './execution-environment/registry-list';
+export { default as FileRemoteDetail } from './file-remote/detail';
+export { default as FileRemoteEdit } from './file-remote/edit';
+export { default as FileRemoteList } from './file-remote/list';
+export { default as FileRepositoryDetail } from './file-repository/detail';
+export { default as FileRepositoryEdit } from './file-repository/edit';
+export { default as FileRepositoryList } from './file-repository/list';
 export { default as GroupDetail } from './group-management/group-detail';
 export { default as GroupList } from './group-management/group-list';
 export { default as LoginPage } from './login/login';

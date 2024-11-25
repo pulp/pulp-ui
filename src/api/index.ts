@@ -1,7 +1,10 @@
 export { ActivitiesAPI } from './activities';
 export { AnsibleDistributionAPI } from './ansible-distribution';
-export { AnsibleRemoteAPI } from './ansible-remote';
-export { AnsibleRepositoryAPI } from './ansible-repository';
+export { AnsibleRemoteAPI, type AnsibleRemoteType } from './ansible-remote';
+export {
+  AnsibleRepositoryAPI,
+  type AnsibleRepositoryType,
+} from './ansible-repository';
 export { CertificateUploadAPI } from './certificate-upload';
 export { CollectionAPI } from './collection';
 export { CollectionVersionAPI } from './collection-version';
@@ -37,8 +40,6 @@ export { OrphanCleanupAPI } from './orphan-cleanup';
 export { PulpLoginAPI } from './pulp-login';
 export { PulpStatusAPI } from './pulp-status';
 export { RepairAPI } from './repair';
-export { type AnsibleRemoteType } from './response-types/ansible-remote';
-export { type AnsibleRepositoryType } from './response-types/ansible-repository';
 export {
   type CollectionDetailType,
   type CollectionUploadType,

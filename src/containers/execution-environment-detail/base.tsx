@@ -12,12 +12,12 @@ import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
+  ContainerRepositoryForm,
   DeleteExecutionEnvironmentModal,
   ExecutionEnvironmentHeader,
   LoadingPage,
   Main,
   NotFound,
-  RepositoryForm,
   StatefulDropdown,
   closeAlert,
 } from 'src/components';
@@ -203,7 +203,7 @@ export function withContainerRepo(WrappedComponent) {
           />
           <Main>
             {editing && (
-              <RepositoryForm
+              <ContainerRepositoryForm
                 name={repo.name}
                 namespace={repo.namespace.name}
                 description={repo.description}
