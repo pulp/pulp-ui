@@ -23,6 +23,7 @@ import {
   BaseHeader,
   ClipboardCopy,
   CompoundFilter,
+  ContainerRepositoryForm,
   DateComponent,
   DeleteExecutionEnvironmentModal,
   EmptyStateFilter,
@@ -33,7 +34,6 @@ import {
   LoadingSpinner,
   Main,
   PulpPagination,
-  RepositoryForm,
   SortTable,
   Tooltip,
   closeAlert,
@@ -445,7 +445,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
     const distributionPulpId = pulp?.distribution?.id;
     const { alerts } = this.state;
     return (
-      <RepositoryForm
+      <ContainerRepositoryForm
         isRemote={!!remote}
         isNew={isNew}
         name={name}

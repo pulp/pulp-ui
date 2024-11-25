@@ -37,22 +37,6 @@ export const ansibleRepositoryDeleteAction = Action({
         pulp_href,
       },
     }),
-  disabled: ({ name }) => {
-    if (
-      [
-        'certified',
-        'community',
-        'published',
-        'rejected',
-        'staging',
-        'validated',
-      ].includes(name)
-    ) {
-      return t`Protected repositories cannot be deleted.`;
-    }
-
-    return null;
-  },
 });
 
 async function deleteRepository(
