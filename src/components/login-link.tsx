@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import { Paths, formatPath } from 'src/paths';
 import { config } from 'src/ui-config';
 import { loginURL } from 'src/utilities';

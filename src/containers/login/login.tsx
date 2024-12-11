@@ -2,7 +2,7 @@ import { t } from '@lingui/macro';
 import { LoginPage } from '@patternfly/react-core';
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import { PulpLoginAPI } from 'src/api';
 import { FormFieldHelper, LoginForm } from 'src/components';
 import { Paths, formatPath } from 'src/paths';

@@ -3,7 +3,7 @@ import { Button, Checkbox, Text } from '@patternfly/react-core';
 import { DropdownItem } from '@patternfly/react-core/deprecated';
 import { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router';
 import {
   CollectionAPI,
   CollectionVersionAPI,

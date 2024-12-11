@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro';
 import { Button } from '@patternfly/react-core';
 import { Component } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import { NamespaceAPI, type NamespaceListType } from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {

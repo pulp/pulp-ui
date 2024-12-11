@@ -8,7 +8,7 @@ import {
   TextListVariants,
 } from '@patternfly/react-core';
 import { type ReactNode, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { DateComponent, ExternalLink, MaybeLink } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
 import { config } from 'src/ui-config';
