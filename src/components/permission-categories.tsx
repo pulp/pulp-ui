@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 import { Flex, FlexItem } from '@patternfly/react-core';
 import { type ModelPermissionsType } from 'src/api';
 import { useAppContext } from 'src/app-context';

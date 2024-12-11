@@ -1,4 +1,4 @@
-import { msg, t } from '@lingui/macro';
+import { msg, t } from '@lingui/core/macro';
 import { AnsibleDistributionAPI } from 'src/api';
 import { getDistroURL, repositoryDistro } from 'src/utilities';
 import { Action } from './action';

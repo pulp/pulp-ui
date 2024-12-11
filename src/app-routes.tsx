@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro';
+import { Trans } from '@lingui/react/macro';
 import { Banner, Flex, FlexItem } from '@patternfly/react-core';
 import WrenchIcon from '@patternfly/react-icons/dist/esm/icons/wrench-icon';
 import { type ElementType } from 'react';

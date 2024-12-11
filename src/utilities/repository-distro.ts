@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 import { GenericDistributionAPI, GenericRepositoryAPI } from 'src/api';
 import { ModelToApi } from 'src/utilities/model-to-api';
 import { parsePulpResource } from 'src/utilities/parse-pulp-id';

@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 import { Nav, NavExpandable, NavItem } from '@patternfly/react-core';
 import { reject, some } from 'lodash';
 import { useEffect, useState } from 'react';

@@ -1,4 +1,5 @@
-import { Trans, t } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
+import { Trans } from '@lingui/react/macro';
 import { List, ListItem } from '@patternfly/react-core';
 import { type UserType } from 'src/api';
 import { Alert, DeleteModal, Spinner } from 'src/components';

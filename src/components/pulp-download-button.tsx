@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 import { Button } from '@patternfly/react-core';
 import DownloadIcon from '@patternfly/react-icons/dist/esm/icons/download-icon';
 import { downloadString } from 'src/utilities';

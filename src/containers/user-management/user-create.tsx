@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 import { useState } from 'react';
 import { Navigate } from 'react-router';
 import { UserAPI, type UserType } from 'src/api';

@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro';
+import { Trans } from '@lingui/react/macro';
 import { BaseHeader, type BreadcrumbType, Breadcrumbs } from 'src/components';
 
 interface IProps {

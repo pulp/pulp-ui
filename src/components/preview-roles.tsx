@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro';
+import { Trans } from '@lingui/react/macro';
 import { Divider, Flex, FlexItem, Label } from '@patternfly/react-core';
 import { Fragment } from 'react';
 import { type RoleType } from 'src/api';

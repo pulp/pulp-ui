@@ -1,4 +1,4 @@
-import { plural } from '@lingui/macro';
+import { plural } from '@lingui/core/macro';
 
 const units = [null, 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
 
