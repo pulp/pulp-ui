@@ -1,4 +1,3 @@
-import { Trans } from '@lingui/react/macro';
 import { BaseHeader, type BreadcrumbType, Breadcrumbs } from 'src/components';
 
 interface IProps {
@@ -10,8 +9,6 @@ interface IProps {
 export const RoleHeader = ({ title, subTitle, breadcrumbs }: IProps) => (
   <BaseHeader breadcrumbs={<Breadcrumbs links={breadcrumbs} />} title={title}>
     {' '}
-    <div style={{ paddingBottom: '10px' }}>
-      <Trans>{subTitle}</Trans>
-    </div>
+    <div style={{ paddingBottom: '10px' }}>{subTitle}</div>
   </BaseHeader>
 );
