@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro';
 import { isEqual } from 'lodash';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { AppContext } from 'src/app-context';
 import {
   AlertList,

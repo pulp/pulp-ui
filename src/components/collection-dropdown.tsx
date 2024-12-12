@@ -1,6 +1,5 @@
 import { t } from '@lingui/macro';
 import { DropdownItem } from '@patternfly/react-core/deprecated';
-import React from 'react';
 import { useAppContext } from 'src/app-context';
 import { StatefulDropdown } from 'src/components';
 import { DeleteCollectionUtils } from 'src/utilities';

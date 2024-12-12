@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro';
 import { Button, DataList } from '@patternfly/react-core';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import {
   CollectionAPI,

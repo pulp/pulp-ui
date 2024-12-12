@@ -2,7 +2,7 @@ import { t } from '@lingui/macro';
 import { Button, Label } from '@patternfly/react-core';
 import InfoCircleIcon from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
-import React from 'react';
+import { useState } from 'react';
 import { LabelGroup } from 'src/components';
 
 interface Label {
@@ -19,7 +19,7 @@ export const PulpLabels = ({
   labels: Record<string, string>;
   updateLabels?: (l) => void;
 }) => {
-  const [labelS, setLabels] = React.useState(
+  const [labelS, setLabels] = useState(
     !labels || !Object.keys(labels).length
       ? []
       : Object.entries(labels).map(([k, v], i) => ({
@@ -29,7 +29,7 @@ export const PulpLabels = ({
           valid: true,
         })),
   );
-  const [idIndex, setIdIndex] = React.useState(labelS.length);
+  const [idIndex, setIdIndex] = useState(labelS.length);
   const update = (newLabels: Label[]) => {
     const newLabelsObj = newLabels.reduce(
       (o, label) => ({ ...o, [label.key]: label.value }),

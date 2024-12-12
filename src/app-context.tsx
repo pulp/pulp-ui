@@ -1,9 +1,4 @@
-import React, {
-  type ReactNode,
-  createContext,
-  useContext,
-  useState,
-} from 'react';
+import { type ReactNode, createContext, useContext, useState } from 'react';
 import { type AlertType } from 'src/components';
 import { useUserContext } from './user-context';
 

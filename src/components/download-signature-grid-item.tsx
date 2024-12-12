@@ -9,7 +9,7 @@ import {
   SplitItem,
 } from '@patternfly/react-core';
 import DownloadIcon from '@patternfly/react-icons/dist/esm/icons/download-icon';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CollectionAPI, type CollectionVersionSearch } from 'src/api';
 import { useAppContext } from 'src/app-context';
 import { LoadingSpinner } from 'src/components';

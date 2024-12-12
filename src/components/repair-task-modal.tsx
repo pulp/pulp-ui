@@ -6,7 +6,6 @@ import {
   FormGroup,
   Modal,
 } from '@patternfly/react-core';
-import React from 'react';
 
 interface IProps {
   cancelAction: () => void;

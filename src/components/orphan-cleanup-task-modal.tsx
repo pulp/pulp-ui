@@ -6,7 +6,6 @@ import {
   Modal,
   NumberInput,
 } from '@patternfly/react-core';
-import React from 'react';
 import { DateComponent, FormFieldHelper } from 'src/components';
 
 interface IProps {

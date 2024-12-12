@@ -7,7 +7,7 @@ import {
   TextListItemVariants,
   TextListVariants,
 } from '@patternfly/react-core';
-import React, { type ReactNode, useEffect, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { DateComponent, ExternalLink, MaybeLink } from 'src/components';
 import { Paths, formatPath } from 'src/paths';

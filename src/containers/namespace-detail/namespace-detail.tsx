@@ -1,7 +1,7 @@
 import { Trans, t } from '@lingui/macro';
 import { Button, Checkbox, Text } from '@patternfly/react-core';
 import { DropdownItem } from '@patternfly/react-core/deprecated';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link, Navigate } from 'react-router-dom';
 import {

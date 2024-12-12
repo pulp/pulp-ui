@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PulpLogo from 'static/images/pulp_logo.png';
 
 interface IProps {
