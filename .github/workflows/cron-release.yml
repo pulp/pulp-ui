@@ -109,7 +109,7 @@ jobs:
             curl -s https://api.github.com/repos/pulp/pulp-ui/releases/latest | \
             jq -r '.name,"",.body' | \
             sed -e 's/^## /### /' -e 's/^pulp-ui \(.*\) \(.*\)/## \1 (\2) {: #\1 }/' | \
-            grep -v '^\* Bump .* by @dependabot in ' \
+            grep -v '^\* Bump .* by @dependabot in ' | \
             sed -e 's/^\(\* .*\) by @[a-zA-Z][-a-zA-Z0-9_]\+ in https:\/\/github.com\/pulp\/pulp-ui\/pull\/\([0-9]\+\)$/\1 [#\2](https:\/\/github.com\/pulp\/pulp-ui\/pull\/\2)/'
             echo
             echo '---'
