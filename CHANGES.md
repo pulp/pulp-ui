@@ -13,22 +13,11 @@
 
 ## 0.1.18 (2024-11-25) {: #0.1.18 }
 
-### What's Changed
-* Bump the eslint group across 1 directory with 2 updates by @dependabot in https://github.com/pulp/pulp-ui/pull/159
-
-
 **Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.17...v0.1.18
 
 ---
 
 ## 0.1.17 (2024-11-19) {: #0.1.17 }
-
-### What's Changed
-* Bump the lingui group with 3 updates by @dependabot in https://github.com/pulp/pulp-ui/pull/155
-* Bump stylelint-scss from 6.8.1 to 6.9.0 by @dependabot in https://github.com/pulp/pulp-ui/pull/156
-* Bump sass from 1.80.6 to 1.81.0 by @dependabot in https://github.com/pulp/pulp-ui/pull/157
-* Bump globals from 15.11.0 to 15.12.0 by @dependabot in https://github.com/pulp/pulp-ui/pull/158
-
 
 **Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.16...v0.1.17
 
@@ -37,9 +26,9 @@
 ## 0.1.16 (2024-11-18) {: #0.1.16 }
 
 ### What's Changed
-* Remove obsolete write\_only\_fields logic by @himdel in https://github.com/pulp/pulp-ui/pull/150
-* Add pulp\_file apis by @himdel in https://github.com/pulp/pulp-ui/pull/151
-* Update paths, make beta a route property by @himdel in https://github.com/pulp/pulp-ui/pull/152
+* Remove obsolete write\_only\_fields logic [#150](https://github.com/pulp/pulp-ui/pull/150)
+* Add pulp\_file apis [#151](https://github.com/pulp/pulp-ui/pull/151)
+* Update paths, make beta a route property [#152](https://github.com/pulp/pulp-ui/pull/152)
 
 
 **Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.15...v0.1.16
@@ -49,12 +38,7 @@
 ## 0.1.15 (2024-11-17) {: #0.1.15 }
 
 ### What's Changed
-* Bump the eslint group across 1 directory with 2 updates by @dependabot in https://github.com/pulp/pulp-ui/pull/149
-* Bump sass from 1.80.4 to 1.80.6 by @dependabot in https://github.com/pulp/pulp-ui/pull/142
-* Bump @patternfly/react-table from 5.4.8 to 5.4.9 in the patternfly group by @dependabot in https://github.com/pulp/pulp-ui/pull/141
-* Bump webpack from 5.95.0 to 5.96.1 by @dependabot in https://github.com/pulp/pulp-ui/pull/143
-* Bump sass-loader from 16.0.2 to 16.0.3 by @dependabot in https://github.com/pulp/pulp-ui/pull/144
-* Fix Repository Url to use distributions value by @gerrod3 in https://github.com/pulp/pulp-ui/pull/148
+* Fix Repository Url to use distributions value [#148](https://github.com/pulp/pulp-ui/pull/148)
 
 
 **Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.14...v0.1.15
@@ -64,7 +48,7 @@
 ## 0.1.14 (2024-11-04) {: #0.1.14 }
 
 ### What's Changed
-* Add under contruction banner by @ZitaNemeckova in https://github.com/pulp/pulp-ui/pull/139
+* Add under contruction banner [#139](https://github.com/pulp/pulp-ui/pull/139)
 
 
 **Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.13...v0.1.14
@@ -74,7 +58,7 @@
 ## 0.1.13 (2024-11-01) {: #0.1.13 }
 
 ### What's Changed
-* Small fixes for orphan clean up modal by @ZitaNemeckova in https://github.com/pulp/pulp-ui/pull/138
+* Small fixes for orphan clean up modal [#138](https://github.com/pulp/pulp-ui/pull/138)
 
 
 **Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.12...v0.1.13
@@ -84,11 +68,8 @@
 ## 0.1.12 (2024-10-30) {: #0.1.12 }
 
 ### What's Changed
-* Add modals for Task buttons by @ZitaNemeckova in https://github.com/pulp/pulp-ui/pull/126
-* dependabot: stop trying to update to patternfly 6 by @himdel in https://github.com/pulp/pulp-ui/pull/133
-* Bump cypress from 13.15.0 to 13.15.1 by @dependabot in https://github.com/pulp/pulp-ui/pull/136
-* Bump typescript-eslint from 8.11.0 to 8.12.1 in the eslint group by @dependabot in https://github.com/pulp/pulp-ui/pull/134
-* Bump the patternfly group with 3 updates by @dependabot in https://github.com/pulp/pulp-ui/pull/135
+* Add modals for Task buttons [#126](https://github.com/pulp/pulp-ui/pull/126)
+* dependabot: stop trying to update to patternfly 6 [#133](https://github.com/pulp/pulp-ui/pull/133)
 
 
 **Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.11...v0.1.12
@@ -98,11 +79,7 @@
 ## 0.1.11 (2024-10-29) {: #0.1.11 }
 
 ### What's Changed
-* Bump the babel group with 6 updates by @dependabot in https://github.com/pulp/pulp-ui/pull/127
-* Bump the eslint group with 2 updates by @dependabot in https://github.com/pulp/pulp-ui/pull/128
-* Bump html-webpack-plugin from 5.6.0 to 5.6.3 by @dependabot in https://github.com/pulp/pulp-ui/pull/130
-* Bump sass from 1.80.3 to 1.80.4 by @dependabot in https://github.com/pulp/pulp-ui/pull/131
-* Update task reserved resource logic to handle PRNs by @gerrod3 in https://github.com/pulp/pulp-ui/pull/92
+* Update task reserved resource logic to handle PRNs [#92](https://github.com/pulp/pulp-ui/pull/92)
 
 
 **Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.10...v0.1.11
@@ -112,9 +89,9 @@
 ## 0.1.10 (2024-10-27) {: #0.1.10 }
 
 ### What's Changed
-* CHANGES - update PR links to match pulpcore by @himdel in https://github.com/pulp/pulp-ui/pull/125
-* API cleanup by @himdel in https://github.com/pulp/pulp-ui/pull/120
-* Add ability to add/edit/remove pulp labels by @gerrod3 in https://github.com/pulp/pulp-ui/pull/123
+* CHANGES - update PR links to match pulpcore [#125](https://github.com/pulp/pulp-ui/pull/125)
+* API cleanup [#120](https://github.com/pulp/pulp-ui/pull/120)
+* Add ability to add/edit/remove pulp labels [#123](https://github.com/pulp/pulp-ui/pull/123)
 
 
 **Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.9...v0.1.10
@@ -124,8 +101,8 @@
 ## 0.1.9 (2024-10-25) {: #0.1.9 }
 
 ### What's Changed
-* Make API\_BASE\_PATH, UI\_BASE\_PATH, UI\_EXTERNAL\_LOGIN\_URI configurable at load-time by @himdel in https://github.com/pulp/pulp-ui/pull/111
-* cron-release: add CHANGES.md from autogenerated github release changelog by @himdel in https://github.com/pulp/pulp-ui/pull/114
+* Make API\_BASE\_PATH, UI\_BASE\_PATH, UI\_EXTERNAL\_LOGIN\_URI configurable at load-time [#111](https://github.com/pulp/pulp-ui/pull/111)
+* cron-release: add CHANGES.md from autogenerated github release changelog [#114](https://github.com/pulp/pulp-ui/pull/114)
 
 
 **Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.8...v0.1.9
