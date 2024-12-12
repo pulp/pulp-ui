@@ -261,7 +261,7 @@ class TaskDetail extends Component<RouteProps, IState> {
                       {resources.map((resource, index) => {
                         return (
                           <Fragment key={resource.type + index}>
-                            <hr />
+                            {index ? <hr /> : null}
                             <DescriptionListGroup>
                               <DescriptionListTerm>{t`Type`}</DescriptionListTerm>
                               <DescriptionListDescription>

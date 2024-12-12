@@ -1,6 +1,6 @@
 import { msg, t } from '@lingui/macro';
 import React from 'react';
-import { AnsibleDistributionAPI, AnsibleRepositoryAPI } from 'src/api';
+import { FileDistributionAPI, FileRepositoryAPI } from 'src/api';
 import { DeleteAnsibleRepositoryModal } from 'src/components';
 import {
   handleHttpError,
@@ -10,7 +10,7 @@ import {
 } from 'src/utilities';
 import { Action } from './action';
 
-export const ansibleRepositoryDeleteAction = Action({
+export const fileRepositoryDeleteAction = Action({
   title: msg`Delete`,
   modal: ({ addAlert, listQuery, setState, state }) =>
     state.deleteModalOpen ? (
@@ -44,7 +44,7 @@ async function deleteRepository(
   { addAlert, setState, listQuery },
 ) {
   // TODO: handle more pages
-  const distributionsToDelete = await AnsibleDistributionAPI.list({
+  const distributionsToDelete = await FileDistributionAPI.list({
     repository: pulp_href,
     page: 1,
     page_size: 100,
@@ -59,7 +59,7 @@ async function deleteRepository(
       return [];
     });
 
-  const deleteRepo = AnsibleRepositoryAPI.delete(pulpId)
+  const deleteRepo = FileRepositoryAPI.delete(pulpId)
     .then(({ data }) => {
       addAlert(taskAlert(data.task, t`Removal started for repository ${name}`));
       return waitForTaskUrl(data.task);
@@ -74,7 +74,7 @@ async function deleteRepository(
 
   const deleteDistribution = ({ name, pulp_href }) => {
     const distribution_id = parsePulpIDFromURL(pulp_href);
-    return AnsibleDistributionAPI.delete(distribution_id)
+    return FileDistributionAPI.delete(distribution_id)
       .then(({ data }) => {
         addAlert(
           taskAlert(data.task, t`Removal started for distribution ${name}`),
