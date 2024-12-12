@@ -10,7 +10,7 @@ import {
   Progress,
 } from '@patternfly/react-core';
 import { sortBy } from 'lodash';
-import React, { Component, type ReactNode, useState } from 'react';
+import { Component, type ReactNode, useState } from 'react';
 import { PulpStatusAPI } from 'src/api';
 import {
   AlertList,

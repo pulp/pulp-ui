@@ -1,6 +1,5 @@
 import { t } from '@lingui/macro';
 import { Bullseye } from '@patternfly/react-core';
-import React from 'react';
 import { BaseHeader, Main } from 'src/components';
 import PulpLogo from 'static/images/pulp_logo.png';
 import './not-found.scss';

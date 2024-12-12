@@ -7,7 +7,6 @@ import {
   CardTitle,
   Gallery,
 } from '@patternfly/react-core';
-import React from 'react';
 import { BaseHeader, ExternalLink, Main } from 'src/components';
 import { type RouteProps, withRouter } from 'src/utilities';
 import PulpLogo from 'static/images/pulp_logo.png';

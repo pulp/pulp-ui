@@ -2,7 +2,7 @@ import { t } from '@lingui/macro';
 import { DropdownItem } from '@patternfly/react-core/deprecated';
 import MoonIcon from '@patternfly/react-icons/dist/esm/icons/moon-icon';
 import SunIcon from '@patternfly/react-icons/dist/esm/icons/sun-icon';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StatefulDropdown } from 'src/components';
 import {
   getBrowserDefault,

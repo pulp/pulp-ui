@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro';
 import { Button } from '@patternfly/react-core';
 import DownloadIcon from '@patternfly/react-icons/dist/esm/icons/download-icon';
-import React from 'react';
 import { downloadString } from 'src/utilities';
 
 export const PulpDownloadButton = ({

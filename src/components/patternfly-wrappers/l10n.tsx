@@ -31,7 +31,6 @@ import {
   type SearchInputProps,
   type SpinnerProps,
 } from '@patternfly/react-core';
-import React from 'react';
 
 const count = '${remaining}'; // pf templating
 

@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { UserAPI, type UserType } from 'src/api';
 import { UserFormPage } from 'src/components';

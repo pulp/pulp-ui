@@ -4,7 +4,7 @@ import { t } from '@lingui/macro';
 import { I18nProvider } from '@lingui/react';
 import '@patternfly/patternfly/patternfly.scss';
 import { Button } from '@patternfly/react-core';
-import React, { StrictMode, useEffect, useState } from 'react';
+import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Alert, LoadingSpinner, UIVersion } from 'src/components';

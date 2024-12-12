@@ -1,5 +1,5 @@
 import { Title } from '@patternfly/react-core';
-import React, { type ReactNode, useEffect } from 'react';
+import { type ReactNode, useEffect } from 'react';
 import './header.scss';
 
 interface IProps {

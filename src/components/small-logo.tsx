@@ -1,4 +1,3 @@
-import React from 'react';
 import PulpLogo from 'static/images/pulp_logo.png';
 
 interface IProps {

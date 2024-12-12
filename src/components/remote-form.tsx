@@ -16,7 +16,7 @@ import {
 } from '@patternfly/react-core';
 import DownloadIcon from '@patternfly/react-icons/dist/esm/icons/download-icon';
 import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
-import React, { Component, type ReactNode } from 'react';
+import { Component, type ReactNode } from 'react';
 import { type RemoteType } from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {

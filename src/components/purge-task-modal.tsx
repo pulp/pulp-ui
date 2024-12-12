@@ -7,7 +7,6 @@ import {
   FormGroup,
   Modal,
 } from '@patternfly/react-core';
-import React from 'react';
 import { Alert } from 'src/components/patternfly-wrappers/l10n';
 
 interface IProps {

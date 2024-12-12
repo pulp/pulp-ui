@@ -1,6 +1,6 @@
 import { Trans, t } from '@lingui/macro';
 import { Button } from '@patternfly/react-core';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserAPI, type UserType } from 'src/api';
 import {
   AlertList,

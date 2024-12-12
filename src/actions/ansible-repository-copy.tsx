@@ -1,5 +1,4 @@
 import { msg, t } from '@lingui/macro';
-import React from 'react';
 import { AnsibleDistributionAPI } from 'src/api';
 import { getDistroURL, repositoryDistro } from 'src/utilities';
 import { Action } from './action';
