@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro';
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import { UserAPI, type UserType } from 'src/api';
 import {
   BaseHeader,

@@ -9,7 +9,7 @@ import {
 import { DropdownItem } from '@patternfly/react-core/deprecated';
 import { Td } from '@patternfly/react-table';
 import { Component } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router';
 import { RoleAPI, type RoleType } from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {

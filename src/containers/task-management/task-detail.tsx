@@ -13,7 +13,7 @@ import {
 import CubesIcon from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
 import { capitalize } from 'lodash';
 import { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { GenericPulpAPI, TaskManagementAPI, type TaskType } from 'src/api';
 import {
   AlertList,

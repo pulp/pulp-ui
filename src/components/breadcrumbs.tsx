@@ -1,5 +1,5 @@
 import { BreadcrumbItem } from '@patternfly/react-core';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Breadcrumb } from 'src/components';
 
 export interface BreadcrumbType {
