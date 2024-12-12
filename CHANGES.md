@@ -1,0 +1,209 @@
+## 0.1.19 (2024-12-12) {: #0.1.19 }
+
+### What's Changed
+* Switch from moment to luxon [#170](https://github.com/pulp/pulp-ui/pull/170)
+* Switch to new JSX transform [#174](https://github.com/pulp/pulp-ui/pull/174)
+* Bump react-router to v7 [#172](https://github.com/pulp/pulp-ui/pull/172)
+* Bump lingui to v5 [#173](https://github.com/pulp/pulp-ui/pull/173)
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.18...v0.1.19
+
+---
+
+## 0.1.18 (2024-11-25) {: #0.1.18 }
+
+### What's Changed
+* Bump the eslint group across 1 directory with 2 updates by @dependabot in https://github.com/pulp/pulp-ui/pull/159
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.17...v0.1.18
+
+---
+
+## 0.1.17 (2024-11-19) {: #0.1.17 }
+
+### What's Changed
+* Bump the lingui group with 3 updates by @dependabot in https://github.com/pulp/pulp-ui/pull/155
+* Bump stylelint-scss from 6.8.1 to 6.9.0 by @dependabot in https://github.com/pulp/pulp-ui/pull/156
+* Bump sass from 1.80.6 to 1.81.0 by @dependabot in https://github.com/pulp/pulp-ui/pull/157
+* Bump globals from 15.11.0 to 15.12.0 by @dependabot in https://github.com/pulp/pulp-ui/pull/158
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.16...v0.1.17
+
+---
+
+## 0.1.16 (2024-11-18) {: #0.1.16 }
+
+### What's Changed
+* Remove obsolete write\_only\_fields logic by @himdel in https://github.com/pulp/pulp-ui/pull/150
+* Add pulp\_file apis by @himdel in https://github.com/pulp/pulp-ui/pull/151
+* Update paths, make beta a route property by @himdel in https://github.com/pulp/pulp-ui/pull/152
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.15...v0.1.16
+
+---
+
+## 0.1.15 (2024-11-17) {: #0.1.15 }
+
+### What's Changed
+* Bump the eslint group across 1 directory with 2 updates by @dependabot in https://github.com/pulp/pulp-ui/pull/149
+* Bump sass from 1.80.4 to 1.80.6 by @dependabot in https://github.com/pulp/pulp-ui/pull/142
+* Bump @patternfly/react-table from 5.4.8 to 5.4.9 in the patternfly group by @dependabot in https://github.com/pulp/pulp-ui/pull/141
+* Bump webpack from 5.95.0 to 5.96.1 by @dependabot in https://github.com/pulp/pulp-ui/pull/143
+* Bump sass-loader from 16.0.2 to 16.0.3 by @dependabot in https://github.com/pulp/pulp-ui/pull/144
+* Fix Repository Url to use distributions value by @gerrod3 in https://github.com/pulp/pulp-ui/pull/148
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.14...v0.1.15
+
+---
+
+## 0.1.14 (2024-11-04) {: #0.1.14 }
+
+### What's Changed
+* Add under contruction banner by @ZitaNemeckova in https://github.com/pulp/pulp-ui/pull/139
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.13...v0.1.14
+
+---
+
+## 0.1.13 (2024-11-01) {: #0.1.13 }
+
+### What's Changed
+* Small fixes for orphan clean up modal by @ZitaNemeckova in https://github.com/pulp/pulp-ui/pull/138
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.12...v0.1.13
+
+---
+
+## 0.1.12 (2024-10-30) {: #0.1.12 }
+
+### What's Changed
+* Add modals for Task buttons by @ZitaNemeckova in https://github.com/pulp/pulp-ui/pull/126
+* dependabot: stop trying to update to patternfly 6 by @himdel in https://github.com/pulp/pulp-ui/pull/133
+* Bump cypress from 13.15.0 to 13.15.1 by @dependabot in https://github.com/pulp/pulp-ui/pull/136
+* Bump typescript-eslint from 8.11.0 to 8.12.1 in the eslint group by @dependabot in https://github.com/pulp/pulp-ui/pull/134
+* Bump the patternfly group with 3 updates by @dependabot in https://github.com/pulp/pulp-ui/pull/135
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.11...v0.1.12
+
+---
+
+## 0.1.11 (2024-10-29) {: #0.1.11 }
+
+### What's Changed
+* Bump the babel group with 6 updates by @dependabot in https://github.com/pulp/pulp-ui/pull/127
+* Bump the eslint group with 2 updates by @dependabot in https://github.com/pulp/pulp-ui/pull/128
+* Bump html-webpack-plugin from 5.6.0 to 5.6.3 by @dependabot in https://github.com/pulp/pulp-ui/pull/130
+* Bump sass from 1.80.3 to 1.80.4 by @dependabot in https://github.com/pulp/pulp-ui/pull/131
+* Update task reserved resource logic to handle PRNs by @gerrod3 in https://github.com/pulp/pulp-ui/pull/92
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.10...v0.1.11
+
+---
+
+## 0.1.10 (2024-10-27) {: #0.1.10 }
+
+### What's Changed
+* CHANGES - update PR links to match pulpcore by @himdel in https://github.com/pulp/pulp-ui/pull/125
+* API cleanup by @himdel in https://github.com/pulp/pulp-ui/pull/120
+* Add ability to add/edit/remove pulp labels by @gerrod3 in https://github.com/pulp/pulp-ui/pull/123
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.9...v0.1.10
+
+---
+
+## 0.1.9 (2024-10-25) {: #0.1.9 }
+
+### What's Changed
+* Make API\_BASE\_PATH, UI\_BASE\_PATH, UI\_EXTERNAL\_LOGIN\_URI configurable at load-time by @himdel in https://github.com/pulp/pulp-ui/pull/111
+* cron-release: add CHANGES.md from autogenerated github release changelog by @himdel in https://github.com/pulp/pulp-ui/pull/114
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.8...v0.1.9
+
+---
+
+## 0.1.8 (2024-10-22) {: #0.1.8 }
+
+### What's Changed
+* Add basic docs to show on Pulp website [#107](https://github.com/pulp/pulp-ui/pull/107)
+* User form fixes - convert user edit screens to functional, use user context, update api to patch [#112](https://github.com/pulp/pulp-ui/pull/112)
+* Add new PulpCodeBlock component that auto-truncates and has download + copy action [#109](https://github.com/pulp/pulp-ui/pull/109)
+* Add About page [#95](https://github.com/pulp/pulp-ui/pull/95)
+* Not found handling - switch away from routes [#121](https://github.com/pulp/pulp-ui/pull/121)
+* Remove galaxy-specifics from ansible repository list & detail tab [#108](https://github.com/pulp/pulp-ui/pull/108)
+* stylelint - switch to `stylelint-config-recommended-scss` [#122](https://github.com/pulp/pulp-ui/pull/122)
+
+### New Contributors
+* @pedro-psb made their first contribution in https://github.com/pulp/pulp-ui/pull/107
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.7...v0.1.8
+
+---
+
+## 0.1.7 (2024-10-19) {: #0.1.7 }
+
+### What's Changed
+* Remove galaxy info from about modal [#90](https://github.com/pulp/pulp-ui/pull/90)
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.6...v0.1.7
+
+---
+
+## 0.1.6 (2024-10-18) {: #0.1.6 }
+
+### What's Changed
+* Fix date command for build startup [#94](https://github.com/pulp/pulp-ui/pull/94)
+* Add Ubuntu update fix [#101](https://github.com/pulp/pulp-ui/pull/101)
+* Login - add warning about basic auth [#104](https://github.com/pulp/pulp-ui/pull/104)
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.5...v0.1.6
+
+---
+
+## 0.1.5 (2024-10-10) {: #0.1.5 }
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.4...v0.1.5
+
+---
+
+## 0.1.4 (2024-10-07) {: #0.1.4 }
+
+### What's Changed
+* RPM list [#72](https://github.com/pulp/pulp-ui/pull/72)
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.3...v0.1.4
+
+---
+
+## 0.1.3 (2024-10-07) {: #0.1.3 }
+
+### What's Changed
+* Add utility function has\_plugins [#74](https://github.com/pulp/pulp-ui/pull/74)
+* Paths - reorganize by plugin [#82](https://github.com/pulp/pulp-ui/pull/82)
+* Filter menu based on plugins [#86](https://github.com/pulp/pulp-ui/pull/86)
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.2...v0.1.3
+
+---
+
+## 0.1.2 (2024-10-01) {: #0.1.2 }
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.1...v0.1.2
+
+---
+
+## 0.1.1 (2024-10-01) {: #0.1.1 }
