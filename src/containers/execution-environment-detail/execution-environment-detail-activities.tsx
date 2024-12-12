@@ -2,7 +2,7 @@ import { t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import { Button, Flex, FlexItem } from '@patternfly/react-core';
 import { Table, Tbody, Td, Tr } from '@patternfly/react-table';
-import { Component, type ReactFragment } from 'react';
+import { Component, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import { ActivitiesAPI } from 'src/api';
 import {
@@ -19,7 +19,7 @@ import './execution-environment-detail.scss';
 
 interface IState {
   loading: boolean;
-  activities: { created: string; action: ReactFragment }[];
+  activities: { created: string; action: ReactNode }[];
   redirect: string;
   page: number;
 }
