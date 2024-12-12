@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 import WrenchIcon from '@patternfly/react-icons//dist/esm/icons/wrench-icon';
 import { EmptyStateCustom } from 'src/components';
 

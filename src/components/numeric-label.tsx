@@ -1,4 +1,4 @@
-import { plural } from '@lingui/macro';
+import { plural } from '@lingui/core/macro';
 
 interface IProps {
   number: number;

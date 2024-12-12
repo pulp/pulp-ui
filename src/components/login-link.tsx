@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 import { Link, useLocation } from 'react-router';
 import { Paths, formatPath } from 'src/paths';
 import { config } from 'src/ui-config';

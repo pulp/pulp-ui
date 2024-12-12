@@ -1,5 +1,6 @@
 import eslint from '@eslint/js';
 import prettierConfig from 'eslint-config-prettier';
+import pluginLingui from 'eslint-plugin-lingui';
 import reactPlugin from 'eslint-plugin-react';
 import globals from 'globals';
 import {
@@ -23,6 +24,7 @@ export default config(
   ...tsConfigs.recommended,
   ...tsConfigs.stylistic,
   prettierConfig,
+  pluginLingui.configs['flat/recommended'],
   {
     files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     plugins: {
@@ -61,6 +63,7 @@ export default config(
         'error',
         { fixStyle: 'inline-type-imports' },
       ],
+      'lingui/no-expression-in-message': 'off',
       'react/react-in-jsx-scope': 'off',
       'no-restricted-imports': [
         'error',

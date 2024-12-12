@@ -1,4 +1,4 @@
-import { msg, t } from '@lingui/macro';
+import { msg, t } from '@lingui/core/macro';
 import { AnsibleRemoteAPI, type AnsibleRemoteType } from 'src/api';
 import { Page, RemoteForm } from 'src/components';
 import { Paths, formatPath } from 'src/paths';

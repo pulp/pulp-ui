@@ -26,15 +26,10 @@ updates:
           - 'react'
           - 'react-dom'
     ignore:
-      - dependency-name: '@patternfly/patternfly'
+      - dependency-name: '@patternfly/*'
         update-types:
           - 'version-update:semver-major'
-      - dependency-name: '@patternfly/react-core'
-        update-types:
-          - 'version-update:semver-major'
-      - dependency-name: '@patternfly/react-table'
-        update-types:
-          - 'version-update:semver-major'
+
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:

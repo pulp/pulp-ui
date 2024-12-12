@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 import { List, ListItem } from '@patternfly/react-core';
 import { Link } from 'react-router';
 import { type CollectionVersion, type CollectionVersionSearch } from 'src/api';

@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 import { ClipboardCopy } from 'src/components';
 
 export const CopyURL = ({

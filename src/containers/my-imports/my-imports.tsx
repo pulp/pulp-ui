@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 import { Component, type RefObject, createRef } from 'react';
 import { Link } from 'react-router';
 import {

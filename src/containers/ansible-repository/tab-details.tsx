@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro';
+import { t } from '@lingui/core/macro';
 import { Link } from 'react-router';
 import { type AnsibleRemoteType, type AnsibleRepositoryType } from 'src/api';
 import { CopyURL, Details, PulpLabels } from 'src/components';

@@ -1,4 +1,4 @@
-import { msg, t } from '@lingui/macro';
+import { msg, t } from '@lingui/core/macro';
 import { Td, Tr } from '@patternfly/react-table';
 import { RPMPackageAPI } from 'src/api';
 import { LazyRPMRepository, ListItemActions, ListPage } from 'src/components';
