@@ -1,3 +1,16 @@
+## 0.1.19 (2024-12-12) {: #0.1.19 }
+
+### What's Changed
+* Switch from moment to luxon [#170](https://github.com/pulp/pulp-ui/pull/170)
+* Switch to new JSX transform [#174](https://github.com/pulp/pulp-ui/pull/174)
+* Bump react-router to v7 [#172](https://github.com/pulp/pulp-ui/pull/172)
+* Bump lingui to v5 [#173](https://github.com/pulp/pulp-ui/pull/173)
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.18...v0.1.19
+
+---
+
 ## 0.1.18 (2024-11-25) {: #0.1.18 }
 
 ### What's Changed
