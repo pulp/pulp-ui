@@ -56,6 +56,7 @@ import {
   UserList,
   UserProfile,
 } from 'src/containers';
+import { StandaloneLayout } from 'src/layout';
 import { Paths, formatPath } from 'src/paths';
 import { config } from 'src/ui-config';
 import { loginURL } from 'src/utilities';
@@ -367,24 +368,26 @@ const AuthHandler = ({
 
 export const AppRoutes = () => (
   <Routes>
-    {routes.map(({ beta, component, noAuth, path }, index) => (
+    <Route element={<StandaloneLayout />}>
+      {routes.map(({ beta, component, noAuth, path }, index) => (
+        <Route
+          element={
+            <AuthHandler
+              beta={beta}
+              component={component}
+              noAuth={noAuth}
+              path={path}
+            />
+          }
+          key={index}
+          path={path}
+        />
+      ))}
       <Route
-        element={
-          <AuthHandler
-            beta={beta}
-            component={component}
-            noAuth={noAuth}
-            path={path}
-          />
-        }
-        key={index}
-        path={path}
+        path={'/'}
+        element={<Navigate to={formatPath(Paths.core.status)} />}
       />
-    ))}
-    <Route
-      path={'/'}
-      element={<Navigate to={formatPath(Paths.core.status)} />}
-    />
-    <Route path='*' element={<NotFound />} />
+      <Route path='*' element={<NotFound />} />
+    </Route>
   </Routes>
 );
