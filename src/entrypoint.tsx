@@ -6,13 +6,12 @@ import '@patternfly/patternfly/patternfly.scss';
 import { Button } from '@patternfly/react-core';
 import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router';
-import { Alert, LoadingSpinner, UIVersion } from 'src/components';
+import { RouterProvider, createBrowserRouter } from 'react-router';
+import { Alert, LoadingSpinner } from 'src/components';
 import { AppContextProvider } from './app-context';
-import { AppRoutes } from './app-routes';
+import { dataRoutes } from './app-routes';
 import './darkmode';
 import './l10n';
-import { StandaloneLayout } from './layout';
 import { configFallback, configPromise } from './ui-config';
 import { UserContextProvider } from './user-context';
 
@@ -94,16 +93,15 @@ function LoadConfig(_props) {
     );
   }
 
+  const router = createBrowserRouter(dataRoutes, {
+    basename: config.UI_BASE_PATH,
+  });
+
   return (
-    <BrowserRouter basename={config.UI_BASE_PATH}>
-      <UserContextProvider>
-        <AppContextProvider>
-          <StandaloneLayout>
-            <AppRoutes />
-          </StandaloneLayout>
-          <UIVersion />
-        </AppContextProvider>
-      </UserContextProvider>
-    </BrowserRouter>
+    <UserContextProvider>
+      <AppContextProvider>
+        <RouterProvider router={router} />
+      </AppContextProvider>
+    </UserContextProvider>
   );
 }

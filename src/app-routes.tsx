@@ -2,8 +2,8 @@ import { Trans } from '@lingui/react/macro';
 import { Banner, Flex, FlexItem } from '@patternfly/react-core';
 import WrenchIcon from '@patternfly/react-icons/dist/esm/icons/wrench-icon';
 import { type ElementType } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router';
-import { ExternalLink, NotFound } from 'src/components';
+import { Navigate, useLocation } from 'react-router';
+import { ErrorBoundary, ExternalLink, NotFound } from 'src/components';
 import {
   AboutProject,
   AnsibleRemoteDetail,
@@ -50,6 +50,7 @@ import {
   UserList,
   UserProfile,
 } from 'src/containers';
+import { StandaloneLayout } from 'src/layout';
 import { Paths, formatPath } from 'src/paths';
 import { config } from 'src/ui-config';
 import { loginURL } from 'src/utilities';
@@ -343,26 +344,36 @@ const AuthHandler = ({
   );
 };
 
-export const AppRoutes = () => (
-  <Routes>
-    {routes.map(({ beta, component, noAuth, path }, index) => (
-      <Route
-        element={
-          <AuthHandler
-            beta={beta}
-            component={component}
-            noAuth={noAuth}
-            path={path}
-          />
-        }
-        key={index}
+const appRoutes = () =>
+  routes.map(({ beta, component, noAuth, path, ...rest }) => ({
+    element: (
+      <AuthHandler
+        beta={beta}
+        component={component}
+        noAuth={noAuth}
         path={path}
       />
-    ))}
-    <Route
-      path={'/'}
-      element={<Navigate to={formatPath(Paths.core.status)} />}
-    />
-    <Route path='*' element={<NotFound />} />
-  </Routes>
-);
+    ),
+    path: path,
+    ...rest,
+  }));
+
+export const dataRoutes = [
+  {
+    element: <StandaloneLayout />,
+    children: [
+      {
+        errorElement: <ErrorBoundary />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to={formatPath(Paths.core.status)} />,
+          },
+          ...appRoutes(),
+          // "No matching route" is not handled by the error boundary.
+          { path: '*', element: <NotFound /> },
+        ],
+      },
+    ],
+  },
+];

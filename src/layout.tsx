@@ -17,8 +17,8 @@ import {
 } from '@patternfly/react-core/deprecated';
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import QuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/question-circle-icon';
-import { type ReactNode, useState } from 'react';
-import { Link } from 'react-router';
+import { useState } from 'react';
+import { Link, Outlet } from 'react-router';
 import {
   DarkmodeSwitcher,
   ExternalLink,
@@ -27,12 +27,13 @@ import {
   PulpAboutModal,
   SmallLogo,
   StatefulDropdown,
+  UIVersion,
 } from 'src/components';
 import { StandaloneMenu } from './menu';
 import { Paths, formatPath } from './paths';
 import { useUserContext } from './user-context';
 
-export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
+export const StandaloneLayout = () => {
   const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
   const { credentials, clearCredentials } = useUserContext();
 
@@ -147,9 +148,12 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
   );
 
   return (
-    <Page isManagedSidebar header={Header} sidebar={Sidebar}>
-      {children}
-      {aboutModalVisible && aboutModal}
-    </Page>
+    <>
+      <Page isManagedSidebar header={Header} sidebar={Sidebar}>
+        <Outlet />
+        {aboutModalVisible && aboutModal}
+      </Page>
+      <UIVersion />
+    </>
   );
 };
