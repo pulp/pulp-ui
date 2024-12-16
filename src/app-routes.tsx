@@ -2,7 +2,7 @@ import { Trans } from '@lingui/react/macro';
 import { Banner, Flex, FlexItem } from '@patternfly/react-core';
 import WrenchIcon from '@patternfly/react-icons/dist/esm/icons/wrench-icon';
 import { type ElementType } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 import { ErrorBoundary, ExternalLink, NotFound } from 'src/components';
 import {
   AboutProject,
@@ -366,25 +366,19 @@ const AuthHandler = ({
   );
 };
 
-export const AppRoutes = () => (
-  <Routes>
-    {routes.map(({ beta, component, noAuth, path }, index) => (
-      <Route
-        element={
-          <AuthHandler
-            beta={beta}
-            component={component}
-            noAuth={noAuth}
-            path={path}
-          />
-        }
-        key={index}
+const appRoutes = () =>
+  routes.map(({ beta, component, noAuth, path, ...rest }) => ({
+    element: (
+      <AuthHandler
+        beta={beta}
+        component={component}
+        noAuth={noAuth}
         path={path}
       />
-    ))}
-    <Route path='*' element={<NotFound />} />
-  </Routes>
-);
+    ),
+    path: path,
+    ...rest,
+  }));
 
 export const dataRoutes = [
   {
@@ -394,10 +388,12 @@ export const dataRoutes = [
         errorElement: <ErrorBoundary />,
         children: [
           {
-            path: '/',
+            index: true,
             element: <Navigate to={formatPath(Paths.core.status)} />,
           },
-          { path: '*', element: <AppRoutes /> },
+          ...appRoutes(),
+          // "No matching route" is not handled by the error boundary.
+          { path: '*', element: <NotFound /> },
         ],
       },
     ],
