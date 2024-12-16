@@ -3,7 +3,7 @@ import { Banner, Flex, FlexItem } from '@patternfly/react-core';
 import WrenchIcon from '@patternfly/react-icons/dist/esm/icons/wrench-icon';
 import { type ElementType } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
-import { ExternalLink, NotFound } from 'src/components';
+import { ExternalLink, NotFound, ErrorBoundary } from 'src/components';
 import {
   AboutProject,
   AnsibleRemoteDetail,
@@ -368,31 +368,33 @@ const AuthHandler = ({
 
 export const AppRoutes = () => (
   <Routes>
-      {routes.map(({ beta, component, noAuth, path }, index) => (
-        <Route
-          element={
-            <AuthHandler
-              beta={beta}
-              component={component}
-              noAuth={noAuth}
-              path={path}
-            />
-          }
-          key={index}
-          path={path}
-        />
-      ))}
+    {routes.map(({ beta, component, noAuth, path }, index) => (
       <Route
-        path={'/'}
-        element={<Navigate to={formatPath(Paths.core.status)} />}
+        element={
+          <AuthHandler
+            beta={beta}
+            component={component}
+            noAuth={noAuth}
+            path={path}
+          />
+        }
+        key={index}
+        path={path}
       />
-      <Route path='*' element={<NotFound />} />
+    ))}
+    <Route
+      path={'/'}
+      element={<Navigate to={formatPath(Paths.core.status)} />}
+    />
+    <Route path='*' element={<NotFound />} />
   </Routes>
 );
 
 export const dataRoutes = [
   {
     element: <StandaloneLayout />,
-    children: [{ path: '*', element: <AppRoutes /> }],
+    children: [
+      { errorElement: <ErrorBoundary />, children: [{ path: '*', element: <AppRoutes /> }] },
+    ],
   },
 ];
