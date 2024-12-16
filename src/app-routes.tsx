@@ -3,7 +3,7 @@ import { Banner, Flex, FlexItem } from '@patternfly/react-core';
 import WrenchIcon from '@patternfly/react-icons/dist/esm/icons/wrench-icon';
 import { type ElementType } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
-import { ExternalLink, NotFound, ErrorBoundary } from 'src/components';
+import { ErrorBoundary, ExternalLink, NotFound } from 'src/components';
 import {
   AboutProject,
   AnsibleRemoteDetail,
@@ -382,10 +382,6 @@ export const AppRoutes = () => (
         path={path}
       />
     ))}
-    <Route
-      path={'/'}
-      element={<Navigate to={formatPath(Paths.core.status)} />}
-    />
     <Route path='*' element={<NotFound />} />
   </Routes>
 );
@@ -394,7 +390,16 @@ export const dataRoutes = [
   {
     element: <StandaloneLayout />,
     children: [
-      { errorElement: <ErrorBoundary />, children: [{ path: '*', element: <AppRoutes /> }] },
+      {
+        errorElement: <ErrorBoundary />,
+        children: [
+          {
+            path: '/',
+            element: <Navigate to={formatPath(Paths.core.status)} />,
+          },
+          { path: '*', element: <AppRoutes /> },
+        ],
+      },
     ],
   },
 ];
