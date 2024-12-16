@@ -6,7 +6,7 @@ import '@patternfly/patternfly/patternfly.scss';
 import { Button } from '@patternfly/react-core';
 import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router';
+import { RouterProvider, createBrowserRouter } from 'react-router';
 import { Alert, LoadingSpinner } from 'src/components';
 import { AppContextProvider } from './app-context';
 import { AppRoutes } from './app-routes';
@@ -93,12 +93,14 @@ function LoadConfig(_props) {
     );
   }
 
+  const router = createBrowserRouter([{ path: '*', element: <AppRoutes /> }], {
+    basename: config.UI_BASE_PATH,
+  });
+
   return (
     <UserContextProvider>
       <AppContextProvider>
-        <BrowserRouter basename={config.UI_BASE_PATH}>
-          <AppRoutes />
-        </BrowserRouter>
+        <RouterProvider router={router} />
       </AppContextProvider>
     </UserContextProvider>
   );
