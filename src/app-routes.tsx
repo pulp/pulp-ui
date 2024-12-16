@@ -391,3 +391,5 @@ export const AppRoutes = () => (
     </Route>
   </Routes>
 );
+
+export const dataRoutes = [{ path: '*', element: <AppRoutes /> }];

@@ -9,7 +9,7 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router';
 import { Alert, LoadingSpinner } from 'src/components';
 import { AppContextProvider } from './app-context';
-import { AppRoutes } from './app-routes';
+import { dataRoutes } from './app-routes';
 import './darkmode';
 import './l10n';
 import { configFallback, configPromise } from './ui-config';
@@ -93,7 +93,7 @@ function LoadConfig(_props) {
     );
   }
 
-  const router = createBrowserRouter([{ path: '*', element: <AppRoutes /> }], {
+  const router = createBrowserRouter(dataRoutes, {
     basename: config.UI_BASE_PATH,
   });
 
