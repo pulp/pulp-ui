@@ -9,7 +9,7 @@ export const ErrorBoundary = () => {
         <h1>
           {error.status} {error.statusText}
         </h1>
-        <p>{error.data}</p>
+        <p>{error.data.toString()}</p>
       </>
     );
   } else if (error instanceof Error) {

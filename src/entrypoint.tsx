@@ -8,12 +8,10 @@ import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router';
 import { Alert, LoadingSpinner } from 'src/components';
-import { AppContextProvider } from './app-context';
 import { dataRoutes } from './app-routes';
 import './darkmode';
 import './l10n';
 import { configFallback, configPromise } from './ui-config';
-import { UserContextProvider } from './user-context';
 
 // App entrypoint
 
@@ -97,11 +95,5 @@ function LoadConfig(_props) {
     basename: config.UI_BASE_PATH,
   });
 
-  return (
-    <UserContextProvider>
-      <AppContextProvider>
-        <RouterProvider router={router} />
-      </AppContextProvider>
-    </UserContextProvider>
-  );
+  return <RouterProvider router={router} />;
 }
