@@ -8,9 +8,11 @@ export class BaseAPI {
 
   constructor() {
     this.http = axios.create({
-      // adapter + withCredentials ensures no popup on http basic auth fail
       adapter: 'fetch',
-      withCredentials: false,
+      // Allow session cookie to be used.
+      withCredentials: true,
+      // Don't let the browser ask for username/password.
+      headers: { 'X-Request-With': 'XMLHttpRequest' },
 
       // baseURL gets set in PulpAPI
       paramsSerializer: {

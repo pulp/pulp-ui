@@ -3,7 +3,7 @@ import { Trans } from '@lingui/react/macro';
 import { useState } from 'react';
 import { UserAPI, type UserType } from 'src/api';
 import { DeleteModal } from 'src/components';
-import { useUserContext } from 'src/user-context';
+import { useAppContext } from 'src/app-context';
 import { jsxErrorMessage, mapErrorMessages } from 'src/utilities';
 
 interface IProps {
@@ -20,7 +20,7 @@ export const DeleteUserModal = ({
   user,
 }: IProps) => {
   const [waiting, setWaiting] = useState(false);
-  const { credentials } = useUserContext();
+  const { user: currentUser } = useAppContext();
 
   if (!user || !isOpen) {
     return null;
@@ -30,11 +30,11 @@ export const DeleteUserModal = ({
     <DeleteModal
       cancelAction={() => closeModal(false)}
       deleteAction={() => deleteUser()}
-      isDisabled={waiting || user.username === credentials.username}
+      isDisabled={waiting || user.username === currentUser.username}
       spinner={waiting}
       title={t`Delete user?`}
     >
-      {user.username === credentials.username ? (
+      {user.username === currentUser.username ? (
         t`Deleting yourself is not allowed.`
       ) : (
         <Trans>
