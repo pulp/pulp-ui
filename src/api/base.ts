@@ -8,10 +8,8 @@ export class BaseAPI {
 
   constructor() {
     this.http = axios.create({
-      // adapter + withCredentials ensures no popup on http basic auth fail
-      adapter: 'fetch',
-      withCredentials: false,
-
+      xsrfCookieName: "csrftoken",
+      xsrfHeaderName: "X-CSRFToken",
       // baseURL gets set in PulpAPI
       paramsSerializer: {
         serialize: (params) => ParamHelper.getQueryString(params),
