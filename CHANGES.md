@@ -1,3 +1,13 @@
+## 0.1.20 (2024-12-24) {: #0.1.20 }
+
+### What's Changed
+* cron-release, CHANGELOG: fix changelog generation [#179](https://github.com/pulp/pulp-ui/pull/179)
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.19...v0.1.20
+
+---
+
 ## 0.1.19 (2024-12-12) {: #0.1.19 }
 
 ### What's Changed
