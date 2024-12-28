@@ -18,7 +18,7 @@ import {
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import QuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/question-circle-icon';
 import { type ReactNode, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useFetcher } from 'react-router';
 import {
   DarkmodeSwitcher,
   ExternalLink,
@@ -27,26 +27,30 @@ import {
   PulpAboutModal,
   SmallLogo,
   StatefulDropdown,
+  UIVersion,
 } from 'src/components';
+import { useAppContext } from './app-context';
 import { StandaloneMenu } from './menu';
 import { Paths, formatPath } from './paths';
-import { useUserContext } from './user-context';
 
-export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
+export const Layout = ({ children }: { children: ReactNode }) => {
+  const fetcher = useFetcher();
+  const {
+    account: { username },
+  } = useAppContext();
   const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
-  const { credentials, clearCredentials } = useUserContext();
 
   let aboutModal = null;
   let docsDropdownItems = [];
   let userDropdownItems = [];
-  let userName: string;
 
-  if (credentials) {
-    userName = credentials.username;
+  const logout = () =>
+    fetcher.submit(null, { method: 'delete', action: '/login' });
 
+  if (username) {
     userDropdownItems = [
       <DropdownItem isDisabled key='username'>
-        <Trans>Username: {userName}</Trans>
+        <Trans>Username: {username}</Trans>
       </DropdownItem>,
       <DropdownSeparator key='separator' />,
       <DropdownItem
@@ -56,11 +60,7 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
         }
       />,
 
-      <DropdownItem
-        key='logout'
-        aria-label={'logout'}
-        onClick={() => clearCredentials()}
-      >
+      <DropdownItem key='logout' aria-label={'logout'} onClick={() => logout()}>
         {t`Logout`}
       </DropdownItem>,
     ];
@@ -84,7 +84,7 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
       <PulpAboutModal
         isOpen={aboutModalVisible}
         onClose={() => setAboutModalVisible(false)}
-        userName={userName}
+        userName={username}
       />
     );
   }
@@ -114,7 +114,7 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
         <span style={{ flexGrow: 1 }} />
         <DarkmodeSwitcher />
         <LanguageSwitcher />
-        {credentials ? (
+        {username ? (
           <StatefulDropdown
             ariaLabel={t`Docs dropdown`}
             data-cy='docs-dropdown'
@@ -123,13 +123,13 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
             toggleType='icon'
           />
         ) : null}
-        {!credentials ? (
+        {!username ? (
           <LoginLink />
         ) : (
           <StatefulDropdown
             ariaLabel={t`User dropdown`}
             data-cy='user-dropdown'
-            defaultText={userName}
+            defaultText={username}
             items={userDropdownItems}
             toggleType='dropdown'
           />
@@ -147,9 +147,12 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
   );
 
   return (
-    <Page isManagedSidebar header={Header} sidebar={Sidebar}>
-      {children}
-      {aboutModalVisible && aboutModal}
-    </Page>
+    <>
+      <Page isManagedSidebar header={Header} sidebar={Sidebar}>
+        {children}
+        {aboutModalVisible && aboutModal}
+      </Page>
+      <UIVersion />
+    </>
   );
 };
