@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import {
   DropdownItem,
   DropdownSeparator,
@@ -18,11 +17,9 @@ export function LanguageSwitcher(_props) {
       toggleType='icon'
       items={[
         <DropdownItem isDisabled key='current'>
-          {window.localStorage.override_l10n ? (
-            <Trans>{currentLanguage} (current)</Trans>
-          ) : (
-            <Trans>{currentLanguage} (browser default)</Trans>
-          )}
+          {window.localStorage.override_l10n
+            ? t`{currentLanguage} (current)`
+            : t`{currentLanguage} (browser default)`}
         </DropdownItem>,
         <DropdownSeparator key='separator1' />,
         ...availableLanguages.map((lang) => (
@@ -40,7 +37,7 @@ export function LanguageSwitcher(_props) {
           href='?lang='
           isDisabled={!window.localStorage.override_l10n}
         >
-          <Trans>Reset to browser defaults</Trans>
+          {t`Reset to browser defaults`}
         </DropdownItem>,
       ]}
     />

@@ -36,7 +36,7 @@ export const DeleteExecutionEnvironmentModal = (props: IProps) => {
     >
       <Text className='delete-container-modal-message'>
         <Trans>
-          Deleting <b>{selectedItem}</b> and its data will be lost.
+          Deleting environment <b>{selectedItem}</b>.
         </Trans>
       </Text>
       <Checkbox
@@ -67,9 +67,7 @@ function deleteContainer(
         setIsDeletionPending(false);
         closeAction();
         addAlert(
-          <Trans>
-            Container &quot;{selectedItem}&quot; has been successfully deleted.
-          </Trans>,
+          t`Container "${selectedItem}" has been successfully deleted.`,
           'success',
         );
         afterDelete();

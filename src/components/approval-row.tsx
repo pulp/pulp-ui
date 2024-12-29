@@ -160,7 +160,7 @@ export const ApprovalRow = ({
               },
             )}
           >
-            {t`View Import Logs`}
+            {t`View import logs`}
           </Link>
         }
       />

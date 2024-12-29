@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import {
   Button,
   Toolbar,
@@ -470,9 +469,7 @@ export class TaskListView extends Component<RouteProps, IState> {
             {
               variant: 'success',
               title: name,
-              description: (
-                <Trans>Task &quot;{name}&quot; stopped successfully.</Trans>
-              ),
+              description: t`Task "${name}" stopped successfully.`,
             },
           ],
         });
@@ -551,12 +548,12 @@ export class TaskListView extends Component<RouteProps, IState> {
   private repair(task: { verify_checksums: boolean }) {
     RepairAPI.create(task)
       .then(() => {
-        this.addAlert(t`Repair Artifact Storage started`, 'success');
+        this.addAlert(t`Repair artifact storage started`, 'success');
         this.queryTasks();
       })
       .catch(() =>
         this.addAlert(
-          t`Repair Artifact Storage could not be started`,
+          t`Repair artifact storage could not be started`,
           'danger',
         ),
       );
@@ -565,11 +562,11 @@ export class TaskListView extends Component<RouteProps, IState> {
   private purge(task: { finished_before: string; states: string[] }) {
     TaskPurgeAPI.create(task)
       .then(() => {
-        this.addAlert(t`Purge Tasks started`, 'success');
+        this.addAlert(t`Purge tasks started`, 'success');
         this.queryTasks();
       })
       .catch(() =>
-        this.addAlert(t`Purge Tasks could not be started`, 'danger'),
+        this.addAlert(t`Purge tasks could not be started`, 'danger'),
       );
   }
 

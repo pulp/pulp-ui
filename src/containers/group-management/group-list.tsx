@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import {
   Button,
   Toolbar,
@@ -418,7 +417,7 @@ class GroupList extends Component<RouteProps, IState> {
             });
           }}
         >
-          <Trans>Delete</Trans>
+          {t`Delete`}
         </DropdownItem>
       ),
     ];
@@ -457,11 +456,7 @@ class GroupList extends Component<RouteProps, IState> {
             ...this.state.alerts,
             {
               variant: 'success',
-              title: (
-                <Trans>
-                  Group &quot;{group.name}&quot; has been successfully deleted.
-                </Trans>
-              ),
+              title: t`Group "${group.name}" has been successfully deleted.`,
             },
           ],
         });

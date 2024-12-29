@@ -57,7 +57,7 @@ const AnsibleRepositoryList = ListPage<AnsibleRepositoryType>({
     },
     {
       id: 'pulp_label_select',
-      title: t`Pulp Label`,
+      title: t`Pulp label`,
     },
     {
       id: 'remote',

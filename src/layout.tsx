@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import {
   Masthead,
   MastheadBrand,
@@ -46,7 +45,7 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
 
     userDropdownItems = [
       <DropdownItem isDisabled key='username'>
-        <Trans>Username: {userName}</Trans>
+        {t`Username: ${userName}`}
       </DropdownItem>,
       <DropdownSeparator key='separator' />,
       <DropdownItem

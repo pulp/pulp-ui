@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import { ActionGroup, Button, Form } from '@patternfly/react-core';
 import { Component } from 'react';
 import { Navigate } from 'react-router';
@@ -266,12 +265,7 @@ class EditNamespace extends Component<RouteProps, IState> {
             () =>
               (this.context as IAppContextType).queueAlert({
                 variant: 'success',
-                title: (
-                  <Trans>
-                    Saved changes to namespace &quot;
-                    {this.state.namespace.name}&quot;.
-                  </Trans>
-                ),
+                title: t`Saved changes to namespace "${this.state.namespace.name}".`,
               }),
           );
         })

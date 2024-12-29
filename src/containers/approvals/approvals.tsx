@@ -216,7 +216,7 @@ class Approvals extends Component<RouteProps, IState> {
                                 },
                                 {
                                   id: 'pipeline=staging',
-                                  title: t`Needs Review`,
+                                  title: t`Needs review`,
                                 },
                                 {
                                   id: 'pipeline=approved',
@@ -252,7 +252,7 @@ class Approvals extends Component<RouteProps, IState> {
                     repository_label: {
                       'pipeline=approved': t`Approved`,
                       'pipeline=rejected': t`Rejected`,
-                      'pipeline=staging': t`Needs Review`,
+                      'pipeline=staging': t`Needs review`,
                     },
                   }}
                   niceNames={{

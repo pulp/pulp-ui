@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import { Flex, FlexItem, Label } from '@patternfly/react-core';
 import { Td } from '@patternfly/react-table';
 import { type FunctionComponent, useEffect, useState } from 'react';
@@ -132,9 +131,7 @@ export const SelectRoles: FunctionComponent<SelectRolesProps> = ({
               <FlexItem>
                 <Flex>
                   <FlexItem>
-                    <strong>
-                      <Trans>Selected roles</Trans>
-                    </strong>
+                    <strong>{t`Selected roles`}</strong>
                   </FlexItem>
 
                   <FlexItem flex={{ default: 'flex_1' }}>

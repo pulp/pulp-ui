@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import {
   Button,
   Label,
@@ -178,7 +177,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
         }
         variant='primary'
       >
-        <Trans>Add container</Trans>
+        {t`Add container`}
       </Button>
     );
 
@@ -467,17 +466,9 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
                 itemToEdit: null,
                 alerts: alerts.concat({
                   variant: 'success',
-                  title: isNew ? (
-                    <Trans>
-                      Container &quot;{form.name}&quot; has been added
-                      successfully.
-                    </Trans>
-                  ) : (
-                    <Trans>
-                      Saved changes to container &quot;{form.name}
-                      &quot;.
-                    </Trans>
-                  ),
+                  title: isNew
+                    ? t`Container "${form.name}" has been added successfully.`
+                    : t`Saved changes to container "${form.name}".`,
                 }),
               },
               () => this.queryEnvironments(),

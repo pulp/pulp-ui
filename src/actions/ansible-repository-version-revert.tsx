@@ -1,5 +1,4 @@
 import { msg, t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import { Button, Modal } from '@patternfly/react-core';
 import { useState } from 'react';
 import { AnsibleRepositoryAPI } from 'src/api';
@@ -46,9 +45,7 @@ const RevertModal = ({
       variant={'small'}
       data-cy='modal_checkbox'
     >
-      <Trans>
-        Are you sure you want to revert this repository to the version below?
-      </Trans>
+      {t`Are you sure you want to revert this repository to the version below?`}
       <br />
       <b>{version}</b>
     </Modal>

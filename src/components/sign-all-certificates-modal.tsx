@@ -60,13 +60,9 @@ export const SignAllCertificatesModal: FunctionComponent<IProps> = ({
         </GridItem>
         <GridItem span={12}>
           <Split hasGutter>
-            <SplitItem>
-              <Trans>Signed version(s)</Trans>
-            </SplitItem>
+            <SplitItem>{t`Signed version(s)`}</SplitItem>
             <SplitItem />
-            <SplitItem>
-              <Trans>Unsigned version(s)</Trans>
-            </SplitItem>
+            <SplitItem>{t`Unsigned version(s)`}</SplitItem>
           </Split>
         </GridItem>
         <GridItem span={12}>

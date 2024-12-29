@@ -284,7 +284,7 @@ export class AccessTab extends Component<IProps> {
             })
           }
         >
-          <Trans>Remove user</Trans>
+          {t`Remove user`}
         </DropdownItem>
       ),
     ];
@@ -323,7 +323,7 @@ export class AccessTab extends Component<IProps> {
             })
           }
         >
-          <Trans>Remove group</Trans>
+          {t`Remove group`}
         </DropdownItem>
       ),
     ];
@@ -384,8 +384,8 @@ export class AccessTab extends Component<IProps> {
         {showRoleSelectWizard ? this.renderRoleSelectWizard() : null}
 
         <h3 className='pf-v5-c-title'>
-          {user ? <Trans>User {user.username}</Trans> : null}
-          {group ? <Trans>Group {group.name}</Trans> : null}
+          {user ? t`User ${user.username}` : null}
+          {group ? t`Group ${group.name}` : null}
         </h3>
 
         {canEditOwners && (

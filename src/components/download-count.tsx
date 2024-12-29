@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import DownloadIcon from '@patternfly/react-icons/dist/esm/icons/download-icon';
 import { Tooltip } from 'src/components';
 import { language } from 'src/l10n';
@@ -21,7 +20,7 @@ export const DownloadCount = ({ item }: IProps) => {
     <Tooltip
       content={t`Download count is the sum of all versions' download counts`}
     >
-      <DownloadIcon /> <Trans>{downloadCount} Downloads</Trans>
+      <DownloadIcon /> {t`${downloadCount} downloads`}
     </Tooltip>
   );
 };

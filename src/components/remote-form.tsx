@@ -887,7 +887,7 @@ export class RemoteForm extends Component<IProps, IState> {
 
             <FormGroup
               fieldId={'rate_limit'}
-              label={t`Rate Limit`}
+              label={t`Rate limit`}
               labelIcon={
                 <HelpButton
                   content={t`Limits total download rate in requests per second.`}

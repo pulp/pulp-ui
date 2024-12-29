@@ -32,15 +32,11 @@ export const DeleteGroupModal = ({
     <p>&nbsp;</p>
     <div>
       {users && count > 10 && (
-        <p>
-          <Trans>Deleting this group will affect {count} users.</Trans>
-        </p>
+        <p>{t`Deleting this group will affect ${count} users.`}</p>
       )}
       {users && count > 0 && count <= 10 && (
         <>
-          <p>
-            <Trans>These users will lose access to the group content:</Trans>
-          </p>
+          <p>{t`These users will lose access to the group content:`}</p>
           <List>
             {users.map((u) => (
               <ListItem key={u.username}>
@@ -68,7 +64,7 @@ export const DeleteGroupModal = ({
           variant='warning'
           isInline
         >
-          <Trans>You don&apos;t have permission to display users.</Trans>
+          {t`You don't have permission to display users.`}
         </Alert>
       )}
     </div>

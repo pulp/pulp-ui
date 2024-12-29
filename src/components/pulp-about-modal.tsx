@@ -58,7 +58,7 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
 
   return (
     <AboutModal
-      brandImageAlt={t`Pulp Logo`}
+      brandImageAlt={t`Pulp logo`}
       brandImageSrc={PulpLogo}
       isOpen={isOpen}
       onClose={onClose}
@@ -66,7 +66,7 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
     >
       <TextContent>
         <TextList component={TextListVariants.dl}>
-          <Label>{t`Pulp Core Version`}</Label>
+          <Label>{t`Pulp core version`}</Label>
           <Value>
             {pulp_core_version?.includes('.dev') ? (
               pulp_core_version
@@ -79,7 +79,7 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
             )}
           </Value>
 
-          <Label>{t`UI Version`}</Label>
+          <Label>{t`UI version`}</Label>
           <Value>
             {ui_version ? (
               <>
@@ -124,7 +124,7 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
             </MaybeLink>
           </Value>
 
-          <Label>{t`User Groups`}</Label>
+          <Label>{t`User groups`}</Label>
           <Value>
             {user.groups.map(({ id: group, name }, index) => (
               <>

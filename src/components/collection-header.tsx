@@ -665,7 +665,7 @@ export const CollectionHeader = ({
     const errorAlert = (status: string | number = 500): AlertType => ({
       variant: 'danger',
       title: t`Failed to sign all versions in the collection.`,
-      description: t`API Error: ${status}`,
+      description: t`API error: ${status}`,
     });
 
     addAlert({
@@ -703,7 +703,7 @@ export const CollectionHeader = ({
     const errorAlert = (status: string | number = 500): AlertType => ({
       variant: 'danger',
       title: t`Failed to sign the version.`,
-      description: t`API Error: ${status}`,
+      description: t`API error: ${status}`,
     });
 
     addAlert({
@@ -811,23 +811,13 @@ export const CollectionHeader = ({
 
           addAlert({
             variant: 'success',
-            title: (
-              <Trans>
-                Collection &quot;{name} v{collectionVersion}&quot; has been
-                successfully deleted.
-              </Trans>
-            ),
+            title: t`Collection "${name} v${collectionVersion}" has been successfully deleted.`,
           });
         } else {
           // last version in collection => collection will be deleted => redirect
           queueAlert({
             variant: 'success',
-            title: (
-              <Trans>
-                Collection &quot;{name} v{collectionVersion}&quot; has been
-                successfully deleted.
-              </Trans>
-            ),
+            title: t`Collection "${name} v${collectionVersion}" has been successfully deleted.`,
           });
           setRedirect(
             formatPath(Paths.ansible.namespace.detail, {
@@ -846,7 +836,7 @@ export const CollectionHeader = ({
         if (status === 400) {
           const dependencies = (
             <>
-              <Trans>Dependent collections</Trans>
+              {t`Dependent collections`}
               <List
                 style={{
                   marginTop: 'var(--pf-v5-global--spacer--sm)',

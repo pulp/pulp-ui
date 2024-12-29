@@ -252,7 +252,7 @@ export class ImportModal extends Component<IProps, IState> {
             <Radio
               id='radio-staging'
               isChecked={onlyStaging}
-              label={t`Staging Repos`}
+              label={t`Staging repos`}
               name='radio-staging'
               onChange={() =>
                 this.setState({ onlyStaging: true }, () => this.loadAllRepos())
@@ -261,7 +261,7 @@ export class ImportModal extends Component<IProps, IState> {
             <Radio
               id='radio-all'
               isChecked={!onlyStaging}
-              label={t`All Repos`}
+              label={t`All repos`}
               name='radio-all'
               onChange={() =>
                 this.setState({ onlyStaging: false }, () => this.loadAllRepos())

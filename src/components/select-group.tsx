@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import { Flex, FlexItem, Label } from '@patternfly/react-core';
 import { Td } from '@patternfly/react-table';
 import { type FunctionComponent, useEffect, useState } from 'react';
@@ -114,9 +113,7 @@ export const SelectGroup: FunctionComponent<IProps> = ({
               <FlexItem>
                 <Flex>
                   <FlexItem>
-                    <strong>
-                      <Trans>Selected group</Trans>
-                    </strong>
+                    <strong>{t`Selected group`}</strong>
                   </FlexItem>
 
                   <FlexItem flex={{ default: 'flex_1' }}>

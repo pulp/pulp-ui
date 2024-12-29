@@ -86,14 +86,14 @@ function standaloneMenu() {
       ],
     ),
     menuSection(
-      'Pulp Container',
+      'Pulp container',
       { condition: and(loggedIn, hasPlugin('container')) },
       [
         menuItem(t`Containers`, {
           url: formatPath(Paths.container.repository.list),
           condition: BROKEN,
         }),
-        menuItem(t`Remote Registries`, {
+        menuItem(t`Remote registries`, {
           url: formatPath(Paths.container.remote.list),
           condition: BROKEN,
         }),
@@ -104,16 +104,16 @@ function standaloneMenu() {
         url: formatPath(Paths.rpm.package.list),
       }),
     ]),
-    menuItem(t`Task Management`, {
+    menuItem(t`Task management`, {
       url: formatPath(Paths.core.task.list),
       alternativeUrls: [altPath(Paths.core.task.detail)],
       condition: loggedIn,
     }),
-    menuItem(t`Signature Keys`, {
+    menuItem(t`Signature keys`, {
       url: formatPath(Paths.core.signature_keys),
       condition: loggedIn,
     }),
-    menuSection(t`User Access`, { condition: loggedIn }, [
+    menuSection(t`User access`, { condition: loggedIn }, [
       menuItem(t`Users`, {
         url: formatPath(Paths.core.user.list),
       }),

@@ -143,7 +143,7 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
           })
         }
       >
-        <Trans>Add remote registry</Trans>
+        {t`Add remote registry`}
       </Button>
     ) : null;
 
@@ -370,7 +370,7 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
           variant='secondary'
           onClick={() => this.syncRegistry(item)}
         >
-          <Trans>Sync from registry</Trans>
+          {t`Sync from registry`}
         </Button>
       ),
     ];
@@ -389,7 +389,7 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
             })
           }
         >
-          <Trans>Edit</Trans>
+          {t`Edit`}
         </DropdownItem>
       ),
       hasPermission('galaxy.delete_containerregistryremote') && (
@@ -402,7 +402,7 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
             })
           }
         >
-          <Trans>Delete</Trans>
+          {t`Delete`}
         </DropdownItem>
       ),
       <Tooltip
@@ -417,7 +417,7 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
           onClick={() => this.indexRegistry(item)}
           isDisabled={!item.is_indexable}
         >
-          <Trans>Index containers</Trans>
+          {t`Index containers`}
         </DropdownItem>
       </Tooltip>,
     ].filter(Boolean);
@@ -469,9 +469,7 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
     ExecutionEnvironmentRegistryAPI.delete(id)
       .then(() =>
         this.addAlert(
-          <Trans>
-            Remote registry &quot;{name}&quot; has been successfully deleted.
-          </Trans>,
+          t`Remote registry "${name}" has been successfully deleted.`,
           'success',
         ),
       )

@@ -425,7 +425,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
           >
             <Text style={{ paddingBottom: 'var(--pf-v5-global--spacer--md)' }}>
               <Trans>
-                Deleting <b>{namespace.name}</b> and its data will be lost.
+                Deleting namespace <b>{namespace.name}</b>.
               </Trans>
             </Text>
             <Checkbox
@@ -700,7 +700,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
           })
           .catch(() => {
             this.addAlert({
-              title: t`API Error: Failed to set deprecation.`,
+              title: t`API error: Failed to set deprecation.`,
               variant: 'warning',
             });
           });
@@ -720,7 +720,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
     const errorAlert = (status: string | number = 500): AlertType => ({
       variant: 'danger',
       title: t`Failed to sign all collections.`,
-      description: t`API Error: ${status}`,
+      description: t`API error: ${status}`,
     });
 
     SignCollectionAPI.sign({
@@ -974,11 +974,7 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
           });
           queueAlert({
             variant: 'success',
-            title: (
-              <Trans>
-                Namespace &quot;{name}&quot; has been successfully deleted.
-              </Trans>
-            ),
+            title: t`Namespace "${name}" has been successfully deleted.`,
           });
         })
         .catch((e) => {

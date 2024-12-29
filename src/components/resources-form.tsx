@@ -26,7 +26,7 @@ export const ResourcesForm = ({ namespace, updateNamespace }: IProps) => (
   <MarkdownEditor
     text={namespace.resources}
     placeholder={placeholder}
-    helperText={t`You can can customize the Resources tab on your profile by entering custom markdown here.`}
+    helperText={t`You can can customize the Resources tab on your profile by entering custom Markdown here.`}
     updateText={(resources) => updateNamespace({ ...namespace, resources })}
     editing
   />
