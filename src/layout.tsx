@@ -31,19 +31,41 @@ import { StandaloneMenu } from './menu';
 import { Paths, formatPath } from './paths';
 import { useUserContext } from './user-context';
 
-export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
-  const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
-  const { credentials, clearCredentials } = useUserContext();
+const DocsDropdown = ({ showAbout }: { showAbout: () => void }) => (
+  <StatefulDropdown
+    ariaLabel={t`Docs dropdown`}
+    data-cy='docs-dropdown'
+    defaultText={<QuestionCircleIcon />}
+    items={[
+      <DropdownItem
+        key='documentation'
+        component={
+          <ExternalLink
+            href={UI_DOCS_URL}
+            variant='menu'
+          >{t`Documentation`}</ExternalLink>
+        }
+      />,
+      <DropdownItem key='about' onClick={() => showAbout()}>
+        {t`About`}
+      </DropdownItem>,
+    ]}
+    toggleType='icon'
+  />
+);
 
-  let aboutModal = null;
-  let docsDropdownItems = [];
-  let userDropdownItems = [];
-  let username: string;
-
-  if (credentials) {
-    username = credentials.username;
-
-    userDropdownItems = [
+const UserDropdown = ({
+  username,
+  logout,
+}: {
+  username: string;
+  logout: () => void;
+}) => (
+  <StatefulDropdown
+    ariaLabel={t`User dropdown`}
+    data-cy='user-dropdown'
+    defaultText={username}
+    items={[
       <DropdownItem isDisabled key='username'>
         {t`Username: ${username}`}
       </DropdownItem>,
@@ -54,30 +76,23 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
           <Link to={formatPath(Paths.core.user.profile)}>{t`My profile`}</Link>
         }
       />,
-
-      <DropdownItem
-        key='logout'
-        aria-label={'logout'}
-        onClick={() => clearCredentials()}
-      >
+      <DropdownItem key='logout' aria-label={'logout'} onClick={() => logout()}>
         {t`Logout`}
       </DropdownItem>,
-    ];
+    ]}
+    toggleType='dropdown'
+  />
+);
 
-    docsDropdownItems = [
-      <DropdownItem
-        key='documentation'
-        component={
-          <ExternalLink
-            href={UI_DOCS_URL}
-            variant='menu'
-          >{t`Documentation`}</ExternalLink>
-        }
-      />,
-      <DropdownItem key='about' onClick={() => setAboutModalVisible(true)}>
-        {t`About`}
-      </DropdownItem>,
-    ].filter(Boolean);
+export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
+  const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
+  const { credentials, clearCredentials } = useUserContext();
+
+  let aboutModal = null;
+  let username: string;
+
+  if (credentials) {
+    username = credentials.username;
 
     aboutModal = (
       <PulpAboutModal
@@ -113,25 +128,11 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
         <span style={{ flexGrow: 1 }} />
         <DarkmodeSwitcher />
         <LanguageSwitcher />
-        {credentials ? (
-          <StatefulDropdown
-            ariaLabel={t`Docs dropdown`}
-            data-cy='docs-dropdown'
-            defaultText={<QuestionCircleIcon />}
-            items={docsDropdownItems}
-            toggleType='icon'
-          />
-        ) : null}
+        <DocsDropdown showAbout={() => setAboutModalVisible(true)} />
         {!credentials ? (
           <LoginLink />
         ) : (
-          <StatefulDropdown
-            ariaLabel={t`User dropdown`}
-            data-cy='user-dropdown'
-            defaultText={username}
-            items={userDropdownItems}
-            toggleType='dropdown'
-          />
+          <UserDropdown username={username} logout={() => clearCredentials()} />
         )}
       </MastheadContent>
     </Masthead>
