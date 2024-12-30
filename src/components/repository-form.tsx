@@ -32,7 +32,7 @@ interface IProps {
   updateRepository: (r) => void;
 }
 
-export const AnsibleRepositoryForm = ({
+export const RepositoryForm = ({
   allowEditName,
   errorMessages,
   onCancel,

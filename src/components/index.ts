@@ -1,6 +1,5 @@
 export { AccessTab } from './access-tab';
 export { AlertList, type AlertType, closeAlert } from './alert-list';
-export { AnsibleRepositoryForm } from './ansible-repository-form';
 export { AppliedFilters } from './applied-filters';
 export { ApprovalRow } from './approval-row';
 export { ApproveModal } from './approve-modal';
@@ -115,6 +114,7 @@ export { PurgeTaskModal } from './purge-task-modal';
 export { RemoteForm } from './remote-form';
 export { RepairTaskModal } from './repair-task-modal';
 export { RepositoryBadge } from './repository-badge';
+export { RepositoryForm } from './repository-form';
 export { ResourcesForm } from './resources-form';
 export { RoleForm } from './role-form';
 export { RoleHeader } from './role-header';
