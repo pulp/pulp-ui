@@ -1,6 +1,6 @@
 import { msg, t } from '@lingui/core/macro';
 import { AnsibleRemoteAPI } from 'src/api';
-import { DeleteAnsibleRemoteModal } from 'src/components';
+import { DeleteRemoteModal } from 'src/components';
 import {
   handleHttpError,
   parsePulpIDFromURL,
@@ -13,7 +13,7 @@ export const ansibleRemoteDeleteAction = Action({
   title: msg`Delete`,
   modal: ({ addAlert, listQuery, setState, state }) =>
     state.deleteModalOpen ? (
-      <DeleteAnsibleRemoteModal
+      <DeleteRemoteModal
         closeAction={() => setState({ deleteModalOpen: null })}
         deleteAction={() =>
           deleteRemote(state.deleteModalOpen, { addAlert, setState, listQuery })
