@@ -41,14 +41,7 @@ export const DistributionsTab = ({
   };
 
   const cliConfig = (base_path) =>
-    [
-      '[galaxy]',
-      `server_list = ${base_path}`,
-      '',
-      `[galaxy_server.${base_path}]`,
-      `url=${getRepoURL(base_path)}`,
-      'token=<put your token here>',
-    ].join('\n');
+    `pulp file remote create --name "${item.name}" --url "${getRepoURL(base_path)}"`;
 
   const renderTableRow = (
     item: Distribution,
@@ -65,7 +58,7 @@ export const DistributionsTab = ({
           <DateComponent date={pulp_created} />
         </Td>
         <Td>
-          <ClipboardCopy isCode isReadOnly variant={'expansion'} key={index}>
+          <ClipboardCopy isCode isReadOnly variant={'inline-compact'} key={index}>
             {cliConfig(base_path)}
           </ClipboardCopy>
         </Td>
