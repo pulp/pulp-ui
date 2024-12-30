@@ -81,6 +81,5 @@ export { SignContainersAPI } from './sign-containers';
 export { SigningServiceAPI, type SigningServiceType } from './signing-service';
 export { TagAPI } from './tag';
 export { TaskAPI } from './task';
-export { TaskManagementAPI } from './task-management';
 export { TaskPurgeAPI } from './task-purge';
 export { UserAPI } from './user';

@@ -14,7 +14,7 @@ import CubesIcon from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
 import { capitalize } from 'lodash';
 import { Component, Fragment } from 'react';
 import { Link } from 'react-router';
-import { GenericPulpAPI, TaskManagementAPI, type TaskType } from 'src/api';
+import { GenericPulpAPI, TaskAPI, type TaskType } from 'src/api';
 import {
   AlertList,
   type AlertType,
@@ -385,7 +385,7 @@ class TaskDetail extends Component<RouteProps, IState> {
 
   private cancelTask() {
     const { task, taskName } = this.state;
-    TaskManagementAPI.patch(parsePulpIDFromURL(task.pulp_href), {
+    TaskAPI.patch(parsePulpIDFromURL(task.pulp_href), {
       state: 'canceled',
     })
       .then(() => {
@@ -436,7 +436,7 @@ class TaskDetail extends Component<RouteProps, IState> {
     }
 
     const taskId = this.props.routeParams.task;
-    return TaskManagementAPI.get(taskId)
+    return TaskAPI.get(taskId)
       .then((result) => {
         const allRelatedTasks = [];
         let parentTask = null;
@@ -450,7 +450,7 @@ class TaskDetail extends Component<RouteProps, IState> {
         if (result.data.parent_task) {
           const parentTaskId = parsePulpIDFromURL(result.data.parent_task);
           allRelatedTasks.push(
-            TaskManagementAPI.get(parentTaskId)
+            TaskAPI.get(parentTaskId)
               .then((result) => {
                 parentTask = result.data;
               })
@@ -462,7 +462,7 @@ class TaskDetail extends Component<RouteProps, IState> {
           result.data.child_tasks.forEach((child) => {
             const childTaskId = parsePulpIDFromURL(child);
             allRelatedTasks.push(
-              TaskManagementAPI.get(childTaskId)
+              TaskAPI.get(childTaskId)
                 .then((result) => {
                   childTasks.push(result.data);
                 })

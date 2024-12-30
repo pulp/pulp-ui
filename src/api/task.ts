@@ -2,7 +2,10 @@ import { PulpAPI } from './pulp';
 
 const base = new PulpAPI();
 
-// FIXME HubAPI
 export const TaskAPI = {
-  get: (id) => base.http.get(`v3/tasks/${id}/`),
+  get: (id) => base.http.get(`tasks/${id}/`),
+
+  list: (params?) => base.list(`tasks/`, params),
+
+  patch: (id, data) => base.http.patch(`tasks/${id}/`, data),
 };
