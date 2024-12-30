@@ -1,11 +1,11 @@
 const uiPrefix = Cypress.env('uiPrefix');
 
-const userName = 'testUser';
+const username = 'testUser';
 const userPassword = 'I am a complicated passw0rd';
 
 describe('RBAC test for user without permissions', () => {
   beforeEach(() => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
   });
 
   it("shouldn't display create, edit and delete buttons in namespace when user doesn't have permission", () => {
@@ -120,7 +120,7 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should display create, edit and delete buttons in namespace when user has permissions', () => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
 
     cy.visit(`${uiPrefix}namespaces`);
 
@@ -136,7 +136,7 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should let delete collection and modify ansible repo content when user has permissions', () => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
 
     cy.visit(`${uiPrefix}repo/published/testspace2/testcollection2`);
     cy.contains('Go to documentation');
@@ -147,7 +147,7 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should let view, add, change and delete users when user has permissions', () => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
 
     // can View user
     cy.menuPresent('User Access > Users');
@@ -169,7 +169,7 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should let view, add, change and delete groups when user has permissions', () => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
 
     // can View group
     cy.menuPresent('User Access > Groups');
@@ -187,7 +187,7 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should let create, edit or delete container when user has permission', () => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
 
     cy.visit(`${uiPrefix}containers`);
 
@@ -212,7 +212,7 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should let add, delete and sync remote registries when user has permission', () => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
 
     // can Add remote registry
     cy.visit(`${uiPrefix}registries`);
@@ -231,7 +231,7 @@ describe('RBAC test for user with permissions', () => {
   });
 
   it('should let view task when user has permission', () => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
 
     cy.visit(`${uiPrefix}tasks`);
     cy.get('[aria-label="Task list"] tr td a').first().click();

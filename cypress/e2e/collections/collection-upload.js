@@ -2,11 +2,11 @@ const apiPrefix = Cypress.env('apiPrefix');
 const uiPrefix = Cypress.env('uiPrefix');
 
 describe('Collection Upload Tests', () => {
-  const userName = 'testUser';
+  const username = 'testUser';
   const userPassword = 'I am a complicated passw0rd';
 
   it('should not upload new collection version in collection list when user does not have permissions', () => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
     cy.visit(
       `${uiPrefix}collections?page_size=10&view_type=list&keywords=testcollection`,
     );
@@ -15,7 +15,7 @@ describe('Collection Upload Tests', () => {
   });
 
   it('should not upload new collection version in collection list/cards when user does not have permissions', () => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
     cy.visit(
       `${uiPrefix}collections?page_size=10&view_type=card&keywords=testcollection`,
     );
@@ -24,7 +24,7 @@ describe('Collection Upload Tests', () => {
   });
 
   it('should not upload new collection version in collection detail when user does not have permissions', () => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
     cy.visit(`${uiPrefix}repo/published/testspace/testcollection`);
     cy.contains('testcollection');
     cy.openHeaderKebab();
@@ -59,7 +59,7 @@ describe('Collection Upload Tests', () => {
   });
 
   it('user should not be able to upload new collection without permissions', () => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
     cy.intercept(
       'GET',
       `${apiPrefix}v3/plugin/ansible/search/collection-versions/?namespace=*`,
@@ -98,7 +98,7 @@ describe('Collection Upload Tests', () => {
   });
 
   it('should not upload new collection version when user does not have permissions', () => {
-    cy.login(userName, userPassword);
+    cy.login(username, userPassword);
     cy.visit(`${uiPrefix}namespaces/testspace`);
 
     cy.get('[data-cy="CollectionList-name"]').contains('testcollection');
