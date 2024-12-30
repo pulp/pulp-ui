@@ -453,7 +453,7 @@ export class RemoteForm extends Component<IProps, IState> {
                     'requirements_file' in errorMessages ? 'error' : 'default'
                   }
                   isRequired={requiredFields.includes('requirements_file')}
-                  id='yaml'
+                  id='requirements_file'
                   type='text'
                   filename={filename('requirements_file')}
                   value={this.props.remote.requirements_file || ''}
@@ -741,7 +741,7 @@ export class RemoteForm extends Component<IProps, IState> {
                     'client_key' in errorMessages ? 'error' : 'default'
                   }
                   isRequired={requiredFields.includes('client_key')}
-                  id='yaml'
+                  id='client_key'
                   type='text'
                   filename={filename('client_key')}
                   value={this.props.remote.client_key || ''}
@@ -773,7 +773,7 @@ export class RemoteForm extends Component<IProps, IState> {
                       'client_cert' in errorMessages ? 'error' : 'default'
                     }
                     isRequired={requiredFields.includes('client_cert')}
-                    id='yaml'
+                    id='client_cert'
                     type='text'
                     filename={filename('client_cert')}
                     value={this.props.remote.client_cert || ''}
@@ -820,7 +820,7 @@ export class RemoteForm extends Component<IProps, IState> {
                   <FileUpload
                     validated={'ca_cert' in errorMessages ? 'error' : 'default'}
                     isRequired={requiredFields.includes('ca_cert')}
-                    id='yaml'
+                    id='ca_cart'
                     type='text'
                     filename={filename('ca_cert')}
                     value={this.props.remote.ca_cert || ''}
