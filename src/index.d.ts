@@ -5,7 +5,5 @@ declare module '*.png';
 declare module '*.svg';
 
 // Declare configuration globals here so that TypeScript compiles
-/* eslint-disable no-var */
-declare var APPLICATION_NAME;
+/* eslint-disable-next-line no-var */
 declare var UI_BUILD_INFO;
-declare var UI_DOCS_URL;

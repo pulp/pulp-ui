@@ -28,9 +28,7 @@ export const BaseHeader = ({
   subTitle,
 }: IProps) => {
   useEffect(() => {
-    document.title = title
-      ? `${APPLICATION_NAME} - ${title}`
-      : APPLICATION_NAME;
+    document.title = title ? `Pulp UI - ${title}` : 'Pulp UI';
   }, [title]);
 
   return (

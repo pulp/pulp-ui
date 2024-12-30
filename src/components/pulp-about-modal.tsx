@@ -62,7 +62,7 @@ export const PulpAboutModal = ({ isOpen, onClose, username }: IProps) => {
       brandImageSrc={PulpLogo}
       isOpen={isOpen}
       onClose={onClose}
-      productName={APPLICATION_NAME}
+      productName='Pulp UI'
     >
       <TextContent>
         <TextList component={TextListVariants.dl}>

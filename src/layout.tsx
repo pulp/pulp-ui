@@ -41,7 +41,7 @@ const DocsDropdown = ({ showAbout }: { showAbout: () => void }) => (
         key='documentation'
         component={
           <ExternalLink
-            href={UI_DOCS_URL}
+            href='https://docs.pulpproject.org/'
             variant='menu'
           >{t`Documentation`}</ExternalLink>
         }
@@ -113,7 +113,7 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
       <MastheadMain>
         <MastheadBrand>
           <Link to={formatPath(Paths.core.status)}>
-            <SmallLogo alt={APPLICATION_NAME} />
+            <SmallLogo alt='Pulp UI' />
           </Link>
           <span
             style={{
@@ -129,11 +129,10 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
         <DarkmodeSwitcher />
         <LanguageSwitcher />
         <DocsDropdown showAbout={() => setAboutModalVisible(true)} />
-        {!credentials ? (
-          <LoginLink />
-        ) : (
+        {credentials ? (
           <UserDropdown username={username} logout={() => clearCredentials()} />
-        )}
+        ) : null}
+        {!credentials ? <LoginLink /> : null}
       </MastheadContent>
     </Masthead>
   );

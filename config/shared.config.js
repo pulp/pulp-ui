@@ -22,20 +22,12 @@ const buildInfo = {
   version: require('../package.json').version,
 };
 
-const appName = 'Pulp UI';
-const docsURL = 'https://docs.pulpproject.org/';
-
 // Default user defined settings
 const defaultConfigs = [
-  // scope = webpack | browser | both
-  // webpack: will only be available to webpack config, via `customConfigs`
   // browser: will only be available in the browser, as DefinePlugin constants
-  // both: means both
-  { name: 'APPLICATION_NAME', default: appName, scope: 'both' },
-
   { name: 'UI_BUILD_INFO', default: buildInfo, scope: 'browser' },
-  { name: 'UI_DOCS_URL', default: docsURL, scope: 'browser' },
 
+  // webpack: will only be available to webpack config, via `customConfigs`
   { name: 'DEV_PORT', scope: 'webpack' },
   { name: 'DEV_HTTPS', scope: 'webpack' },
   { name: 'DEV_PROXY', scope: 'webpack' },
@@ -47,13 +39,13 @@ module.exports = (inputConfigs) => {
   const globals = {};
 
   defaultConfigs
-    .filter(({ scope }) => ['both', 'webpack'].includes(scope))
+    .filter(({ scope }) => ['webpack'].includes(scope))
     .forEach((item) => {
       customConfigs[item.name] = inputConfigs[item.name] ?? item.default;
     });
 
   defaultConfigs
-    .filter(({ scope }) => ['both', 'browser'].includes(scope))
+    .filter(({ scope }) => ['browser'].includes(scope))
     .forEach((item) => {
       globals[item.name] = JSON.stringify(
         inputConfigs[item.name] ?? item.default,
@@ -142,7 +134,6 @@ module.exports = (inputConfigs) => {
       new ForkTsCheckerWebpackPlugin(),
       // inject src/index.html
       new HtmlWebpackPlugin({
-        applicationName: customConfigs.APPLICATION_NAME,
         favicon: 'static/images/favicon.ico',
         template: resolve(__dirname, '../src/index.html'),
       }),

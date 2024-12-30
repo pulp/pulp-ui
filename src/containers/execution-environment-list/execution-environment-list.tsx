@@ -154,7 +154,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
         content={
           <>
             {instructions}
-            <ExternalLink href={UI_DOCS_URL}>{t`Documentation`}</ExternalLink>
+            <ExternalLink href='https://docs.pulpproject.org/'>{t`Documentation`}</ExternalLink>
           </>
         }
         hasAutoWidth

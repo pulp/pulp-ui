@@ -38,7 +38,7 @@ const AboutProject = (_props: RouteProps) => (
             style={{ gridTemplateColumns: '32.5% 32.5% 32.5%' }}
           >
             <Card>
-              <CardTitle>{APPLICATION_NAME}</CardTitle>
+              <CardTitle>Pulp UI</CardTitle>
               <CardBody>{t`This project is an attempt to up-cycle the Ansible Galaxy UI codebase. The first version contains mostly saved code with minor fixes. In the future more types of content will be added. We welcome kindly any contributions.`}</CardBody>
               <CardFooter>
                 {' '}
