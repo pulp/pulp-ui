@@ -1,7 +1,7 @@
 import { msg, t } from '@lingui/core/macro';
 import { Td, Tr } from '@patternfly/react-table';
 import { RPMPackageAPI } from 'src/api';
-import { LazyRPMRepository, ListItemActions, ListPage } from 'src/components';
+import { LazyRepositories, ListItemActions, ListPage } from 'src/components';
 
 interface RPMPackage {
   name: string;
@@ -42,7 +42,7 @@ const RPMPackageList = ListPage<RPMPackage>({
         <Td>{version}</Td>
         <Td>{arch}</Td>
         <Td>
-          <LazyRPMRepository content_href={pulp_href} />
+          <LazyRepositories plugin='rpm' content_href={pulp_href} />
         </Td>
         <ListItemActions kebabItems={kebabItems} />
       </Tr>

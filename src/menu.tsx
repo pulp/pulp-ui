@@ -99,6 +99,14 @@ function standaloneMenu() {
         }),
       ],
     ),
+    menuSection('Pulp file', { condition: and(loggedIn, hasPlugin('file')) }, [
+      menuItem(t`Repositories`, {
+        url: formatPath(Paths.file.repository.list),
+      }),
+      menuItem(t`Remotes`, {
+        url: formatPath(Paths.file.remote.list),
+      }),
+    ]),
     menuSection('Pulp RPM', { condition: and(loggedIn, hasPlugin('rpm')) }, [
       menuItem(t`RPMs`, {
         url: formatPath(Paths.rpm.package.list),

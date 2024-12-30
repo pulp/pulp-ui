@@ -1,534 +1,292 @@
 import { t } from '@lingui/core/macro';
 import {
+  ActionGroup,
   Button,
+  Checkbox,
   Form,
   FormGroup,
-  InputGroup,
-  InputGroupItem,
-  Label,
-  Modal,
-  TextArea,
   TextInput,
 } from '@patternfly/react-core';
-import TagIcon from '@patternfly/react-icons/dist/esm/icons/tag-icon';
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  ContainerDistributionAPI,
-  ExecutionEnvironmentRegistryAPI,
-  ExecutionEnvironmentRemoteAPI,
+  AnsibleRemoteAPI,
+  type AnsibleRepositoryType,
+  FileRemoteAPI,
 } from 'src/api';
 import {
-  AlertList,
-  type AlertType,
   FormFieldHelper,
   HelpButton,
-  LabelGroup,
+  LazyDistributions,
+  PulpLabels,
   Spinner,
   Typeahead,
-  closeAlert,
 } from 'src/components';
 import {
   type ErrorMessagesType,
-  alertErrorsWithoutFields,
-  isFieldValid,
-  isFormValid,
-  jsxErrorMessage,
-  mapErrorMessages,
+  errorMessage,
+  pluginRepositoryBasePath,
 } from 'src/utilities';
 
 interface IProps {
-  name: string;
-  namespace: string;
-  description: string;
-  onSave: (Promise, state?: IState) => void;
+  allowEditName: boolean;
+  errorMessages: ErrorMessagesType;
   onCancel: () => void;
-  permissions: string[];
-  distributionPulpId: string;
-
-  // remote only
-  isNew?: boolean;
-  isRemote?: boolean;
-  excludeTags?: string[];
-  includeTags?: string[];
-  registry?: string; // pk
-  upstreamName?: string;
-  remoteId?: string;
-  addAlert?: (variant, title, description?) => void;
+  onSave: ({ createDistribution }) => void;
+  plugin: 'ansible' | 'file' | 'rpm';
+  repository: AnsibleRepositoryType;
+  updateRepository: (r) => void;
 }
 
-interface IState {
-  name: string;
-  description: string;
-  alerts: AlertType[];
-  addTagsInclude: string;
-  addTagsExclude: string;
-  excludeTags?: string[];
-  includeTags?: string[];
-  registries?: { id: string; name: string }[];
-  registrySelection?: { id: string; name: string }[];
-  upstreamName: string;
-  formErrors: ErrorMessagesType;
-}
+export const RepositoryForm = ({
+  allowEditName,
+  errorMessages,
+  onCancel,
+  onSave,
+  plugin,
+  repository,
+  updateRepository,
+}: IProps) => {
+  const requiredFields = [];
+  const disabledFields = allowEditName ? [] : ['name'];
 
-export class RepositoryForm extends Component<IProps, IState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: this.props.name || '',
-      description: this.props.description,
-
-      addTagsInclude: '',
-      addTagsExclude: '',
-      excludeTags: this.props.excludeTags,
-      includeTags: this.props.includeTags,
-      registries: null,
-      registrySelection: [],
-      upstreamName: this.props.upstreamName || '',
-      formErrors: {},
-      alerts: [],
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.isRemote) {
-      this.loadRegistries()
-        .then((registries) => {
-          // prefill registry if passed from props
-          if (this.props.registry) {
-            this.setState({
-              registrySelection: registries.filter(
-                ({ id }) => id === this.props.registry,
-              ),
-            });
-          }
-        })
-        .catch((e) => {
-          const { status, statusText } = e.response;
-          const errorTitle = t`Registries list could not be displayed.`;
-          this.addAlert({
-            variant: 'danger',
-            title: errorTitle,
-            description: jsxErrorMessage(status, statusText),
-          });
-          this.setState({
-            formErrors: { ...this.state.formErrors, registries: errorTitle },
-          });
-        });
-    }
-  }
-
-  render() {
-    const { onSave, onCancel, namespace, isNew, isRemote } = this.props;
-    const {
-      addTagsExclude,
-      addTagsInclude,
-      alerts,
-      description,
-      excludeTags,
-      formErrors,
-      includeTags,
-      name,
-      registries,
-      registrySelection,
-      upstreamName,
-    } = this.state;
-
-    return (
-      <Modal
-        variant='large'
-        onClose={onCancel}
-        isOpen
-        title={isNew ? t`Add container` : t`Edit container`}
-        actions={[
-          <Button
-            key='save'
-            variant='primary'
-            isDisabled={!this.formIsValid()}
-            onClick={() => onSave(this.onSave(), this.state)}
-          >
-            {t`Save`}
-          </Button>,
-          <Button key='cancel' variant='link' onClick={onCancel}>
-            {t`Cancel`}
-          </Button>,
-        ]}
+  const formGroup = (fieldName, label, helperText, children) => (
+    <FormGroup
+      key={fieldName}
+      fieldId={fieldName}
+      label={
+        helperText ? (
+          <>
+            {label} <HelpButton content={helperText} />
+          </>
+        ) : (
+          label
+        )
+      }
+      isRequired={requiredFields.includes(fieldName)}
+    >
+      {children}
+      <FormFieldHelper
+        variant={fieldName in errorMessages ? 'error' : 'default'}
       >
-        <AlertList
-          alerts={alerts}
-          closeAlert={(i) =>
-            closeAlert(i, {
-              alerts,
-              setAlerts: (alerts) => this.setState({ alerts }),
+        {errorMessages[fieldName]}
+      </FormFieldHelper>
+    </FormGroup>
+  );
+  const inputField = (fieldName, label, helperText, props) =>
+    formGroup(
+      fieldName,
+      label,
+      helperText,
+      <TextInput
+        validated={fieldName in errorMessages ? 'error' : 'default'}
+        isRequired={requiredFields.includes(fieldName)}
+        isDisabled={disabledFields.includes(fieldName)}
+        id={fieldName}
+        value={repository[fieldName] || ''}
+        onChange={(_event, value) =>
+          updateRepository({ ...repository, [fieldName]: value })
+        }
+        {...props}
+      />,
+    );
+  const stringField = (fieldName, label, helperText?) =>
+    inputField(fieldName, label, helperText, { type: 'text' });
+  const numericField = (fieldName, label, helperText?) =>
+    inputField(fieldName, label, helperText, { type: 'number' });
+
+  const isValid = !requiredFields.find((field) => !repository[field]);
+
+  const [createDistribution, setCreateDistribution] = useState(true);
+  const [disabledDistribution, setDisabledDistribution] = useState(false);
+  const onDistributionsLoad = (distroBasePath) => {
+    if (distroBasePath) {
+      setCreateDistribution(false);
+      setDisabledDistribution(true);
+    } else {
+      setCreateDistribution(true);
+      setDisabledDistribution(false);
+    }
+  };
+
+  const [remotes, setRemotes] = useState(null);
+  const [remotesError, setRemotesError] = useState(null);
+  const loadRemotes = (name?) => {
+    setRemotesError(null);
+    (plugin === 'ansible'
+      ? AnsibleRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
+      : plugin === 'file'
+        ? FileRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
+        : Promise.reject(plugin)
+    )
+      .then(({ data }) =>
+        setRemotes(data.results.map((r) => ({ ...r, id: r.pulp_href }))),
+      )
+      .catch((e) => {
+        const { status, statusText } = e.response;
+        setRemotes([]);
+        setRemotesError(errorMessage(status, statusText));
+      });
+  };
+
+  useEffect(() => loadRemotes(), []);
+
+  useEffect(() => {
+    // create
+    if (!repository || !repository.name) {
+      onDistributionsLoad(null);
+      return;
+    }
+
+    pluginRepositoryBasePath(plugin, repository.name, repository.pulp_href)
+      .catch(() => null)
+      .then(onDistributionsLoad);
+  }, [repository?.pulp_href]);
+
+  const selectedRemote = remotes?.find?.(
+    ({ pulp_href }) => pulp_href === repository?.remote,
+  );
+
+  return (
+    <Form>
+      {stringField('name', t`Name`)}
+      {stringField('description', t`Description`)}
+      {numericField(
+        'retain_repo_versions',
+        t`Retained number of versions`,
+        t`In order to retain all versions, leave this field blank.`,
+      )}
+
+      {formGroup(
+        'distributions',
+        t`Distributions`,
+        t`Content in repositories without a distribution will not be visible to clients for sync, download or search.`,
+        <>
+          <LazyDistributions
+            plugin={plugin}
+            emptyText={t`None`}
+            repositoryHref={repository.pulp_href}
+          />
+          <br />
+          <Checkbox
+            isChecked={createDistribution}
+            isDisabled={disabledDistribution}
+            onChange={(_event, value) => setCreateDistribution(value)}
+            label={t`Create a "${repository.name}" distribution`}
+            id='create_distribution'
+          />
+        </>,
+      )}
+
+      {formGroup(
+        'pulp_labels',
+        t`Labels`,
+        t`Pulp labels in the form of 'key:value'.`,
+        <>
+          <div
+            // prevents "N more" clicks from submitting the form
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            <PulpLabels
+              labels={repository.pulp_labels}
+              updateLabels={(labels) =>
+                updateRepository({ ...repository, pulp_labels: labels })
+              }
+            />
+          </div>
+        </>,
+      )}
+
+      {formGroup(
+        'private',
+        t`Make private`,
+        t`Make the repository private.`,
+        <Checkbox
+          id='private'
+          isChecked={repository.private}
+          label={t`Make private`}
+          onChange={(_event, value) =>
+            updateRepository({ ...repository, private: value })
+          }
+        />,
+      )}
+
+      {formGroup(
+        'remote',
+        t`Remote`,
+        t`Setting a remote allows a repository to sync from elsewhere.`,
+        <>
+          <div data-cy='remote'>
+            {remotes ? (
+              <Typeahead
+                loadResults={loadRemotes}
+                onClear={() =>
+                  updateRepository({ ...repository, remote: null })
+                }
+                onSelect={(_event, value) =>
+                  updateRepository({
+                    ...repository,
+                    remote: remotes.find(({ name }) => name === value)
+                      ?.pulp_href,
+                  })
+                }
+                placeholderText={t`Select a remote`}
+                results={remotes}
+                selections={
+                  selectedRemote
+                    ? [
+                        {
+                          name: selectedRemote.name,
+                          id: selectedRemote.pulp_href,
+                        },
+                      ]
+                    : []
+                }
+              />
+            ) : null}
+            {remotesError ? (
+              <span
+                style={{
+                  color: 'var(--pf-v5-global--danger-color--200)',
+                }}
+              >
+                {t`Failed to load remotes: ${remotesError}`}
+              </span>
+            ) : null}
+            {!remotes && !remotesError ? <Spinner size='sm' /> : null}
+          </div>
+        </>,
+      )}
+
+      {errorMessages['__nofield'] ? (
+        <span
+          style={{
+            color: 'var(--pf-v5-global--danger-color--200)',
+          }}
+        >
+          {errorMessages['__nofield']}
+        </span>
+      ) : null}
+
+      <ActionGroup key='actions'>
+        <Button
+          isDisabled={!isValid}
+          key='confirm'
+          variant='primary'
+          onClick={() =>
+            onSave({
+              createDistribution,
             })
           }
-        />
-        <Form>
-          {!isRemote ? (
-            <>
-              <FormGroup key='name' fieldId='name' label={t`Name`}>
-                <TextInput id='name' value={name} isDisabled type='text' />
-              </FormGroup>
-
-              <FormGroup
-                key='namespace'
-                fieldId='namespace'
-                label={t`Container namespace`}
-              >
-                <TextInput
-                  id='namespace'
-                  value={namespace}
-                  isDisabled
-                  type='text'
-                />
-              </FormGroup>
-            </>
-          ) : (
-            <>
-              <FormGroup isRequired key='name' fieldId='name' label={t`Name`}>
-                <TextInput
-                  id='name'
-                  value={name}
-                  isDisabled={!isNew}
-                  onChange={(_event, value) => {
-                    this.setState({ name: value });
-                    this.validateName(value);
-                  }}
-                  validated={isFieldValid(this.state.formErrors, 'name')}
-                />
-                <FormFieldHelper
-                  variant={isFieldValid(this.state.formErrors, 'name')}
-                >
-                  {this.state.formErrors['name']}
-                </FormFieldHelper>
-              </FormGroup>
-
-              <FormGroup
-                key='upstreamName'
-                fieldId='upstreamName'
-                label={t`Upstream name`}
-                isRequired
-                labelIcon={
-                  <HelpButton
-                    content={t`Use the namespace/name format for namespaced containers. Otherwise, use the library/name format.`}
-                  />
-                }
-              >
-                <TextInput
-                  id='upstreamName'
-                  value={upstreamName}
-                  onChange={(_event, value) =>
-                    this.setState({ upstreamName: value })
-                  }
-                />
-              </FormGroup>
-
-              <FormGroup
-                key='registry'
-                fieldId='registry'
-                label={t`Registry`}
-                className='pulp-formgroup-registry'
-                isRequired
-              >
-                {!formErrors?.registries && (
-                  <>
-                    {registries ? (
-                      <Typeahead
-                        loadResults={(name) => this.loadRegistries(name)}
-                        onClear={() => this.setState({ registrySelection: [] })}
-                        onSelect={(event, value) =>
-                          this.setState({
-                            registrySelection: registries.filter(
-                              ({ name }) => name === value,
-                            ),
-                            formErrors: { ...formErrors, registry: null },
-                          })
-                        }
-                        placeholderText={t`Select a registry`}
-                        results={registries}
-                        selections={registrySelection}
-                      />
-                    ) : (
-                      <Spinner />
-                    )}
-                    <FormFieldHelper
-                      variant={isFieldValid(this.state.formErrors, [
-                        'registries',
-                        'registry',
-                      ])}
-                    >
-                      {this.state.formErrors['registries'] ||
-                        this.state.formErrors['registry']}
-                    </FormFieldHelper>
-                  </>
-                )}
-              </FormGroup>
-
-              <FormGroup
-                fieldId='addTagsInclude'
-                label={t`Add tag(s) to include`}
-              >
-                <InputGroup>
-                  <InputGroupItem isFill>
-                    <TextInput
-                      type='text'
-                      id='addTagsInclude'
-                      value={addTagsInclude}
-                      onChange={(_event, val) =>
-                        this.setState({ addTagsInclude: val })
-                      }
-                      onKeyUp={(e) => {
-                        // l10n: don't translate
-                        if (e.key === 'Enter') {
-                          this.addTags(addTagsInclude, 'includeTags');
-                        }
-                      }}
-                    />
-                  </InputGroupItem>
-                  <InputGroupItem>
-                    <Button
-                      variant='secondary'
-                      onClick={() =>
-                        this.addTags(addTagsInclude, 'includeTags')
-                      }
-                    >
-                      {t`Add`}
-                    </Button>
-                  </InputGroupItem>
-                </InputGroup>
-              </FormGroup>
-
-              <FormGroup
-                fieldId='currentTag'
-                label={t`Currently included tags`}
-              >
-                <LabelGroup id='remove-tag' defaultIsOpen>
-                  {includeTags.map((tag) => (
-                    <Label
-                      icon={<TagIcon />}
-                      onClose={() => this.removeTag(tag, 'includeTags')}
-                      key={tag}
-                    >
-                      {tag}
-                    </Label>
-                  ))}
-                  {!includeTags.length ? t`None` : null}
-                </LabelGroup>
-              </FormGroup>
-
-              <FormGroup
-                fieldId='addTagsExclude'
-                label={t`Add tag(s) to exclude`}
-              >
-                <InputGroup>
-                  <InputGroupItem isFill>
-                    <TextInput
-                      type='text'
-                      id='addTagsExclude'
-                      value={addTagsExclude}
-                      onChange={(_event, val) =>
-                        this.setState({ addTagsExclude: val })
-                      }
-                      onKeyUp={(e) => {
-                        // l10n: don't translate
-                        if (e.key === 'Enter') {
-                          this.addTags(addTagsExclude, 'excludeTags');
-                        }
-                      }}
-                    />
-                  </InputGroupItem>
-                  <InputGroupItem>
-                    <Button
-                      variant='secondary'
-                      onClick={() =>
-                        this.addTags(addTagsExclude, 'excludeTags')
-                      }
-                    >
-                      {t`Add`}
-                    </Button>
-                  </InputGroupItem>
-                </InputGroup>
-              </FormGroup>
-
-              <FormGroup
-                fieldId='currentTag'
-                label={t`Currently excluded tags`}
-              >
-                <LabelGroup id='remove-tag' defaultIsOpen>
-                  {excludeTags.map((tag) => (
-                    <Label
-                      icon={<TagIcon />}
-                      onClose={() => this.removeTag(tag, 'excludeTags')}
-                      key={tag}
-                    >
-                      {tag}
-                    </Label>
-                  ))}
-                  {!excludeTags.length ? t`None` : null}
-                </LabelGroup>
-              </FormGroup>
-
-              {!excludeTags.length && !includeTags.length ? (
-                <FormGroup>
-                  <FormFieldHelper variant='warning'>
-                    {t`Including all tags might transfer a lot of data.`}{' '}
-                    <Button
-                      variant='link'
-                      style={{
-                        padding: 0,
-                        fontSize: 'var(--pf-v5-c-helper-text--FontSize)',
-                      }}
-                      onClick={() => this.setState({ includeTags: ['latest'] })}
-                    >{t`Pull only latest?`}</Button>
-                  </FormFieldHelper>
-                </FormGroup>
-              ) : null}
-            </>
-          )}
-
-          <FormGroup
-            key='description'
-            fieldId='description'
-            label={t`Description`}
-          >
-            <TextArea
-              id='description'
-              value={description || ''}
-              isDisabled={
-                !this.props.permissions.includes(
-                  'container.namespace_change_containerdistribution',
-                )
-              }
-              onChange={(_event, value) =>
-                this.setState({ description: value })
-              }
-              type='text'
-              resizeOrientation={'vertical'}
-              autoResize
-            />
-          </FormGroup>
-        </Form>
-      </Modal>
-    );
-  }
-
-  private validateName(name) {
-    const regex = /^([0-9A-Za-z._-]+\/)?[0-9A-Za-z._-]+$/;
-    if (name === '' || regex.test(name)) {
-      this.setState({ formErrors: { ...this.state.formErrors, name: null } });
-      return;
-    } else {
-      const error = t`Container names can only contain alphanumeric characters, ".", "_", "-" and zero or one "/".`;
-      this.setState({ formErrors: { ...this.state.formErrors, name: error } });
-    }
-  }
-
-  private formIsValid() {
-    const { name, upstreamName, registrySelection } = this.state;
-    if (!this.props.isRemote) {
-      // no validation for local
-      return true;
-    }
-
-    if (!isFormValid(this.state.formErrors)) {
-      return false;
-    }
-
-    // validation for non empty fields
-    return name && upstreamName && registrySelection.length;
-  }
-
-  private loadRegistries(name?) {
-    return ExecutionEnvironmentRegistryAPI.list({
-      ...(name ? { name__icontains: name } : {}),
-    }).then(({ data }) => {
-      const registries = data.data.map(({ id, name }) => ({ id, name }));
-      this.setState({ registries });
-      return registries;
-    });
-  }
-
-  private addTags(tags, key: 'includeTags' | 'excludeTags') {
-    const current = new Set(this.state[key]);
-    tags.split(/\s+|\s*,\s*/).forEach((tag) => tag && current.add(tag));
-
-    this.setState({
-      [key]: Array.from(current.values()),
-      [key === 'includeTags' ? 'addTagsInclude' : 'addTagsExclude']: '',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } as any);
-  }
-
-  private removeTag(tag, key: 'includeTags' | 'excludeTags') {
-    const current = new Set(this.state[key]);
-    current.delete(tag);
-
-    this.setState({
-      [key]: Array.from(current.values()),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } as any);
-  }
-
-  private onSave() {
-    const {
-      description: originalDescription,
-      distributionPulpId,
-      isNew,
-      isRemote,
-      name: originalName,
-      remoteId,
-    } = this.props;
-    const {
-      description,
-      excludeTags: exclude_tags,
-      includeTags: include_tags,
-      name,
-      registrySelection: [{ id: registry } = { id: null }],
-      upstreamName: upstream_name,
-    } = this.state;
-
-    let promise = null;
-    if (isRemote && isNew) {
-      promise = ExecutionEnvironmentRemoteAPI.create({
-        name,
-        upstream_name,
-        registry,
-        include_tags,
-        exclude_tags,
-      });
-    } else {
-      promise = Promise.all([
-        // remote edit - upstream, tags, registry
-        isRemote &&
-          !isNew &&
-          ExecutionEnvironmentRemoteAPI.update(remoteId, {
-            name: originalName, // readonly but required
-            upstream_name,
-            registry,
-            include_tags,
-            exclude_tags,
-          }),
-        // remote edit or local edit - description, if changed
-        description !== originalDescription &&
-          ContainerDistributionAPI.patch(distributionPulpId, { description }),
-      ]);
-    }
-
-    return promise.catch((e) => {
-      this.setState({ formErrors: mapErrorMessages(e) });
-      alertErrorsWithoutFields(
-        this.state.formErrors,
-        ['name', 'registry', 'registries'],
-        (alert) => this.addAlert(alert),
-        t`Error when saving registry.`,
-        (state) => this.setState({ formErrors: state }),
-      );
-      return Promise.reject(new Error(e));
-    });
-  }
-
-  private addAlert(alert) {
-    this.setState({
-      alerts: [...this.state.alerts, alert],
-    });
-  }
-}
+        >
+          {t`Save`}
+        </Button>
+        <Button key='cancel' variant='link' onClick={onCancel}>
+          {t`Cancel`}
+        </Button>
+      </ActionGroup>
+    </Form>
+  );
+};

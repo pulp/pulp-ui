@@ -1,6 +1,5 @@
 export { AccessTab } from './access-tab';
 export { AlertList, type AlertType, closeAlert } from './alert-list';
-export { AnsibleRepositoryForm } from './ansible-repository-form';
 export { AppliedFilters } from './applied-filters';
 export { ApprovalRow } from './approval-row';
 export { ApproveModal } from './approve-modal';
@@ -19,6 +18,7 @@ export { CollectionListItem } from './collection-list-item';
 export { CollectionUsedbyDependenciesList } from './collection-usedby-dependencies-list';
 export { CompoundFilter, type FilterOption } from './compound-filter';
 export { ConfirmModal } from './confirm-modal';
+export { ContainerRepositoryForm } from './container-repository-form';
 export { CopyCollectionToRepositoryModal } from './copy-collection-to-repository-modal';
 export { CopyURL } from './copy-url';
 export { DarkmodeSwitcher } from './darkmode-switcher';
@@ -53,7 +53,6 @@ export { ImportModal } from './import-modal';
 export { LanguageSwitcher } from './language-switcher';
 export { LazyDistributions } from './lazy-distributions';
 export { LazyRepositories } from './lazy-repositories';
-export { LazyRPMRepository } from './lazy-rpm-repository';
 export { LinkTabs, type LinkTabsProps } from './link-tabs';
 export { ListItemActions } from './list-item-actions';
 export {

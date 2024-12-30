@@ -1,5 +1,5 @@
 import { t } from '@lingui/core/macro';
-import { type AnsibleRemoteType } from 'src/api';
+import { type FileRemoteType } from 'src/api';
 import {
   CopyURL,
   Details,
@@ -8,7 +8,7 @@ import {
 } from 'src/components';
 
 interface TabProps {
-  item: AnsibleRemoteType;
+  item: FileRemoteType;
   actionContext: object;
 }
 
@@ -53,18 +53,7 @@ export const DetailsTab = ({ item }: TabProps) => (
       { label: t`Rate limit`, value: item?.rate_limit ?? t`None` },
       {
         label: t`Repositories`,
-        value: (
-          <LazyRepositories plugin='ansible' remote_href={item?.pulp_href} />
-        ),
-      },
-      {
-        label: t`YAML requirements`,
-        value: (
-          <MaybeCode
-            code={item?.requirements_file}
-            filename={item.name + '-requirements.yml'}
-          />
-        ),
+        value: <LazyRepositories plugin='file' remote_href={item?.pulp_href} />,
       },
     ]}
   />
