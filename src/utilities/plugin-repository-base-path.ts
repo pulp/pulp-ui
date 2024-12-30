@@ -4,6 +4,7 @@ import {
   AnsibleRepositoryAPI,
   FileDistributionAPI,
   FileRepositoryAPI,
+  RPMRepositoryAPI,
 } from 'src/api';
 
 // returns the preferred distribution base_path given a repo name
@@ -12,7 +13,7 @@ import {
 // reject if no distributions or repository
 // optional pulp_href param skips repo lookup
 
-function plugin2api(plugin) {
+export function plugin2api(plugin) {
   switch (plugin) {
     case 'ansible':
       return {
@@ -23,6 +24,11 @@ function plugin2api(plugin) {
       return {
         DistributionAPI: FileDistributionAPI,
         RepositoryAPI: FileRepositoryAPI,
+      };
+    case 'rpm':
+      return {
+        // FIXME: DistributionAPI: RPMDistributionAPI,
+        RepositoryAPI: RPMRepositoryAPI,
       };
     default:
       return {};

@@ -53,7 +53,9 @@ export const DetailsTab = ({ item }: TabProps) => (
       { label: t`Rate limit`, value: item?.rate_limit ?? t`None` },
       {
         label: t`Repositories`,
-        value: <LazyRepositories remoteHref={item?.pulp_href} />,
+        value: (
+          <LazyRepositories plugin='ansible' remote_href={item?.pulp_href} />
+        ),
       },
       {
         label: t`YAML requirements`,

@@ -58,7 +58,12 @@ export const DistributionsTab = ({
           <DateComponent date={pulp_created} />
         </Td>
         <Td>
-          <ClipboardCopy isCode isReadOnly variant={'inline-compact'} key={index}>
+          <ClipboardCopy
+            isCode
+            isReadOnly
+            variant={'inline-compact'}
+            key={index}
+          >
             {cliConfig(base_path)}
           </ClipboardCopy>
         </Td>

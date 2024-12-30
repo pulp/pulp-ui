@@ -2,18 +2,20 @@ import { t } from '@lingui/core/macro';
 import { Button } from '@patternfly/react-core';
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
-import { AnsibleRepositoryAPI } from 'src/api';
-import { Spinner, Tooltip } from 'src/components';
+import { MaybeLink, Spinner, Tooltip } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
-import { errorMessage } from 'src/utilities';
+import { errorMessage, plugin2api } from 'src/utilities';
 
 export const LazyRepositories = ({
+  content_href,
   emptyText,
-  remoteHref,
+  plugin,
+  remote_href,
 }: {
+  content_href?: string;
   emptyText?: string;
-  remoteHref: string;
+  plugin: 'ansible' | 'file' | 'rpm';
+  remote_href?: string;
 }) => {
   const [repositories, setRepositories] = useState([]);
   const [count, setCount] = useState(null);
@@ -22,7 +24,13 @@ export const LazyRepositories = ({
   const [loading, setLoading] = useState(true);
 
   const query = (prepend?) => {
-    AnsibleRepositoryAPI.list({ remote: remoteHref, page, page_size: 10 })
+    plugin2api(plugin)
+      .RepositoryAPI.list({
+        ...(content_href ? { with_content: content_href } : null),
+        ...(remote_href ? { remote: remote_href } : null),
+        page,
+        page_size: 10,
+      })
       .then(({ data: { count, results } }) => {
         setRepositories(prepend ? [...prepend, ...results] : results);
         setCount(count);
@@ -39,7 +47,7 @@ export const LazyRepositories = ({
   };
 
   useEffect(() => {
-    if (!remoteHref) {
+    if (!remote_href && !content_href) {
       setRepositories([]);
       setCount(null);
       setPage(1);
@@ -55,7 +63,7 @@ export const LazyRepositories = ({
     setLoading(true);
 
     query();
-  }, [remoteHref]);
+  }, [content_href, remote_href]);
 
   // support pagination, but page == 1 is handled above
   useEffect(() => {
@@ -78,6 +86,8 @@ export const LazyRepositories = ({
     setPage((page) => page + 1);
   };
 
+  const pluginPaths = Paths[plugin] as Record<string, Record<string, string>>;
+
   return loading ? (
     <Spinner size='sm' />
   ) : error ? (
@@ -87,16 +97,22 @@ export const LazyRepositories = ({
       {repositories?.map?.(({ name }, index) => (
         <>
           {index ? ', ' : ''}
-          <Link to={formatPath(Paths.ansible.repository.detail, { name })}>
+          <MaybeLink
+            to={
+              pluginPaths?.repository?.detail
+                ? formatPath(pluginPaths.repository.detail, { name })
+                : null
+            }
+          >
             {name}
-          </Link>
+          </MaybeLink>
         </>
       ))}
       {!repositories?.length ? (emptyText ?? '---') : null}
       {count > repositories?.length ? (
         <>
           {' '}
-          <a onClick={loadMore}>(more)</a>
+          <a onClick={loadMore}>{t`(more)`}</a>
         </>
       ) : null}
     </>
