@@ -8,7 +8,6 @@ import {
   TextVariants,
 } from '@patternfly/react-core';
 import { Link } from 'react-router';
-import { useAppContext } from 'src/app-context';
 import { Paths, formatPath } from 'src/paths';
 
 interface IProps {
@@ -24,26 +23,10 @@ export const RepositoryBadge = ({
   isTextContent,
   name,
 }: IProps) => {
-  const { featureFlags } = useAppContext();
-
-  if (!featureFlags.display_repositories) {
-    return null;
-  }
-
-  const repoName =
-    {
-      certified: t`Certified`,
-      community: t`Community`,
-      published: t`Published`,
-      rejected: t`Rejected`,
-      staging: t`Staging`,
-      validated: t`Validated`,
-    }[name] || name;
-
   const label = (
     <Label variant='outline' isCompact={isTextContent} title={name}>
       <Link to={formatPath(Paths.ansible.repository.detail, { name })}>
-        {repoName}
+        {name}
       </Link>
     </Label>
   );
