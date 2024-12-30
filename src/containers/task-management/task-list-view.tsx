@@ -28,14 +28,14 @@ import {
   EmptyStateNoData,
   LoadingSpinner,
   Main,
+  OrphanCleanupTaskModal,
   PulpPagination,
+  PurgeTaskModal,
+  RepairTaskModal,
   SortTable,
   StatusIndicator,
   closeAlert,
 } from 'src/components';
-import { OrphanCleanupTaskModal } from 'src/components/orphan-cleanup-task-modal';
-import { PurgeTaskModal } from 'src/components/purge-task-modal';
-import { RepairTaskModal } from 'src/components/repair-task-modal';
 import { Paths, formatPath } from 'src/paths';
 import {
   ParamHelper,

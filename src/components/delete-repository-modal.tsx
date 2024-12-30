@@ -10,7 +10,7 @@ interface IProps {
   name: string;
 }
 
-export const DeleteAnsibleRepositoryModal = ({
+export const DeleteRepositoryModal = ({
   closeAction,
   deleteAction,
   name,

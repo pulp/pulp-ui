@@ -1,6 +1,6 @@
 import { msg, t } from '@lingui/core/macro';
 import { AnsibleDistributionAPI, AnsibleRepositoryAPI } from 'src/api';
-import { DeleteAnsibleRepositoryModal } from 'src/components';
+import { DeleteRepositoryModal } from 'src/components';
 import {
   handleHttpError,
   parsePulpIDFromURL,
@@ -13,7 +13,7 @@ export const ansibleRepositoryDeleteAction = Action({
   title: msg`Delete`,
   modal: ({ addAlert, listQuery, setState, state }) =>
     state.deleteModalOpen ? (
-      <DeleteAnsibleRepositoryModal
+      <DeleteRepositoryModal
         closeAction={() => setState({ deleteModalOpen: null })}
         deleteAction={() =>
           deleteRepository(state.deleteModalOpen, {
@@ -36,22 +36,6 @@ export const ansibleRepositoryDeleteAction = Action({
         pulp_href,
       },
     }),
-  disabled: ({ name }) => {
-    if (
-      [
-        'certified',
-        'community',
-        'published',
-        'rejected',
-        'staging',
-        'validated',
-      ].includes(name)
-    ) {
-      return t`Protected repositories cannot be deleted.`;
-    }
-
-    return null;
-  },
 });
 
 async function deleteRepository(
