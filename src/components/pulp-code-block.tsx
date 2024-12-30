@@ -5,8 +5,7 @@ import {
   CodeBlockCode,
   ExpandableSection,
 } from '@patternfly/react-core';
-import { PulpCopyButton } from 'src/components/pulp-copy-button';
-import { PulpDownloadButton } from 'src/components/pulp-download-button';
+import { PulpCopyButton, PulpDownloadButton } from 'src/components';
 
 export const PulpCodeBlock = ({
   code,

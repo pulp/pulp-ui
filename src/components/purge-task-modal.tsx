@@ -7,7 +7,7 @@ import {
   FormGroup,
   Modal,
 } from '@patternfly/react-core';
-import { Alert } from 'src/components/patternfly-wrappers/l10n';
+import { Alert } from 'src/components';
 
 interface IProps {
   cancelAction: () => void;
