@@ -1,8 +1,6 @@
 import { PulpAPI } from './pulp';
 
-// FIXME
 export class FileRemoteType {
-  auth_url: string;
   ca_cert: string;
   client_cert: string;
   download_concurrency: number;
@@ -10,16 +8,15 @@ export class FileRemoteType {
   proxy_url: string;
   pulp_href?: string;
   rate_limit: number;
-  requirements_file: string;
   tls_validation: boolean;
   url: string;
-  signed_only: boolean;
   sync_dependencies?: boolean;
 
   // connect_timeout
   // headers
   // max_retries
   // policy
+  // prn
   // pulp_created
   // pulp_labels
   // pulp_last_updated

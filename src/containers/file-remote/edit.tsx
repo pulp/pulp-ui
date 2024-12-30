@@ -13,9 +13,6 @@ const initialRemote: FileRemoteType = {
   proxy_url: null,
   download_concurrency: null,
   rate_limit: null,
-  requirements_file: null,
-  auth_url: null,
-  signed_only: false,
 
   hidden_fields: [
     'client_key',
@@ -78,7 +75,6 @@ const FileRemoteEdit = Page<FileRemoteType>({
       }
 
       delete data.my_permissions;
-      delete data.signed_only;
 
       // api requires traling slash, fix the trivial case
       if (data.url && !data.url.includes('?') && !data.url.endsWith('/')) {

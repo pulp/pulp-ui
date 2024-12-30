@@ -55,15 +55,6 @@ export const DetailsTab = ({ item }: TabProps) => (
         label: t`Repositories`,
         value: <LazyRepositories plugin='file' remote_href={item?.pulp_href} />,
       },
-      {
-        label: t`YAML requirements`,
-        value: (
-          <MaybeCode
-            code={item?.requirements_file}
-            filename={item.name + '-requirements.yml'}
-          />
-        ),
-      },
     ]}
   />
 );
