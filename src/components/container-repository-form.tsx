@@ -70,7 +70,7 @@ interface IState {
   formErrors: ErrorMessagesType;
 }
 
-export class RepositoryForm extends Component<IProps, IState> {
+export class ContainerRepositoryForm extends Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
