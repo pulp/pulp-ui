@@ -83,7 +83,11 @@ const FileRemoteEdit = Page<FileRemoteType>({
 
       const promise = !item
         ? FileRemoteAPI.create(data)
-        : FileRemoteAPI.patch(parsePulpIDFromURL(item.pulp_href), data);
+        : FileRemoteAPI.smartUpdate(
+            parsePulpIDFromURL(item.pulp_href),
+            data,
+            item,
+          );
 
       promise
         .then(({ data: task }) => {
