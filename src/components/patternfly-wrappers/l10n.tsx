@@ -65,7 +65,7 @@ export const Chip = (props: Omit<ChipProps, 'ref'>) => (
 export const ChipGroup = (props: Omit<ChipGroupProps, 'ref'>) => (
   <PFChipGroup
     collapsedText={t`${count} more`}
-    expandedText={t`Show Less`}
+    expandedText={t`Show less`}
     {...props}
   />
 );
@@ -101,7 +101,7 @@ export const Icon = (props: IconComponentProps) => (
 export const LabelGroup = (props: Omit<LabelGroupProps, 'ref'>) => (
   <PFLabelGroup
     collapsedText={t`${count} more`}
-    expandedText={t`Show Less`}
+    expandedText={t`Show less`}
     {...props}
   />
 );
@@ -112,7 +112,7 @@ export const LoginForm = (props: LoginFormProps) => (
     passwordLabel={t`Password`}
     hidePasswordAriaLabel={t`Hide password`}
     showPasswordAriaLabel={t`Show password`}
-    loginButtonLabel={t`Log In`}
+    loginButtonLabel={t`Log in`}
     {...props}
   />
 );

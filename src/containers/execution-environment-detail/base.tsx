@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import { Button } from '@patternfly/react-core';
 import { DropdownItem } from '@patternfly/react-core/deprecated';
 import { Component } from 'react';
@@ -217,12 +216,7 @@ export function withContainerRepo(WrappedComponent) {
                       loading: true,
                       alerts: alerts.concat({
                         variant: 'success',
-                        title: (
-                          <Trans>
-                            Saved changes to container &quot;
-                            {repo.name}&quot;.
-                          </Trans>
-                        ),
+                        title: t`Saved changes to container "${repo.name}".`,
                       }),
                     });
                     if (task) {

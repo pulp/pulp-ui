@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import {
   AlertActionLink,
   Button,
@@ -212,14 +211,9 @@ export class TagManifestModal extends Component<IProps, IState> {
             <Alert
               isInline
               variant='info'
-              title={
-                <Trans>Waiting for {pendingTasks} task(s) to finish.</Trans>
-              }
+              title={t`Waiting for ${pendingTasks} task(s) to finish.`}
             >
-              <Trans>
-                It&apos;s safe to close this window. These tasks will finish in
-                the background.
-              </Trans>
+              {t`It's safe to close this window. These tasks will finish in the background.`}
             </Alert>
           )}
         </Form>

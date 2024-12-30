@@ -134,9 +134,7 @@ class ExecutionEnvironmentManifest extends Component<RouteProps, IState> {
             ))}
           </LabelGroup>
 
-          <div style={{ padding: '4px 0' }}>
-            <Trans>Size: {size}</Trans>
-          </div>
+          <div style={{ padding: '4px 0' }}>{t`Size: ${size}`}</div>
         </BaseHeader>
 
         <Main>

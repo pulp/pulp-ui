@@ -19,7 +19,7 @@ import { ParamHelper, type RouteProps, withRouter } from 'src/utilities';
 import { type IBaseCollectionState, loadCollection } from './base';
 import './collection-detail.scss';
 
-// renders markdown files in collection docs/ directory
+// renders Markdown files in collection docs/ directory
 class CollectionDocs extends Component<RouteProps, IBaseCollectionState> {
   static contextType = AppContext;
 

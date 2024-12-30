@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import {
   Button,
   CodeBlock,
@@ -398,9 +397,7 @@ class TaskDetail extends Component<RouteProps, IState> {
             {
               variant: 'success',
               title: taskName,
-              description: (
-                <Trans>Task &quot;{taskName}&quot; stopped successfully.</Trans>
-              ),
+              description: t`Task "${taskName}" stopped successfully.`,
             },
           ],
         });

@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import { Button } from '@patternfly/react-core';
 import { useEffect, useState } from 'react';
 import { UserAPI, type UserType } from 'src/api';
@@ -64,7 +63,7 @@ function UserProfile(_props: RouteProps) {
         setInEditMode(false);
         addAlert({
           variant: 'success',
-          title: <Trans>Saved changes to user &quot;{username}&quot;.</Trans>,
+          title: t`Saved changes to user "${username}".`,
         });
 
         // update saved credentials when password of logged user is changed

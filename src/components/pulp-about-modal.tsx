@@ -26,14 +26,14 @@ const Value = ({ children }: { children: ReactNode }) => (
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
-  userName: string;
+  username: string;
 }
 
 interface IApplicationInfo {
   pulp_core_version?: string;
 }
 
-export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
+export const PulpAboutModal = ({ isOpen, onClose, username }: IProps) => {
   const [applicationInfo, setApplicationInfo] = useState<IApplicationInfo>({});
 
   useEffect(() => {
@@ -54,11 +54,11 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
   const ui_extra = config.EXTRA_VERSION;
 
   // FIXME
-  const user = { username: userName, id: null, groups: [] };
+  const user = { username, id: null, groups: [] };
 
   return (
     <AboutModal
-      brandImageAlt={t`Pulp Logo`}
+      brandImageAlt={t`Pulp logo`}
       brandImageSrc={PulpLogo}
       isOpen={isOpen}
       onClose={onClose}
@@ -66,7 +66,7 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
     >
       <TextContent>
         <TextList component={TextListVariants.dl}>
-          <Label>{t`Pulp Core Version`}</Label>
+          <Label>{t`Pulp core version`}</Label>
           <Value>
             {pulp_core_version?.includes('.dev') ? (
               pulp_core_version
@@ -79,7 +79,7 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
             )}
           </Value>
 
-          <Label>{t`UI Version`}</Label>
+          <Label>{t`UI version`}</Label>
           <Value>
             {ui_version ? (
               <>
@@ -115,16 +115,16 @@ export const PulpAboutModal = ({ isOpen, onClose, userName }: IProps) => {
                   ? formatPath(Paths.core.user.detail, { user_id: user.id })
                   : null
               }
-              title={userName}
+              title={username}
             >
-              {userName}
-              {user?.username && user.username !== userName ? (
+              {username}
+              {user?.username && user.username !== username ? (
                 <> ({user.username})</>
               ) : null}
             </MaybeLink>
           </Value>
 
-          <Label>{t`User Groups`}</Label>
+          <Label>{t`User groups`}</Label>
           <Value>
             {user.groups.map(({ id: group, name }, index) => (
               <>

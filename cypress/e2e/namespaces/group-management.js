@@ -19,16 +19,16 @@ function createGroupManually(name) {
   cy.contains(name).should('exist');
 }
 
-function addUserToGroupManually(groupName, userName) {
+function addUserToGroupManually(groupName, username) {
   cy.menuGo('User Access > Groups');
   cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
   cy.contains('a.pf-v5-c-tabs__link', 'Users').click();
   cy.contains('button', 'Add').click();
-  cy.get('.pf-v5-c-select__toggle-typeahead input').type(userName);
-  cy.contains('button', userName).click();
+  cy.get('.pf-v5-c-select__toggle-typeahead input').type(username);
+  cy.contains('button', username).click();
   cy.get('.pf-v5-c-content h2').click(); // click modal header to close dropdown
   cy.contains('footer > button', 'Add').click({ force: true });
-  cy.get(`[data-cy="GroupDetail-users-${userName}"]`).should('exist');
+  cy.get(`[data-cy="GroupDetail-users-${username}"]`).should('exist');
 }
 
 function deleteGroupManually(name) {
@@ -47,19 +47,19 @@ function deleteGroupManually(name) {
   cy.contains('No groups yet').should('exist');
 }
 
-function removeUserFromGroupManually(groupName, userName) {
+function removeUserFromGroupManually(groupName, username) {
   cy.menuGo('User Access > Groups');
   cy.get(`[data-cy="GroupList-row-${groupName}"] a`).click();
   cy.contains('a.pf-v5-c-tabs__link', 'Users').click();
   cy.get(
-    `[data-cy="GroupDetail-users-${userName}"] [aria-label="Actions"]`,
+    `[data-cy="GroupDetail-users-${username}"] [aria-label="Actions"]`,
   ).click();
   cy.containsnear(
-    `[data-cy="GroupDetail-users-${userName}"] [aria-label="Actions"]`,
+    `[data-cy="GroupDetail-users-${username}"] [aria-label="Actions"]`,
     'Remove',
   ).click();
   cy.contains('button.pf-m-danger', 'Delete').click();
-  cy.contains('[data-cy=main-tabs]', userName).should('not.exist');
+  cy.contains('[data-cy=main-tabs]', username).should('not.exist');
 }
 
 describe('Pulp Group Management Tests', () => {
@@ -77,14 +77,14 @@ describe('Pulp Group Management Tests', () => {
 
   it('admin user can add/remove a user to/from a group', () => {
     const groupName = 'testGroup';
-    const userName = 'testUser';
+    const username = 'testUser';
 
-    cy.createUser(userName);
+    cy.createUser(username);
     createGroupManually(groupName);
 
-    addUserToGroupManually(groupName, userName);
+    addUserToGroupManually(groupName, username);
 
-    removeUserFromGroupManually(groupName, userName);
+    removeUserFromGroupManually(groupName, username);
   });
 
   it('admin user can add/remove roles to/from a group', () => {

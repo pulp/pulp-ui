@@ -168,7 +168,7 @@ export const AnsibleRepositoryForm = ({
       {formGroup(
         'pulp_labels',
         t`Labels`,
-        t`Pulp Labels in the form of 'key:value'.`,
+        t`Pulp labels in the form of 'key:value'.`,
         <>
           <div
             // prevents "N more" clicks from submitting the form

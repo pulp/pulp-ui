@@ -5,77 +5,77 @@ import { type CollectionVersionSearch } from 'src/api';
 import { DeleteModal } from 'src/components';
 
 interface IProps {
-  deleteCollection: CollectionVersionSearch;
-  collections: CollectionVersionSearch[];
-  isDeletionPending: boolean;
-  confirmDelete: boolean;
-  collectionVersion?: string;
   cancelAction: () => void;
+  collectionVersion?: string;
+  collections: CollectionVersionSearch[];
+  confirmDelete: boolean;
   deleteAction: () => void;
+  deleteCollection: CollectionVersionSearch;
+  deleteFromRepo?: string;
+  isDeletionPending: boolean;
   setConfirmDelete: (val) => void;
-  deleteFromRepo: string;
 }
 
-export const DeleteCollectionModal = (props: IProps) => {
-  const {
-    deleteCollection,
-    collections,
-    isDeletionPending,
-    confirmDelete,
-    collectionVersion,
-    cancelAction,
-    deleteAction,
-    setConfirmDelete,
-    deleteFromRepo,
-  } = props;
-
-  const lastCollectionVersion = collectionVersion && collections.length === 1;
-
-  return (
-    deleteCollection && (
-      <DeleteModal
-        spinner={isDeletionPending}
-        cancelAction={() => cancelAction()}
-        deleteAction={() => deleteAction()}
-        isDisabled={!confirmDelete || isDeletionPending}
-        title={
-          collectionVersion
-            ? t`Delete collection version?`
-            : t`Delete collection?`
-        }
-      >
-        <Text style={{ paddingBottom: 'var(--pf-v5-global--spacer--md)' }}>
-          {collectionVersion ? (
+export const DeleteCollectionModal = ({
+  cancelAction,
+  collectionVersion,
+  collections,
+  confirmDelete,
+  deleteAction,
+  deleteCollection,
+  deleteFromRepo,
+  isDeletionPending,
+  setConfirmDelete,
+}: IProps) =>
+  deleteCollection ? (
+    <DeleteModal
+      spinner={isDeletionPending}
+      cancelAction={() => cancelAction()}
+      deleteAction={() => deleteAction()}
+      isDisabled={!confirmDelete || isDeletionPending}
+      title={
+        collectionVersion
+          ? t`Delete collection version?`
+          : t`Delete collection?`
+      }
+    >
+      <Text style={{ paddingBottom: 'var(--pf-v5-global--spacer--md)' }}>
+        {collectionVersion && collections.length !== 1 ? (
+          deleteFromRepo ? (
             <Trans>
-              Deleting{' '}
+              Removing collection version{' '}
               <b>
                 {deleteCollection.collection_version.name} v{collectionVersion}
-              </b>
-              , its data will be lost.
+              </b>{' '}
+              from repository <b>{deleteFromRepo}</b>.
             </Trans>
           ) : (
             <Trans>
-              Deleting <b>{deleteCollection.collection_version.name}</b>, its
-              data will be lost.
+              Deleting collection version{' '}
+              <b>
+                {deleteCollection.collection_version.name} v{collectionVersion}
+              </b>
+              .
             </Trans>
-          )}
-          {lastCollectionVersion ? (
-            <> {t`This will cause the entire collection to be deleted.`}</>
-          ) : null}
-          {deleteFromRepo ? (
-            <>
-              {' '}
-              {t`The collection will be deleted only from repository ${deleteFromRepo}.`}
-            </>
-          ) : null}
-        </Text>
-        <Checkbox
-          isChecked={confirmDelete}
-          onChange={setConfirmDelete}
-          label={t`I understand that this action cannot be undone.`}
-          id='delete_confirm'
-        />
-      </DeleteModal>
-    )
-  );
-};
+          )
+        ) : deleteFromRepo ? (
+          <Trans>
+            Removing collection{' '}
+            <b>{deleteCollection.collection_version.name}</b> from repository{' '}
+            <b>{deleteFromRepo}</b>.
+          </Trans>
+        ) : (
+          <Trans>
+            Deleting collection{' '}
+            <b>{deleteCollection.collection_version.name}</b>.
+          </Trans>
+        )}
+      </Text>
+      <Checkbox
+        isChecked={confirmDelete}
+        onChange={setConfirmDelete}
+        label={t`I understand that this action cannot be undone.`}
+        id='delete_confirm'
+      />
+    </DeleteModal>
+  ) : null;

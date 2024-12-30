@@ -211,7 +211,7 @@ class ExecutionEnvironmentDetailImages extends Component<
             <>
               <Text className='delete-image-modal-message'>
                 <Trans>
-                  Deleting <b>{digest}</b> and its data will be lost.
+                  Deleting image <b>{digest}</b>.
                 </Trans>
               </Text>
             </>
@@ -565,11 +565,7 @@ class ExecutionEnvironmentDetailImages extends Component<
             });
             this.props.addAlert({
               variant: 'success',
-              title: (
-                <Trans>
-                  Image &quot;{digest}&quot; has been successfully deleted.
-                </Trans>
-              ),
+              title: t`Image "${digest}" has been successfully deleted.`,
             });
             this.queryImages(containerName(this.props.routeParams));
           });

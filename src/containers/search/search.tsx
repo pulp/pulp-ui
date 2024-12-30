@@ -453,7 +453,7 @@ class Search extends Component<RouteProps, IState> {
     return (
       <div className='list-container'>
         <div className='pulp-list'>
-          <DataList className='data-list' aria-label={t`List of Collections`}>
+          <DataList className='data-list' aria-label={t`List of collections`}>
             {collections.map((c, i) => (
               <CollectionListItem
                 key={i}

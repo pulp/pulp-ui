@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import {
   Masthead,
   MastheadBrand,
@@ -39,14 +38,14 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
   let aboutModal = null;
   let docsDropdownItems = [];
   let userDropdownItems = [];
-  let userName: string;
+  let username: string;
 
   if (credentials) {
-    userName = credentials.username;
+    username = credentials.username;
 
     userDropdownItems = [
       <DropdownItem isDisabled key='username'>
-        <Trans>Username: {userName}</Trans>
+        {t`Username: ${username}`}
       </DropdownItem>,
       <DropdownSeparator key='separator' />,
       <DropdownItem
@@ -84,7 +83,7 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
       <PulpAboutModal
         isOpen={aboutModalVisible}
         onClose={() => setAboutModalVisible(false)}
-        userName={userName}
+        username={username}
       />
     );
   }
@@ -129,7 +128,7 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
           <StatefulDropdown
             ariaLabel={t`User dropdown`}
             data-cy='user-dropdown'
-            defaultText={userName}
+            defaultText={username}
             items={userDropdownItems}
             toggleType='dropdown'
           />

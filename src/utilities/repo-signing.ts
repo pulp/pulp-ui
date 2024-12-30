@@ -49,7 +49,7 @@ export class RepoSigningUtils {
       .catch((ex) => {
         addAlert({
           variant: 'danger',
-          description: t`API Error: ${ex}`,
+          description: t`API error: ${ex}`,
           title: t`Failed to sign the container version.`,
         });
       });

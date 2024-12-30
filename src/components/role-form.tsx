@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import {
   ActionGroup,
   Button,
@@ -109,9 +108,7 @@ export const RoleForm = ({
           <br />
           <Divider />
           <br />
-          <Title headingLevel='h2'>
-            <Trans>Permissions</Trans>
-          </Title>
+          <Title headingLevel='h2'>{t`Permissions`}</Title>
 
           <PermissionCategories
             permissions={permissions}

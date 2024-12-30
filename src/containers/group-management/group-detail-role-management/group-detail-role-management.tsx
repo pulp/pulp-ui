@@ -152,10 +152,7 @@ const GroupDetailRoleManagement: FunctionComponent<IProps> = ({
         <strong>{group?.name}</strong>.
       </Trans>
       <br />
-      <Trans>
-        This will revoke all permissions associated with this role from the
-        group.
-      </Trans>
+      {t`This will revoke all permissions associated with this role from the group.`}
     </DeleteModal>
   );
 
@@ -165,7 +162,7 @@ const GroupDetailRoleManagement: FunctionComponent<IProps> = ({
       variant='primary'
       data-cy='add-roles'
     >
-      <Trans>Add roles</Trans>
+      {t`Add roles`}
     </Button>
   );
 

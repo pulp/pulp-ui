@@ -28,7 +28,7 @@ const AboutProject = (_props: RouteProps) => (
           />
         </CardTitle>
         <CardBody style={{ textAlign: 'center' }}>
-          {t`Pulp is an open source project that makes it easy for developers to fetch, upload, and distribute Software Packages on-prem or in the cloud.`}
+          {t`Pulp is an open source project that makes it easy for developers to fetch, upload, and distribute software packages on-prem or in the cloud.`}
         </CardBody>
       </Card>
       <Card>
@@ -49,7 +49,7 @@ const AboutProject = (_props: RouteProps) => (
             </Card>
             <Card>
               <CardTitle>{t`Issue tracker`}</CardTitle>
-              <CardBody>{t`If you find a bug or have an idea for enhancement, please feel free to file a Github issue. Thank you for contributing to improvement of the project.`}</CardBody>
+              <CardBody>{t`If you find a bug or have an idea for enhancement, please feel free to file a GitHub issue. Thank you for contributing to improvement of the project.`}</CardBody>
               <CardFooter>
                 {' '}
                 <ExternalLink href='https://github.com/pulp/pulp-ui/issues'>

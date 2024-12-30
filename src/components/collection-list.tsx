@@ -38,7 +38,7 @@ export const CollectionList = ({
 }: IProps) => {
   return (
     <>
-      <DataList aria-label={t`List of Collections`}>
+      <DataList aria-label={t`List of collections`}>
         {collections.length ? (
           collections.map((c, i) => (
             <CollectionListItem
