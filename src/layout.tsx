@@ -88,20 +88,7 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
   const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
   const { credentials, clearCredentials } = useUserContext();
 
-  let aboutModal = null;
-  let username: string;
-
-  if (credentials) {
-    username = credentials.username;
-
-    aboutModal = (
-      <PulpAboutModal
-        isOpen={aboutModalVisible}
-        onClose={() => setAboutModalVisible(false)}
-        username={username}
-      />
-    );
-  }
+  const username = credentials?.username;
 
   const Header = (
     <Masthead>
@@ -148,7 +135,13 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
   return (
     <Page isManagedSidebar header={Header} sidebar={Sidebar}>
       {children}
-      {aboutModalVisible && aboutModal}
+      {aboutModalVisible ? (
+        <PulpAboutModal
+          isOpen
+          onClose={() => setAboutModalVisible(false)}
+          username={username}
+        />
+      ) : null}
     </Page>
   );
 };
