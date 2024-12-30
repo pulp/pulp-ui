@@ -2,15 +2,16 @@ import { t } from '@lingui/core/macro';
 import { Button } from '@patternfly/react-core';
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { useEffect, useState } from 'react';
-import { AnsibleDistributionAPI } from 'src/api';
 import { Spinner, Tooltip } from 'src/components';
-import { errorMessage } from 'src/utilities';
+import { errorMessage, plugin2api } from 'src/utilities';
 
 export const LazyDistributions = ({
   emptyText,
+  plugin,
   repositoryHref,
 }: {
   emptyText?: string;
+  plugin: 'ansible' | 'file' | 'rpm';
   repositoryHref: string;
 }) => {
   const [distributions, setDistributions] = useState([]);
@@ -20,12 +21,13 @@ export const LazyDistributions = ({
   const [loading, setLoading] = useState(true);
 
   const query = (prepend?) => {
-    AnsibleDistributionAPI.list({
-      repository: repositoryHref,
-      sort: 'pulp_created',
-      page,
-      page_size: 10,
-    })
+    plugin2api(plugin)
+      .DistributionAPI.list({
+        repository: repositoryHref,
+        sort: 'pulp_created',
+        page,
+        page_size: 10,
+      })
       .then(({ data: { count, results } }) => {
         setDistributions(prepend ? [...prepend, ...results] : results);
         setCount(count);

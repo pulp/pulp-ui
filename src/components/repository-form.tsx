@@ -32,7 +32,7 @@ interface IProps {
   errorMessages: ErrorMessagesType;
   onCancel: () => void;
   onSave: ({ createDistribution }) => void;
-  plugin: 'ansible' | 'file';
+  plugin: 'ansible' | 'file' | 'rpm';
   repository: AnsibleRepositoryType;
   updateRepository: (r) => void;
 }
@@ -162,6 +162,7 @@ export const RepositoryForm = ({
         t`Content in repositories without a distribution will not be visible to clients for sync, download or search.`,
         <>
           <LazyDistributions
+            plugin={plugin}
             emptyText={t`None`}
             repositoryHref={repository.pulp_href}
           />
