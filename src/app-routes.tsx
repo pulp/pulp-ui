@@ -140,62 +140,50 @@ const routes: IRouteConfig[] = [
   {
     component: AnsibleRemoteDetail,
     path: Paths.ansible.remote.detail,
-    beta: true,
   },
   {
     component: AnsibleRemoteEdit,
     path: Paths.ansible.remote.edit,
-    beta: true,
   },
   {
     component: AnsibleRemoteList,
     path: Paths.ansible.remote.list,
-    beta: true,
   },
   {
     component: AnsibleRepositoryDetail,
     path: Paths.ansible.repository.detail,
-    beta: true,
   },
   {
     component: AnsibleRepositoryEdit,
     path: Paths.ansible.repository.edit,
-    beta: true,
   },
   {
     component: AnsibleRepositoryList,
     path: Paths.ansible.repository.list,
-    beta: true,
   },
   {
     component: FileRemoteDetail,
     path: Paths.file.remote.detail,
-    beta: true,
   },
   {
     component: FileRemoteEdit,
     path: Paths.file.remote.edit,
-    beta: true,
   },
   {
     component: FileRemoteList,
     path: Paths.file.remote.list,
-    beta: true,
   },
   {
     component: FileRepositoryDetail,
     path: Paths.file.repository.detail,
-    beta: true,
   },
   {
     component: FileRepositoryEdit,
     path: Paths.file.repository.edit,
-    beta: true,
   },
   {
     component: FileRepositoryList,
     path: Paths.file.repository.list,
-    beta: true,
   },
   {
     component: UserProfile,
