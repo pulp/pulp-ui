@@ -25,12 +25,13 @@ msgstr "(current)"
 msgid "(default)"
 msgstr "(default)"
 
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 #: src/components/collection-header.tsx
 msgid "(latest)"
 msgstr "(latest)"
 
-#: src/components/lazy-rpm-repository.tsx
+#: src/components/lazy-repositories.tsx
 msgid "(more)"
 msgstr "(more)"
 
@@ -123,8 +124,12 @@ msgid "{currentLanguage} (current)"
 msgstr "{currentLanguage} (current)"
 
 #: src/components/download-count.tsx
-msgid "{downloadCount} Downloads"
-msgstr "{downloadCount} Downloads"
+msgid "{downloadCount} downloads"
+msgstr "{downloadCount} downloads"
+
+#: src/components/download-count.tsx
+#~ msgid "{downloadCount} Downloads"
+#~ msgstr "{downloadCount} Downloads"
 
 #: src/components/legacy-role-list/legacy-role-item.tsx
 #~ msgid "{github_user} logo"
@@ -340,13 +345,15 @@ msgstr "Activity"
 #: src/containers/group-management/group-detail.tsx
 #: src/containers/group-management/group-detail.tsx
 #: src/containers/group-management/group-detail.tsx
+#: src/containers/file-repository/edit.tsx
+#: src/containers/file-remote/edit.tsx
 #: src/containers/execution-environment-detail/execution-environment-detail.tsx
 #: src/containers/ansible-repository/edit.tsx
 #: src/containers/ansible-remote/edit.tsx
 #: src/components/wizard-modal.tsx
 #: src/components/tag-manifest-modal.tsx
-#: src/components/repository-form.tsx
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Add"
 msgstr "Add"
 
@@ -379,7 +386,7 @@ msgstr "Add collection"
 #~ msgstr "Add collection remote"
 
 #: src/containers/execution-environment-list/execution-environment-list.tsx
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Add container"
 msgstr "Add container"
 
@@ -404,10 +411,12 @@ msgstr "Add container"
 #~ msgid "Add namespace"
 #~ msgstr "Add namespace"
 
+#: src/containers/file-remote/edit.tsx
 #: src/containers/ansible-remote/edit.tsx
 msgid "Add new remote"
 msgstr "Add new remote"
 
+#: src/containers/file-repository/edit.tsx
 #: src/containers/ansible-repository/edit.tsx
 msgid "Add new repository"
 msgstr "Add new repository"
@@ -428,6 +437,7 @@ msgstr "Add new tag to image"
 msgid "Add or remove content"
 msgstr "Add or remove content"
 
+#: src/actions/file-remote-create.tsx
 #: src/actions/ansible-remote-create.tsx
 msgid "Add remote"
 msgstr "Add remote"
@@ -437,6 +447,7 @@ msgstr "Add remote"
 msgid "Add remote registry"
 msgstr "Add remote registry"
 
+#: src/actions/file-repository-create.tsx
 #: src/actions/ansible-repository-create.tsx
 msgid "Add repository"
 msgstr "Add repository"
@@ -456,11 +467,11 @@ msgstr "Add selected users to group"
 #~ msgid "Add synclist"
 #~ msgstr "Add synclist"
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Add tag(s) to exclude"
 msgstr "Add tag(s) to exclude"
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Add tag(s) to include"
 msgstr "Add tag(s) to include"
 
@@ -489,6 +500,7 @@ msgstr "add-user-modal"
 #~ msgstr "aliases"
 
 #: src/containers/namespace-list/namespace-list.tsx
+#: src/containers/file-repository/tab-details.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 msgid "All"
 msgstr "All"
@@ -502,8 +514,12 @@ msgstr "All associated permissions under this role were removed."
 #~ msgstr "All policies and guidelines"
 
 #: src/components/import-modal.tsx
-msgid "All Repos"
-msgstr "All Repos"
+msgid "All repos"
+msgstr "All repos"
+
+#: src/components/import-modal.tsx
+#~ msgid "All Repos"
+#~ msgstr "All Repos"
 
 #: src/utilities/translate-locked-role.ts
 msgid "Allow all actions on a task schedule."
@@ -558,22 +574,36 @@ msgstr "Ansible copy content"
 #~ msgstr "API Error: {0}"
 
 #: src/utilities/repo-signing.ts
-msgid "API Error: {ex}"
-msgstr "API Error: {ex}"
+msgid "API error: {ex}"
+msgstr "API error: {ex}"
+
+#: src/utilities/repo-signing.ts
+#~ msgid "API Error: {ex}"
+#~ msgstr "API Error: {ex}"
 
 #: src/containers/namespace-detail/namespace-detail.tsx
 #: src/components/collection-header.tsx
 #: src/components/collection-header.tsx
-msgid "API Error: {status}"
-msgstr "API Error: {status}"
+msgid "API error: {status}"
+msgstr "API error: {status}"
+
+#: src/containers/namespace-detail/namespace-detail.tsx
+#: src/components/collection-header.tsx
+#: src/components/collection-header.tsx
+#~ msgid "API Error: {status}"
+#~ msgstr "API Error: {status}"
 
 #: src/containers/certification-dashboard/certification-dashboard.tsx
 #~ msgid "API Error: 500"
 #~ msgstr "API Error: 500"
 
 #: src/containers/namespace-detail/namespace-detail.tsx
-msgid "API Error: Failed to set deprecation."
-msgstr "API Error: Failed to set deprecation."
+msgid "API error: Failed to set deprecation."
+msgstr "API error: Failed to set deprecation."
+
+#: src/containers/namespace-detail/namespace-detail.tsx
+#~ msgid "API Error: Failed to set deprecation."
+#~ msgstr "API Error: Failed to set deprecation."
 
 #. placeholder {0}: err.status
 #. placeholder {0}: errors.response.status
@@ -642,11 +672,11 @@ msgstr "Approved"
 msgid "Arch"
 msgstr "Arch"
 
-#: src/components/delete-ansible-remote-modal.tsx
+#: src/components/delete-remote-modal.tsx
 msgid "Are you sure you want to delete the remote <0>{name}</0>?<1/><2>Note:</2> This will also delete all associated resources under this remote."
 msgstr "Are you sure you want to delete the remote <0>{name}</0>?<1/><2>Note:</2> This will also delete all associated resources under this remote."
 
-#: src/components/delete-ansible-repository-modal.tsx
+#: src/components/delete-repository-modal.tsx
 msgid "Are you sure you want to delete the repository <0>{name}</0>?<1/><2>Note:</2> This will also delete all associated resources under this repository."
 msgstr "Are you sure you want to delete the repository <0>{name}</0>?<1/><2>Note:</2> This will also delete all associated resources under this repository."
 
@@ -727,6 +757,8 @@ msgstr "Available matching namespaces"
 msgid "Back"
 msgstr "Back"
 
+#: src/containers/file-repository/tab-distributions.tsx
+#: src/containers/file-repository/tab-distributions.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
@@ -735,6 +767,7 @@ msgstr "Back"
 msgid "Base path"
 msgstr "Base path"
 
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Base version"
 msgstr "Base version"
@@ -785,6 +818,7 @@ msgstr "Built-in roles cannot be edited or deleted."
 msgid "Built-in roles cannot be edited."
 msgstr "Built-in roles cannot be edited."
 
+#: src/containers/file-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/components/remote-form.tsx
 msgid "CA certificate"
@@ -814,8 +848,8 @@ msgstr "CA certificate"
 #: src/components/import-modal.tsx
 #: src/components/group-modal.tsx
 #: src/components/delete-modal.tsx
+#: src/components/container-repository-form.tsx
 #: src/components/confirm-modal.tsx
-#: src/components/ansible-repository-form.tsx
 #: src/actions/ansible-repository-version-revert.tsx
 #: src/actions/ansible-repository-collection-version-add.tsx
 msgid "Cancel"
@@ -868,8 +902,8 @@ msgid "Certification status for collection \"{namespace} {name} v{version}\" has
 msgstr "Certification status for collection \"{namespace} {name} v{version}\" has been successfully updated."
 
 #: src/components/repository-badge.tsx
-msgid "Certified"
-msgstr "Certified"
+#~ msgid "Certified"
+#~ msgstr "Certified"
 
 #: src/containers/execution-environment-detail/execution-environment-detail-activities.tsx
 msgid "Change"
@@ -1007,6 +1041,7 @@ msgid "Clear all filters"
 msgstr "Clear all filters"
 
 #: src/containers/namespace-detail/namespace-detail.tsx
+#: src/containers/file-repository/tab-distributions.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
 #: src/containers/ansible-repository/tab-distributions.tsx
 msgid "CLI configuration"
@@ -1020,6 +1055,7 @@ msgstr "CLI configuration"
 #~ msgid "Click on the Controller URL that you want to use the above execution environment in, and it will launch that Controller's console. Log in (if necessary) and follow the steps to complete the configuration."
 #~ msgstr "Click on the Controller URL that you want to use the above execution environment in, and it will launch that Controller's console. Log in (if necessary) and follow the steps to complete the configuration."
 
+#: src/containers/file-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/components/remote-form.tsx
 msgid "Client certificate"
@@ -1035,6 +1071,7 @@ msgid "close"
 msgstr "close"
 
 #: src/components/wizard-modal.tsx
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Close"
 msgstr "Close"
@@ -1270,7 +1307,6 @@ msgstr "Command"
 #~ msgstr "Communicating with the Ansible community"
 
 #: src/containers/about-project.tsx
-#: src/components/repository-badge.tsx
 msgid "Community"
 msgstr "Community"
 
@@ -1368,11 +1404,11 @@ msgstr "Container must be synchronized with remote repository first."
 #~ msgid "Container names can only contain alphanumeric characters, \".\", \"_\", \"-\" and a up to one \"/\"."
 #~ msgstr "Container names can only contain alphanumeric characters, \".\", \"_\", \"-\" and a up to one \"/\"."
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Container names can only contain alphanumeric characters, \".\", \"_\", \"-\" and zero or one \"/\"."
 msgstr "Container names can only contain alphanumeric characters, \".\", \"_\", \"-\" and zero or one \"/\"."
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Container namespace"
 msgstr "Container namespace"
 
@@ -1405,6 +1441,7 @@ msgstr "Containers"
 msgid "Content"
 msgstr "Content"
 
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Content added"
 msgstr "Content added"
@@ -1425,14 +1462,16 @@ msgstr "Content added"
 #~ msgid "Content from roles and collections can be referenced in Ansible PlayBooks and immediately put to work. You'll find content for provisioning infrastructure, deploying applications, and all of the tasks you do everyday."
 #~ msgstr "Content from roles and collections can be referenced in Ansible PlayBooks and immediately put to work. You'll find content for provisioning infrastructure, deploying applications, and all of the tasks you do everyday."
 
-#: src/components/ansible-repository-form.tsx
+#: src/components/repository-form.tsx
 msgid "Content in repositories without a distribution will not be visible to clients for sync, download or search."
 msgstr "Content in repositories without a distribution will not be visible to clients for sync, download or search."
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Content not present in remote repository will be removed from the local repository"
 msgstr "Content not present in remote repository will be removed from the local repository"
 
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Content removed"
 msgstr "Content removed"
@@ -1505,6 +1544,7 @@ msgstr "Could not load import log"
 #~ msgid "Could not update the certification status for {0}.{1}.{2}."
 #~ msgstr "Could not update the certification status for {0}.{1}.{2}."
 
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Count"
 msgstr "Count"
@@ -1525,7 +1565,7 @@ msgid "Create"
 msgstr "Create"
 
 #. placeholder {0}: repository.name
-#: src/components/ansible-repository-form.tsx
+#: src/components/repository-form.tsx
 msgid "Create a \"{0}\" distribution"
 msgstr "Create a \"{0}\" distribution"
 
@@ -1590,6 +1630,7 @@ msgstr "Create, delete and change collection namespaces. Upload and delete colle
 #: src/containers/pulp-status.tsx
 #: src/containers/user-management/user-list.tsx
 #: src/containers/role-management/role-list.tsx
+#: src/containers/file-repository/tab-distributions.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
 #: src/containers/execution-environment/registry-list.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
@@ -1597,6 +1638,9 @@ msgstr "Create, delete and change collection namespaces. Upload and delete colle
 msgid "Created"
 msgstr "Created"
 
+#: src/containers/file-repository/tab-repository-versions.tsx
+#: src/containers/file-repository/tab-repository-versions.tsx
+#: src/containers/file-repository/list.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/list.tsx
@@ -1613,6 +1657,7 @@ msgstr "Created on"
 #~ msgid "Creation started for distribution {0}"
 #~ msgstr "Creation started for distribution {0}"
 
+#: src/containers/file-repository/edit.tsx
 #: src/containers/ansible-repository/edit.tsx
 msgid "Creation started for distribution {distributionName}"
 msgstr "Creation started for distribution {distributionName}"
@@ -1633,6 +1678,7 @@ msgstr "Creation started for distribution {distributionName}"
 #~ msgid "Curate synclist repository batch"
 #~ msgstr "Curate synclist repository batch"
 
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Current content"
 msgstr "Current content"
@@ -1653,11 +1699,11 @@ msgstr "Current tags"
 msgid "Current task"
 msgstr "Current task"
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Currently excluded tags"
 msgstr "Currently excluded tags"
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Currently included tags"
 msgstr "Currently included tags"
 
@@ -1737,6 +1783,8 @@ msgstr "Debian verbatim publish"
 #: src/containers/execution-environment-detail/base.tsx
 #: src/containers/execution-environment/registry-list.tsx
 #: src/components/delete-modal.tsx
+#: src/actions/file-repository-delete.tsx
+#: src/actions/file-remote-delete.tsx
 #: src/actions/ansible-repository-delete.tsx
 #: src/actions/ansible-remote-delete.tsx
 msgid "Delete"
@@ -1836,7 +1884,7 @@ msgstr "Delete namespace?"
 msgid "Delete remote registry?"
 msgstr "Delete remote registry?"
 
-#: src/components/delete-ansible-remote-modal.tsx
+#: src/components/delete-remote-modal.tsx
 msgid "Delete remote?"
 msgstr "Delete remote?"
 
@@ -1844,7 +1892,7 @@ msgstr "Delete remote?"
 msgid "Delete repository version"
 msgstr "Delete repository version"
 
-#: src/components/delete-ansible-repository-modal.tsx
+#: src/components/delete-repository-modal.tsx
 msgid "Delete repository?"
 msgstr "Delete repository?"
 
@@ -1897,32 +1945,52 @@ msgstr "Delete version {version} from system"
 #~ msgid "Deleting <0>{0} v{collectionVersion}</0> and its data will be lost."
 #~ msgstr "Deleting <0>{0} v{collectionVersion}</0> and its data will be lost."
 
-#. placeholder {0}: deleteCollection.collection_version.name
 #: src/components/delete-collection-modal.tsx
-msgid "Deleting <0>{0} v{collectionVersion}</0>, its data will be lost."
-msgstr "Deleting <0>{0} v{collectionVersion}</0>, its data will be lost."
+#~ msgid "Deleting <0>{0} v{collectionVersion}</0>, its data will be lost."
+#~ msgstr "Deleting <0>{0} v{collectionVersion}</0>, its data will be lost."
 
-#. placeholder {0}: namespace.name
 #: src/containers/namespace-detail/namespace-detail.tsx
-msgid "Deleting <0>{0}</0> and its data will be lost."
-msgstr "Deleting <0>{0}</0> and its data will be lost."
+#~ msgid "Deleting <0>{0}</0> and its data will be lost."
+#~ msgstr "Deleting <0>{0}</0> and its data will be lost."
 
-#. placeholder {0}: deleteCollection.collection_version.name
 #: src/components/delete-collection-modal.tsx
-msgid "Deleting <0>{0}</0>, its data will be lost."
-msgstr "Deleting <0>{0}</0>, its data will be lost."
+#~ msgid "Deleting <0>{0}</0>, its data will be lost."
+#~ msgstr "Deleting <0>{0}</0>, its data will be lost."
 
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
-msgid "Deleting <0>{digest}</0> and its data will be lost."
-msgstr "Deleting <0>{digest}</0> and its data will be lost."
+#~ msgid "Deleting <0>{digest}</0> and its data will be lost."
+#~ msgstr "Deleting <0>{digest}</0> and its data will be lost."
 
 #: src/containers/execution-environment-list/execution_environment_list.tsx
 #~ msgid "Deleting <0>{name}</0> and its data will be lost."
 #~ msgstr "Deleting <0>{name}</0> and its data will be lost."
 
 #: src/components/delete-execution-environment-modal.tsx
-msgid "Deleting <0>{selectedItem}</0> and its data will be lost."
-msgstr "Deleting <0>{selectedItem}</0> and its data will be lost."
+#~ msgid "Deleting <0>{selectedItem}</0> and its data will be lost."
+#~ msgstr "Deleting <0>{selectedItem}</0> and its data will be lost."
+
+#. placeholder {0}: deleteCollection.collection_version.name
+#: src/components/delete-collection-modal.tsx
+msgid "Deleting collection <0>{0}</0>."
+msgstr "Deleting collection <0>{0}</0>."
+
+#. placeholder {0}: deleteCollection.collection_version.name
+#: src/components/delete-collection-modal.tsx
+msgid "Deleting collection version <0>{0} v{collectionVersion}</0>."
+msgstr "Deleting collection version <0>{0} v{collectionVersion}</0>."
+
+#: src/components/delete-execution-environment-modal.tsx
+msgid "Deleting environment <0>{selectedItem}</0>."
+msgstr "Deleting environment <0>{selectedItem}</0>."
+
+#: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
+msgid "Deleting image <0>{digest}</0>."
+msgstr "Deleting image <0>{digest}</0>."
+
+#. placeholder {0}: namespace.name
+#: src/containers/namespace-detail/namespace-detail.tsx
+msgid "Deleting namespace <0>{0}</0>."
+msgstr "Deleting namespace <0>{0}</0>."
 
 #: src/components/delete-user-modal.tsx
 #~ msgid "Deleting super users is not allowed."
@@ -1975,6 +2043,7 @@ msgstr "Deprecation status update starting for collection \"{name}\"."
 #: src/containers/task-management/task-detail.tsx
 #: src/containers/role-management/role-list.tsx
 #: src/containers/group-management/group-detail-role-management/group-detail-role-management.tsx
+#: src/containers/file-repository/tab-details.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-details.tsx
@@ -1985,8 +2054,8 @@ msgstr "Deprecation status update starting for collection \"{name}\"."
 #: src/components/repository-form.tsx
 #: src/components/namespace-form.tsx
 #: src/components/multiple-repo-selector.tsx
+#: src/components/container-repository-form.tsx
 #: src/components/collection-content-list.tsx
-#: src/components/ansible-repository-form.tsx
 #: src/actions/ansible-repository-collection-version-add.tsx
 msgid "Description"
 msgstr "Description"
@@ -2013,6 +2082,8 @@ msgstr "Deselect page ({0} items)"
 msgid "Detail"
 msgstr "Detail"
 
+#: src/containers/file-repository/detail.tsx
+#: src/containers/file-remote/detail.tsx
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/ansible-remote/detail.tsx
 #: src/components/role-form.tsx
@@ -2033,6 +2104,7 @@ msgstr "Digest"
 #~ msgid "Digital accessibility"
 #~ msgstr "Digital accessibility"
 
+#: src/containers/file-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 msgid "Disabled"
 msgstr "Disabled"
@@ -2049,14 +2121,17 @@ msgstr "Disabled"
 #~ msgid "Distribution URL"
 #~ msgstr "Distribution URL"
 
+#: src/containers/file-repository/tab-distributions.tsx
+#: src/containers/file-repository/detail.tsx
 #: src/containers/collection-detail/collection-distributions.tsx
 #: src/containers/ansible-repository/tab-distributions.tsx
 #: src/containers/ansible-repository/detail.tsx
+#: src/components/repository-form.tsx
 #: src/components/collection-header.tsx
-#: src/components/ansible-repository-form.tsx
 msgid "Distributions"
 msgstr "Distributions"
 
+#: src/containers/file-repository/tab-distributions.tsx
 #: src/containers/ansible-repository/tab-distributions.tsx
 msgid "Distributions could not be displayed."
 msgstr "Distributions could not be displayed."
@@ -2129,6 +2204,7 @@ msgstr "Download client certification file"
 #~ msgid "Download code"
 #~ msgstr "Download code"
 
+#: src/containers/file-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/components/remote-form.tsx
 msgid "Download concurrency"
@@ -2197,6 +2273,8 @@ msgstr "Dropdown"
 #: src/containers/user-management/user-detail.tsx
 #: src/containers/settings/user-profile.tsx
 #: src/containers/role-management/role-list.tsx
+#: src/containers/file-repository/edit.tsx
+#: src/containers/file-remote/edit.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
 #: src/containers/execution-environment-detail/execution-environment-detail.tsx
 #: src/containers/execution-environment-detail/base.tsx
@@ -2204,12 +2282,14 @@ msgstr "Dropdown"
 #: src/containers/edit-namespace/edit-namespace.tsx
 #: src/containers/ansible-repository/edit.tsx
 #: src/containers/ansible-remote/edit.tsx
+#: src/actions/file-repository-edit.tsx
+#: src/actions/file-remote-edit.tsx
 #: src/actions/ansible-repository-edit.tsx
 #: src/actions/ansible-remote-edit.tsx
 msgid "Edit"
 msgstr "Edit"
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Edit container"
 msgstr "Edit container"
 
@@ -2283,6 +2363,7 @@ msgid "Email"
 msgstr "Email"
 
 #: src/containers/pulp-status.tsx
+#: src/containers/file-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 msgid "Enabled"
 msgstr "Enabled"
@@ -2471,7 +2552,7 @@ msgstr "Error message:"
 #~ msgid "Error updating users."
 #~ msgstr "Error updating users."
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Error when saving registry."
 msgstr "Error when saving registry."
 
@@ -2589,13 +2670,16 @@ msgstr "Failed to copy collection version."
 #~ msgstr "Failed to delete remote registry {name}"
 
 #: src/utilities/repository-distro.ts
+#: src/utilities/plugin-repository-base-path.ts
 msgid "Failed to find a distribution for repository {name}"
 msgstr "Failed to find a distribution for repository {name}"
 
 #: src/utilities/repository-distro.ts
+#: src/utilities/plugin-repository-base-path.ts
 msgid "Failed to find repository {name}"
 msgstr "Failed to find repository {name}"
 
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Failed to find repository version"
 msgstr "Failed to find repository version"
@@ -2612,6 +2696,7 @@ msgstr "Failed to find repository version"
 #~ msgid "Failed to import role"
 #~ msgstr "Failed to import role"
 
+#: src/actions/file-repository-delete.tsx
 #: src/actions/ansible-repository-delete.tsx
 msgid "Failed to list distributions, removing only the repository."
 msgstr "Failed to list distributions, removing only the repository."
@@ -2640,11 +2725,10 @@ msgstr "Failed to load distributions: {error}"
 #~ msgid "Failed to load pulp_id of collection repository."
 #~ msgstr "Failed to load pulp_id of collection repository."
 
-#: src/components/ansible-repository-form.tsx
+#: src/components/repository-form.tsx
 msgid "Failed to load remotes: {remotesError}"
 msgstr "Failed to load remotes: {remotesError}"
 
-#: src/components/lazy-rpm-repository.tsx
 #: src/components/lazy-repositories.tsx
 msgid "Failed to load repositories: {error}"
 msgstr "Failed to load repositories: {error}"
@@ -2706,14 +2790,17 @@ msgstr "Failed to query repositories."
 msgid "Failed to remove {namespace}.{name} v{version} from repository \"{repositoryName}\"."
 msgstr "Failed to remove {namespace}.{name} v{version} from repository \"{repositoryName}\"."
 
+#: src/actions/file-repository-delete.tsx
 #: src/actions/ansible-repository-delete.tsx
 msgid "Failed to remove distribution {name}"
 msgstr "Failed to remove distribution {name}"
 
+#: src/actions/file-remote-delete.tsx
 #: src/actions/ansible-remote-delete.tsx
 msgid "Failed to remove remote {name}"
 msgstr "Failed to remove remote {name}"
 
+#: src/actions/file-repository-delete.tsx
 #: src/actions/ansible-repository-delete.tsx
 msgid "Failed to remove repository {name}"
 msgstr "Failed to remove repository {name}"
@@ -2767,6 +2854,7 @@ msgstr "Failed to sign the container version."
 msgid "Failed to sign the version."
 msgstr "Failed to sign the version."
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Failed to sync repository \"{name}\""
 msgstr "Failed to sync repository \"{name}\""
@@ -2860,6 +2948,7 @@ msgstr "First name"
 msgid "Follow logs"
 msgstr "Follow logs"
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Force a sync to happen."
 msgstr "Force a sync to happen."
@@ -3127,6 +3216,7 @@ msgstr "Hide the signature"
 msgid "I understand that this action cannot be undone."
 msgstr "I understand that this action cannot be undone."
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "If selected, all content that is not present in the remote repository will be removed from the local repository; otherwise, sync will add missing content."
 msgstr "If selected, all content that is not present in the remote repository will be removed from the local repository; otherwise, sync will add missing content."
@@ -3140,8 +3230,12 @@ msgstr "If selected, TLS peer validation must be performed."
 #~ msgstr "If the Controller is not listed in the table, check settings.py."
 
 #: src/containers/about-project.tsx
-msgid "If you find a bug or have an idea for enhancement, please feel free to file a Github issue. Thank you for contributing to improvement of the project."
-msgstr "If you find a bug or have an idea for enhancement, please feel free to file a Github issue. Thank you for contributing to improvement of the project."
+#~ msgid "If you find a bug or have an idea for enhancement, please feel free to file a Github issue. Thank you for contributing to improvement of the project."
+#~ msgstr "If you find a bug or have an idea for enhancement, please feel free to file a Github issue. Thank you for contributing to improvement of the project."
+
+#: src/containers/about-project.tsx
+msgid "If you find a bug or have an idea for enhancement, please feel free to file a GitHub issue. Thank you for contributing to improvement of the project."
+msgstr "If you find a bug or have an idea for enhancement, please feel free to file a GitHub issue. Thank you for contributing to improvement of the project."
 
 #: src/components/remote-form.tsx
 msgid "If you populate this requirements file, this remote will only sync collections from this file, otherwise all collections will be synchronized."
@@ -3217,7 +3311,7 @@ msgstr "Import log"
 msgid "Imports"
 msgstr "Imports"
 
-#: src/components/ansible-repository-form.tsx
+#: src/components/repository-form.tsx
 msgid "In order to retain all versions, leave this field blank."
 msgstr "In order to retain all versions, leave this field blank."
 
@@ -3225,7 +3319,7 @@ msgstr "In order to retain all versions, leave this field blank."
 msgid "Include all dependencies when syncing a collection."
 msgstr "Include all dependencies when syncing a collection."
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Including all tags might transfer a lot of data."
 msgstr "Including all tags might transfer a lot of data."
 
@@ -3367,9 +3461,11 @@ msgstr "keywords"
 msgid "Keywords"
 msgstr "Keywords"
 
+#: src/containers/file-repository/tab-details.tsx
+#: src/containers/file-repository/list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 #: src/containers/ansible-repository/list.tsx
-#: src/components/ansible-repository-form.tsx
+#: src/components/repository-form.tsx
 msgid "Labels"
 msgstr "Labels"
 
@@ -3409,6 +3505,7 @@ msgstr "Last updated <0/>"
 
 #. placeholder {0}: lastSynced(item)
 #. placeholder {0}: lastSynced({ last_sync_task })
+#: src/containers/file-repository/detail.tsx
 #: src/containers/ansible-repository/detail.tsx
 #: src/components/execution-environment-header.tsx
 msgid "Last updated from registry {0}"
@@ -3486,8 +3583,13 @@ msgstr "Link URL"
 
 #: src/containers/search/search.tsx
 #: src/components/collection-list.tsx
-msgid "List of Collections"
-msgstr "List of Collections"
+msgid "List of collections"
+msgstr "List of collections"
+
+#: src/containers/search/search.tsx
+#: src/components/collection-list.tsx
+#~ msgid "List of Collections"
+#~ msgstr "List of Collections"
 
 #: src/containers/legacy-namespaces/legacy-namespaces.tsx
 #~ msgid "List of Legacy Namespaces"
@@ -3529,8 +3631,12 @@ msgid "Local"
 msgstr "Local"
 
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Log In"
-msgstr "Log In"
+msgid "Log in"
+msgstr "Log in"
+
+#: src/components/patternfly-wrappers/l10n.tsx
+#~ msgid "Log In"
+#~ msgstr "Log In"
 
 #: src/containers/login/login.tsx
 #~ msgid "Log in to your account"
@@ -3551,12 +3657,12 @@ msgstr "Logo URL"
 msgid "Logout"
 msgstr "Logout"
 
-#: src/components/ansible-repository-form.tsx
-#: src/components/ansible-repository-form.tsx
+#: src/components/repository-form.tsx
+#: src/components/repository-form.tsx
 msgid "Make private"
 msgstr "Make private"
 
-#: src/components/ansible-repository-form.tsx
+#: src/components/repository-form.tsx
 msgid "Make the repository private."
 msgstr "Make the repository private."
 
@@ -3593,6 +3699,7 @@ msgstr "Manifest lists are not currently supported on this screen, please use th
 msgid "Message"
 msgstr "Message"
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Mirror"
 msgstr "Mirror"
@@ -3640,6 +3747,8 @@ msgstr "My profile"
 #: src/containers/namespace-list/namespace-list.tsx
 #: src/containers/group-management/group-detail-role-management/group-detail-role-management.tsx
 #: src/containers/group-management/group-detail-role-management/group-detail-role-management.tsx
+#: src/containers/file-repository/tab-distributions.tsx
+#: src/containers/file-repository/tab-distributions.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
 #: src/containers/execution-environment/registry-list.tsx
 #: src/containers/execution-environment/registry-list.tsx
@@ -3657,7 +3766,6 @@ msgstr "My profile"
 #: src/components/select-group.tsx
 #: src/components/role-form.tsx
 #: src/components/repository-form.tsx
-#: src/components/repository-form.tsx
 #: src/components/remote-form.tsx
 #: src/components/namespace-modal.tsx
 #: src/components/namespace-form.tsx
@@ -3666,10 +3774,11 @@ msgstr "My profile"
 #: src/components/import-list.tsx
 #: src/components/import-list.tsx
 #: src/components/group-modal.tsx
+#: src/components/container-repository-form.tsx
+#: src/components/container-repository-form.tsx
 #: src/components/collection-usedby-dependencies-list.tsx
 #: src/components/collection-filter.ts
 #: src/components/collection-content-list.tsx
-#: src/components/ansible-repository-form.tsx
 msgid "Name"
 msgstr "Name"
 
@@ -3786,14 +3895,16 @@ msgstr "Namespaces will appear once created"
 #~ msgid "Namespaces will appear once created or roles are imported"
 #~ msgstr "Namespaces will appear once created or roles are imported"
 
+#: src/containers/approvals/approvals.tsx
+#: src/containers/approvals/approvals.tsx
 #: src/components/approval-row.tsx
 msgid "Needs review"
 msgstr "Needs review"
 
 #: src/containers/approvals/approvals.tsx
 #: src/containers/approvals/approvals.tsx
-msgid "Needs Review"
-msgstr "Needs Review"
+#~ msgid "Needs Review"
+#~ msgstr "Needs Review"
 
 #: src/components/approval-row.tsx
 msgid "Needs signature and review"
@@ -3884,6 +3995,7 @@ msgstr "No data"
 msgid "No dependencies"
 msgstr "No dependencies"
 
+#: src/containers/file-repository/tab-distributions.tsx
 #: src/containers/ansible-repository/tab-distributions.tsx
 msgid "No distributions created"
 msgstr "No distributions created"
@@ -4002,14 +4114,17 @@ msgstr "No remote registries yet"
 #~ msgid "No remote repositories yet"
 #~ msgstr "No remote repositories yet"
 
+#: src/containers/file-remote/list.tsx
 #: src/containers/ansible-remote/list.tsx
 msgid "No remotes yet"
 msgstr "No remotes yet"
 
+#: src/containers/file-repository/list.tsx
 #: src/containers/ansible-repository/list.tsx
 msgid "No repositories yet"
 msgstr "No repositories yet"
 
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "No repository versions yet"
 msgstr "No repository versions yet"
@@ -4069,6 +4184,14 @@ msgstr "No version of {fqn} exists that matches {version_range}."
 #~ msgstr "No versions"
 
 #: src/containers/pulp-status.tsx
+#: src/containers/file-repository/tab-repository-versions.tsx
+#: src/containers/file-repository/tab-repository-versions.tsx
+#: src/containers/file-repository/tab-details.tsx
+#: src/containers/file-repository/tab-details.tsx
+#: src/containers/file-repository/list.tsx
+#: src/containers/file-remote/tab-details.tsx
+#: src/containers/file-remote/tab-details.tsx
+#: src/containers/file-remote/tab-details.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-details.tsx
@@ -4078,11 +4201,11 @@ msgstr "No version of {fqn} exists that matches {version_range}."
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/components/repository-form.tsx
-#: src/components/repository-form.tsx
 #: src/components/pulp-labels.tsx
 #: src/components/pulp-labels.tsx
 #: src/components/copy-url.tsx
-#: src/components/ansible-repository-form.tsx
+#: src/components/container-repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "None"
 msgstr "None"
 
@@ -4146,10 +4269,12 @@ msgstr "Online content apps"
 msgid "Online workers"
 msgstr "Online workers"
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Only perform the sync if changes are reported by the remote server."
 msgstr "Only perform the sync if changes are reported by the remote server."
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Only perform the sync if changes are reported by the remote server. To force a sync to happen, deselect this option."
 msgstr "Only perform the sync if changes are reported by the remote server. To force a sync to happen, deselect this option."
@@ -4186,6 +4311,7 @@ msgstr "Only perform the sync if changes are reported by the remote server. To f
 #~ msgid "Opt out of Wisdom"
 #~ msgstr "Opt out of Wisdom"
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Optimize"
 msgstr "Optimize"
@@ -4482,8 +4608,8 @@ msgid "Progress messages"
 msgstr "Progress messages"
 
 #: src/actions/ansible-repository-delete.tsx
-msgid "Protected repositories cannot be deleted."
-msgstr "Protected repositories cannot be deleted."
+#~ msgid "Protected repositories cannot be deleted."
+#~ msgstr "Protected repositories cannot be deleted."
 
 #: src/components/cards/collection-card.tsx
 #: src/components/collection-list/collection-list-item.tsx
@@ -4516,6 +4642,7 @@ msgstr "Provided by <0>{nsTitle}</0>"
 msgid "Proxy password"
 msgstr "Proxy password"
 
+#: src/containers/file-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/components/remote-form.tsx
 msgid "Proxy URL"
@@ -4530,7 +4657,6 @@ msgid "Public key"
 msgstr "Public key"
 
 #: src/containers/execution-environment-detail/execution-environment-detail-images.tsx
-#: src/components/repository-badge.tsx
 msgid "Published"
 msgstr "Published"
 
@@ -4538,7 +4664,7 @@ msgstr "Published"
 #~ msgid "Pull distribution"
 #~ msgstr "Pull distribution"
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Pull only latest?"
 msgstr "Pull only latest?"
 
@@ -4612,8 +4738,12 @@ msgstr "Pull this image"
 #~ msgstr "Pulp container: Untage image"
 
 #: src/components/pulp-about-modal.tsx
-msgid "Pulp Core Version"
-msgstr "Pulp Core Version"
+msgid "Pulp core version"
+msgstr "Pulp core version"
+
+#: src/components/pulp-about-modal.tsx
+#~ msgid "Pulp Core Version"
+#~ msgstr "Pulp Core Version"
 
 #: src/utilities/translate-task.ts
 msgid "Pulp export"
@@ -4624,25 +4754,39 @@ msgid "Pulp import"
 msgstr "Pulp import"
 
 #: src/containers/about-project.tsx
-msgid "Pulp is an open source project that makes it easy for developers to fetch, upload, and distribute Software Packages on-prem or in the cloud."
-msgstr "Pulp is an open source project that makes it easy for developers to fetch, upload, and distribute Software Packages on-prem or in the cloud."
+msgid "Pulp is an open source project that makes it easy for developers to fetch, upload, and distribute software packages on-prem or in the cloud."
+msgstr "Pulp is an open source project that makes it easy for developers to fetch, upload, and distribute software packages on-prem or in the cloud."
+
+#: src/containers/about-project.tsx
+#~ msgid "Pulp is an open source project that makes it easy for developers to fetch, upload, and distribute Software Packages on-prem or in the cloud."
+#~ msgstr "Pulp is an open source project that makes it easy for developers to fetch, upload, and distribute Software Packages on-prem or in the cloud."
 
 #: src/containers/ansible-repository/list.tsx
+msgid "Pulp label"
+msgstr "Pulp label"
+
+#: src/containers/file-repository/list.tsx
 msgid "Pulp Label"
 msgstr "Pulp Label"
 
+#: src/components/repository-form.tsx
+msgid "Pulp labels in the form of 'key:value'."
+msgstr "Pulp labels in the form of 'key:value'."
+
 #: src/components/ansible-repository-form.tsx
-msgid "Pulp Labels in the form of 'key:value'."
-msgstr "Pulp Labels in the form of 'key:value'."
+#~ msgid "Pulp Labels in the form of 'key:value'."
+#~ msgstr "Pulp Labels in the form of 'key:value'."
 
 #: src/containers/about-project.tsx
+#: src/components/pulp-about-modal.tsx
 msgid "Pulp logo"
 msgstr "Pulp logo"
 
 #: src/components/pulp-about-modal.tsx
-msgid "Pulp Logo"
-msgstr "Pulp Logo"
+#~ msgid "Pulp Logo"
+#~ msgstr "Pulp Logo"
 
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Pulp type"
 msgstr "Pulp type"
@@ -4716,12 +4860,20 @@ msgid "Purge tasks"
 msgstr "Purge tasks"
 
 #: src/containers/task-management/task-list-view.tsx
-msgid "Purge Tasks could not be started"
-msgstr "Purge Tasks could not be started"
+msgid "Purge tasks could not be started"
+msgstr "Purge tasks could not be started"
 
 #: src/containers/task-management/task-list-view.tsx
-msgid "Purge Tasks started"
-msgstr "Purge Tasks started"
+#~ msgid "Purge Tasks could not be started"
+#~ msgstr "Purge Tasks could not be started"
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Purge tasks started"
+msgstr "Purge tasks started"
+
+#: src/containers/task-management/task-list-view.tsx
+#~ msgid "Purge Tasks started"
+#~ msgstr "Purge Tasks started"
 
 #: src/utilities/translate-locked-role.ts
 msgid "Push and change containers."
@@ -4792,13 +4944,15 @@ msgstr "Python package upload"
 #~ msgid "Quality score"
 #~ msgstr "Quality score"
 
+#: src/containers/file-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
+#: src/components/remote-form.tsx
 msgid "Rate limit"
 msgstr "Rate limit"
 
 #: src/components/remote-form.tsx
-msgid "Rate Limit"
-msgstr "Rate Limit"
+#~ msgid "Rate Limit"
+#~ msgstr "Rate Limit"
 
 #: src/components/markdown-editor.tsx
 msgid "Raw Markdown"
@@ -4837,11 +4991,11 @@ msgstr "Recursive remove content"
 msgid "Redis connection"
 msgstr "Redis connection"
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Registries list could not be displayed."
 msgstr "Registries list could not be displayed."
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Registry"
 msgstr "Registry"
 
@@ -4867,7 +5021,6 @@ msgstr "rejected"
 
 #: src/containers/approvals/approvals.tsx
 #: src/containers/approvals/approvals.tsx
-#: src/components/repository-badge.tsx
 #: src/components/approval-row.tsx
 msgid "Rejected"
 msgstr "Rejected"
@@ -4890,31 +5043,39 @@ msgstr "Rejected"
 #~ msgstr "Released <0/>"
 
 #: src/containers/search/multi-search.tsx
+#: src/containers/file-repository/tab-details.tsx
+#: src/containers/file-repository/list.tsx
 #: src/containers/execution-environment-list/execution-environment-list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 #: src/containers/ansible-repository/list.tsx
-#: src/components/ansible-repository-form.tsx
+#: src/components/repository-form.tsx
 msgid "Remote"
 msgstr "Remote"
 
+#: src/containers/file-remote/edit.tsx
+#: src/containers/file-remote/detail.tsx
 #: src/containers/ansible-remote/edit.tsx
 #: src/containers/ansible-remote/detail.tsx
 msgid "Remote could not be displayed."
 msgstr "Remote could not be displayed."
 
+#: src/containers/file-remote/tab-details.tsx
+#: src/containers/file-remote/list.tsx
+#: src/containers/file-remote/list.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/list.tsx
 #: src/containers/ansible-remote/list.tsx
 msgid "Remote name"
 msgstr "Remote name"
 
+#: src/menu.tsx
 #: src/containers/execution-environment/registry-list.tsx
 msgid "Remote registries"
 msgstr "Remote registries"
 
 #: src/menu.tsx
-msgid "Remote Registries"
-msgstr "Remote Registries"
+#~ msgid "Remote Registries"
+#~ msgstr "Remote Registries"
 
 #: src/containers/execution-environment/registry-list.tsx
 msgid "Remote registry \"{name}\" could not be deleted."
@@ -4933,16 +5094,22 @@ msgstr "Remote registry \"{name}\" has been successfully deleted."
 #~ msgstr "Remote repositories will appear once added"
 
 #: src/menu.tsx
+#: src/menu.tsx
+#: src/containers/file-remote/list.tsx
+#: src/containers/file-remote/edit.tsx
+#: src/containers/file-remote/detail.tsx
 #: src/containers/ansible-remote/list.tsx
 #: src/containers/ansible-remote/edit.tsx
 #: src/containers/ansible-remote/detail.tsx
 msgid "Remotes"
 msgstr "Remotes"
 
+#: src/containers/file-remote/list.tsx
 #: src/containers/ansible-remote/list.tsx
 msgid "Remotes could not be displayed."
 msgstr "Remotes could not be displayed."
 
+#: src/containers/file-remote/list.tsx
 #: src/containers/ansible-remote/list.tsx
 msgid "Remotes will appear once created."
 msgstr "Remotes will appear once created."
@@ -4951,14 +5118,17 @@ msgstr "Remotes will appear once created."
 msgid "Removal of {namespace}.{name} v{version} from repository \"{repositoryName}\" started."
 msgstr "Removal of {namespace}.{name} v{version} from repository \"{repositoryName}\" started."
 
+#: src/actions/file-repository-delete.tsx
 #: src/actions/ansible-repository-delete.tsx
 msgid "Removal started for distribution {name}"
 msgstr "Removal started for distribution {name}"
 
+#: src/actions/file-remote-delete.tsx
 #: src/actions/ansible-remote-delete.tsx
 msgid "Removal started for remote {name}"
 msgstr "Removal started for remote {name}"
 
+#: src/actions/file-repository-delete.tsx
 #: src/actions/ansible-repository-delete.tsx
 msgid "Removal started for repository {name}"
 msgstr "Removal started for repository {name}"
@@ -5014,6 +5184,16 @@ msgstr "Remove user from group?"
 msgid "Remove version {version} from repository"
 msgstr "Remove version {version} from repository"
 
+#. placeholder {0}: deleteCollection.collection_version.name
+#: src/components/delete-collection-modal.tsx
+msgid "Removing collection <0>{0}</0> from repository <1>{deleteFromRepo}</1>."
+msgstr "Removing collection <0>{0}</0> from repository <1>{deleteFromRepo}</1>."
+
+#. placeholder {0}: deleteCollection.collection_version.name
+#: src/components/delete-collection-modal.tsx
+msgid "Removing collection version <0>{0} v{collectionVersion}</0> from repository <1>{deleteFromRepo}</1>."
+msgstr "Removing collection version <0>{0} v{collectionVersion}</0> from repository <1>{deleteFromRepo}</1>."
+
 #: src/containers/task-management/task-list-view.tsx
 msgid "Repair"
 msgstr "Repair"
@@ -5023,12 +5203,20 @@ msgid "Repair all artifacts"
 msgstr "Repair all artifacts"
 
 #: src/containers/task-management/task-list-view.tsx
-msgid "Repair Artifact Storage could not be started"
-msgstr "Repair Artifact Storage could not be started"
+msgid "Repair artifact storage could not be started"
+msgstr "Repair artifact storage could not be started"
 
 #: src/containers/task-management/task-list-view.tsx
-msgid "Repair Artifact Storage started"
-msgstr "Repair Artifact Storage started"
+#~ msgid "Repair Artifact Storage could not be started"
+#~ msgstr "Repair Artifact Storage could not be started"
+
+#: src/containers/task-management/task-list-view.tsx
+msgid "Repair artifact storage started"
+msgstr "Repair artifact storage started"
+
+#: src/containers/task-management/task-list-view.tsx
+#~ msgid "Repair Artifact Storage started"
+#~ msgstr "Repair Artifact Storage started"
 
 #: src/utilities/translate-task.ts
 msgid "Repair repository version"
@@ -5051,6 +5239,11 @@ msgstr "Repo"
 #~ msgstr "Repo URL"
 
 #: src/menu.tsx
+#: src/menu.tsx
+#: src/containers/file-repository/list.tsx
+#: src/containers/file-repository/edit.tsx
+#: src/containers/file-repository/detail.tsx
+#: src/containers/file-remote/tab-details.tsx
 #: src/containers/ansible-repository/list.tsx
 #: src/containers/ansible-repository/edit.tsx
 #: src/containers/ansible-repository/detail.tsx
@@ -5059,10 +5252,12 @@ msgstr "Repo"
 msgid "Repositories"
 msgstr "Repositories"
 
+#: src/containers/file-repository/list.tsx
 #: src/containers/ansible-repository/list.tsx
 msgid "Repositories could not be displayed."
 msgstr "Repositories could not be displayed."
 
+#: src/containers/file-repository/list.tsx
 #: src/containers/ansible-repository/list.tsx
 msgid "Repositories will appear once created."
 msgstr "Repositories will appear once created."
@@ -5086,6 +5281,8 @@ msgstr "Repository"
 msgid "Repository {repoName} not found."
 msgstr "Repository {repoName} not found."
 
+#: src/containers/file-repository/edit.tsx
+#: src/containers/file-repository/detail.tsx
 #: src/containers/ansible-repository/edit.tsx
 #: src/containers/ansible-repository/detail.tsx
 msgid "Repository could not be displayed."
@@ -5099,6 +5296,9 @@ msgstr "Repository could not be displayed."
 #~ msgid "Repository Management"
 #~ msgstr "Repository Management"
 
+#: src/containers/file-repository/tab-details.tsx
+#: src/containers/file-repository/list.tsx
+#: src/containers/file-repository/list.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 #: src/containers/ansible-repository/list.tsx
 #: src/containers/ansible-repository/list.tsx
@@ -5109,18 +5309,22 @@ msgstr "Repository name"
 #~ msgid "Repository name {originRepoName} not found."
 #~ msgstr "Repository name {originRepoName} not found."
 
+#: src/containers/file-repository/tab-details.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 msgid "Repository URL"
 msgstr "Repository URL"
 
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Repository versions"
 msgstr "Repository versions"
 
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Repository versions could not be displayed."
 msgstr "Repository versions could not be displayed."
 
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Repository versions will appear once the repository is modified."
 msgstr "Repository versions will appear once the repository is modified."
@@ -5158,10 +5362,11 @@ msgstr "Reset to browser defaults"
 msgid "Resources"
 msgstr "Resources"
 
-#: src/components/ansible-repository-form.tsx
+#: src/components/repository-form.tsx
 msgid "Retained number of versions"
 msgstr "Retained number of versions"
 
+#: src/containers/file-repository/tab-details.tsx
 #: src/containers/ansible-repository/tab-details.tsx
 msgid "Retained version count"
 msgstr "Retained version count"
@@ -5342,12 +5547,20 @@ msgid "RPMs"
 msgstr "RPMs"
 
 #: src/utilities/translate-task.ts
-msgid "Ruby Gems publish"
-msgstr "Ruby Gems publish"
+msgid "Ruby gems publish"
+msgstr "Ruby gems publish"
 
 #: src/utilities/translate-task.ts
-msgid "Ruby Gems sync"
-msgstr "Ruby Gems sync"
+#~ msgid "Ruby Gems publish"
+#~ msgstr "Ruby Gems publish"
+
+#: src/utilities/translate-task.ts
+msgid "Ruby gems sync"
+msgstr "Ruby gems sync"
+
+#: src/utilities/translate-task.ts
+#~ msgid "Ruby Gems sync"
+#~ msgstr "Ruby Gems sync"
 
 #: src/containers/task-management/task-list-view.tsx
 #: src/components/status-indicator.tsx
@@ -5367,7 +5580,7 @@ msgstr "Running"
 #: src/components/repository-form.tsx
 #: src/components/remote-form.tsx
 #: src/components/group-modal.tsx
-#: src/components/ansible-repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Save"
 msgstr "Save"
 
@@ -5457,11 +5670,11 @@ msgstr "Select a collection"
 msgid "Select a group"
 msgstr "Select a group"
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Select a registry"
 msgstr "Select a registry"
 
-#: src/components/ansible-repository-form.tsx
+#: src/components/repository-form.tsx
 msgid "Select a remote"
 msgstr "Select a remote"
 
@@ -5573,7 +5786,7 @@ msgstr "Server error. Please come back later."
 #~ msgid "Server version"
 #~ msgstr "Server version"
 
-#: src/components/ansible-repository-form.tsx
+#: src/components/repository-form.tsx
 msgid "Setting a remote allows a repository to sync from elsewhere."
 msgstr "Setting a remote allows a repository to sync from elsewhere."
 
@@ -5631,13 +5844,15 @@ msgid "Show content"
 msgstr "Show content"
 
 #: src/components/pulp-code-block.tsx
+#: src/components/patternfly-wrappers/l10n.tsx
+#: src/components/patternfly-wrappers/l10n.tsx
 msgid "Show less"
 msgstr "Show less"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 #: src/components/patternfly-wrappers/l10n.tsx
-msgid "Show Less"
-msgstr "Show Less"
+#~ msgid "Show Less"
+#~ msgstr "Show Less"
 
 #: src/components/pulp-code-block.tsx
 msgid "Show more"
@@ -5731,14 +5946,15 @@ msgstr "Sign version {version}"
 msgid "Signature"
 msgstr "Signature"
 
+#: src/menu.tsx
 #: src/containers/signature-keys/list.tsx
 #: src/containers/signature-keys/list.tsx
 msgid "Signature keys"
 msgstr "Signature keys"
 
 #: src/menu.tsx
-msgid "Signature Keys"
-msgstr "Signature Keys"
+#~ msgid "Signature Keys"
+#~ msgstr "Signature Keys"
 
 #: src/containers/signature-keys/list.tsx
 msgid "Signature keys could not be displayed."
@@ -5833,12 +6049,16 @@ msgid "SSO URL"
 msgstr "SSO URL"
 
 #: src/components/repository-badge.tsx
-msgid "Staging"
-msgstr "Staging"
+#~ msgid "Staging"
+#~ msgstr "Staging"
 
 #: src/components/import-modal.tsx
-msgid "Staging Repos"
-msgstr "Staging Repos"
+msgid "Staging repos"
+msgstr "Staging repos"
+
+#: src/components/import-modal.tsx
+#~ msgid "Staging Repos"
+#~ msgstr "Staging Repos"
 
 #: src/components/patternfly-wrappers/l10n.tsx
 #~ msgid "Start editing"
@@ -5937,11 +6157,13 @@ msgid "Successfully copied to clipboard!"
 msgstr "Successfully copied to clipboard!"
 
 #. placeholder {0}: data.name
+#: src/containers/file-remote/edit.tsx
 #: src/containers/ansible-remote/edit.tsx
 msgid "Successfully created remote {0}"
 msgstr "Successfully created remote {0}"
 
 #. placeholder {0}: data.name
+#: src/containers/file-repository/edit.tsx
 #: src/containers/ansible-repository/edit.tsx
 msgid "Successfully created repository {0}"
 msgstr "Successfully created repository {0}"
@@ -6012,6 +6234,8 @@ msgstr "Switch to dark mode"
 msgid "Switch to light mode"
 msgstr "Switch to light mode"
 
+#: src/actions/file-repository-sync.tsx
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Sync"
@@ -6034,6 +6258,7 @@ msgstr "Sync from registry"
 #~ msgid "Sync initiated for {name}"
 #~ msgstr "Sync initiated for {name}"
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Sync repository \"{name}\""
 msgstr "Sync repository \"{name}\""
@@ -6060,6 +6285,7 @@ msgstr "Sync started for container \"{name}\"."
 msgid "Sync started for remote registry \"{name}\"."
 msgstr "Sync started for remote registry \"{name}\"."
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Sync started for repository \"{name}\"."
 msgstr "Sync started for repository \"{name}\"."
@@ -6068,10 +6294,12 @@ msgstr "Sync started for repository \"{name}\"."
 msgid "Sync status"
 msgstr "Sync status"
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Sync task is already queued."
 msgstr "Sync task is already queued."
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "Sync will only add missing content"
 msgstr "Sync will only add missing content"
@@ -6156,14 +6384,15 @@ msgstr "Task groups"
 msgid "Task list"
 msgstr "Task list"
 
+#: src/menu.tsx
 #: src/containers/task-management/task-list-view.tsx
 #: src/containers/task-management/task-detail.tsx
 msgid "Task management"
 msgstr "Task management"
 
 #: src/menu.tsx
-msgid "Task Management"
-msgstr "Task Management"
+#~ msgid "Task Management"
+#~ msgstr "Task Management"
 
 #: src/containers/task-management/task-list-view.tsx
 #: src/containers/task-management/task-list-view.tsx
@@ -6258,8 +6487,8 @@ msgid "The collection exists in too many repositories. Some repositories may not
 msgstr "The collection exists in too many repositories. Some repositories may not be disabled and preselected correctly."
 
 #: src/components/delete-collection-modal.tsx
-msgid "The collection will be deleted only from repository {deleteFromRepo}."
-msgstr "The collection will be deleted only from repository {deleteFromRepo}."
+#~ msgid "The collection will be deleted only from repository {deleteFromRepo}."
+#~ msgstr "The collection will be deleted only from repository {deleteFromRepo}."
 
 #: src/components/import-modal.tsx
 msgid "The collection you have selected does not match this namespace."
@@ -6321,8 +6550,12 @@ msgid "The selected roles will be added to this specific Ansible repository."
 msgstr "The selected roles will be added to this specific Ansible repository."
 
 #: src/containers/execution-environment-detail/execution-environment-detail-access.tsx
-msgid "The selected roles will be added to this specific Container."
-msgstr "The selected roles will be added to this specific Container."
+msgid "The selected roles will be added to this specific container."
+msgstr "The selected roles will be added to this specific container."
+
+#: src/containers/execution-environment-detail/execution-environment-detail-access.tsx
+#~ msgid "The selected roles will be added to this specific Container."
+#~ msgstr "The selected roles will be added to this specific Container."
 
 #: src/containers/execution-environment-detail/execution-environment-detail-access.tsx
 #~ msgid "The selected roles will be added to this specific Execution Environment."
@@ -6397,6 +6630,7 @@ msgstr "There are currently no users that can be assigned ownership."
 msgid "There are no distributions associated with this repository."
 msgstr "There are no distributions associated with this repository."
 
+#: src/actions/file-repository-sync.tsx
 #: src/actions/ansible-repository-sync.tsx
 msgid "There are no remotes associated with this repository."
 msgstr "There are no remotes associated with this repository."
@@ -6503,13 +6737,14 @@ msgid "This uses the same {docsAnsibleLink} format as the ansible-galaxy CLI wit
 msgstr "This uses the same {docsAnsibleLink} format as the ansible-galaxy CLI with the caveat that roles aren't supported and the source parameter is not supported."
 
 #: src/components/delete-collection-modal.tsx
-msgid "This will cause the entire collection to be deleted."
-msgstr "This will cause the entire collection to be deleted."
+#~ msgid "This will cause the entire collection to be deleted."
+#~ msgstr "This will cause the entire collection to be deleted."
 
 #: src/containers/group-management/group-detail-role-management/group-detail-role-management.tsx
 msgid "This will revoke all permissions associated with this role from the group."
 msgstr "This will revoke all permissions associated with this role from the group."
 
+#: src/containers/file-remote/tab-details.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/components/remote-form.tsx
 msgid "TLS validation"
@@ -6593,8 +6828,12 @@ msgid "Type"
 msgstr "Type"
 
 #: src/components/pulp-about-modal.tsx
-msgid "UI Version"
-msgstr "UI Version"
+msgid "UI version"
+msgstr "UI version"
+
+#: src/components/pulp-about-modal.tsx
+#~ msgid "UI Version"
+#~ msgstr "UI Version"
 
 #: src/components/collection-dropdown.tsx
 msgid "Undeprecate"
@@ -6638,11 +6877,13 @@ msgstr "Update collection remote"
 #~ msgstr "Update container information"
 
 #. placeholder {0}: data.name
+#: src/containers/file-remote/edit.tsx
 #: src/containers/ansible-remote/edit.tsx
 msgid "Update started for remote {0}"
 msgstr "Update started for remote {0}"
 
 #. placeholder {0}: data.name
+#: src/containers/file-repository/edit.tsx
 #: src/containers/ansible-repository/edit.tsx
 msgid "Update started for repository {0}"
 msgstr "Update started for repository {0}"
@@ -6701,10 +6942,12 @@ msgstr "Upload signature"
 #~ msgid "Upload to namespace"
 #~ msgstr "Upload to namespace"
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Upstream name"
 msgstr "Upstream name"
 
+#: src/containers/file-remote/tab-details.tsx
+#: src/containers/file-remote/list.tsx
 #: src/containers/ansible-remote/tab-details.tsx
 #: src/containers/ansible-remote/list.tsx
 #: src/components/remote-form.tsx
@@ -6742,7 +6985,7 @@ msgstr "Use template"
 #~ msgid "Use the <0>Search page </0>to find content for your project, then download them onto your Ansible host using <1>ansible-galaxy</1>, the command line tool that comes bundled with Ansible."
 #~ msgstr "Use the <0>Search page </0>to find content for your project, then download them onto your Ansible host using <1>ansible-galaxy</1>, the command line tool that comes bundled with Ansible."
 
-#: src/components/repository-form.tsx
+#: src/components/container-repository-form.tsx
 msgid "Use the namespace/name format for namespaced containers. Otherwise, use the library/name format."
 msgstr "Use the namespace/name format for namespaced containers. Otherwise, use the library/name format."
 
@@ -6916,8 +7159,12 @@ msgstr "User <0>{username}</0> will be removed from group <1>{groupname}</1>."
 #~ msgstr "User <0>{username}</0> will be removed from group<1>{groupname}</1>."
 
 #: src/menu.tsx
-msgid "User Access"
-msgstr "User Access"
+msgid "User access"
+msgstr "User access"
+
+#: src/menu.tsx
+#~ msgid "User Access"
+#~ msgstr "User Access"
 
 #: src/containers/user-management/user-detail.tsx
 msgid "User details"
@@ -6928,8 +7175,12 @@ msgid "User dropdown"
 msgstr "User dropdown"
 
 #: src/components/pulp-about-modal.tsx
-msgid "User Groups"
-msgstr "User Groups"
+msgid "User groups"
+msgstr "User groups"
+
+#: src/components/pulp-about-modal.tsx
+#~ msgid "User Groups"
+#~ msgstr "User Groups"
 
 #: src/containers/user-management/user-list.tsx
 #: src/containers/group-management/group-detail.tsx
@@ -6958,8 +7209,12 @@ msgstr "Username"
 #~ msgstr "Username: {0}"
 
 #: src/layout.tsx
-msgid "Username: {userName}"
-msgstr "Username: {userName}"
+msgid "Username: {username}"
+msgstr "Username: {username}"
+
+#: src/layout.tsx
+#~ msgid "Username: {userName}"
+#~ msgstr "Username: {userName}"
 
 #: src/menu.tsx
 #: src/containers/user-management/user-list.tsx
@@ -6988,8 +7243,8 @@ msgid "Users will appear once created"
 msgstr "Users will appear once created"
 
 #: src/components/repository-badge.tsx
-msgid "Validated"
-msgstr "Validated"
+#~ msgid "Validated"
+#~ msgstr "Validated"
 
 #: src/components/render-plugin-doc.tsx
 #~ msgid "VALUE"
@@ -7010,10 +7265,13 @@ msgstr "Verify checksums"
 msgid "Version"
 msgstr "Version"
 
+#: src/containers/file-repository/detail.tsx
 #: src/containers/ansible-repository/detail.tsx
 msgid "Version {repositoryVersion}"
 msgstr "Version {repositoryVersion}"
 
+#: src/containers/file-repository/tab-repository-versions.tsx
+#: src/containers/file-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 #: src/containers/ansible-repository/tab-repository-versions.tsx
 msgid "Version number"
@@ -7024,6 +7282,9 @@ msgid "Version:"
 msgstr "Version:"
 
 #: src/containers/pulp-status.tsx
+#: src/containers/file-repository/detail.tsx
+#: src/containers/file-repository/detail.tsx
+#: src/containers/file-repository/detail.tsx
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/ansible-repository/detail.tsx
 #: src/containers/ansible-repository/detail.tsx
@@ -7067,8 +7328,12 @@ msgstr "View collections"
 #~ msgstr "View group"
 
 #: src/components/approval-row.tsx
-msgid "View Import Logs"
-msgstr "View Import Logs"
+msgid "View import logs"
+msgstr "View import logs"
+
+#: src/components/approval-row.tsx
+#~ msgid "View Import Logs"
+#~ msgstr "View Import Logs"
 
 #: src/components/namespace-card.tsx
 #: src/components/collection-header.tsx
@@ -7264,9 +7529,14 @@ msgstr "You are about to sign <0>version {version}</0> under <1>{name}</1>."
 #~ msgstr "You are an SSO user. Your token will expire <0/>."
 
 #: src/components/resources-form.tsx
-msgid "You can can customize the Resources tab on your profile by entering custom markdown here."
-msgstr "You can can customize the Resources tab on your profile by entering custom markdown here."
+#~ msgid "You can can customize the Resources tab on your profile by entering custom markdown here."
+#~ msgstr "You can can customize the Resources tab on your profile by entering custom markdown here."
 
+#: src/components/resources-form.tsx
+msgid "You can can customize the Resources tab on your profile by entering custom Markdown here."
+msgstr "You can can customize the Resources tab on your profile by entering custom Markdown here."
+
+#: src/containers/file-repository/tab-distributions.tsx
 #: src/containers/ansible-repository/tab-distributions.tsx
 msgid "You can edit this repository to create a distribution."
 msgstr "You can edit this repository to create a distribution."
