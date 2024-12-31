@@ -108,14 +108,17 @@ jobs:
         run: |
           podman exec -it pulp pulpcore-manager reset-admin-password --password admin
 
-      - name: 'Check login works'
-        run: |
-          curl -s -f --user admin:admin http://localhost:8080/pulp/api/v3/repositories/python/python/ | jq
-
       - name: 'Configure pulp-cli'
         run: |
           pip install pulp-cli[pygments]
           pulp config create --username admin --base-url http://localhost:8080 --password admin
+
+      - name: 'Check login works'
+        run: |
+          curl -s -f --retry 8 --retry-all-errors --user admin:admin http://localhost:8080/pulp/api/v3/repositories/python/python/ | jq
+
+      - name: 'Check pulp-cli works'
+        run: |
           pulp user list
 
       - name: 'Run cypress'
