@@ -18,8 +18,8 @@ export function LanguageSwitcher(_props) {
       items={[
         <DropdownItem isDisabled key='current'>
           {window.localStorage.override_l10n
-            ? t`{currentLanguage} (current)`
-            : t`{currentLanguage} (browser default)`}
+            ? t`${currentLanguage} (current)`
+            : t`${currentLanguage} (browser default)`}
         </DropdownItem>,
         <DropdownSeparator key='separator1' />,
         ...availableLanguages.map((lang) => (

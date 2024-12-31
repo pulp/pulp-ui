@@ -1,0 +1,140 @@
+name: Cypress
+
+on:
+  # allow running manually
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+  # weekly on main
+  schedule:
+    - cron: '14 4 * * 6'
+
+concurrency:
+  group: cypress-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: 'Checkout pulp-ui (${{ github.ref }})'
+        uses: actions/checkout@v4
+
+      - name: 'backend setup'
+        run: |
+          mkdir -p settings/certs pulp_storage pgsql containers
+          echo "CONTENT_ORIGIN='http://$(hostname):8080'" >> settings/settings.py
+          echo "ANSIBLE_API_HOSTNAME='http://$(hostname):8080'" >> settings/settings.py
+          echo "ANSIBLE_CONTENT_HOSTNAME='http://$(hostname):8080/pulp/content'" >> settings/settings.py
+
+      - name: 'backend run'
+        run: |
+          podman run --publish 8080:80 --name pulp --replace --detach \
+            --volume "$(pwd)/settings":/etc/pulp \
+            --volume "$(pwd)/pulp_storage":/var/lib/pulp \
+            --volume "$(pwd)/pgsql":/var/lib/pgsql \
+            --volume "$(pwd)/containers":/var/lib/containers \
+            docker.io/pulp/pulp
+
+      - name: 'Install node 20'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 'Install python 3.13'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: 'Cache ~/.npm & ~/.cache/Cypress'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ~/.cache/Cypress
+          key: npm-${{ hashFiles('package-lock.json') }}
+
+      - name: 'npm install'
+        run: 'npm install'
+
+      - name: 'gettext extract & compile'
+        run: |
+          # production displays unknown translations literally, make sure it's up to date
+          npm run gettext:extract
+          npm run gettext:compile
+
+      - name: 'Build UI'
+        run: |
+          npm run build
+
+          # save the App.*.js hash for later verification
+          BUILD_HASH=`ls dist/js/App*js | cut -d. -f2`
+          echo "BUILD_HASH=${BUILD_HASH}" >> $GITHUB_ENV
+
+      - name: 'Serve UI'
+        run: |
+          mkdir -p www/static/
+          mv dist www/static/pulp_ui
+          cd www
+          echo '{}' > package.json
+          npm install local-web-server
+          node_modules/.bin/ws \
+            --port 8002 \
+            --directory . \
+            --spa static/pulp_ui/index.html \
+            --rewrite '/api/(.*) -> http://localhost:8080/api/$1' \
+            --rewrite '/assets/(.*) -> http://localhost:8080/assets/$1' \
+            --rewrite '/auth/(.*) -> http://localhost:8080/auth/$1' \
+            --rewrite '/extensions/(.*) -> http://localhost:8080/extensions/$1' \
+            --rewrite '/pulp/(.*) -> http://localhost:8080/pulp/$1' \
+            --rewrite '/static/rest_framework/(.*) -> http://localhost:8080/static/rest_framework/$1' \
+            --rewrite '/v2/(.*) -> http://localhost:8080/v2/$1' \
+            --rewrite '/pulp-ui-config.json -> /static/pulp_ui/pulp-ui-config.json' &
+
+      - name: 'Ensure index.html uses the new js'
+        run: |
+          echo 'expecting /static/pulp_ui/js/App.'"$BUILD_HASH"'.js'
+          curl http://localhost:8002/static/pulp_ui/index.html | tee /dev/stderr | grep '/static/pulp_ui/js/App.'"$BUILD_HASH"'.js'
+
+      - name: 'Check status endpoint'
+        run: |
+          curl -s -f http://localhost:8080/pulp/api/v3/status/ | jq
+
+      - name: 'Change admin password'
+        run: |
+          podman exec -it pulp pulpcore-manager reset-admin-password --password admin
+
+      - name: 'Configure pulp-cli'
+        run: |
+          pip install pulp-cli[pygments]
+          pulp config create --username admin --base-url http://localhost:8080 --password admin
+
+      - name: 'Check login works'
+        run: |
+          curl -s -f --retry 8 --retry-all-errors --user admin:admin http://localhost:8080/pulp/api/v3/repositories/python/python/ | jq
+
+      - name: 'Check pulp-cli works'
+        run: |
+          pulp user list
+
+      - name: 'Run cypress'
+        run: |
+          npm run cypress:chrome
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: screenshots_and_videos
+          path: |
+            cypress/screenshots
+            cypress/videos
+
+      - name: 'Kill container, show logs'
+        if: always()
+        run: |
+          podman logs pulp
+          podman kill pulp
