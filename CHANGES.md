@@ -1,3 +1,20 @@
+## 0.1.21 (2024-12-31) {: #0.1.21 }
+
+### What's Changed
+* Bump everything but pf6 and react19 [#187](https://github.com/pulp/pulp-ui/pull/187)
+* ReactFragment deprecated in React 19, replace with ReactNode [#178](https://github.com/pulp/pulp-ui/pull/178)
+* Use sentence case [#189](https://github.com/pulp/pulp-ui/pull/189)
+* Fixups from #137 [#191](https://github.com/pulp/pulp-ui/pull/191)
+* Fixups from #124 [#192](https://github.com/pulp/pulp-ui/pull/192)
+* workflows/stale: Add workflow to close stale issues and PRs [#193](https://github.com/pulp/pulp-ui/pull/193)
+* pulp_file: Repositories & Remotes [#137](https://github.com/pulp/pulp-ui/pull/137)
+* Tests [#147](https://github.com/pulp/pulp-ui/pull/147)
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.20...v0.1.21
+
+---
+
 ## 0.1.20 (2024-12-24) {: #0.1.20 }
 
 ### What's Changed
