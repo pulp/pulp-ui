@@ -8,11 +8,12 @@ export class BaseAPI {
 
   constructor() {
     this.http = axios.create({
-      // adapter + withCredentials ensures no popup on http basic auth fail
-      adapter: 'fetch',
-      withCredentials: false,
-
-      // baseURL gets set in PulpAPI
+      // API_BASE_PATH gets set in pulp.ts.
+      xsrfCookieName: 'csrftoken',
+      xsrfHeaderName: 'X-CSRFToken',
+      // This is what prevents Pulp from sending the "WWW-Authenticat: Basic *" header.
+      // In turn, firefox will not be asking for a password.
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
       paramsSerializer: {
         serialize: (params) => ParamHelper.getQueryString(params),
       },

@@ -17,7 +17,7 @@ import {
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
 import QuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/question-circle-icon';
 import { type ReactNode, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useFetcher } from 'react-router';
 import {
   DarkmodeSwitcher,
   ExternalLink,
@@ -27,9 +27,9 @@ import {
   SmallLogo,
   StatefulDropdown,
 } from 'src/components';
+import { useAppContext } from './app-context';
 import { PulpMenu } from './menu';
 import { Paths, formatPath } from './paths';
-import { useUserContext } from './user-context';
 
 const DocsDropdown = ({ showAbout }: { showAbout: () => void }) => (
   <StatefulDropdown
@@ -76,7 +76,7 @@ const UserDropdown = ({
           <Link to={formatPath(Paths.core.user.profile)}>{t`My profile`}</Link>
         }
       />,
-      <DropdownItem key='logout' aria-label={'logout'} onClick={() => logout()}>
+      <DropdownItem key='logout' aria-label={'logout'} onClick={logout}>
         {t`Logout`}
       </DropdownItem>,
     ]}
@@ -85,10 +85,14 @@ const UserDropdown = ({
 );
 
 export const Layout = ({ children }: { children: ReactNode }) => {
+  const fetcher = useFetcher();
+  const {
+    account: { username },
+  } = useAppContext();
   const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
-  const { credentials, clearCredentials } = useUserContext();
 
-  const username = credentials?.username;
+  const logout = () =>
+    fetcher.submit(null, { method: 'delete', action: '/login' });
 
   const Header = (
     <Masthead>
@@ -116,10 +120,10 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         <DarkmodeSwitcher />
         <LanguageSwitcher />
         <DocsDropdown showAbout={() => setAboutModalVisible(true)} />
-        {credentials ? (
-          <UserDropdown username={username} logout={() => clearCredentials()} />
+        {username ? (
+          <UserDropdown username={username} logout={logout} />
         ) : null}
-        {!credentials ? <LoginLink /> : null}
+        {!username ? <LoginLink /> : null}
       </MastheadContent>
     </Masthead>
   );

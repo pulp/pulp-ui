@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { ExternalLink, NavList } from 'src/components';
 import { plugin_versions } from 'src/utilities';
+import { useAppContext } from './app-context';
 import { Paths, formatPath } from './paths';
-import { useUserContext } from './user-context';
 
 const menuItem = (name, options = {}) => ({
   active: false,
@@ -292,7 +292,9 @@ export const PulpMenu = () => {
   const location = useLocation();
   const [menu, setMenu] = useState([]);
 
-  const { credentials } = useUserContext();
+  const {
+    account: { username },
+  } = useAppContext();
 
   const plugins = usePlugins();
 
@@ -320,7 +322,7 @@ export const PulpMenu = () => {
       <NavList>
         <Menu
           items={menu}
-          context={{ user: credentials, plugins }}
+          context={{ user: username, plugins }}
           expandedSections={expandedSections}
         />
       </NavList>

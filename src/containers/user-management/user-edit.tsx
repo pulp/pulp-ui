@@ -9,7 +9,6 @@ import {
   UserFormPage,
 } from 'src/components';
 import { Paths, formatPath } from 'src/paths';
-import { useUserContext } from 'src/user-context';
 import {
   type ErrorMessagesType,
   type RouteProps,
@@ -19,23 +18,15 @@ import {
 
 function UserEdit(props: RouteProps) {
   const [errorMessages, setErrorMessages] = useState<ErrorMessagesType>({});
-  const [initialState, setInitialState] = useState<UserType>();
   const [redirect, setRedirect] = useState<string>();
   const [unauthorized, setUnauthorized] = useState<boolean>(false);
   const [user, setUser] = useState<UserType>();
-
-  const {
-    credentials: { username },
-    updateUsername,
-    updatePassword,
-  } = useUserContext();
 
   const id = props.routeParams.user_id;
   useEffect(() => {
     UserAPI.get(id)
       .then(({ data: result }) => {
         const extendedResult = { ...result, password: '' };
-        setInitialState({ ...extendedResult });
         setUser(extendedResult);
         setUnauthorized(false);
       })
@@ -45,14 +36,6 @@ function UserEdit(props: RouteProps) {
   const saveUser = () =>
     UserAPI.saveUser(user)
       .then(() => {
-        // update saved credentials when password of logged user is changed
-        if (initialState.username === username && user.password) {
-          updatePassword(user.password);
-        }
-        if (initialState.username === username && username !== user.username) {
-          updateUsername(user.username);
-        }
-
         setRedirect(formatPath(Paths.core.user.list));
       })
       .catch((err) => setErrorMessages(mapErrorMessages(err)));
