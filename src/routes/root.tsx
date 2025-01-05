@@ -1,7 +1,7 @@
 import { Outlet, useNavigation } from 'react-router';
 import { AppContextProvider } from 'src/app-context';
 import { LoadingSpinner, UIVersion } from 'src/components';
-import { StandaloneLayout } from 'src/layout';
+import { Layout } from 'src/layout';
 import { UserContextProvider } from 'src/user-context';
 
 export default function Root() {
@@ -11,10 +11,10 @@ export default function Root() {
   return (
     <UserContextProvider>
       <AppContextProvider>
-        <StandaloneLayout>
+        <Layout>
           {isNavigating && <LoadingSpinner />}
           <Outlet />
-        </StandaloneLayout>
+        </Layout>
         <UIVersion />
       </AppContextProvider>
     </UserContextProvider>

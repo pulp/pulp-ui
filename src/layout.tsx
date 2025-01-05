@@ -27,7 +27,7 @@ import {
   SmallLogo,
   StatefulDropdown,
 } from 'src/components';
-import { StandaloneMenu } from './menu';
+import { PulpMenu } from './menu';
 import { Paths, formatPath } from './paths';
 import { useUserContext } from './user-context';
 
@@ -84,7 +84,7 @@ const UserDropdown = ({
   />
 );
 
-export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
+export const Layout = ({ children }: { children: ReactNode }) => {
   const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
   const { credentials, clearCredentials } = useUserContext();
 
@@ -127,7 +127,7 @@ export const StandaloneLayout = ({ children }: { children: ReactNode }) => {
   const Sidebar = (
     <PageSidebar>
       <PageSidebarBody>
-        <StandaloneMenu />
+        <PulpMenu />
       </PageSidebarBody>
     </PageSidebar>
   );
