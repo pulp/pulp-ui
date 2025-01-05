@@ -2,7 +2,7 @@ import { Trans } from '@lingui/react/macro';
 import { Banner, Flex, FlexItem } from '@patternfly/react-core';
 import WrenchIcon from '@patternfly/react-icons/dist/esm/icons/wrench-icon';
 import { type ElementType } from 'react';
-import { Navigate, useLocation } from 'react-router';
+import { Navigate, redirect, useLocation } from 'react-router';
 import { ErrorBoundary, ExternalLink, NotFound } from 'src/components';
 import {
   AboutProject,
@@ -56,7 +56,6 @@ import {
   UserList,
   UserProfile,
 } from 'src/containers';
-import { StandaloneLayout } from 'src/layout';
 import { Paths, formatPath } from 'src/paths';
 import { config } from 'src/ui-config';
 import { loginURL } from 'src/utilities';
@@ -380,16 +379,27 @@ const appRoutes = () =>
     ...rest,
   }));
 
+const convert = (m) => {
+  const {
+    default: Component,
+    clientLoader: loader,
+    clientAction: action,
+    ...rest
+  } = m;
+  return { ...rest, loader, action, Component };
+};
+
 export const dataRoutes = [
   {
-    element: <StandaloneLayout />,
+    id: 'root',
+    lazy: () => import('src/routes/root').then((m) => convert(m)),
     children: [
       {
         errorElement: <ErrorBoundary />,
         children: [
           {
             index: true,
-            element: <Navigate to={formatPath(Paths.core.status)} />,
+            loader: () => redirect(formatPath(Paths.core.status)),
           },
           ...appRoutes(),
           // "No matching route" is not handled by the error boundary.
