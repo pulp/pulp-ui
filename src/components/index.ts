@@ -42,6 +42,7 @@ export { EmptyStateNoData } from './empty-state-no-data';
 export { EmptyStateUnauthorized } from './empty-state-unauthorized';
 export { EmptyStateNotImplemented } from './empty-state-under-construction';
 export { EmptyStateXs } from './empty-state-xs';
+export { ErrorBoundary } from './error-boundary';
 export { ExecutionEnvironmentHeader } from './execution-environment-header';
 export { ExternalLink } from './external-link';
 export { FormFieldHelper } from './form-field-helper';

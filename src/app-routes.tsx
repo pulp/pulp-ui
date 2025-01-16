@@ -2,8 +2,8 @@ import { Trans } from '@lingui/react/macro';
 import { Banner, Flex, FlexItem } from '@patternfly/react-core';
 import WrenchIcon from '@patternfly/react-icons/dist/esm/icons/wrench-icon';
 import { type ElementType } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router';
-import { ExternalLink, NotFound } from 'src/components';
+import { Navigate, redirect, useLocation } from 'react-router';
+import { ErrorBoundary, ExternalLink, NotFound } from 'src/components';
 import {
   AboutProject,
   AnsibleRemoteDetail,
@@ -365,26 +365,47 @@ const AuthHandler = ({
   );
 };
 
-export const AppRoutes = () => (
-  <Routes>
-    {routes.map(({ beta, component, noAuth, path }, index) => (
-      <Route
-        element={
-          <AuthHandler
-            beta={beta}
-            component={component}
-            noAuth={noAuth}
-            path={path}
-          />
-        }
-        key={index}
+const appRoutes = () =>
+  routes.map(({ beta, component, noAuth, path, ...rest }) => ({
+    element: (
+      <AuthHandler
+        beta={beta}
+        component={component}
+        noAuth={noAuth}
         path={path}
       />
-    ))}
-    <Route
-      path={'/'}
-      element={<Navigate to={formatPath(Paths.core.status)} />}
-    />
-    <Route path='*' element={<NotFound />} />
-  </Routes>
-);
+    ),
+    path: path,
+    ...rest,
+  }));
+
+const convert = (m) => {
+  const {
+    default: Component,
+    clientLoader: loader,
+    clientAction: action,
+    ...rest
+  } = m;
+  return { ...rest, loader, action, Component };
+};
+
+export const dataRoutes = [
+  {
+    id: 'root',
+    lazy: () => import('src/routes/root').then((m) => convert(m)),
+    children: [
+      {
+        errorElement: <ErrorBoundary />,
+        children: [
+          {
+            index: true,
+            loader: () => redirect(formatPath(Paths.core.status)),
+          },
+          ...appRoutes(),
+          // "No matching route" is not handled by the error boundary.
+          { path: '*', element: <NotFound /> },
+        ],
+      },
+    ],
+  },
+];
