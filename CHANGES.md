@@ -1,3 +1,12 @@
+## 0.1.22 (2025-01-16) {: #0.1.22 }
+
+### What's Changed
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.21...v0.1.22
+
+---
+
 ## 0.1.21 (2024-12-31) {: #0.1.21 }
 
 ### What's Changed
