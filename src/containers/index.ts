@@ -28,7 +28,6 @@ export { default as FileRepositoryEdit } from './file-repository/edit';
 export { default as FileRepositoryList } from './file-repository/list';
 export { default as GroupDetail } from './group-management/group-detail';
 export { default as GroupList } from './group-management/group-list';
-export { default as LoginPage } from './login/login';
 export { default as MyImports } from './my-imports/my-imports';
 export { default as NamespaceDetail } from './namespace-detail/namespace-detail';
 export { default as MyNamespaces } from './namespace-list/my-namespaces';
