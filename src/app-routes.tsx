@@ -45,6 +45,7 @@ import {
   Partners,
   PulpStatus,
   RPMPackageList,
+  RPMSearch,
   RoleCreate,
   RoleList,
   Search,
@@ -312,6 +313,11 @@ const routes: IRouteConfig[] = [
   {
     component: RPMPackageList,
     path: Paths.rpm.package.list,
+    beta: true,
+  },
+  {
+    component: RPMSearch,
+    path: Paths.rpm.search,
     beta: true,
   },
 ];
