@@ -286,7 +286,7 @@ function usePlugins() {
   return plugins;
 }
 
-export const StandaloneMenu = () => {
+export const PulpMenu = () => {
   const [expandedSections, setExpandedSections] = useState([]);
 
   const location = useLocation();
