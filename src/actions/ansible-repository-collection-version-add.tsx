@@ -8,12 +8,7 @@ import {
   CollectionVersionAPI,
   type CollectionVersionSearch,
 } from 'src/api';
-import {
-  AlertList,
-  type AlertType,
-  DetailList,
-  closeAlert,
-} from 'src/components';
+import { DetailList, useAddAlert } from 'src/components';
 import { handleHttpError, parsePulpIDFromURL, taskAlert } from 'src/utilities';
 import { Action } from './action';
 
@@ -86,12 +81,9 @@ const AddCollectionVersionModal = ({
   closeAction: () => void;
   sourceRepository: AnsibleRepositoryType;
 }) => {
-  const [alerts, setAlerts] = useState([]);
   const [selected, setSelected] = useState<CollectionVersionSearch[]>([]);
 
-  const addAlert = (alert: AlertType) => {
-    setAlerts([...alerts, alert]);
-  };
+  const addAlert = useAddAlert();
 
   // @ts-expect-error: TS2525: Initializer provides no value for this binding element and the binding element has no default value.
   const query = ({ params } = {}) => CollectionVersionAPI.list(params);
@@ -209,11 +201,6 @@ const AddCollectionVersionModal = ({
           title={t`Collection versions`}
         />
       </section>
-
-      <AlertList
-        alerts={alerts}
-        closeAlert={(i) => closeAlert(i, { alerts, setAlerts })}
-      />
     </Modal>
   );
 };

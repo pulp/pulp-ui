@@ -29,8 +29,6 @@ import {
 import { useAppContext } from 'src/app-context';
 import {
   Alert,
-  AlertList,
-  type AlertType,
   BaseHeader,
   type BreadcrumbType,
   Breadcrumbs,
@@ -50,8 +48,9 @@ import {
   SignatureBadge,
   Spinner,
   UploadSignatureModal,
-  closeAlert,
+  useAddAlert,
 } from 'src/components';
+import { type AlertType } from 'src/components/alerts';
 import { Paths, formatPath } from 'src/paths';
 import {
   DeleteCollectionUtils,
@@ -91,7 +90,6 @@ export const CollectionHeader = ({
   reload,
   updateParams,
 }: IProps) => {
-  const [alerts, setAlerts] = useState([]);
   const [collectionVersion, setCollectionVersion] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [copyCollectionToRepositoryModal, setCopyCollectionToRepositoryModal] =
@@ -117,11 +115,12 @@ export const CollectionHeader = ({
     useState(false);
   const [versionToUploadCertificate, setVersionToUploadCertificate] =
     useState(undefined);
+  const addAlert = useAddAlert();
 
   useEffect(() => {
     DeleteCollectionUtils.countUsedbyDependencies(collection)
       .then((count) => setDeletionBlocked(!!count))
-      .catch((alert) => addAlert(alert));
+      .catch(addAlert);
 
     NamespaceAPI.get(collection.collection_version.namespace, {
       include_related: 'my_permissions',
@@ -139,7 +138,6 @@ export const CollectionHeader = ({
   const context = useAppContext();
   const {
     featureFlags: { can_upload_signatures, display_signatures },
-    queueAlert,
     settings: { GALAXY_COLLECTION_SIGNING_SERVICE },
   } = context;
 
@@ -313,7 +311,7 @@ export const CollectionHeader = ({
               redirect: formatPath(Paths.ansible.namespace.detail, {
                 namespace: deleteCollection.collection_version.namespace,
               }),
-              addAlert: (alert) => queueAlert(alert),
+              addAlert,
               deleteFromRepo,
             });
           }
@@ -322,7 +320,7 @@ export const CollectionHeader = ({
       />
       {copyCollectionToRepositoryModal && (
         <CopyCollectionToRepositoryModal
-          addAlert={(alert) => addAlert(alert)}
+          addAlert={addAlert}
           closeAction={() => setCopyCollectionToRepositoryModal(null)}
           collectionVersion={collection}
         />
@@ -464,15 +462,6 @@ export const CollectionHeader = ({
             title={t`This collection has been deprecated.`}
           />
         )}
-        <AlertList
-          alerts={alerts}
-          closeAlert={(i) =>
-            closeAlert(i, {
-              alerts,
-              setAlerts,
-            })
-          }
-        />
         <div className='pulp-tab-link-container'>
           <div className='tabs'>{renderTabs(activeTab)}</div>
           <div className='links'>
@@ -604,20 +593,16 @@ export const CollectionHeader = ({
           if (reload) {
             reload();
           }
-          setAlerts((alerts) =>
-            alerts.filter(({ id }) => id !== 'upload-certificate'),
-          );
           addAlert({
+      id: 'upload-certificate',
             variant: 'success',
             title: t`Certificate for collection "${version.namespace} ${version.name} v${version.version}" has been successfully uploaded.`,
           });
         });
       })
       .catch((error) => {
-        setAlerts((alerts) =>
-          alerts.filter(({ id }) => id !== 'upload-certificate'),
-        );
         addAlert({
+      id: 'upload-certificate',
           variant: 'danger',
           title: t`The certificate for "${version.namespace} ${version.name} v${version.version}" could not be saved.`,
           description: error,
@@ -685,11 +670,6 @@ export const CollectionHeader = ({
         waitForTask(result.data.task_id)
           .then(() => updateParams({}))
           .catch((error) => addAlert(errorAlert(error)))
-          .finally(() =>
-            setAlerts((alerts) =>
-              alerts.filter(({ id }) => id !== 'loading-signing'),
-            ),
-          );
       })
       .catch((error) =>
         // The request failed in the first place
@@ -725,11 +705,6 @@ export const CollectionHeader = ({
         waitForTask(result.data.task_id)
           .then(() => updateParams({}))
           .catch((error) => addAlert(errorAlert(error)))
-          .finally(() =>
-            setAlerts((alerts) =>
-              alerts.filter(({ id }) => id !== 'loading-signing'),
-            ),
-          );
       })
       .catch((error) =>
         // The request failed in the first place
@@ -815,7 +790,7 @@ export const CollectionHeader = ({
           });
         } else {
           // last version in collection => collection will be deleted => redirect
-          queueAlert({
+          addAlert({
             variant: 'success',
             title: t`Collection "${name} v${collectionVersion}" has been successfully deleted.`,
           });
@@ -889,9 +864,5 @@ export const CollectionHeader = ({
 
   function copyToRepository(collection: CollectionVersionSearch) {
     setCopyCollectionToRepositoryModal(collection);
-  }
-
-  function addAlert(alert: AlertType) {
-    setAlerts((alerts) => [...alerts, alert]);
   }
 };
