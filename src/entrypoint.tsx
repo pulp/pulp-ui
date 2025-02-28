@@ -10,7 +10,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router';
 import { Alert, LoadingSpinner } from 'src/components';
 import { dataRoutes } from './app-routes';
 import './darkmode';
-import './l10n';
+import { l10nPromise } from './l10n';
 import { configFallback, configPromise } from './ui-config';
 
 // App entrypoint
@@ -56,14 +56,10 @@ function LoadConfig(_props) {
 
   useEffect(() => {
     configPromise
-      .then((config) => {
-        setLoading(false);
-        setConfig(config);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setError(err);
-      });
+      .then((config) => setConfig(config))
+      .catch((err) => setError(err))
+      .then(() => l10nPromise)
+      .finally(() => setLoading(false));
   }, []);
 
   if (loading) {

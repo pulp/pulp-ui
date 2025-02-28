@@ -82,4 +82,4 @@ if (pseudolocalization) {
   );
 }
 
-activate(language, pseudolocalization);
+export const l10nPromise = activate(language, pseudolocalization);
