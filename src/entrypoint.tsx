@@ -43,9 +43,7 @@ configPromise.then(({ UI_BASE_PATH }) => redirect(UI_BASE_PATH));
 const root = createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
-    <I18nProvider i18n={i18n}>
-      <LoadConfig />
-    </I18nProvider>
+    <LoadConfig />
   </StrictMode>,
 );
 
@@ -68,22 +66,24 @@ function LoadConfig(_props) {
 
   if (error || !config) {
     return (
-      <Alert
-        variant='danger'
-        isInline
-        title={t`Error loading /pulp-ui-config.json`}
-      >
-        {error.toString()}
-        <Button
-          variant='link'
-          onClick={() => {
-            const c = configFallback();
-            redirect(c.UI_BASE_PATH);
-            setConfig(c);
-            setError(null);
-          }}
-        >{t`Fall back to defaults`}</Button>
-      </Alert>
+      <I18nProvider i18n={i18n}>
+        <Alert
+          variant='danger'
+          isInline
+          title={t`Error loading /pulp-ui-config.json`}
+        >
+          {error.toString()}
+          <Button
+            variant='link'
+            onClick={() => {
+              const c = configFallback();
+              redirect(c.UI_BASE_PATH);
+              setConfig(c);
+              setError(null);
+            }}
+          >{t`Fall back to defaults`}</Button>
+        </Alert>
+      </I18nProvider>
     );
   }
 
@@ -91,5 +91,9 @@ function LoadConfig(_props) {
     basename: config.UI_BASE_PATH,
   });
 
-  return <RouterProvider router={router} />;
+  return (
+    <I18nProvider i18n={i18n}>
+      <RouterProvider router={router} />
+    </I18nProvider>
+  );
 }
