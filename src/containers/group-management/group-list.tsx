@@ -363,7 +363,7 @@ class GroupList extends Component<RouteProps, IState> {
             ...this.state.alerts,
             {
               variant: 'danger',
-              title: t`Changes to group "${this.state.selectedGroup}" could not be saved.`,
+              title: t`Changes to group "${this.state.selectedGroup?.name}" could not be saved.`,
             },
           ],
         }),
