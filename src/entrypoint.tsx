@@ -10,7 +10,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router';
 import { Alert, LoadingSpinner } from 'src/components';
 import { dataRoutes } from './app-routes';
 import './darkmode';
-import './l10n';
+import { l10nPromise } from './l10n';
 import { configFallback, configPromise } from './ui-config';
 
 // App entrypoint
@@ -43,9 +43,7 @@ configPromise.then(({ UI_BASE_PATH }) => redirect(UI_BASE_PATH));
 const root = createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
-    <I18nProvider i18n={i18n}>
-      <LoadConfig />
-    </I18nProvider>
+    <LoadConfig />
   </StrictMode>,
 );
 
@@ -56,14 +54,10 @@ function LoadConfig(_props) {
 
   useEffect(() => {
     configPromise
-      .then((config) => {
-        setLoading(false);
-        setConfig(config);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setError(err);
-      });
+      .then((config) => setConfig(config))
+      .catch((err) => setError(err))
+      .then(() => l10nPromise)
+      .finally(() => setLoading(false));
   }, []);
 
   if (loading) {
@@ -72,22 +66,24 @@ function LoadConfig(_props) {
 
   if (error || !config) {
     return (
-      <Alert
-        variant='danger'
-        isInline
-        title={t`Error loading /pulp-ui-config.json`}
-      >
-        {error.toString()}
-        <Button
-          variant='link'
-          onClick={() => {
-            const c = configFallback();
-            redirect(c.UI_BASE_PATH);
-            setConfig(c);
-            setError(null);
-          }}
-        >{t`Fall back to defaults`}</Button>
-      </Alert>
+      <I18nProvider i18n={i18n}>
+        <Alert
+          variant='danger'
+          isInline
+          title={t`Error loading /pulp-ui-config.json`}
+        >
+          {error.toString()}
+          <Button
+            variant='link'
+            onClick={() => {
+              const c = configFallback();
+              redirect(c.UI_BASE_PATH);
+              setConfig(c);
+              setError(null);
+            }}
+          >{t`Fall back to defaults`}</Button>
+        </Alert>
+      </I18nProvider>
     );
   }
 
@@ -95,5 +91,9 @@ function LoadConfig(_props) {
     basename: config.UI_BASE_PATH,
   });
 
-  return <RouterProvider router={router} />;
+  return (
+    <I18nProvider i18n={i18n}>
+      <RouterProvider router={router} />
+    </I18nProvider>
+  );
 }

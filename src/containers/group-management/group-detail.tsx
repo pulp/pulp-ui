@@ -417,7 +417,7 @@ class GroupDetail extends Component<RouteProps, IState> {
             showDeleteModal: false,
           });
           this.addAlert(
-            t`Group "${group}" has been successfully deleted.`,
+            t`Group "${group?.name}" has been successfully deleted.`,
             'success',
           );
           this.setState({ redirect: formatPath(Paths.core.group.list) });
@@ -425,7 +425,7 @@ class GroupDetail extends Component<RouteProps, IState> {
         .catch((e) => {
           const { status, statusText } = e.response;
           this.addAlert(
-            t`Group "${group}" could not be deleted.`,
+            t`Group "${group?.name}" could not be deleted.`,
             'danger',
             jsxErrorMessage(status, statusText),
           );
