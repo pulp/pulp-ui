@@ -11,7 +11,7 @@
     "@patternfly/patternfly": "^5.4.2",
     "@patternfly/react-core": "^5.4.14",
     "@patternfly/react-table": "^5.4.16",
-    "axios": "^1.7.9",
+    "axios": "^1.8.2",
     "classnames": "^2.5.1",
     "compare-versions": "^6.1.1",
     "file-saver": "^2.0.5",
