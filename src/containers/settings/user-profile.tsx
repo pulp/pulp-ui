@@ -2,6 +2,7 @@ import { t } from '@lingui/core/macro';
 import { Button } from '@patternfly/react-core';
 import { useEffect, useState } from 'react';
 import { UserAPI, type UserType } from 'src/api';
+import { useAppContext } from 'src/app-context';
 import {
   AlertList,
   type AlertType,
@@ -10,7 +11,6 @@ import {
   UserFormPage,
   closeAlert,
 } from 'src/components';
-import { useUserContext } from 'src/user-context';
 import {
   type ErrorMessagesType,
   type RouteProps,
@@ -27,10 +27,8 @@ function UserProfile(_props: RouteProps) {
   const [user, setUser] = useState<UserType>();
 
   const {
-    credentials: { username },
-    updateUsername,
-    updatePassword,
-  } = useUserContext();
+    account: { username },
+  } = useAppContext();
 
   const addAlert = (alert: AlertType) => {
     setAlerts([...alerts, alert]);
@@ -65,14 +63,6 @@ function UserProfile(_props: RouteProps) {
           variant: 'success',
           title: t`Saved changes to user "${username}".`,
         });
-
-        // update saved credentials when password of logged user is changed
-        if (user.password) {
-          updatePassword(user.password);
-        }
-        if (username !== user.username) {
-          updateUsername(user.username);
-        }
       })
       .catch((err) => setErrorMessages(mapErrorMessages(err)));
 
