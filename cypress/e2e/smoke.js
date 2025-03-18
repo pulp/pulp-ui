@@ -63,7 +63,14 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
-  it('RPMs', () => {
+  it('RPM Search', () => {
+    cy.ui('rpm/search');
+    cy.assertTitle('Search');
+
+    // TODO
+  });
+
+  it('RPM Packages', () => {
     cy.ui('rpm/rpms');
     cy.assertTitle('Packages');
 
