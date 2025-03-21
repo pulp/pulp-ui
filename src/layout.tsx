@@ -27,6 +27,7 @@ import {
   SmallLogo,
   StatefulDropdown,
 } from 'src/components';
+import { AlertList } from './components/alerts';
 import { PulpMenu } from './menu';
 import { Paths, formatPath } from './paths';
 import { useUserContext } from './user-context';
@@ -134,6 +135,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
   return (
     <Page isManagedSidebar header={Header} sidebar={Sidebar}>
+      <AlertList />
       {children}
       {aboutModalVisible ? (
         <PulpAboutModal
