@@ -37,7 +37,6 @@ import {
   FileRepositoryList,
   GroupDetail,
   GroupList,
-  LoginPage,
   MultiSearch,
   MyImports,
   MyNamespaces,
@@ -59,7 +58,7 @@ import {
 import { Paths, formatPath } from 'src/paths';
 import { config } from 'src/ui-config';
 import { loginURL } from 'src/utilities';
-import { useUserContext } from './user-context';
+import { useAppContext } from './app-context';
 
 interface IRouteConfig {
   beta?: boolean;
@@ -235,11 +234,6 @@ const routes: IRouteConfig[] = [
     beta: true,
   },
   {
-    component: LoginPage,
-    path: Paths.meta.login,
-    noAuth: true,
-  },
-  {
     component: CollectionDocs,
     path: Paths.ansible.collection.docs_page,
     beta: true,
@@ -322,10 +316,12 @@ const AuthHandler = ({
   noAuth,
   path,
 }: IRouteConfig) => {
-  const { credentials } = useUserContext();
+  const {
+    account: { username },
+  } = useAppContext();
   const { pathname } = useLocation();
 
-  if (!credentials && !noAuth) {
+  if (!username && !noAuth) {
     // NOTE: also update LoginLink when changing this
     if (config.UI_EXTERNAL_LOGIN_URI) {
       window.location.replace(loginURL(pathname));
@@ -400,6 +396,11 @@ export const dataRoutes = [
           {
             index: true,
             loader: () => redirect(formatPath(Paths.core.status)),
+          },
+          {
+            path: 'login',
+            id: 'login',
+            lazy: () => import('src/routes/login').then((m) => convert(m)),
           },
           ...appRoutes(),
           // "No matching route" is not handled by the error boundary.
