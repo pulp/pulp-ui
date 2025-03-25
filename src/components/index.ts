@@ -1,3 +1,4 @@
+export { useAddAlert } from './alerts';
 export { AccessTab } from './access-tab';
 export { AlertList, type AlertType, closeAlert } from './alert-list';
 export { AppliedFilters } from './applied-filters';
