@@ -73,9 +73,10 @@ module.exports = (inputConfigs) => {
               ),
             port: customConfigs.DEV_PORT,
             proxy: Object.entries(customConfigs.DEV_PROXY).map(
-              ([path, target]) => ({
+              ([path, proxy_target]) => ({
                 context: [path],
-                target,
+                target: proxy_target,
+                changeOrigin: true
               }),
             ),
             server: { type: customConfigs.DEV_HTTPS ? 'https' : 'http' },
