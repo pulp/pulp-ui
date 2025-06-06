@@ -61,7 +61,7 @@
     "url-join": "^5.0.0",
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.0"
+    "webpack-dev-server": "^5.2.1"
   },
   "scripts": {
     "build": "NODE_ENV=production webpack --config config/build.config.js",
