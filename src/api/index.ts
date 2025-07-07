@@ -5,6 +5,13 @@ export {
   AnsibleRepositoryAPI,
   type AnsibleRepositoryType,
 } from './ansible-repository';
+// Debian addition
+export { DebianDistributionAPI } from './debian-distribution';
+export { DebianRemoteAPI, type DebianRemoteType } from './debian-remote';
+export {
+  DebianRepositoryAPI,
+  type DebianRepositoryType,
+} from './debian-repository';
 export { CertificateUploadAPI } from './certificate-upload';
 export { CollectionAPI } from './collection';
 export { CollectionVersionAPI } from './collection-version';

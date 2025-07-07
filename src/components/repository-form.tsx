@@ -32,7 +32,7 @@ interface IProps {
   errorMessages: ErrorMessagesType;
   onCancel: () => void;
   onSave: ({ createDistribution }) => void;
-  plugin: 'ansible' | 'file' | 'rpm';
+  plugin: 'ansible' | 'file' | 'rpm' | 'debian';
   repository: AnsibleRepositoryType;
   updateRepository: (r) => void;
 }

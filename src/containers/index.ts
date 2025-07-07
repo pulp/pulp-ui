@@ -5,6 +5,13 @@ export { default as AnsibleRemoteList } from './ansible-remote/list';
 export { default as AnsibleRepositoryDetail } from './ansible-repository/detail';
 export { default as AnsibleRepositoryEdit } from './ansible-repository/edit';
 export { default as AnsibleRepositoryList } from './ansible-repository/list';
+// Devian addition
+export { default as DebianRemoteDetail } from './debian-remote/detail';
+export { default as DebianRemoteEdit } from './debian-remote/edit';
+export { default as DebianRemoteList } from './debian-remote/list';
+export { default as DebianRepositoryDetail } from './debian-repository/detail';
+export { default as DebianRepositoryEdit } from './debian-repository/edit';
+export { default as DebianRepositoryList } from './debian-repository/list';
 export { default as Approvals } from './approvals/approvals';
 export { default as CollectionContent } from './collection-detail/collection-content';
 export { default as CollectionDependencies } from './collection-detail/collection-dependencies';

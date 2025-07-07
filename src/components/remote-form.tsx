@@ -37,7 +37,7 @@ interface IProps {
   allowEditName?: boolean;
   closeModal: () => void;
   errorMessages: ErrorMessagesType;
-  plugin: 'ansible' | 'container' | 'file';
+  plugin: 'ansible' | 'container' | 'file' | 'debian';
   remote: RemoteType;
   saveRemote: () => void;
   showMain?: boolean;

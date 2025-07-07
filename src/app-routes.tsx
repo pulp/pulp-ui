@@ -12,6 +12,12 @@ import {
   AnsibleRepositoryDetail,
   AnsibleRepositoryEdit,
   AnsibleRepositoryList,
+  DebianRemoteEdit,
+  DebianRemoteList,
+  DebianRemoteDetail,
+  DebianRepositoryDetail,
+  DebianRepositoryEdit,
+  DebianRepositoryList,
   Approvals,
   CollectionContent,
   CollectionDependencies,
@@ -160,6 +166,30 @@ const routes: IRouteConfig[] = [
   {
     component: AnsibleRepositoryList,
     path: Paths.ansible.repository.list,
+  },
+  {
+    component: DebianRemoteDetail,
+    path: Paths.debian.remote.detail,
+  },
+  {
+    component: DebianRemoteEdit,
+    path: Paths.debian.remote.edit,
+  },
+  {
+    component: DebianRemoteList,
+    path: Paths.debian.remote.list,
+  },
+  {
+    component: DebianRepositoryDetail,
+    path: Paths.debian.repository.detail,
+  },
+  {
+    component: DebianRepositoryEdit,
+    path: Paths.debian.repository.edit,
+  },
+  {
+    component: DebianRepositoryList,
+    path: Paths.debian.repository.list,
   },
   {
     component: FileRemoteDetail,

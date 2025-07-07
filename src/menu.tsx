@@ -56,6 +56,18 @@ function standaloneMenu() {
       condition: and(BROKEN, loggedIn),
     }),
     menuSection(
+      'Pulp Debian',
+      { condition: and(loggedIn, hasPlugin('deb')) },
+      [
+        menuItem(t`Repositories`, {
+          url: formatPath(Paths.debian.repository.list),
+        }),
+        menuItem(t`Remotes`, {
+          url: formatPath(Paths.debian.remote.list),
+        }),
+      ],
+    ),
+    menuSection(
       'Pulp Ansible',
       { condition: and(loggedIn, hasPlugin('ansible')) },
       [

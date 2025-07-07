@@ -142,4 +142,16 @@ export const Paths = {
   rpm: {
     package: { list: '/rpm/rpms' },
   },
+  debian: {
+    remote: {
+      detail: '/debian/remotes/detail/:name',
+      edit: '/debian/remotes/edit/:name',
+      list: '/debian/remotes',
+    },
+    repository: {
+      detail: '/debian/repositories/detail/:name',
+      edit: '/debian/repositories/edit/:name',
+      list: '/debian/repositories',
+    },
+  },
 };
