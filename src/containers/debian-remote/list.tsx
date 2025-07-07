@@ -15,10 +15,10 @@ const listItemActions = [
   debianRemoteDeleteAction,
 ];
 
-const DebRemoteList = ListPage<DebianRemoteType>({
+const DebianRemoteList = ListPage<DebianRemoteType>({
   defaultPageSize: 10,
   defaultSort: '-pulp_created',
-  displayName: 'DebRemoteList',
+  displayName: 'DebianRemoteList',
   errorTitle: msg`Remotes could not be displayed.`,
   filterConfig: () => [
     {
@@ -69,4 +69,4 @@ const DebRemoteList = ListPage<DebianRemoteType>({
   title: msg`Remotes`,
 });
 
-export default DebRemoteList;
+export default DebianRemoteList;

@@ -6,8 +6,8 @@ export {
   type AnsibleRepositoryType,
 } from './ansible-repository';
 // Debian addition
-export { DebianDistributionAPI } from './debian-distribution';
-export { DebianRemoteAPI, type DebianRemoteType } from './debian-remote';
+export { DebianDistributionAPI } from './debian-distribution'
+export { DebianRemoteAPI, type DebianRemoteType } from './debian-remote'
 export {
   DebianRepositoryAPI,
   type DebianRepositoryType,

@@ -1,5 +1,8 @@
 import { t } from '@lingui/core/macro';
 import {
+  DebianDistributionAPI,
+  DebianRepositoryAPI,
+  DebianRemoteAPI,
   AnsibleDistributionAPI,
   AnsibleRepositoryAPI,
   FileDistributionAPI,
@@ -15,6 +18,12 @@ import {
 
 export function plugin2api(plugin) {
   switch (plugin) {
+    case 'debian':
+      return {
+        DistributionAPI: DebianDistributionAPI,
+        RepositoryAPI: DebianRepositoryAPI,
+        RemoteAPI: DebianRemoteAPI,
+      };
     case 'ansible':
       return {
         DistributionAPI: AnsibleDistributionAPI,
