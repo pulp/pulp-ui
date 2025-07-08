@@ -1,40 +1,43 @@
 import { msg, t } from '@lingui/core/macro';
 import {
-  AnsibleDistributionAPI,
-  AnsibleRepositoryAPI,
-  type AnsibleRepositoryType,
-} from 'src/api';
-import { Page, RepositoryForm } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
-import { parsePulpIDFromURL, taskAlert } from 'src/utilities';
+  DebianDistributionAPI,
+  DebianRepositoryAPI,
+  type DebianRepositoryType,
+} from '../../api';
+import { Page, RepositoryForm } from '../../components';
+import { Paths, formatPath } from '../../paths';
+import { parsePulpIDFromURL, taskAlert } from '../../utilities';
 
-const initialRepository: AnsibleRepositoryType = {
+const initialRepository: DebianRepositoryType = {
   name: '',
   description: '',
   retain_repo_versions: 1,
   pulp_labels: {},
-  remote: null,
+  remote: ''
 };
 
-const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
+const DebianRepositoryEdit = Page<DebianRepositoryType>({
   breadcrumbs: ({ name }) =>
     [
-      { url: formatPath(Paths.ansible.repository.list), name: t`Repositories` },
+      { url: formatPath(Paths.debian.repository.list), name: t`Repositories` },
       name && {
-        url: formatPath(Paths.ansible.repository.detail, { name }),
+        url: formatPath(Paths.debian.repository.detail, { name }),
         name,
       },
       name ? { name: t`Edit` } : { name: t`Add` },
     ].filter(Boolean),
 
-  displayName: 'AnsibleRepositoryEdit',
+  displayName: 'DebianRepositoryEdit',
   errorTitle: msg`Repository could not be displayed.`,
-  listUrl: formatPath(Paths.ansible.repository.list),
+  listUrl: formatPath(Paths.debian.repository.list),
   query: ({ name }) => {
-    return AnsibleRepositoryAPI.list({ name })
-      .then(({ data: { results } }) => results[0])
+    return DebianRepositoryAPI.list({ name })
+      .then(({ data: { results } }) => {
+        return results[0]
+      })
       .then((repository) => {
-        return AnsibleRepositoryAPI.myPermissions(
+        console.log(repository)
+        return DebianRepositoryAPI.myPermissions(
           parsePulpIDFromURL(repository.pulp_href),
         )
           .then(({ data: { permissions } }) => permissions)
@@ -92,7 +95,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
       data.pulp_labels ||= {};
 
       let promise = !item
-        ? AnsibleRepositoryAPI.create(data).then(({ data: newData }) => {
+        ? DebianRepositoryAPI.create(data).then(({ data: newData }) => {
             queueAlert({
               variant: 'success',
               title: t`Successfully created repository ${data.name}`,
@@ -100,7 +103,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
 
             return newData.pulp_href;
           })
-        : AnsibleRepositoryAPI.update(
+        : DebianRepositoryAPI.update(
             parsePulpIDFromURL(item.pulp_href),
             data,
           ).then(({ data: task }) => {
@@ -119,7 +122,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
 
         promise = promise
           .then((pulp_href) =>
-            AnsibleDistributionAPI.create({
+            DebianDistributionAPI.create({
               name: distributionName,
               base_path: basePathTransform(distributionName),
               repository: pulp_href,
@@ -127,7 +130,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
               // if distribution already exists, try a numeric suffix to name & base_path
               distributionName =
                 data.name + Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
-              return AnsibleDistributionAPI.create({
+              return DebianDistributionAPI.create({
                 name: distributionName,
                 base_path: basePathTransform(distributionName),
                 repository: pulp_href,
@@ -152,7 +155,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
           });
 
           navigate(
-            formatPath(Paths.ansible.repository.detail, {
+            formatPath(Paths.debian.repository.detail, {
               name: data.name,
             }),
           );
@@ -171,10 +174,10 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
       setState({ errorMessages: {}, repositoryToEdit: undefined });
       navigate(
         item
-          ? formatPath(Paths.ansible.repository.detail, {
+          ? formatPath(Paths.debian.repository.detail, {
               name: item.name,
             })
-          : formatPath(Paths.ansible.repository.list),
+          : formatPath(Paths.debian.repository.list),
       );
     };
 
@@ -184,7 +187,7 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
         errorMessages={errorMessages}
         onCancel={closeModal}
         onSave={saveRepository}
-        plugin='ansible'
+        plugin='debian'
         repository={repositoryToEdit}
         updateRepository={(r) => setState({ repositoryToEdit: r })}
       />
@@ -192,4 +195,4 @@ const AnsibleRepositoryEdit = Page<AnsibleRepositoryType>({
   },
 });
 
-export default AnsibleRepositoryEdit;
+export default DebianRepositoryEdit;

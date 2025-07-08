@@ -1,11 +1,11 @@
 import { t } from '@lingui/core/macro';
-import { type FileRemoteType } from 'src/api';
+import { type FileRemoteType } from '../../api';
 import {
   CopyURL,
   Details,
   LazyRepositories,
   PulpCodeBlock,
-} from 'src/components';
+} from '../../components';
 
 interface TabProps {
   item: FileRemoteType;

@@ -17,8 +17,8 @@ import {
   LoadingSpinner,
   Main,
   closeAlert,
-} from 'src/components';
-import { type RouteProps, jsxErrorMessage, withRouter } from 'src/utilities';
+} from '../components';
+import { type RouteProps, jsxErrorMessage, withRouter } from '../utilities';
 
 interface IState<T> {
   alerts: AlertType[];
@@ -205,6 +205,7 @@ export const Page = function <
               resolve(item);
             })
             .catch((e) => {
+              console.log(e);
               const { status, statusText } = e.response;
               this.setState({
                 loading: false,

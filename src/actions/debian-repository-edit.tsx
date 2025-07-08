@@ -1,5 +1,5 @@
 import { msg } from '@lingui/core/macro';
-import { Paths, formatPath } from 'src/paths';
+import { Paths, formatPath } from '../paths';
 import { Action } from './action';
 
 export const debianRepositoryEditAction = Action({

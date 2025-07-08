@@ -1,4 +1,4 @@
-import { ParamHelper, type ParamType } from 'src/utilities';
+import { ParamHelper, type ParamType } from './utilities';
 
 export function formatPath(
   path: string,

@@ -6,22 +6,22 @@ import {
   debianRepositoryDeleteAction,
   debianRepositoryEditAction,
   debianRepositorySyncAction,
-} from 'src/actions';
+} from '../../actions';
 import {
   DebianDistributionAPI,
   DebianRemoteAPI,
   type DebianRemoteType,
   DebianRepositoryAPI,
   type DebianRepositoryType,
-} from 'src/api';
-import { PageWithTabs } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
+} from '../../api';
+import { PageWithTabs } from '../../components';
+import { Paths, formatPath } from '../../paths';
 import {
   lastSyncStatus,
   lastSynced,
   parsePulpIDFromURL,
   repositoryDistro,
-} from 'src/utilities';
+} from '../../utilities';
 import { RepositoryAccessTab } from './tab-access';
 import { DetailsTab } from './tab-details';
 import { DistributionsTab } from './tab-distributions';
@@ -31,26 +31,26 @@ const DebianRepositoryDetail = PageWithTabs<
   DebianRepositoryType & { remote?: DebianRemoteType }
 >({
   breadcrumbs: ({ name, tab, params: { repositoryVersion, user, group } }) =>
-    [
-      { url: formatPath(Paths.debian.repository.list), name: t`Repositories` },
-      { url: formatPath(Paths.debian.repository.detail, { name }), name },
-      (tab === 'access' && (group || user)) ||
-      (tab === 'repository-versions' && repositoryVersion)
-        ? {
-            url: formatPath(Paths.debian.repository.detail, { name }, { tab }),
-            name: t`Versions`,
-          }
-        : null,
-      tab === 'access' && group ? { name: t`Group ${group}` } : null,
-      tab === 'access' && user ? { name: t`User ${user}` } : null,
-      tab === 'repository-versions' && repositoryVersion
-        ? { name: t`Version ${repositoryVersion}` }
-        : null,
-      (tab === 'access' && !user && !group) ||
-      (tab === 'repository-versions' && !repositoryVersion)
-        ? { name: t`Versions` }
-        : null,
-    ].filter(Boolean),
+  ([
+    { url: formatPath(Paths.debian.repository.list), name: t`Repositories` },
+    { url: formatPath(Paths.debian.repository.detail, { name }), name },
+    (tab === 'access' && (group || user)) ||
+    (tab === 'repository-versions' && repositoryVersion)
+      ? {
+          url: formatPath(Paths.debian.repository.detail, { name }, { tab }),
+          name: t`Versions`,
+        }
+      : null,
+    tab === 'access' && group ? { name: t`Group ${group}` } : null,
+    tab === 'access' && user ? { name: t`User ${user}` } : null,
+    tab === 'repository-versions' && repositoryVersion
+      ? { name: t`Version ${repositoryVersion}` }
+      : null,
+    (tab === 'access' && !user && !group) ||
+    (tab === 'repository-versions' && !repositoryVersion)
+      ? { name: t`Versions` }
+      : null,
+  ].filter(Boolean) as { url?: string; name: string }[]),
   displayName: 'DebianRepositoryDetail',
   errorTitle: msg`Repository could not be displayed.`,
   headerActions: [

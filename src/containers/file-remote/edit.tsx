@@ -1,8 +1,8 @@
 import { msg, t } from '@lingui/core/macro';
-import { FileRemoteAPI, type FileRemoteType } from 'src/api';
-import { Page, RemoteForm } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
-import { parsePulpIDFromURL, taskAlert } from 'src/utilities';
+import { FileRemoteAPI, type FileRemoteType } from '../../api';
+import { Page, RemoteForm } from '../../components';
+import { Paths, formatPath } from '../../paths';
+import { parsePulpIDFromURL, taskAlert } from '../../utilities';
 
 const initialRemote: FileRemoteType = {
   name: '',

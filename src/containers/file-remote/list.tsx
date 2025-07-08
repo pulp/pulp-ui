@@ -5,11 +5,11 @@ import {
   fileRemoteCreateAction,
   fileRemoteDeleteAction,
   fileRemoteEditAction,
-} from 'src/actions';
-import { FileRemoteAPI, type FileRemoteType } from 'src/api';
-import { CopyURL, ListItemActions, ListPage } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
-import { parsePulpIDFromURL } from 'src/utilities';
+} from '../../actions';
+import { FileRemoteAPI, type FileRemoteType } from '../../api';
+import { CopyURL, ListItemActions, ListPage } from '../../components';
+import { Paths, formatPath } from '../../paths';
+import { parsePulpIDFromURL } from '../../utilities';
 
 const listItemActions = [
   // Edit
@@ -37,7 +37,7 @@ const FileRemoteList = ListPage<FileRemoteType>({
   query: ({ params }) => FileRemoteAPI.list(params),
   renderTableRow(item: FileRemoteType, index: number, actionContext) {
     const { name, pulp_href, url } = item;
-    const id = parsePulpIDFromURL(pulp_href);
+    const id = parsePulpIDFromURL(pulp_href as string);
 
     const kebabItems = listItemActions.map((action) =>
       action.dropdownItem({ ...item, id }, actionContext),
