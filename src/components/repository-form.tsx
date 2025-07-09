@@ -12,7 +12,8 @@ import {
   AnsibleRemoteAPI,
   type AnsibleRepositoryType,
   FileRemoteAPI,
-} from 'src/api';
+  DebianRemoteAPI
+} from '../api';
 import {
   FormFieldHelper,
   HelpButton,
@@ -20,12 +21,12 @@ import {
   PulpLabels,
   Spinner,
   Typeahead,
-} from 'src/components';
+} from '../components';
 import {
   type ErrorMessagesType,
   errorMessage,
   pluginRepositoryBasePath,
-} from 'src/utilities';
+} from '../utilities';
 
 interface IProps {
   allowEditName: boolean;
@@ -116,6 +117,8 @@ export const RepositoryForm = ({
       ? AnsibleRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
       : plugin === 'file'
         ? FileRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
+        : plugin === 'debian'
+        ? DebianRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
         : Promise.reject(plugin)
     )
       .then(({ data }) =>

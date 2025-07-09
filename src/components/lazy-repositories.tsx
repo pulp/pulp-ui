@@ -2,9 +2,9 @@ import { t } from '@lingui/core/macro';
 import { Button } from '@patternfly/react-core';
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { useEffect, useState } from 'react';
-import { MaybeLink, Spinner, Tooltip } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
-import { errorMessage, plugin2api } from 'src/utilities';
+import { MaybeLink, Spinner, Tooltip } from '../components';
+import { Paths, formatPath } from '../paths';
+import { errorMessage, plugin2api } from '../utilities';
 
 export const LazyRepositories = ({
   content_href,

@@ -4,11 +4,11 @@ import { Link } from 'react-router';
 import {
   debianRemoteCreateAction,
   debianRemoteDeleteAction
-} from 'src/actions';
-import { DebianRemoteAPI, type DebianRemoteType } from 'src/api';
-import { CopyURL, ListItemActions, ListPage } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
-import { parsePulpIDFromURL } from 'src/utilities';
+} from '../../actions';
+import { DebianRemoteAPI, type DebianRemoteType } from '../../api';
+import { CopyURL, ListItemActions, ListPage } from '../../components';
+import { Paths, formatPath } from '../../paths';
+import { parsePulpIDFromURL } from '../../utilities';
 
 const listItemActions = [
   // Delete
@@ -33,24 +33,26 @@ const DebianRemoteList = ListPage<DebianRemoteType>({
   noDataTitle: msg`No remotes yet`,
   query: ({ params }) => DebianRemoteAPI.list(params),
   renderTableRow(item: DebianRemoteType, index: number, actionContext) {
-    const { name, pulp_href, url } = item;
+    const { name, pulp_href, url , components} = item;
+    console.log(item)
     const id = parsePulpIDFromURL(pulp_href);
 
     const kebabItems = listItemActions.map((action) =>
       action.dropdownItem({ ...item, id }, actionContext),
     );
-
+    console.log(item)
     return (
       <Tr key={index}>
+
         <Td>
           <Link to={formatPath(Paths.debian.remote.detail, { name })}>
             {name}
           </Link>
         </Td>
         <Td>
-          <CopyURL url={url} />
+          <CopyURL url={formatPath(url, {name:components })+components} />
         </Td>
-        <ListItemActions kebabItems={kebabItems} />
+        <ListItemActions kebabItems={kebabItems}/>
       </Tr>
     );
   },

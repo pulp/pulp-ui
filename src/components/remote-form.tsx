@@ -18,20 +18,20 @@ import {
 import DownloadIcon from '@patternfly/react-icons/dist/esm/icons/download-icon';
 import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import { Component, type ReactNode } from 'react';
-import { type RemoteType } from 'src/api';
-import { AppContext, type IAppContextType } from 'src/app-context';
+import { type RemoteType } from '../api';
+import { AppContext, type IAppContextType } from '../app-context';
 import {
   Alert,
   ExternalLink,
   FileUpload,
   FormFieldHelper,
   HelpButton,
-} from 'src/components';
+} from '../components';
 import {
   type ErrorMessagesType,
   downloadString,
   validateURLHelper,
-} from 'src/utilities';
+} from '../utilities';
 
 interface IProps {
   allowEditName?: boolean;
@@ -72,6 +72,7 @@ function isHidden(name: string, hidden_fields: HiddenFieldType[]) {
 
 function isFieldSet(name: string, hidden_fields: HiddenFieldType[]) {
   const field = hidden_fields.find((el) => el.name === name);
+  console.log(hidden_fields)
   if (field) {
     return field.is_set;
   } else {
@@ -119,7 +120,7 @@ export class RemoteForm extends Component<IProps, IState> {
 
   constructor(props) {
     super(props);
-
+    console.log(props);
     const { requirements_file, client_key, client_cert, ca_cert } =
       props.remote || {};
 

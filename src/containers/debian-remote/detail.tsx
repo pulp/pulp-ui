@@ -2,29 +2,30 @@ import { msg, t } from '@lingui/core/macro';
 import {
   debianRemoteDeleteAction,
   debianRemoteEditAction,
-} from 'src/actions';
-import { DebianRemoteAPI, type DebianRemoteType } from 'src/api';
-import { PageWithTabs } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
-import { parsePulpIDFromURL } from 'src/utilities';
+} from '../../actions';
+import { DebianRemoteAPI, type DebianRemoteType } from '../../api';
+import { PageWithTabs } from '../../components';
+import { Paths, formatPath } from '../../paths';
+import { parsePulpIDFromURL } from '../../utilities';
 import { RemoteAccessTab } from './tab-access';
 import { DetailsTab } from './tab-details';
 
 const DebianRemoteDetail = PageWithTabs<DebianRemoteType>({
   breadcrumbs: ({ name, tab, params: { user, group } }) =>
-    [
-      { url: formatPath(Paths.debian.remote.list), name: t`Remotes` },
-      { url: formatPath(Paths.debian.remote.detail, { name }), name },
-      tab === 'access' && (group || user)
-        ? {
-            url: formatPath(Paths.debian.remote.detail, { name }, { tab }),
-            name: t`Access`,
-          }
-        : null,
-      tab === 'access' && group ? { name: t`Group ${group}` } : null,
-      tab === 'access' && user ? { name: t`User ${user}` } : null,
-      tab === 'access' && !user && !group ? { name: t`Access` } : null,
-    ].filter(Boolean),
+  ([
+    { url: formatPath(Paths.debian.remote.list), name: t`Remotes` },
+    { url: formatPath(Paths.debian.remote.detail, { name }), name },
+    tab === 'access' && (group || user)
+      ? {
+          url: formatPath(Paths.debian.remote.detail, { name }, { tab }),
+          name: t`Access`,
+        }
+      : null,
+    tab === 'access' && group ? { name: t`Group ${group}` } : null,
+    tab === 'access' && user ? { name: t`User ${user}` } : null,
+    tab === 'access' && !user && !group ? { name: t`Access` } : null,
+  ].filter(Boolean) as { name: string; url?: string }[]),
+
   displayName: 'DebianRemoteDetail',
   errorTitle: msg`Remote could not be displayed.`,
   headerActions: [

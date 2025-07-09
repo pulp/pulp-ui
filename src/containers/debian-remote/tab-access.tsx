@@ -7,14 +7,14 @@ import {
   type GroupType,
   type RoleType,
   UserAPI,
-} from 'src/api';
-import { AccessTab } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
+} from '../../api';
+import { AccessTab } from '../../components';
+import { Paths, formatPath } from '../../paths';
 import {
   assignRoles,
   jsxErrorMessage,
   parsePulpIDFromURL,
-} from 'src/utilities';
+} from '../../utilities';
 
 interface UserType {
   username: string;

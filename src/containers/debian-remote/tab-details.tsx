@@ -1,11 +1,11 @@
 import { t } from '@lingui/core/macro';
-import { type DebianRemoteType } from 'src/api';
+import { type DebianRemoteType } from '../../api';
 import {
   CopyURL,
   Details,
   LazyRepositories,
   PulpCodeBlock,
-} from 'src/components';
+} from '../../components';
 
 interface TabProps {
   item: DebianRemoteType;
@@ -56,6 +56,14 @@ export const DetailsTab = ({ item }: TabProps) => (
         value: (
           <LazyRepositories plugin='debian' remote_href={item?.pulp_href} />
         ),
+      },
+      {
+        label: t`Architecture`,
+        value: item.architectures
+      },
+      {
+        label: t`Distribution`,
+        value: item.distributions
       },
       {
         label: t`YAML requirements`,

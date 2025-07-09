@@ -1,21 +1,24 @@
 import { msg, t } from '@lingui/core/macro';
-import { DebianRemoteAPI, type DebianRemoteType } from 'src/api';
-import { Page, RemoteForm } from 'src/components';
-import { Paths, formatPath } from 'src/paths';
-import { parsePulpIDFromURL, taskAlert } from 'src/utilities';
+import { DebianRemoteAPI, type DebianRemoteType } from '../../api';
+import { Page, RemoteForm } from '../../components';
+import { Paths, formatPath } from '../../paths';
+import { parsePulpIDFromURL, taskAlert } from '../../utilities';
 
 const initialRemote: DebianRemoteType = {
   name: '',
   url: '',
-  ca_cert: null,
-  client_cert: null,
+  ca_cert: '',
+  client_cert: '',
   tls_validation: true,
-  proxy_url: null,
-  download_concurrency: null,
-  rate_limit: null,
-  requirements_file: null,
-  auth_url: null,
+  proxy_url: '',
+  download_concurrency: 0,
+  rate_limit: 0,
+  requirements_file: '',
+  auth_url: '',
   signed_only: false,
+  components: '',
+  architectures: '',
+  distributions: '',
 
   hidden_fields: [
     'client_key',
@@ -26,6 +29,7 @@ const initialRemote: DebianRemoteType = {
     'token',
   ].map((name) => ({ name, is_set: false })),
 };
+
 
 const DebianRemoteEdit = Page<DebianRemoteType>({
   breadcrumbs: ({ name }) =>

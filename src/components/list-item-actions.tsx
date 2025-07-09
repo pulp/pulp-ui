@@ -1,7 +1,7 @@
 import { List } from '@patternfly/react-core';
 import { Td } from '@patternfly/react-table';
 import { type ReactNode } from 'react';
-import { StatefulDropdown } from 'src/components';
+import { StatefulDropdown } from '../components';
 
 interface IProps {
   kebabItems?: ReactNode[];
@@ -13,7 +13,8 @@ export function ListItemActions(props: IProps) {
   const kebabItems = props.kebabItems?.filter(Boolean);
   const anyButtons = buttons?.length;
   const anyKebab = kebabItems?.length;
-
+  
+  console.log(kebabItems);
   return (
     <Td
       style={{
