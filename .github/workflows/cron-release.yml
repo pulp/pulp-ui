@@ -28,11 +28,11 @@ jobs:
             echo "SKIP=no" >> $GITHUB_ENV
           fi
 
-      - name: 'Install node 20'
+      - name: 'Install node 22'
         if: ${{ env.SKIP == 'no' }}
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: 'Install python 3.13'
