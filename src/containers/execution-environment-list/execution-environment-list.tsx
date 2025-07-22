@@ -110,12 +110,10 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    this.queryEnvironments();
-    this.setState({ alerts: (this.context as IAppContextType).alerts });
-  }
-
-  componentWillUnmount() {
+    this.setState({ alerts: (this.context as IAppContextType).alerts || [] });
     (this.context as IAppContextType).setAlerts([]);
+
+    this.queryEnvironments();
   }
 
   render() {

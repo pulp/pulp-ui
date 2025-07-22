@@ -409,6 +409,7 @@ class GroupDetail extends Component<RouteProps, IState> {
 
   private renderGroupDeleteModal() {
     const { group, users, itemCount } = this.state;
+    const { hasPermission, queueAlert } = this.context as IAppContextType;
 
     const deleteAction = () => {
       GroupAPI.delete(group.id)
@@ -416,22 +417,22 @@ class GroupDetail extends Component<RouteProps, IState> {
           this.setState({
             showDeleteModal: false,
           });
-          this.addAlert(
-            t`Group "${group}" has been successfully deleted.`,
-            'success',
-          );
+          queueAlert({
+            title: t`Group "${group.name}" has been successfully deleted.`,
+            variant: 'success',
+          });
           this.setState({ redirect: formatPath(Paths.core.group.list) });
         })
         .catch((e) => {
           const { status, statusText } = e.response;
           this.addAlert(
-            t`Group "${group}" could not be deleted.`,
+            t`Group "${group.name}" could not be deleted.`,
             'danger',
             jsxErrorMessage(status, statusText),
           );
         });
     };
-    const { hasPermission } = this.context as IAppContextType;
+
     const view_user = hasPermission('galaxy.view_user');
 
     if (!users && view_user) {

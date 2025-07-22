@@ -146,10 +146,10 @@ export class NamespaceDetail extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
-    this.load();
-
     this.setState({ alerts: (this.context as IAppContextType).alerts || [] });
     (this.context as IAppContextType).setAlerts([]);
+
+    this.load();
   }
 
   componentDidUpdate(prevProps) {

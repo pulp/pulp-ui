@@ -90,6 +90,9 @@ export const Page = function <
     }
 
     componentDidMount() {
+      this.setState({ alerts: (this.context as IAppContextType).alerts || [] });
+      (this.context as IAppContextType).setAlerts([]);
+
       // condition check after query, for object permissions
       this.query().then((item) => {
         const actionContext = {
@@ -97,15 +100,11 @@ export const Page = function <
           hasObjectPermission: (permission) =>
             item?.my_permissions?.includes?.(permission),
         };
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if (condition && !condition(actionContext as any)) {
           this.setState({ loading: false, unauthorized: true });
         }
-
-        this.setState({
-          alerts: (this.context as IAppContextType).alerts || [],
-        });
-        (this.context as IAppContextType).setAlerts([]);
       });
     }
 
