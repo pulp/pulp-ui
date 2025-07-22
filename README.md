@@ -63,6 +63,8 @@ pulp user list
 
 ### frontend
 
+You can clone the frontend from https://github.com/pulp/pulp-ui .
+
 ```sh
 npm install
 npm run start
@@ -70,7 +72,7 @@ npm run start
 
 and open http://localhost:8002/ :tada: :)
 
-If your API listens elsewhere, you can use `API_PROXY=http://elsewhere:12345 npm run start` instead.
+If your API listens elsewhere, you can use `API_PROXY=http://elsewhere:12345 npm run start` instead. Do note that the server at `elsewhere` has to be configured to allow CORS requests for `localhost` (where UI actually listens); using something like `changeOrigin` is out of scope for pulp-ui, and breaks pulp API URLs (because the domains are based on the Origin header). Do NOT use webpack proxy in production.
 
 
 ## Misc
