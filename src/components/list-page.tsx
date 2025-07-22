@@ -185,15 +185,15 @@ export const ListPage = function <T>({
     }
 
     componentDidMount() {
+      this.setState({ alerts: (this.context as IAppContextType).alerts || [] });
+      (this.context as IAppContextType).setAlerts([]);
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (condition && !condition(this.context as any)) {
         this.setState({ loading: false, unauthorized: true });
       } else {
         this.query();
       }
-
-      this.setState({ alerts: (this.context as IAppContextType).alerts || [] });
-      (this.context as IAppContextType).setAlerts([]);
     }
 
     render() {

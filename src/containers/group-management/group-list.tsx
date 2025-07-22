@@ -103,6 +103,9 @@ class GroupList extends Component<RouteProps, IState> {
   }
 
   componentDidMount() {
+    this.setState({ alerts: (this.context as IAppContextType).alerts || [] });
+    (this.context as IAppContextType).setAlerts([]);
+
     const { hasPermission } = this.context as IAppContextType;
     if (!hasPermission('galaxy.view_group')) {
       this.setState({ unauthorized: true });
@@ -363,7 +366,7 @@ class GroupList extends Component<RouteProps, IState> {
             ...this.state.alerts,
             {
               variant: 'danger',
-              title: t`Changes to group "${this.state.selectedGroup}" could not be saved.`,
+              title: t`Changes to group "${this.state.selectedGroup.name}" could not be saved.`,
             },
           ],
         }),
