@@ -23,28 +23,32 @@ jobs:
         run: |
           LAST=`git blame package.json | grep '"version":' | awk '{ print $1 }'`
           if git diff --exit-code "$LAST" -- src/ package.json; then
-            false
+            echo "SKIP=yes" >> $GITHUB_ENV
           else
-            true
+            echo "SKIP=no" >> $GITHUB_ENV
           fi
 
       - name: 'Install node 20'
+        if: ${{ env.SKIP == 'no' }}
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
       - name: 'Install python 3.13'
+        if: ${{ env.SKIP == 'no' }}
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
 
       - name: 'Install moreutils'
+        if: ${{ env.SKIP == 'no' }}
         run: |
           sudo apt-get -y install moreutils
 
       # FIXME: reuse pr-checks.yml?
       - name: 'Checks'
+        if: ${{ env.SKIP == 'no' }}
         run: |
           # fail if npm install had to change package-lock.json
           npm install
@@ -60,16 +64,19 @@ jobs:
           npm run test
 
       - name: 'Set PULP_UI_VERSION'
+        if: ${{ env.SKIP == 'no' }}
         run: |
           # used in npm run build
           echo "PULP_UI_VERSION=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
       - name: 'git config'
+        if: ${{ env.SKIP == 'no' }}
         run: |
           git config --local user.name "cron-release workflow"
           git config --local user.email "pulp-ui+cron-release@example.com"
 
       - name: 'Update gettext'
+        if: ${{ env.SKIP == 'no' }}
         run: |
           npm run gettext:extract
           npm run gettext:compile
@@ -77,26 +84,32 @@ jobs:
           git commit -m "locale update on $(date --iso=d)" || true
 
       - name: 'Increment npm version, version tag'
+        if: ${{ env.SKIP == 'no' }}
         run: 'npm version patch'
 
       - name: 'Set NPM_VERSION, TARBALL'
+        if: ${{ env.SKIP == 'no' }}
         run: |
           echo "NPM_VERSION=$(jq -r .version < package.json)" >> $GITHUB_ENV
           echo "TARBALL=pulp-ui-$(date --iso=d).tar.gz" >> $GITHUB_ENV
 
       - name: 'Build UI dist/'
+        if: ${{ env.SKIP == 'no' }}
         run: 'npm run build'
 
       - name: 'Build a tarball'
+        if: ${{ env.SKIP == 'no' }}
         run: |
           tar -C dist/ -czvf "$TARBALL" .
 
       - name: 'Push, push tags'
+        if: ${{ env.SKIP == 'no' }}
         run: |
           git push
           git push -f --tags
 
       - name: 'Release'
+        if: ${{ env.SKIP == 'no' }}
         run: |
           gh release create v"$NPM_VERSION" --title "pulp-ui $NPM_VERSION $(date --iso=d)" --generate-notes
           gh release upload v"$NPM_VERSION" "$TARBALL" --clobber
@@ -104,6 +117,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 'Update CHANGES.md'
+        if: ${{ env.SKIP == 'no' }}
         run: |
           (
             curl -s https://api.github.com/repos/pulp/pulp-ui/releases/latest | \
