@@ -482,7 +482,6 @@ class GroupList extends Component<RouteProps, IState> {
     this.setState({ loading: true }, () =>
       GroupAPI.list(this.state.params)
         .then((result) => {
-          console.log(result);
           this.setState({
             groups: result.data.results,
             itemCount: result.data.count,

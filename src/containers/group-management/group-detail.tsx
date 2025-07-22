@@ -543,10 +543,7 @@ class GroupDetail extends Component<RouteProps, IState> {
             !isUserMgmtDisabled && (
               <Button
                 variant='primary'
-                onClick={() => {
-                  this.setState({ addModalVisible: true });
-                  console.log(this.state.addModalVisible);
-                }}
+                onClick={() => this.setState({ addModalVisible: true })}
               >
                 {t`Add`}
               </Button>
@@ -583,11 +580,10 @@ class GroupDetail extends Component<RouteProps, IState> {
                 <ToolbarGroup>
                   <ToolbarItem>
                     <Button
-                      onClick={() => {
-                        this.setState({ addModalVisible: true });
-                        console.log(this.state.addModalVisible);
-                      }}
-                    >{t`Add`}</Button>
+                      onClick={() => this.setState({ addModalVisible: true })}
+                    >
+                      {t`Add`}
+                    </Button>
                   </ToolbarItem>
                 </ToolbarGroup>
               )}
