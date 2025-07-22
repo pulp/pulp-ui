@@ -73,9 +73,9 @@ module.exports = (inputConfigs) => {
               ),
             port: customConfigs.DEV_PORT,
             proxy: Object.entries(customConfigs.DEV_PROXY).map(
-              ([path, proxy_target]) => ({
+              ([path, target]) => ({
                 context: [path],
-                target: proxy_target,
+                target,
                 changeOrigin: true,
               }),
             ),
