@@ -76,7 +76,7 @@ module.exports = (inputConfigs) => {
               ([path, proxy_target]) => ({
                 context: [path],
                 target: proxy_target,
-                changeOrigin: true
+                changeOrigin: true,
               }),
             ),
             server: { type: customConfigs.DEV_HTTPS ? 'https' : 'http' },
