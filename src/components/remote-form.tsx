@@ -76,7 +76,7 @@ function isFieldSet(name: string, hidden_fields: HiddenFieldType[]) {
   if (field) {
     return field.is_set;
   } else {
-    throw `Field ${name} is not in hidden_fields`;
+    // throw `Field ${name} is not in hidden_fields`;
   }
 }
 
@@ -182,6 +182,20 @@ export class RemoteForm extends Component<IProps, IState> {
         break;
 
       case 'container':
+      case 'debian':
+        disabledFields = disabledFields.concat([
+          'client_key',
+          'proxy_username',
+          'proxy_password',
+          'username',
+          'password',
+          'token',
+          'auth_url',
+          'requirements_file',
+          'signed_only',
+          'sync_dependencies',
+        ]);
+        break;
       case 'file':
         disabledFields = disabledFields.concat([
           'auth_url',

@@ -60,7 +60,10 @@ module.exports = (inputConfigs) => {
       : {
           devServer: {
             allowedHosts: 'all',
-            client: { overlay: false },
+            client: {
+              overlay: false,
+              logging: 'info',
+            },
             devMiddleware: { writeToDisk: true },
             historyApiFallback: true,
             host: '0.0.0.0',

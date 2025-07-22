@@ -26,7 +26,6 @@ const initialRemote: DebianRemoteType = {
     'proxy_password',
     'username',
     'password',
-    'token',
   ].map((name) => ({ name, is_set: false })),
 };
 
