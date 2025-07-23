@@ -996,7 +996,7 @@ msgstr "Change existing containers."
 msgid "Changes to certification status for collection \"{0} {1} v{2}\" could not be saved."
 msgstr "Changes to certification status for collection \"{0} {1} v{2}\" could not be saved."
 
-#. placeholder {0}: this.state.selectedGroup
+#. placeholder {0}: this.state.selectedGroup.name
 #: src/containers/group-management/group-list.tsx
 msgid "Changes to group \"{0}\" could not be saved."
 msgstr "Changes to group \"{0}\" could not be saved."
@@ -3063,6 +3063,11 @@ msgstr "Group"
 msgid "Group \"{0}\" could not be added to \"{name}\"."
 msgstr "Group \"{0}\" could not be added to \"{name}\"."
 
+#. placeholder {0}: group.name
+#: src/containers/group-management/group-detail.tsx
+msgid "Group \"{0}\" could not be deleted."
+msgstr "Group \"{0}\" could not be deleted."
+
 #: src/containers/group-management/group-detail.tsx
 #~ msgid "Group \"{0}\" could not be displayed."
 #~ msgstr "Group \"{0}\" could not be displayed."
@@ -3085,6 +3090,7 @@ msgstr "Group \"{0}\" has been successfully added to \"{name}\"."
 
 #. placeholder {0}: group.name
 #: src/containers/group-management/group-list.tsx
+#: src/containers/group-management/group-detail.tsx
 msgid "Group \"{0}\" has been successfully deleted."
 msgstr "Group \"{0}\" has been successfully deleted."
 
@@ -3121,12 +3127,12 @@ msgid "Group \"{0}\" roles successfully updated in \"{name}\"."
 msgstr "Group \"{0}\" roles successfully updated in \"{name}\"."
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" could not be deleted."
-msgstr "Group \"{group}\" could not be deleted."
+#~ msgid "Group \"{group}\" could not be deleted."
+#~ msgstr "Group \"{group}\" could not be deleted."
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" has been successfully deleted."
-msgstr "Group \"{group}\" has been successfully deleted."
+#~ msgid "Group \"{group}\" has been successfully deleted."
+#~ msgstr "Group \"{group}\" has been successfully deleted."
 
 #. placeholder {0}: group.name
 #: src/components/access-tab.tsx

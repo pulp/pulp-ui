@@ -995,7 +995,7 @@ msgstr ""
 msgid "Changes to certification status for collection \"{0} {1} v{2}\" could not be saved."
 msgstr "无法保存集合\"{0} {1} v{2}\"认证状态的更改 。"
 
-#. placeholder {0}: this.state.selectedGroup
+#. placeholder {0}: this.state.selectedGroup.name
 #: src/containers/group-management/group-list.tsx
 msgid "Changes to group \"{0}\" could not be saved."
 msgstr "无法保存对组 \"{0}\" 的更改。"
@@ -3062,6 +3062,11 @@ msgstr "组"
 msgid "Group \"{0}\" could not be added to \"{name}\"."
 msgstr "组 \"{0}\" 无法被添加到 \"{name}\"。"
 
+#. placeholder {0}: group.name
+#: src/containers/group-management/group-detail.tsx
+msgid "Group \"{0}\" could not be deleted."
+msgstr ""
+
 #: src/containers/group-management/group-detail.tsx
 #~ msgid "Group \"{0}\" could not be displayed."
 #~ msgstr "Group \"{0}\" could not be displayed."
@@ -3084,6 +3089,7 @@ msgstr "组 \"{0}\" 已被添加到 \"{name}\"。"
 
 #. placeholder {0}: group.name
 #: src/containers/group-management/group-list.tsx
+#: src/containers/group-management/group-detail.tsx
 msgid "Group \"{0}\" has been successfully deleted."
 msgstr "组 \"{0}\" 已成功删除。"
 
@@ -3120,12 +3126,12 @@ msgid "Group \"{0}\" roles successfully updated in \"{name}\"."
 msgstr "组 \"{0}\" 角色在 \"{name}\" 中已成功更新。"
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" could not be deleted."
-msgstr "组 \"{group}\" 无法被删除。"
+#~ msgid "Group \"{group}\" could not be deleted."
+#~ msgstr "组 \"{group}\" 无法被删除。"
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" has been successfully deleted."
-msgstr "组 \"{group}\" 已成功删除。"
+#~ msgid "Group \"{group}\" has been successfully deleted."
+#~ msgstr "组 \"{group}\" 已成功删除。"
 
 #. placeholder {0}: group.name
 #: src/components/access-tab.tsx

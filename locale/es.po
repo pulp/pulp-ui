@@ -995,7 +995,7 @@ msgstr ""
 msgid "Changes to certification status for collection \"{0} {1} v{2}\" could not be saved."
 msgstr "No se pudieron guardar los cambios para el estado de certificación \"{0} {1} v{2}\"."
 
-#. placeholder {0}: this.state.selectedGroup
+#. placeholder {0}: this.state.selectedGroup.name
 #: src/containers/group-management/group-list.tsx
 msgid "Changes to group \"{0}\" could not be saved."
 msgstr "No se pudieron guardar los cambios para el grupo \"{0}\"."
@@ -3062,6 +3062,11 @@ msgstr "Grupo"
 msgid "Group \"{0}\" could not be added to \"{name}\"."
 msgstr "No se pudo agregar el grupo \"{0}\" a \"{name}\"."
 
+#. placeholder {0}: group.name
+#: src/containers/group-management/group-detail.tsx
+msgid "Group \"{0}\" could not be deleted."
+msgstr ""
+
 #: src/containers/group-management/group-detail.tsx
 #~ msgid "Group \"{0}\" could not be displayed."
 #~ msgstr "Group \"{0}\" could not be displayed."
@@ -3084,6 +3089,7 @@ msgstr "El grupo \"{0}\" se agregó correctamente a \"{name}\"."
 
 #. placeholder {0}: group.name
 #: src/containers/group-management/group-list.tsx
+#: src/containers/group-management/group-detail.tsx
 msgid "Group \"{0}\" has been successfully deleted."
 msgstr "El grupo \"{0}\" se eliminó correctamente."
 
@@ -3120,12 +3126,12 @@ msgid "Group \"{0}\" roles successfully updated in \"{name}\"."
 msgstr "Los roles del grupo \"{0}\" se actualizaron correctamente en \"{name}\"."
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" could not be deleted."
-msgstr "No se pudo eliminar el grupo \"{group}\"."
+#~ msgid "Group \"{group}\" could not be deleted."
+#~ msgstr "No se pudo eliminar el grupo \"{group}\"."
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" has been successfully deleted."
-msgstr "El grupo \"{group}\" se eliminó correctamente."
+#~ msgid "Group \"{group}\" has been successfully deleted."
+#~ msgstr "El grupo \"{group}\" se eliminó correctamente."
 
 #. placeholder {0}: group.name
 #: src/components/access-tab.tsx

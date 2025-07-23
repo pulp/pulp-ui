@@ -995,7 +995,7 @@ msgstr ""
 msgid "Changes to certification status for collection \"{0} {1} v{2}\" could not be saved."
 msgstr "コレクション \"{0} {1} v{2}\" の認定ステータスへの変更を保存できませんでした。"
 
-#. placeholder {0}: this.state.selectedGroup
+#. placeholder {0}: this.state.selectedGroup.name
 #: src/containers/group-management/group-list.tsx
 msgid "Changes to group \"{0}\" could not be saved."
 msgstr "グループ \"{0}\" への変更を保存できませんでした。"
@@ -3062,6 +3062,11 @@ msgstr "グループ"
 msgid "Group \"{0}\" could not be added to \"{name}\"."
 msgstr "グループ \"{0}\" を \"{name}\" に追加できませんでした。"
 
+#. placeholder {0}: group.name
+#: src/containers/group-management/group-detail.tsx
+msgid "Group \"{0}\" could not be deleted."
+msgstr ""
+
 #: src/containers/group-management/group-detail.tsx
 #~ msgid "Group \"{0}\" could not be displayed."
 #~ msgstr "Group \"{0}\" could not be displayed."
@@ -3084,6 +3089,7 @@ msgstr "グループ \"{0}\" が \"{name}\" に正常に追加されました。
 
 #. placeholder {0}: group.name
 #: src/containers/group-management/group-list.tsx
+#: src/containers/group-management/group-detail.tsx
 msgid "Group \"{0}\" has been successfully deleted."
 msgstr "グループ \"{0}\" が正常に削除されました。"
 
@@ -3120,12 +3126,12 @@ msgid "Group \"{0}\" roles successfully updated in \"{name}\"."
 msgstr "グループ \"{0}\" のロールが \"{name}\" に正常に更新されました。"
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" could not be deleted."
-msgstr "グループ \"{group}\" を削除できませんでした。"
+#~ msgid "Group \"{group}\" could not be deleted."
+#~ msgstr "グループ \"{group}\" を削除できませんでした。"
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" has been successfully deleted."
-msgstr "グループ \"{group}\" が正常に削除されました。"
+#~ msgid "Group \"{group}\" has been successfully deleted."
+#~ msgstr "グループ \"{group}\" が正常に削除されました。"
 
 #. placeholder {0}: group.name
 #: src/components/access-tab.tsx

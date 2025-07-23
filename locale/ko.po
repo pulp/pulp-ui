@@ -995,7 +995,7 @@ msgstr ""
 msgid "Changes to certification status for collection \"{0} {1} v{2}\" could not be saved."
 msgstr "컬렉션 \"{0} {1} v{2}\"에 대한 인증 상태 변경 사항을 저장할 수 없습니다."
 
-#. placeholder {0}: this.state.selectedGroup
+#. placeholder {0}: this.state.selectedGroup.name
 #: src/containers/group-management/group-list.tsx
 msgid "Changes to group \"{0}\" could not be saved."
 msgstr "그룹 \"{0}\"에 대한 변경 사항을 저장할 수 없습니다."
@@ -3062,6 +3062,11 @@ msgstr "그룹"
 msgid "Group \"{0}\" could not be added to \"{name}\"."
 msgstr "그룹 \"{0}\"을/를 \"{name}\"에 추가할 수 없습니다."
 
+#. placeholder {0}: group.name
+#: src/containers/group-management/group-detail.tsx
+msgid "Group \"{0}\" could not be deleted."
+msgstr ""
+
 #: src/containers/group-management/group-detail.tsx
 #~ msgid "Group \"{0}\" could not be displayed."
 #~ msgstr "Group \"{0}\" could not be displayed."
@@ -3084,6 +3089,7 @@ msgstr "그룹\"{0}\"이/가 \"{name}\"에 성공적으로 추가되었습니다
 
 #. placeholder {0}: group.name
 #: src/containers/group-management/group-list.tsx
+#: src/containers/group-management/group-detail.tsx
 msgid "Group \"{0}\" has been successfully deleted."
 msgstr "그룹 \"{0}\"이/가 성공적으로 삭제되었습니다."
 
@@ -3120,12 +3126,12 @@ msgid "Group \"{0}\" roles successfully updated in \"{name}\"."
 msgstr "그룹 \"{0}\" 역할이 \"{name}\"에서 성공적으로 업데이트되었습니다."
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" could not be deleted."
-msgstr "그룹 \"{group}\"을/를 삭제할 수 없습니다."
+#~ msgid "Group \"{group}\" could not be deleted."
+#~ msgstr "그룹 \"{group}\"을/를 삭제할 수 없습니다."
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" has been successfully deleted."
-msgstr "그룹 \"{group}\"이/가 성공적으로 삭제되었습니다."
+#~ msgid "Group \"{group}\" has been successfully deleted."
+#~ msgstr "그룹 \"{group}\"이/가 성공적으로 삭제되었습니다."
 
 #. placeholder {0}: group.name
 #: src/components/access-tab.tsx

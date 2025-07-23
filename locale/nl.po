@@ -995,7 +995,7 @@ msgstr ""
 msgid "Changes to certification status for collection \"{0} {1} v{2}\" could not be saved."
 msgstr "Wijzigingen in certificeringsstatus voor collectie \"{0} {1} v{2}\" konden niet worden opgeslagen."
 
-#. placeholder {0}: this.state.selectedGroup
+#. placeholder {0}: this.state.selectedGroup.name
 #: src/containers/group-management/group-list.tsx
 msgid "Changes to group \"{0}\" could not be saved."
 msgstr "Wijzigingen in groep \"{0}\" konden niet worden opgeslagen."
@@ -3062,6 +3062,11 @@ msgstr "Groep"
 msgid "Group \"{0}\" could not be added to \"{name}\"."
 msgstr "Groep \"{0}\" kan niet worden toegevoegd aan \"{name}\"."
 
+#. placeholder {0}: group.name
+#: src/containers/group-management/group-detail.tsx
+msgid "Group \"{0}\" could not be deleted."
+msgstr ""
+
 #: src/containers/group-management/group-detail.tsx
 #~ msgid "Group \"{0}\" could not be displayed."
 #~ msgstr "Group \"{0}\" could not be displayed."
@@ -3084,6 +3089,7 @@ msgstr "Groep \"{0}\" is toegevoegd aan \"{name}\"."
 
 #. placeholder {0}: group.name
 #: src/containers/group-management/group-list.tsx
+#: src/containers/group-management/group-detail.tsx
 msgid "Group \"{0}\" has been successfully deleted."
 msgstr "Groep \"{0}\" is verwijderd."
 
@@ -3120,12 +3126,12 @@ msgid "Group \"{0}\" roles successfully updated in \"{name}\"."
 msgstr "Rollen van groep \"{0}\" succesvol bijgewerkt in \"{name}\"."
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" could not be deleted."
-msgstr "Groep \"{group}\" kon niet worden verwijderd."
+#~ msgid "Group \"{group}\" could not be deleted."
+#~ msgstr "Groep \"{group}\" kon niet worden verwijderd."
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" has been successfully deleted."
-msgstr "Groep \"{group}\" is verwijderd."
+#~ msgid "Group \"{group}\" has been successfully deleted."
+#~ msgstr "Groep \"{group}\" is verwijderd."
 
 #. placeholder {0}: group.name
 #: src/components/access-tab.tsx

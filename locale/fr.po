@@ -995,7 +995,7 @@ msgstr ""
 msgid "Changes to certification status for collection \"{0} {1} v{2}\" could not be saved."
 msgstr "Les changements de statut de certification pour la collection \"{0} {1} v{2}\" n’ont pas pu être sauvegardés."
 
-#. placeholder {0}: this.state.selectedGroup
+#. placeholder {0}: this.state.selectedGroup.name
 #: src/containers/group-management/group-list.tsx
 msgid "Changes to group \"{0}\" could not be saved."
 msgstr "Les changements au groupe \"{0}\" n’ont pas pu être sauvegardés."
@@ -3062,6 +3062,11 @@ msgstr "Groupe"
 msgid "Group \"{0}\" could not be added to \"{name}\"."
 msgstr "Groupe \"{0}\" n’a pas pu être ajouté à \"{name}\"."
 
+#. placeholder {0}: group.name
+#: src/containers/group-management/group-detail.tsx
+msgid "Group \"{0}\" could not be deleted."
+msgstr ""
+
 #: src/containers/group-management/group-detail.tsx
 #~ msgid "Group \"{0}\" could not be displayed."
 #~ msgstr "Group \"{0}\" could not be displayed."
@@ -3084,6 +3089,7 @@ msgstr "L’utilsateur \"{0}\" a été ajouté à \"{name}\"."
 
 #. placeholder {0}: group.name
 #: src/containers/group-management/group-list.tsx
+#: src/containers/group-management/group-detail.tsx
 msgid "Group \"{0}\" has been successfully deleted."
 msgstr "Le groupe \"{0}\" a été supprimé."
 
@@ -3120,12 +3126,12 @@ msgid "Group \"{0}\" roles successfully updated in \"{name}\"."
 msgstr "Les rôles du groupe \"{0}\" ont été mis à jour avec succès dans \"{name}\"."
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" could not be deleted."
-msgstr "Le groupe \"{group}\" n’a pas pu être supprimé."
+#~ msgid "Group \"{group}\" could not be deleted."
+#~ msgstr "Le groupe \"{group}\" n’a pas pu être supprimé."
 
 #: src/containers/group-management/group-detail.tsx
-msgid "Group \"{group}\" has been successfully deleted."
-msgstr "Le groupe \"{group}\" a été supprimé."
+#~ msgid "Group \"{group}\" has been successfully deleted."
+#~ msgstr "Le groupe \"{group}\" a été supprimé."
 
 #. placeholder {0}: group.name
 #: src/components/access-tab.tsx
