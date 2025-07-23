@@ -115,7 +115,7 @@ $white: #fff;
     color: $white;
     line-height: 18px;
     margin-bottom: 50px;
-    word-break: break-word;
+    overflow-wrap: break-word;
 
     .log-follow-button {
       position: relative;
