@@ -1,26 +1,9 @@
 ## 0.1.23 (2025-07-23) {: #0.1.23 }
 
 ### What's Changed
-* Bump the eslint group with 2 updates by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/196
-* Bump @patternfly/react-table from 5.4.13 to 5.4.14 in the patternfly group by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/197
 * Update react router to data router [#182](https://github.com/pulp/pulp-ui/pull/182)
-* Bump the babel group across 1 directory with 4 updates by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/208
-* Bump the eslint group across 1 directory with 3 updates by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/209
-* Bump the patternfly group with 2 updates by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/210
-* Bump the patternfly group with 2 updates by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/213
-* Bump the eslint group across 1 directory with 3 updates by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/215
-* Bump axios from 1.7.9 to 1.8.2 by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/217
-* Bump @babel/runtime from 7.26.9 to 7.26.10 by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/218
-* Bump the eslint group across 1 directory with 2 updates by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/221
 * [PULP-530] Add docs CI using pulp-docs' reusable workflow [#234](https://github.com/pulp/pulp-ui/pull/234)
-* README - mention ui repo, mention cors with API_PROXY [#241](https://github.com/pulp/pulp-ui/pull/241)
-* Bump form-data from 4.0.0 to 4.0.4 by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/240
-* Bump on-headers and compression by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/239
-* Bump webpack-dev-server from 5.2.0 to 5.2.1 by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/235
-* Bump http-proxy-middleware from 2.0.7 to 2.0.9 by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/229
-* Bump the babel group across 1 directory with 7 updates by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/232
-* Bump react-router from 7.1.1 to 7.5.2 by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/228
-* Bump the eslint group across 1 directory with 5 updates by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/227
+* README - mention ui repo, mention cors with API\_PROXY [#241](https://github.com/pulp/pulp-ui/pull/241)
 * GroupList, GroupDetail - fix deletion alert [object Object] [#243](https://github.com/pulp/pulp-ui/pull/243)
 * cleanup stray console.log [#245](https://github.com/pulp/pulp-ui/pull/245)
 * pulp-login: change roles/ to groups/ [#244](https://github.com/pulp/pulp-ui/pull/244)
@@ -53,7 +36,7 @@
 * Fixups from #137 [#191](https://github.com/pulp/pulp-ui/pull/191)
 * Fixups from #124 [#192](https://github.com/pulp/pulp-ui/pull/192)
 * workflows/stale: Add workflow to close stale issues and PRs [#193](https://github.com/pulp/pulp-ui/pull/193)
-* pulp_file: Repositories & Remotes [#137](https://github.com/pulp/pulp-ui/pull/137)
+* pulp\_file: Repositories & Remotes [#137](https://github.com/pulp/pulp-ui/pull/137)
 * Tests [#147](https://github.com/pulp/pulp-ui/pull/147)
 
 
