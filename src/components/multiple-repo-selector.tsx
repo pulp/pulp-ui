@@ -113,7 +113,9 @@ export const MultipleRepoSelector = (props: IProps) => {
           <LabelGroup>
             {selectedRepos.map((name) => (
               <>
-                <Label onClose={() => changeSelection({ name })}>{name}</Label>{' '}
+                <Label onClose={() => changeSelection({ name })}>
+                  {name}
+                </Label>{' '}
               </>
             ))}
           </LabelGroup>

@@ -1,5 +1,5 @@
 ls:
-  .config.js: point.case
+  .config.js: kebab-case
   .d.ts: kebab-case
   .js: kebab-case
   .jsx: kebab-case
