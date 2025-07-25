@@ -108,6 +108,9 @@ function standaloneMenu() {
       }),
     ]),
     menuSection('Pulp RPM', { condition: and(loggedIn, hasPlugin('rpm')) }, [
+      menuItem(t`Repositories`, {
+        url: formatPath(Paths.rpm.repository.list),
+      }),
       menuItem(t`RPMs`, {
         url: formatPath(Paths.rpm.package.list),
       }),
