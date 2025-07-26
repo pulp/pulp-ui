@@ -6,14 +6,32 @@ A community driven UI for [Pulp](https://pulpproject.org/).
 
 ### Backend
 
-The `tests/run_container.sh` script is provided and allows you to run a command with a [Pulp in one](https://pulpproject.org/pulp-in-one-container/) container active.
-It requires Docker or Podman to be installed.
-The default credentials are:
-Username: admin
-Password: password
+You can follow the [pulp-oci-images quickstart](https://pulpproject.org/pulp-oci-images/docs/admin/tutorials/quickstart/),
+TLDR:
 
+#### Setup:
+
+```sh
+mkdir -p ~/pulp-backend-oci/{settings/certs,pulp_storage,pgsql,containers}
+cd ~/pulp-backend-oci/
+echo "
+CONTENT_ORIGIN='http://$(hostname):8080'
+ANSIBLE_API_HOSTNAME='http://$(hostname):8080'
+ANSIBLE_CONTENT_HOSTNAME='http://$(hostname):8080/pulp/content'
+" >> settings/settings.py
 ```
-./tests/run_container sleep inf
+
+#### Run:
+
+```sh
+cd ~/pulp-backend-oci/
+podman run --publish 8080:80 \
+           --replace --name pulp \
+           --volume "$(pwd)/settings":/etc/pulp \
+           --volume "$(pwd)/pulp_storage":/var/lib/pulp \
+           --volume "$(pwd)/pgsql":/var/lib/pgsql \
+           --volume "$(pwd)/containers":/var/lib/containers \
+           docker.io/pulp/pulp
 ```
 
 #### Check:
@@ -33,6 +51,24 @@ pulp config create --username admin --base-url http://localhost:8080 --password 
 pulp --help
 pulp user list
 ```
+
+### Setup (run_container.sh script)
+
+The `tests/run_container.sh` script is provided and allows you to run a command with a [Pulp OCI-image](https://pulpproject.org/pulp-oci-images/docs/admin/tutorials/quickstart/) container running.
+
+It requires Docker or Podman to be installed.
+
+The default credentials are:
+ * Username: admin
+ * Password: password
+
+```
+./tests/run_container sleep inf
+```
+
+The following optional environment variable is availble to be set:
+
+* `IMAGE_TAG`: Change the Pulp OCI image tage to use, defaults to `latest`
 
 ### Frontend
 

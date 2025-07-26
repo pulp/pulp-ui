@@ -1,12 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-# This file is shared between some projects please keep all copies in sync
-# Known places:
-#   - https://github.com/pulp/pulp-cli/blob/main/.ci/run_container.sh
-#   - https://github.com/pulp/pulp-cli-deb/blob/main/.ci/run_container.sh
-#   - https://github.com/pulp/pulp-cli-ostree/blob/main/.ci/run_container.sh
-#   - https://github.com/pulp/squeezer/blob/develop/tests/run_container.sh
-#   - https://github.com/pulp/pulp-ui/blob/main/tests/run_container.sh
+# This script was originally taken from the https://github.com/pulp/squeezer repository and adapted for pulp-ui
 
 set -eu
 
@@ -15,7 +9,7 @@ export BASEPATH
 
 if [ -z "${CONTAINER_RUNTIME:+x}" ]
 then
-  if ls /usr/bin/podman
+  if command -v podman > /dev/null 2>&1
   then
     CONTAINER_RUNTIME=podman
   else
@@ -32,24 +26,23 @@ else
 fi
 
 IMAGE_TAG="${IMAGE_TAG:-latest}"
-FROM_TAG="${FROM_TAG:-latest}"
 
-if [ "${CONTAINER_FILE:+x}" ]
+# Check if getenforce is available and set SELINUX accordingly
+if command -v getenforce > /dev/null 2>&1
 then
-  IMAGE_TAG="ephemeral-build"
-  "${CONTAINER_RUNTIME}" build --file "${BASEPATH}/assets/${CONTAINER_FILE}" --build-arg FROM_TAG="${FROM_TAG}" --tag ghcr.io/pulp/pulp:"${IMAGE_TAG}" .
-fi
-
-if [ "$(getenforce)" = "Enforcing" ]; then
+  if [ "$(getenforce)" = "Enforcing" ]
+  then
     SELINUX="yes"
-else
+  else
     SELINUX=""
-fi;
+  fi
+else
+  SELINUX=""
+fi
 
 "${CONTAINER_RUNTIME}" \
   run ${RM:+--rm} \
   --env S6_KEEP_ENV=1 \
-  ${PULP_API_ROOT:+--env PULP_API_ROOT} \
   --detach \
   --name "pulp-ephemeral" \
   --volume "${BASEPATH}/settings:/etc/pulp${SELINUX:+:Z}" \
@@ -75,7 +68,7 @@ do
   fi
 
   sleep 3
-  if curl --fail "http://localhost:8080${PULP_API_ROOT:-/pulp/}api/v3/status/" > /dev/null 2>&1
+  if curl --fail "http://localhost:8080/pulp/api/v3/status/" > /dev/null 2>&1
   then
     echo "SUCCESS."
     break
@@ -83,15 +76,10 @@ do
   echo "."
 done
 
-# show pulpcore/plugin versions we're using
-curl -s "http://localhost:8080${PULP_API_ROOT:-/pulp/}api/v3/status/" | jq '.versions|map({key: .component, value: .version})|from_entries'
+# Show pulpcore/plugin versions we're using
+curl -s "http://localhost:8080/pulp/api/v3/status/" | jq '.versions|map({key: .component, value: .version})|from_entries'
 
 # Set admin password
 "${CONTAINER_RUNTIME}" exec "pulp-ephemeral" pulpcore-manager reset-admin-password --password password
-
-if [ -d "${BASEPATH}/container_setup.d/" ]
-then
-  run-parts --regex '^[0-9]+-[-_[:alnum:]]*\.sh$' "${BASEPATH}/container_setup.d/"
-fi
 
 PULP_LOGGING="${CONTAINER_RUNTIME}" "$@"

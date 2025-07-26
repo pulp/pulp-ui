@@ -10,4 +10,4 @@ cypress/videos/*
 dist/
 node_modules/
 npm-debug.log*
-tests/settings
+tests/settings/certs/

@@ -1,0 +1,5 @@
+CONTENT_ORIGIN = "http://localhost:8080/"
+ALLOWED_EXPORT_PATHS = ["/tmp"]
+CACHE_ENABLED = True
+REDIS_HOST = "localhost"
+REDIS_PORT = 6379
