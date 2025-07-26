@@ -48,7 +48,7 @@ fi
   --volume "${BASEPATH}/settings:/etc/pulp${SELINUX:+:Z}" \
   --publish "8080:80" \
   --network "bridge" \
-  "ghcr.io/pulp/pulp:${IMAGE_TAG}"
+  "docker.io/pulp/pulp:${IMAGE_TAG}"
 
 # shellcheck disable=SC2064
 trap "${CONTAINER_RUNTIME} stop pulp-ephemeral" EXIT
