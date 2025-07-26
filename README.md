@@ -42,6 +42,15 @@ curl localhost:8080/pulp/api/v3/status/ | jq
 
 or open http://localhost:8080/pulp/api/v3/status/
 
+#### Change password:
+
+```sh
+podman exec -it pulp pulpcore-manager reset-admin-password --password admin
+```
+```sh
+docker exec -it compose-pulp_api-1 pulpcore-manager reset-admin-password --password admin
+```
+
 #### Configure `pulp-cli`:
 
 ```sh
