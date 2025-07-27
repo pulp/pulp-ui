@@ -1,5 +1,9 @@
-build-ui:
-  image: node:18
-  script:
-    - npm install
-    - npm run build
+include:
+  - project: 'devops/ci-templates'
+    file: '/sast-template.yml'
+
+# build-ui:
+#   image: node:18
+#   script:
+#     - npm install
+#     - npm run build
