@@ -1,5 +1,5 @@
 include:
-  - project: 'devops/ci-templates'
+  - project: 'cyberdev/ci-templates'
     file: '/sast-template.yml'
 
 # build-ui:
