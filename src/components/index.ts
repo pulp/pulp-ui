@@ -125,6 +125,7 @@ export {
   RoleListTable,
 } from './role-list-table';
 export { RolePermissions } from './role-permissions';
+export { RPMRepositoryForm } from './rpm-repository-form';
 export { SelectGroup } from './select-group';
 export { SelectRoles } from './select-roles';
 export { SelectUser } from './select-user';
