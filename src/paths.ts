@@ -100,6 +100,11 @@ export const Paths = {
   },
   rpm: {
     package: { list: '/rpm/rpms' },
+    distribution: {
+      detail: '/rpm/distributions/detail/:name',
+      edit: '/rpm/distributions/edit/:name',
+      list: '/rpm/distributions',
+    },
     repository: {
       detail: '/rpm/repositories/detail/:name',
       edit: '/rpm/repositories/edit/:name',
