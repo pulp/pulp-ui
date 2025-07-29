@@ -24,3 +24,6 @@ export { rpmRepositoryCreateAction } from './rpm-repository-create';
 export { rpmRepositoryDeleteAction } from './rpm-repository-delete';
 export { rpmRepositoryEditAction } from './rpm-repository-edit';
 export { rpmRepositorySyncAction } from './rpm-repository-sync';
+export { rpmRemoteCreateAction } from './rpm-remote-create';
+export { rpmRemoteDeleteAction } from './rpm-remote-delete';
+export { rpmRemoteEditAction } from './rpm-remote-edit';

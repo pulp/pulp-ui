@@ -111,6 +111,9 @@ function standaloneMenu() {
       menuItem(t`Repositories`, {
         url: formatPath(Paths.rpm.repository.list),
       }),
+      menuItem(t`Remotes`, {
+        url: formatPath(Paths.rpm.remote.list),
+      }),
       menuItem(t`RPMs`, {
         url: formatPath(Paths.rpm.package.list),
       }),

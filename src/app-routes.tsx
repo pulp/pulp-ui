@@ -48,6 +48,9 @@ import {
   RPMRepositoryDetail,
   RPMRepositoryList,
   RpmRepositoryEdit,
+  RPMRemoteDetail,
+  RPMRemoteEdit,
+  RPMRemoteList,
   RoleCreate,
   RoleList,
   Search,
@@ -330,6 +333,21 @@ const routes: IRouteConfig[] = [
   {
     component: RpmRepositoryEdit,
     path: Paths.rpm.repository.edit,
+  },
+  {
+    component: RPMRemoteDetail,
+    path: Paths.rpm.remote.detail,
+    beta: true,
+  },
+  {
+    component: RPMRemoteEdit,
+    path: Paths.rpm.remote.edit,
+    beta: true,
+  },
+  {
+    component: RPMRemoteList,
+    path: Paths.rpm.remote.list,
+    beta: true,
   },
 ];
 
