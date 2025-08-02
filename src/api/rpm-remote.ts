@@ -1,20 +1,20 @@
 import { PulpAPI } from './pulp';
 
 export class RPMRemoteType {
-  ca_cert: string;
-  client_cert: string;
-  download_concurrency: number;
+  ca_cert?: string;
+  client_cert?: string;
+  download_concurrency?: number;
   name: string;
-  proxy_url: string;
-  proxy_username: string;
-  proxy_password: string;
+  proxy_url?: string;
+  proxy_username?: string;
+  proxy_password?: string;
   pulp_href?: string;
-  rate_limit: number;
-  tls_validation: boolean;
+  rate_limit?: number;
+  tls_validation?: boolean;
   url: string;
-  username: string;
-  password: string;
-  max_retries: number;
+  username?: string;
+  password?: string;
+  max_retries?: number;
   policy?: 'immediate' | 'on_demand' | 'streamed';
   pulp_labels?: Record<string, string>;
   total_timeout?: number;

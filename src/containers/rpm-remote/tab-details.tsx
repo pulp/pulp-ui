@@ -13,7 +13,7 @@ interface TabProps {
 }
 
 const MaybeCode = ({ code, rpmname }: { code: string; rpmname: string }) =>
-  code ? <PulpCodeBlock code={code} rpmname={rpmname} /> : <>{t`None`}</>;
+  code ? <PulpCodeBlock code={code} filename={rpmname} /> : <>{t`None`}</>;
 
 export const DetailsTab = ({ item }: TabProps) => (
   <Details

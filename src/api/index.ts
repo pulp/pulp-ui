@@ -74,7 +74,7 @@ export {
   type UserType,
 } from './response-types/user';
 export { RoleAPI } from './role';
-export { RPMDistributionAPI } from './rpm-distribution';
+export { RPMDistributionAPI, type RPMDistributionType } from './rpm-distribution';
 export { RPMPackageAPI } from './rpm-package';
 export { RPMRepositoryAPI, type RPMRepositoryType } from './rpm-repository';
 export { RPMRemoteAPI, type RPMRemoteType } from './rpm-remote';

@@ -44,6 +44,9 @@ import {
   NamespaceDetail,
   Partners,
   PulpStatus,
+  RPMDistributionDetail,
+  RPMDistributionEdit,
+  RPMDistributionList,
   RPMPackageList,
   RPMRepositoryDetail,
   RPMRepositoryList,
@@ -314,6 +317,21 @@ const routes: IRouteConfig[] = [
     component: AboutProject,
     path: Paths.meta.about,
     noAuth: true,
+  },
+  {
+    component: RPMDistributionDetail,
+    path: Paths.rpm.distribution.detail,
+    beta: true,
+  },
+  {
+    component: RPMDistributionEdit,
+    path: Paths.rpm.distribution.edit,
+    beta: true,
+  },
+  {
+    component: RPMDistributionList,
+    path: Paths.rpm.distribution.list,
+    beta: true,
   },
   {
     component: RPMPackageList,
