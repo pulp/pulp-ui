@@ -16,9 +16,10 @@ const initialRepository: RPMRepositoryType = {
   remote: null,
   autopublish: false,
   metadata_signing_service: null,
-  gpgcheck: 0,
-  repo_gpgcheck: 0,
   checksum_type: 'sha256',
+  compression_type: 'zstd',
+  repo_config: {},
+  layout: 'nested_alphabetically',
 };
 
 const RpmRepositoryEdit = Page<RPMRepositoryType>({

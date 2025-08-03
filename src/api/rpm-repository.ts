@@ -2,11 +2,12 @@ import { PulpAPI } from './pulp';
 
 export class RPMRepositoryType {
   autopublish?: boolean;
-  checksum_type?: 'sha1' | 'sha256' | 'sha512';
   description: string | null;
-  gpgcheck?: 0 | 1 | 2;
   latest_version_href?: string;
   metadata_signing_service?: string;
+  package_signing_service?: string;
+  package_signing_fingerprint?: string;
+  checksum_type?: 'unknown' | 'md5' | 'sha1' | 'sha224' |'sha256' | 'sha384' | 'sha512';
   name: string;
   pulp_created?: string;
   pulp_href?: string;
@@ -14,10 +15,12 @@ export class RPMRepositoryType {
   pulp_last_updated?: string;
   remote: string | null;
   repoclosure_verification?: boolean;
-  repo_gpgcheck?: 0 | 1;
   retain_package_versions?: number;
   retain_repo_versions: number | null;
   versions_href?: string;
+  compression_type?: 'zstd' | 'gz';
+  repo_config?: object;
+  layout?: 'nested_alphabetically' | 'flat';
 }
 
 const base = new PulpAPI();
