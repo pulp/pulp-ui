@@ -98,6 +98,24 @@ export const Paths = {
       manifest: '/container/containers/manifest/:namespace?/:container/:digest',
     },
   },
+  rpm: {
+    package: { list: '/rpm/rpms' },
+    distribution: {
+      detail: '/rpm/distributions/detail/:name',
+      edit: '/rpm/distributions/edit/:name',
+      list: '/rpm/distributions',
+    },
+    repository: {
+      detail: '/rpm/repositories/detail/:name',
+      edit: '/rpm/repositories/edit/:name',
+      list: '/rpm/repositories',
+    },
+    remote: {
+      detail: '/rpm/remotes/detail/:name',
+      edit: '/rpm/remotes/edit/:name',
+      list: '/rpm/remotes',
+    }
+  },
   core: {
     group: {
       detail: '/groups/detail/:group',
@@ -138,8 +156,5 @@ export const Paths = {
     about: '/about',
     login: '/login',
     search: '/search',
-  },
-  rpm: {
-    package: { list: '/rpm/rpms' },
   },
 };

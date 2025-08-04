@@ -4,6 +4,7 @@ import {
   AnsibleRepositoryAPI,
   ContainerDistributionAPI,
   ContainerPullThroughDistributionAPI,
+  RPMRepositoryAPI,
 } from 'src/api';
 
 export const ModelToApi = {
@@ -13,4 +14,5 @@ export const ModelToApi = {
   ansibledistribution: AnsibleDistributionAPI,
   containerdistribution: ContainerDistributionAPI,
   containerpullthroughdistribution: ContainerPullThroughDistributionAPI,
+  rpmrepository: RPMRepositoryAPI
 };

@@ -25,6 +25,7 @@ export { DarkmodeSwitcher } from './darkmode-switcher';
 export { DataForm } from './data-form';
 export { DateComponent } from './date-component';
 export { DeleteCollectionModal } from './delete-collection-modal';
+export { DeleteDistributionModal } from './delete-distribution-modal';
 export { DeleteExecutionEnvironmentModal } from './delete-execution-environment-modal';
 export { DeleteGroupModal } from './delete-group-modal';
 export { DeleteModal } from './delete-modal';
@@ -125,6 +126,8 @@ export {
   RoleListTable,
 } from './role-list-table';
 export { RolePermissions } from './role-permissions';
+export { RPMDistributionForm } from './rpm-distribution-form';
+export { RPMRepositoryForm } from './rpm-repository-form';
 export { SelectGroup } from './select-group';
 export { SelectRoles } from './select-roles';
 export { SelectUser } from './select-user';
