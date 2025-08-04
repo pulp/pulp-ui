@@ -11,15 +11,6 @@ import { parsePulpIDFromURL, taskAlert } from 'src/utilities';
 const initialRepository: RPMRepositoryType = {
   name: '',
   description: '',
-  retain_repo_versions: 1,
-  pulp_labels: {},
-  remote: null,
-  autopublish: false,
-  metadata_signing_service: null,
-  checksum_type: 'sha256',
-  compression_type: 'zstd',
-  repo_config: {},
-  layout: 'nested_alphabetically',
 };
 
 const RpmRepositoryEdit = Page<RPMRepositoryType>({

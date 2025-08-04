@@ -11,12 +11,12 @@ export class RPMRepositoryType {
   name: string;
   pulp_created?: string;
   pulp_href?: string;
-  pulp_labels: Record<string, string>;
+  pulp_labels?: Record<string, string>;
   pulp_last_updated?: string;
-  remote: string | null;
+  remote?: string | null;
   repoclosure_verification?: boolean;
   retain_package_versions?: number;
-  retain_repo_versions: number | null;
+  retain_repo_versions?: number | null;
   versions_href?: string;
   compression_type?: 'zstd' | 'gz';
   repo_config?: object;

@@ -6,10 +6,12 @@ import {
   Form,
   FormGroup,
   TextInput,
+  Select,
 } from '@patternfly/react-core';
 import { useEffect, useState } from 'react';
 import {
   RPMRepositoryAPI,
+  RPMRemoteAPI,
   type RPMRepositoryType,
 } from 'src/api';
 import {
@@ -111,20 +113,15 @@ export const RPMRepositoryForm = ({
   const [remotesError, setRemotesError] = useState(null);
   const loadRemotes = (name?) => {
     setRemotesError(null);
-    // (plugin === 'ansible'
-    //   ? AnsibleRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
-    //   : plugin === 'file'
-    //     ? FileRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
-    //     : Promise.reject(plugin)
-    // )
-    //   .then(({ data }) =>
-    //     setRemotes(data.results.map((r) => ({ ...r, id: r.pulp_href }))),
-    //   )
-    //   .catch((e) => {
-    //     const { status, statusText } = e.response;
-    //     setRemotes([]);
-    //     setRemotesError(errorMessage(status, statusText));
-    //   });
+    RPMRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
+      .then(({ data }) =>
+        setRemotes(data.results.map((r) => ({ ...r, id: r.pulp_href }))),
+      )
+      .catch((e) => {
+        const { status, statusText } = e.response;
+        setRemotes([]);
+        setRemotesError(errorMessage(status, statusText));
+      });
   };
 
   useEffect(() => loadRemotes(), []);
@@ -149,12 +146,7 @@ export const RPMRepositoryForm = ({
     <Form>
       {stringField('name', t`Name`)}
       {stringField('description', t`Description`)}
-      {numericField(
-        'retain_repo_versions',
-        t`Retained number of versions`,
-        t`In order to retain all versions, leave this field blank.`,
-      )}
-
+      {numericField('retain_repo_versions', t`Retained number of versions`, t`In order to retain all versions, leave this field blank.`,)}
       {formGroup(
         'distributions',
         t`Distributions`,
