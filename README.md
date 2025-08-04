@@ -55,7 +55,7 @@ docker exec -it compose-pulp_api-1 pulpcore-manager reset-admin-password --passw
 
 ```sh
 pip install pulp-cli[pygments]
-pulp config create --username admin --base-url http://localhost:8080 --password password
+pulp config create --username admin --base-url http://localhost:8080 --password admin
 
 pulp --help
 pulp user list
@@ -69,7 +69,7 @@ It requires Docker or Podman to be installed.
 
 The default credentials are:
  * Username: admin
- * Password: password
+ * Password: admin
 
 ```
 ./tests/run_container sleep inf

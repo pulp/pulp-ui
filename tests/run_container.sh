@@ -80,6 +80,6 @@ done
 curl -s "http://localhost:8080/pulp/api/v3/status/" | jq '.versions|map({key: .component, value: .version})|from_entries'
 
 # Set admin password
-"${CONTAINER_RUNTIME}" exec "pulp-ephemeral" pulpcore-manager reset-admin-password --password password
+"${CONTAINER_RUNTIME}" exec "pulp-ephemeral" pulpcore-manager reset-admin-password --password admin
 
 PULP_LOGGING="${CONTAINER_RUNTIME}" "$@"
