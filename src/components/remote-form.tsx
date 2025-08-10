@@ -182,6 +182,7 @@ export class RemoteForm extends Component<IProps, IState> {
 
       case 'container':
       case 'file':
+      case 'rpm':
         disabledFields = disabledFields.concat([
           'auth_url',
           'token',
@@ -190,6 +191,7 @@ export class RemoteForm extends Component<IProps, IState> {
           'sync_dependencies',
         ]);
         break;
+
     }
 
     const save = (

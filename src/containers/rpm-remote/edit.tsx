@@ -136,8 +136,8 @@ const RPMRemoteEdit = Page<RPMRemoteType>({
       <RemoteForm
         allowEditName={!item}
         closeModal={closeModal}
-        errorMessages={errorMessages}
         plugin='rpm'
+        errorMessages={errorMessages}
         remote={remoteToEdit}
         saveRemote={saveRemote}
         showMain

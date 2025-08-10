@@ -7,6 +7,10 @@ Cypress.Commands.add('assertTitle', {}, (title) => {
   cy.contains('.pf-v5-c-title', title);
 });
 
+Cypress.Commands.add('assertListText', {}, (text) => {
+  cy.contains('.pf-v5-c-description-list__text', text);
+});
+
 Cypress.Commands.add('ui', {}, (path = '') => {
   cy.visit(ui + path);
 });

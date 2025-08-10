@@ -37,7 +37,7 @@ export const DeleteDistributionModal = ({
     >
       <Text>
         <Trans>
-          Are you sure you want to delete the distribution <b>{name}</b>
+          Are you sure you want to delete the distribution <b>{name}</b>?
         </Trans>
       </Text>
     </DeleteModal>

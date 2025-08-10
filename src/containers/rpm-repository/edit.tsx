@@ -11,6 +11,7 @@ import { parsePulpIDFromURL, taskAlert } from 'src/utilities';
 const initialRepository: RPMRepositoryType = {
   name: '',
   description: '',
+  package_signing_fingerprint: '',
 };
 
 const RpmRepositoryEdit = Page<RPMRepositoryType>({
@@ -58,6 +59,9 @@ const RpmRepositoryEdit = Page<RPMRepositoryType>({
 
       // prevent "This field may not be blank." for nullable fields
       Object.keys(data).forEach((k) => {
+        if (k === 'package_signing_fingerprint') {
+          return;
+        }
         if (data[k] === '') {
           data[k] = null;
         }
