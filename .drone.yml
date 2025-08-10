@@ -1,0 +1,73 @@
+kind: pipeline
+type: docker
+name: default
+
+clone:
+  disable: true
+
+steps:
+  - name: clone-pulp-ui
+    image: alpine
+    volumes:
+      - name: ssh
+        path: /root/.ssh
+    commands:
+      - apk add --no-cache git openssh
+      - mkdir -p /drone/src
+      - cd /drone/src
+      - git config --global --add safe.directory /drone/src
+      - |
+        GIT_SSH_COMMAND="ssh -i /root/.ssh/id_ed25519 -o StrictHostKeyChecking=no -p 2222" \
+          git clone git@172.16.111.190:cyber-sbs/pulp-ui.git .
+
+  - name: debug-dir
+    image: alpine
+    commands:
+      - ls -alhR /drone/src
+
+  - name: restore-cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      restore: true
+      mount:
+        - /drone/src/node_modules
+
+  - name: build-pulp-ui
+    image: node:18-alpine
+    environment:
+      NODE_OPTIONS: --max_old_space_size=4096
+    volumes:
+      - name: cache
+        path: /cache
+    commands:
+      - echo "nameserver 1.1.1.1" > /etc/resolv.conf
+      - cd /drone/src
+      - |
+        if [ ! -f package.json ]; then
+          echo "❌ package.json not found — aborting"
+          exit 1
+        fi
+      - npm install --legacy-peer-deps
+      - npm run build
+
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      rebuild: true
+      mount:
+        - /drone/src/node_modules
+
+volumes:
+  - name: ssh
+    host:
+      path: /home/cyberdev/gitea-stack/.ssh
+
+  - name: cache
+    host:
+      path: /home/cyberdev/.drone-cache
