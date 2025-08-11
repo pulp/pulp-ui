@@ -40,26 +40,31 @@ steps:
 
   # --- deps / build with Node 22 (pulp-ui requires >=20) ---
   - name: deps-and-build
-    image: node:22-alpine
+    image: node:22-bookworm-slim   # ← not alpine
     volumes:
       - name: cache
         path: /cache
+    environment:
+      # keep npm quieter & faster in CI
+      npm_config_audit: "false"
+      npm_config_fund: "false"
+      npm_config_update_notifier: "false"
+      npm_config_loglevel: "info"
     commands:
-      - echo "nameserver 1.1.1.1" > /etc/resolv.conf
-      - cd /drone/src
       - node -v && npm -v
-      # if you use private npm packages, uncomment next 2 lines and set NPM_TOKEN secret in Drone
-      # - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      # - chmod 600 ~/.npmrc
+      # upgrade npm (works around the bug on 10.9.3)
+      - npm i -g npm@latest
+      - npm -v
+      - cd /drone/src
       - |
         if [ ! -f package-lock.json ]; then
           echo "⚠️  package-lock.json missing; falling back to 'npm install'"
-          npm install --legacy-peer-deps
+          npm install --legacy-peer-deps || (cat /root/.npm/_logs/*-debug-0.log || true; exit 1)
         else
-          npm ci --legacy-peer-deps
+          npm ci --legacy-peer-deps || (cat /root/.npm/_logs/*-debug-0.log || true; exit 1)
         fi
       - npm run build
-
+      
   # --- rebuild cache after deps ---
   - name: rebuild-cache
     image: drillster/drone-volume-cache
