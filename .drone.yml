@@ -82,16 +82,19 @@ steps:
 
   - name: docker_login_check
     image: docker:27-cli
-    environment:
-      DOCKER_USERNAME:
-        from_secret: "drone-ci-bot"
-      DOCKER_PASSWORD:
-        from_secret: "8a06165f823ad91f487838e7a7db71935f0764dd"
     volumes:
       - name: dockersock
         path: /var/run/docker.sock
+    environment:
+      DOCKER_USERNAME:
+        from_secret: DOCKER_USERNAME
+      DOCKER_PASSWORD:
+        from_secret: DOCKER_PASSWORD
     commands:
+      - test -n "$DOCKER_USERNAME" || (echo "DOCKER_USERNAME missing" && exit 1)
+      - test -n "$DOCKER_PASSWORD" || (echo "DOCKER_PASSWORD missing" && exit 1)
       - echo "$DOCKER_PASSWORD" | docker login 172.16.111.190 -u "$DOCKER_USERNAME" --password-stdin
+
 
   # --- Docker image publish: short SHA tag ---
   - name: docker_publish_sha
@@ -104,9 +107,9 @@ steps:
         - latest
         - "${DRONE_COMMIT_SHA:0:7}"
       username:
-        from_secret: "drone-ci-bot"
+        from_secret: DOCKER_USERNAME
       password:
-        from_secret: "8a06165f823ad91f487838e7a7db71935f0764dd"
+        from_secret: DOCKER_PASSWORD
 
       dockerfile: Dockerfile
       context: /drone/src
@@ -130,9 +133,9 @@ steps:
         - latest
         - ${DRONE_COMMIT_SHA}
       username:
-        from_secret: "drone-ci-bot"
+        from_secret: DOCKER_USERNAME
       password:
-        from_secret: "8a06165f823ad91f487838e7a7db71935f0764dd"
+        from_secret: DOCKER_PASSWORD
         
       dockerfile: Dockerfile
       context: /drone/src
