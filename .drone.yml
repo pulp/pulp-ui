@@ -7,7 +7,30 @@ clone:
   disable: true
 
 steps:
-  # --- clone from Gitea over SSH:2222 using host-mounted key (same style as WikiJS) ---
+  - name: docker_info
+    image: docker:27-cli
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+    commands:
+      - docker version
+      - docker info | sed -n '/Insecure Registries/,+5p'
+
+  - name: docker_login_check
+    image: docker:27-cli
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+    environment:
+      DOCKER_USERNAME:
+        from_secret: DOCKER_USERNAME
+      DOCKER_PASSWORD:
+        from_secret: DOCKER_PASSWORD
+    commands:
+      - test -n "$DOCKER_USERNAME" || (echo "DOCKER_USERNAME missing" && exit 1)
+      - test -n "$DOCKER_PASSWORD" || (echo "DOCKER_PASSWORD missing" && exit 1)
+      - echo "$DOCKER_PASSWORD" | docker login 172.16.111.190 -u "$DOCKER_USERNAME" --password-stdin
+
   - name: clone-pulp-ui
     image: alpine:3.20
     volumes:
@@ -80,31 +103,6 @@ steps:
         - /drone/src/node_modules
          - /root/.npm
 
-  - name: docker_info
-    image: docker:27-cli
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
-    commands:
-      - docker version
-      - docker info | sed -n '/Insecure Registries/,+5p'
-
-  - name: docker_login_check
-    image: docker:27-cli
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
-    environment:
-      DOCKER_USERNAME:
-        from_secret: DOCKER_USERNAME
-      DOCKER_PASSWORD:
-        from_secret: DOCKER_PASSWORD
-    commands:
-      - test -n "$DOCKER_USERNAME" || (echo "DOCKER_USERNAME missing" && exit 1)
-      - test -n "$DOCKER_PASSWORD" || (echo "DOCKER_PASSWORD missing" && exit 1)
-      - echo "$DOCKER_PASSWORD" | docker login 172.16.111.190 -u "$DOCKER_USERNAME" --password-stdin
-
-
   # --- Docker image publish: short SHA tag ---
   - name: docker_publish_sha
     image: plugins/docker:20
@@ -160,7 +158,9 @@ steps:
         - push
 
 volumes:
-  # same pattern as your working WikiJS pipeline
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
   - name: ssh
     host:
       path: /home/cyberdev/gitea-stack/.ssh   # must contain id_ed25519 with read access in Gitea
