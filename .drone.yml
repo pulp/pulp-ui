@@ -80,12 +80,26 @@ steps:
         - /drone/src/node_modules
          - /root/.npm
 
+  - name: docker_login_check
+    image: docker:27-cli
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+    commands:
+      - echo "$DOCKER_PASSWORD" | docker login 172.16.111.190 -u "$DOCKER_USERNAME" --password-stdin
+    environment:
+      DOCKER_USERNAME:
+        from_secret: "drone-ci-bot"
+      DOCKER_PASSWORD:
+        from_secret: "8a06165f823ad91f487838e7a7db71935f0764dd"
+
   # --- Docker image publish: short SHA tag ---
   - name: docker_publish_sha
     image: plugins/docker:20
     settings:
       registry: 172.16.111.190
       repo: 172.16.111.190/cyber-sbs/pulp-ui
+      insecure: true
       tags:
         - latest
         - "${DRONE_COMMIT_SHA:0:7}"
@@ -93,7 +107,6 @@ steps:
         from_secret: "drone-ci-bot"
       password:
         from_secret: "8a06165f823ad91f487838e7a7db71935f0764dd"
-      insecure: true
 
       dockerfile: Dockerfile
       context: /drone/src
@@ -112,6 +125,7 @@ steps:
     settings:
       registry: 172.16.111.190
       repo: 172.16.111.190/cyber-sbs/pulp-ui
+      insecure: true
       tags:
         - latest
         - ${DRONE_COMMIT_SHA}
@@ -119,8 +133,7 @@ steps:
         from_secret: "drone-ci-bot"
       password:
         from_secret: "8a06165f823ad91f487838e7a7db71935f0764dd"
-      insecure: true
-      # registry: 172.16.111.190
+        
       dockerfile: Dockerfile
       context: /drone/src
       build_args:
