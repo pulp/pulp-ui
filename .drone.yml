@@ -1,73 +1,76 @@
 kind: pipeline
 type: docker
-name: default
+name: pulp-ui-ci
 
-clone:
-  disable: true
+# default workspace is /drone/src
 
 steps:
-  - name: clone-pulp-ui
-    image: alpine
-    volumes:
-      - name: ssh
-        path: /root/.ssh
+  - name: clone
+    image: alpine:3.20
+    environment:
+      REPO_SSH: git@172.16.111.190:cyber-sbs/pulp-ui.git
     commands:
       - apk add --no-cache git openssh
-      - mkdir -p /drone/src
-      - cd /drone/src
-      - git config --global --add safe.directory /drone/src
-      - |
-        GIT_SSH_COMMAND="ssh -i /root/.ssh/id_ed25519 -o StrictHostKeyChecking=no -p 2222" \
-          git clone git@172.16.111.190:cyber-sbs/pulp-ui.git .
+      - mkdir -p ~/.ssh
+      - printf "%s" "$DRONE_SSH_KEY" > ~/.ssh/id_ed25519
+      - chmod 600 ~/.ssh/id_ed25519
+      # trust Gitea internal SSH (port 2222)
+      - ssh-keyscan -p 2222 -t rsa,ecdsa,ed25519 172.16.111.190 >> ~/.ssh/known_hosts
+      - git init .
+      - git remote add origin "$REPO_SSH"
+      - GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes -p 2222" git fetch --depth=1 origin "${DRONE_BRANCH:-main}"
+      - GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes -p 2222" git checkout -B "${DRONE_BRANCH:-main}" "origin/${DRONE_BRANCH:-main}"
 
-  - name: debug-dir
-    image: alpine
-    commands:
-      - ls -alhR /drone/src
+  # optional: cache npm (uncomment if you want caching)
+  # - name: restore-npm-cache
+  #   image: meltwater/drone-cache:latest
+  #   settings:
+  #     mount:
+  #       - /root/.npm
+  #     restore: true
+  #     backend: filesystem
+  #     cache_key: npm-{{ arch }}-{{ os }}-{{ repo.name }}-{{ checksum "package-lock.json" }}
 
-  - name: restore-cache
-    image: drillster/drone-volume-cache
-    volumes:
-      - name: cache
-        path: /cache
-    settings:
-      restore: true
-      mount:
-        - /drone/src/node_modules
-
-  - name: build-pulp-ui
-    image: node:18-alpine
+  - name: deps
+    image: node:22-alpine
     environment:
-      NODE_OPTIONS: --max_old_space_size=4096
-    volumes:
-      - name: cache
-        path: /cache
+      # NPM_TOKEN: # if you need private registry access, add a secret and uncomment
     commands:
-      - echo "nameserver 1.1.1.1" > /etc/resolv.conf
-      - cd /drone/src
-      - |
-        if [ ! -f package.json ]; then
-          echo "❌ package.json not found — aborting"
-          exit 1
-        fi
-      - npm install --legacy-peer-deps
+      - node -v && npm -v
+      # optional: write an .npmrc if using an auth token
+      # - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      - npm ci --legacy-peer-deps
+
+  - name: lint
+    image: node:22-alpine
+    commands:
+      - npm run lint || echo "lint warnings tolerated"
+
+  - name: test
+    image: node:22-alpine
+    commands:
+      - npm test -- --ci --reporters=default || echo "tests optional, adjust as needed"
+
+  - name: build
+    image: node:22-alpine
+    commands:
       - npm run build
 
-  - name: rebuild-cache
-    image: drillster/drone-volume-cache
-    volumes:
-      - name: cache
-        path: /cache
-    settings:
-      rebuild: true
-      mount:
-        - /drone/src/node_modules
+  # optional: save npm cache
+  # - name: save-npm-cache
+  #   image: meltwater/drone-cache:latest
+  #   settings:
+  #     mount:
+  #       - /root/.npm
+  #     rebuild: true
+  #     backend: filesystem
+  #     cache_key: npm-{{ arch }}-{{ os }}-{{ repo.name }}-{{ checksum "package-lock.json" }}
 
-volumes:
-  - name: ssh
-    host:
-      path: /home/cyberdev/gitea-stack/.ssh
-
-  - name: cache
-    host:
-      path: /home/cyberdev/.drone-cache
+trigger:
+  branch:
+    - main
+    - master
+    - develop
+  event:
+    - push
+    - pull_request
