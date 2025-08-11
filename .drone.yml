@@ -47,10 +47,12 @@ steps:
         path: /cache
     environment:
       # keep npm quieter & faster in CI
+      PULP_UI_COMMIT: ${DRONE_COMMIT_SHA} 
       npm_config_audit: "false"
       npm_config_fund: "false"
       npm_config_update_notifier: "false"
       npm_config_loglevel: "info"
+      GIT_COMMIT: ${DRONE_COMMIT_SHA}
     commands:
       - node -v && npm -v
       # upgrade npm (works around the bug on 10.9.3)
