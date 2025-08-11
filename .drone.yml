@@ -2,10 +2,9 @@ kind: pipeline
 type: docker
 name: pulp-ui-ci
 
-# default workspace is /drone/src
-
 steps:
-  - name: clone
+  # --- manual clone from Gitea over SSH:2222 ---
+  - name: clone_gitea
     image: alpine:3.20
     environment:
       REPO_SSH: git@172.16.111.190:cyber-sbs/pulp-ui.git
@@ -14,30 +13,18 @@ steps:
       - mkdir -p ~/.ssh
       - printf "%s" "$DRONE_SSH_KEY" > ~/.ssh/id_ed25519
       - chmod 600 ~/.ssh/id_ed25519
-      # trust Gitea internal SSH (port 2222)
       - ssh-keyscan -p 2222 -t rsa,ecdsa,ed25519 172.16.111.190 >> ~/.ssh/known_hosts
       - git init .
       - git remote add origin "$REPO_SSH"
       - GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes -p 2222" git fetch --depth=1 origin "${DRONE_BRANCH:-main}"
       - GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes -p 2222" git checkout -B "${DRONE_BRANCH:-main}" "origin/${DRONE_BRANCH:-main}"
 
-  # optional: cache npm (uncomment if you want caching)
-  # - name: restore-npm-cache
-  #   image: meltwater/drone-cache:latest
-  #   settings:
-  #     mount:
-  #       - /root/.npm
-  #     restore: true
-  #     backend: filesystem
-  #     cache_key: npm-{{ arch }}-{{ os }}-{{ repo.name }}-{{ checksum "package-lock.json" }}
-
+  # --- deps / lint / test / build with Node 22 ---
   - name: deps
     image: node:22-alpine
-    environment:
-      # NPM_TOKEN: # if you need private registry access, add a secret and uncomment
     commands:
       - node -v && npm -v
-      # optional: write an .npmrc if using an auth token
+      # if you pull from private npm, uncomment next line and set NPM_TOKEN secret
       # - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
       - npm ci --legacy-peer-deps
 
@@ -56,15 +43,81 @@ steps:
     commands:
       - npm run build
 
-  # optional: save npm cache
-  # - name: save-npm-cache
-  #   image: meltwater/drone-cache:latest
-  #   settings:
-  #     mount:
-  #       - /root/.npm
-  #     rebuild: true
-  #     backend: filesystem
-  #     cache_key: npm-{{ arch }}-{{ os }}-{{ repo.name }}-{{ checksum "package-lock.json" }}
+  # --- docker image publish: short SHA tag ---
+  - name: docker_publish_sha
+    image: plugins/docker:20
+    settings:
+      username:
+        from_secret: DOCKER_USERNAME
+      password:
+        from_secret: DOCKER_PASSWORD
+
+      # CHOOSE YOUR TARGET REPO:
+      # Docker Hub example:
+      # repo: your_dockerhub_user/pulp-ui
+      # Gitea registry example (also set `registry:` below):
+      # repo: 172.16.111.190/cyber-sbs/pulp-ui
+      repo: your_dockerhub_user/pulp-ui
+
+      # if pushing to a private registry (e.g., Gitea), uncomment and set:
+      # registry: 172.16.111.190
+
+      dockerfile: Dockerfile
+      context: .
+      tags:
+        - "${DRONE_COMMIT_SHA:0:7}"
+      build_args:
+        - VERSION=${DRONE_TAG:-${DRONE_COMMIT_SHA:0:7}}
+        - COMMIT=${DRONE_COMMIT_SHA}
+        - BUILD_DATE=${DRONE_BUILD_CREATED}
+    when:
+      event:
+        - push
+        - tag
+
+  # --- docker image publish: latest on main/master ---
+  - name: docker_publish_latest
+    image: plugins/docker:20
+    settings:
+      username:
+        from_secret: DOCKER_USERNAME
+      password:
+        from_secret: DOCKER_PASSWORD
+      repo: your_dockerhub_user/pulp-ui
+      # registry: 172.16.111.190
+      dockerfile: Dockerfile
+      context: .
+      tags:
+        - latest
+      build_args:
+        - VERSION=${DRONE_TAG:-${DRONE_COMMIT_SHA:0:7}}
+        - COMMIT=${DRONE_COMMIT_SHA}
+        - BUILD_DATE=${DRONE_BUILD_CREATED}
+    when:
+      branch:
+        - main
+        - master
+      event:
+        - push
+
+# optional: cache example (uncomment all 3 blocks to enable)
+#  - name: restore-npm-cache
+#    image: meltwater/drone-cache:latest
+#    settings:
+#      mount:
+#        - /root/.npm
+#      restore: true
+#      backend: filesystem
+#      cache_key: npm-{{ arch }}-{{ os }}-{{ repo.name }}-{{ checksum "package-lock.json" }}
+#
+#  - name: save-npm-cache
+#    image: meltwater/drone-cache:latest
+#    settings:
+#      mount:
+#        - /root/.npm
+#      rebuild: true
+#      backend: filesystem
+#      cache_key: npm-{{ arch }}-{{ os }}-{{ repo.name }}-{{ checksum "package-lock.json" }}
 
 trigger:
   branch:
@@ -74,3 +127,4 @@ trigger:
   event:
     - push
     - pull_request
+    - tag
