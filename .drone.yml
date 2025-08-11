@@ -52,7 +52,6 @@ steps:
       npm_config_fund: "false"
       npm_config_update_notifier: "false"
       npm_config_loglevel: "info"
-      GIT_COMMIT: ${DRONE_COMMIT_SHA}
     commands:
       - node -v && npm -v
       # upgrade npm (works around the bug on 10.9.3)
@@ -117,16 +116,19 @@ steps:
   - name: docker_publish_latest
     image: plugins/docker:20
     settings:
+      registry: 172.16.111.190
+      repo: 172.16.111.190/cyber-sbs/pulp-ui
+      tags:
+        - latest
+        - ${DRONE_COMMIT_SHA}
       username:
-        from_secret: DOCKER_USERNAME
+        from_secret: "drone-ci-bot"
       password:
-        from_secret: DOCKER_PASSWORD
-      repo: your_dockerhub_user/pulp-ui
+        from_secret: "8a06165f823ad91f487838e7a7db71935f0764dd"
+      insecure: true
       # registry: 172.16.111.190
       dockerfile: Dockerfile
       context: /drone/src
-      tags:
-        - latest
       build_args:
         - VERSION=${DRONE_TAG:-${DRONE_COMMIT_SHA:0:7}}
         - COMMIT=${DRONE_COMMIT_SHA}
