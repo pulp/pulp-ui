@@ -80,6 +80,15 @@ steps:
         - /drone/src/node_modules
          - /root/.npm
 
+  - name: docker_info
+    image: docker:27-cli
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+    commands:
+      - docker version
+      - docker info | sed -n '/Insecure Registries/,+5p'
+
   - name: docker_login_check
     image: docker:27-cli
     volumes:
