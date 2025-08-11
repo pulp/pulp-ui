@@ -2,8 +2,10 @@ kind: pipeline
 type: docker
 name: pulp-ui-ci
 
+clone:
+  disable: true
+
 steps:
-  # --- manual clone from Gitea over SSH:2222 ---
   - name: clone_gitea
     image: alpine:3.20
     environment:
