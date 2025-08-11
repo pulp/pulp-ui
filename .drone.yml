@@ -82,16 +82,16 @@ steps:
 
   - name: docker_login_check
     image: docker:27-cli
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
-    commands:
-      - echo "$DOCKER_PASSWORD" | docker login 172.16.111.190 -u "$DOCKER_USERNAME" --password-stdin
     environment:
       DOCKER_USERNAME:
         from_secret: "drone-ci-bot"
       DOCKER_PASSWORD:
         from_secret: "8a06165f823ad91f487838e7a7db71935f0764dd"
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+    commands:
+      - echo "$DOCKER_PASSWORD" | docker login 172.16.111.190 -u "$DOCKER_USERNAME" --password-stdin
 
   # --- Docker image publish: short SHA tag ---
   - name: docker_publish_sha
