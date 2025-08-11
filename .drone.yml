@@ -84,25 +84,19 @@ steps:
   - name: docker_publish_sha
     image: plugins/docker:20
     settings:
+      registry: 172.16.111.190
+      repo: 172.16.111.190/cyber-sbs/pulp-ui
+      tags:
+        - latest
+        - "${DRONE_COMMIT_SHA:0:7}"
       username:
-        from_secret: DOCKER_USERNAME
+        from_secret: "drone-ci-bot"
       password:
-        from_secret: DOCKER_PASSWORD
-
-      # Choose your target repo:
-      # Docker Hub example:
-      # repo: your_dockerhub_user/pulp-ui
-      # Gitea registry example (also set `registry:` below + make runner trust the registry):
-      # repo: 172.16.111.190/cyber-sbs/pulp-ui
-      repo: your_dockerhub_user/pulp-ui
-
-      # If pushing to Gitea registry:
-      # registry: 172.16.111.190
+        from_secret: "8a06165f823ad91f487838e7a7db71935f0764dd"
+      insecure: true
 
       dockerfile: Dockerfile
       context: /drone/src
-      tags:
-        - "${DRONE_COMMIT_SHA:0:7}"
       build_args:
         - VERSION=${DRONE_TAG:-${DRONE_COMMIT_SHA:0:7}}
         - COMMIT=${DRONE_COMMIT_SHA}
