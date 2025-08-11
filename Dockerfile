@@ -6,7 +6,12 @@ WORKDIR /app
 ARG VERSION
 ARG COMMIT
 ARG BUILD_DATE
-LABEL org.opencontainers.image.version=$VERSION \
+ENV NODE_ENV=production \
+    PULP_UI_COMMIT=${COMMIT}
+LABEL org.opencontainers.image.title="Pulp UI" \
+      org.opencontainers.image.description="Pulp UI is a web-based user interface for managing Pulp content." \
+      org.opencontainers.image.vendor="Cyber SBS" \
+      org.opencontainers.image.version=$VERSION \
       org.opencontainers.image.revision=$COMMIT \
       org.opencontainers.image.created=$BUILD_DATE
 
