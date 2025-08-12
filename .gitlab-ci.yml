@@ -207,64 +207,85 @@ publish_wikijs:
   variables:
     WIKI_LOCALE: "en"
     WIKI_TITLE: "Security Report"
-    WIKI_ARCHIVE: "false"
+    WIKI_ARCHIVE: "false"  # set true to also write YYYY-MM-DD snapshot
   before_script:
     - set -eux
     - apk add --no-cache curl jq coreutils ca-certificates
-    - mkdir -p wikijs-debug
-    # make PATH explicit and ensure no shell alias/function shadows curl
-    - export PATH="/usr/bin:/bin:/usr/sbin:/sbin"
-    - unalias curl 2>/dev/null || true
-    - type -a curl || true
-    - /usr/bin/curl --version
     - test -f out/security-report.html
+    - : "${WIKI_URL:?WIKI_URL is required (e.g. http://172.16.111.195:3000)}"
+    - : "${WIKI_TOKEN:?WIKI_TOKEN is required (Wiki.js API token with manage:pages)}"
+    - mkdir -p wikijs-debug
   script: |
     set -euo pipefail
 
+    # Derive paths
     PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
-    DEFAULT_PATH="security/${PROJECT_SLUG}/latest"
-    TARGET_PATH="${WIKI_PATH:-$DEFAULT_PATH}"
-    ARCHIVE_DATE="$(date -u +%F)"
-    ARCHIVE_PATH="security/${PROJECT_SLUG}/${ARCHIVE_DATE}"
+    TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
+    ARCHIVE_PATH="security/${PROJECT_SLUG}/$(date -u +%F)"
 
     HTML_JSON=$(jq -Rs . out/security-report.html)
 
+    call_gql () {
+      # $1: JSON payload; writes response to $2 and returns non-zero on HTTP error
+      local payload="$1" out="$2"
+      http=$(
+        curl -sS -o "$out" -w "%{http_code}" \
+          -H "Authorization: Bearer ${WIKI_TOKEN}" \
+          -H "Content-Type: application/json" \
+          --data "$payload" \
+          "${WIKI_URL%/}/graphql"
+      )
+      echo "HTTP $http" | tee -a "wikijs-debug/http.log"
+      [ "$http" = "200" ] || return 22
+      return 0
+    }
+
     upsert_page () {
-      PATH_SLUG="$1"; TITLE="$2"; CONTENT_JSON="$3"
+      local path="$1" title="$2" content_json="$3"
 
-      GET_PAYLOAD=$(jq -cn --arg path "$PATH_SLUG" --arg locale "${WIKI_LOCALE}" \
-        '{query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title } } }", variables:{path:$path, locale:$locale}}')
+      # 1) Lookup by path
+      get_payload=$(jq -cn --arg path "$path" --arg locale "$WIKI_LOCALE" \
+        '{query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title } } }",
+          variables:{path:$path, locale:$locale}}')
 
-      RES=$(/usr/bin/curl -sS -H "Authorization: Bearer ${WIKI_TOKEN}" -H "Content-Type: application/json" \
-        --data "$GET_PAYLOAD" "${WIKI_URL}/graphql")
-      echo "$RES" > "wikijs-debug/get-$(echo "$PATH_SLUG" | tr '/' '_').json"
+      if ! call_gql "$get_payload" "wikijs-debug/get-$(echo "$path" | tr '/' '_').json"; then
+        echo "GraphQL lookup failed (check token/URL). Response:"
+        cat "wikijs-debug/get-$(echo "$path" | tr '/' '_').json" || true
+        exit 1
+      fi
 
-      ID=$(printf "%s" "$RES" | jq -r '.data.pages.singleByPath.id // empty')
+      id=$(jq -r '.data.pages.singleByPath.id // empty' "wikijs-debug/get-$(echo "$path" | tr '/' '_').json")
 
-      if [ -n "$ID" ]; then
-        echo "Updating ${PATH_SLUG}"
-        MUT_PAYLOAD=$(jq -cn --argjson id "$ID" --arg content "$CONTENT_JSON" \
+      if [ -n "$id" ]; then
+        echo "Updating page id=$id at $path"
+        mut_payload=$(jq -cn --argjson id "$id" --arg content "$content_json" \
           '{query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } } } }",
             variables:{id:$id, content:$content}}')
-        /usr/bin/curl -sS -H "Authorization: Bearer ${WIKI_TOKEN}" -H "Content-Type: application/json" \
-          --data "$MUT_PAYLOAD" "${WIKI_URL}/graphql" \
-          | tee "wikijs-debug/update-$(echo "$PATH_SLUG" | tr '/' '_').json" >/dev/null
-        test "$(jq -r '.data.pages.update.responseResult.succeeded' "wikijs-debug/update-$(echo "$PATH_SLUG" | tr '/' '_').json")" = "true"
+
+        if ! call_gql "$mut_payload" "wikijs-debug/update-$(echo "$path" | tr '/' '_').json"; then
+          echo "GraphQL update failed. Response:"; cat "wikijs-debug/update-$(echo "$path" | tr '/' '_').json" || true; exit 1
+        fi
+
+        jq -e '.errors|not' "wikijs-debug/update-$(echo "$path" | tr '/' '_').json" >/dev/null || { echo "GraphQL errors:"; jq '.errors' "wikijs-debug/update-$(echo "$path" | tr '/' '_').json"; exit 1; }
+        jq -e '.data.pages.update.responseResult.succeeded == true' "wikijs-debug/update-$(echo "$path" | tr '/' '_').json" >/dev/null || { jq '.data.pages.update.responseResult' "wikijs-debug/update-$(echo "$path" | tr '/' '_').json"; exit 1; }
       else
-        echo "Creating ${PATH_SLUG}"
-        MUT_PAYLOAD=$(jq -cn --arg path "$PATH_SLUG" --arg title "${WIKI_TITLE}" --arg locale "${WIKI_LOCALE}" --arg content "$CONTENT_JSON" \
+        echo "Creating page at $path"
+        mut_payload=$(jq -cn --arg path "$path" --arg title "$title" --arg locale "$WIKI_LOCALE" --arg content "$content_json" \
           '{query:"mutation($path:String!,$title:String!,$locale:String!,$content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"html\", isPublished:true, isPrivate:false, content:$content){ responseResult{ succeeded message } } } }",
             variables:{path:$path, title:$title, locale:$locale, content:$content}}')
-        /usr/bin/curl -sS -H "Authorization: Bearer ${WIKI_TOKEN}" -H "Content-Type: application/json" \
-          --data "$MUT_PAYLOAD" "${WIKI_URL}/graphql" \
-          | tee "wikijs-debug/create-$(echo "$PATH_SLUG" | tr '/' '_').json" >/dev/null
-        test "$(jq -r '.data.pages.create.responseResult.succeeded' "wikijs-debug/create-$(echo "$PATH_SLUG" | tr '/' '_').json")" = "true"
+
+        if ! call_gql "$mut_payload" "wikijs-debug/create-$(echo "$path" | tr '/' '_').json"; then
+          echo "GraphQL create failed. Response:"; cat "wikijs-debug/create-$(echo "$path" | tr '/' '_').json" || true; exit 1
+        fi
+
+        jq -e '.errors|not' "wikijs-debug/create-$(echo "$path" | tr '/' '_').json" >/dev/null || { echo "GraphQL errors:"; jq '.errors' "wikijs-debug/create-$(echo "$path" | tr '/' '_').json"; exit 1; }
+        jq -e '.data.pages.create.responseResult.succeeded == true' "wikijs-debug/create-$(echo "$path" | tr '/' '_').json" >/dev/null || { jq '.data.pages.create.responseResult' "wikijs-debug/create-$(echo "$path" | tr '/' '_').json"; exit 1; }
       fi
     }
 
     upsert_page "$TARGET_PATH" "${WIKI_TITLE} (Latest)" "$HTML_JSON"
     if [ "${WIKI_ARCHIVE,,}" = "true" ]; then
-      upsert_page "$ARCHIVE_PATH" "${WIKI_TITLE} (${ARCHIVE_DATE})" "$HTML_JSON"
+      upsert_page "$ARCHIVE_PATH" "${WIKI_TITLE} ($(date -u +%F))" "$HTML_JSON"
     fi
   artifacts:
     when: on_failure
@@ -273,7 +294,6 @@ publish_wikijs:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     - if: $CI_PIPELINE_SOURCE == "schedule"
-
 
 
 # # Security scans for a JS/TS frontend repo
