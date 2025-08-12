@@ -200,16 +200,18 @@ pages:
 
 publish_wikijs:
   stage: report
-  image: curlimages/curl:8.10.1    # has curl preinstalled
+  image: alpine:3.19
   needs:
     - job: generate_security_report
       artifacts: true
   variables:
+    # defaults; override via CI/CD → Variables if you like
     WIKI_LOCALE: "en"
     WIKI_TITLE: "Security Report"
-    WIKI_ARCHIVE: "false"
+    WIKI_ARCHIVE: "true"                   # set true to also write YYYY-MM-DD snapshot
+    # Optional: WIKI_PATH (e.g., "pulp-ui/security/latest")
   before_script:
-    - apk add --no-cache jq coreutils >/dev/null
+    - apk add --no-cache curl jq coreutils ca-certificates
     - mkdir -p wikijs-debug
     - which curl && curl --version
   script: |
@@ -230,7 +232,6 @@ publish_wikijs:
       local RES
       RES=$(curl -sS -H "Authorization: Bearer $WIKI_TOKEN" -H "Content-Type: application/json" \
         --data "$GET" "$WIKI_URL/graphql")
-      echo "$RES" > "wikijs-debug/get-$(echo "$PATH" | tr '/' '_').json"
       local ID
       ID=$(echo "$RES" | jq -r '.data.pages.singleByPath.id // empty')
 
@@ -238,14 +239,14 @@ publish_wikijs:
         echo "Updating ${PATH}"
         local MUT='{"query":"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } } } }","variables":{"id":'"$ID"',"content":'"$CONTENT_JSON"'}}'
         curl -sS -H "Authorization: Bearer $WIKI_TOKEN" -H "Content-Type: application/json" \
-          --data "$MUT" "$WIKI_URL/graphql" | tee "wikijs-debug/update-$(echo "$PATH" | tr '/' '_').json" >/dev/null
-        test "$(jq -r '.data.pages.update.responseResult.succeeded' "wikijs-debug/update-$(echo "$PATH" | tr '/' '_').json")" = "true"
+          --data "$MUT" "$WIKI_URL/graphql" | tee /tmp/wikijs-update.json
+        test "$(jq -r '.data.pages.update.responseResult.succeeded' /tmp/wikijs-update.json)" = "true"
       else
         echo "Creating ${PATH}"
         local MUT='{"query":"mutation($path:String!,$title:String!,$locale:String!,$content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"html\", isPublished:true, isPrivate:false, content:$content){ responseResult{ succeeded message } } } }","variables":{"path":"'"$PATH"'","title":"'"$WIKI_TITLE"'", "locale":"'"$WIKI_LOCALE"'", "content":'"$CONTENT_JSON"'}}'
         curl -sS -H "Authorization: Bearer $WIKI_TOKEN" -H "Content-Type: application/json" \
-          --data "$MUT" "$WIKI_URL/graphql" | tee "wikijs-debug/create-$(echo "$PATH" | tr '/' '_').json" >/dev/null
-        test "$(jq -r '.data.pages.create.responseResult.succeeded' "wikijs-debug/create-$(echo "$PATH" | tr '/' '_').json")" = "true"
+          --data "$MUT" "$WIKI_URL/graphql" | tee /tmp/wikijs-create.json
+        test "$(jq -r '.data.pages.create.responseResult.succeeded' /tmp/wikijs-create.json)" = "true"
       fi
     }
 
@@ -256,11 +257,11 @@ publish_wikijs:
   artifacts:
     when: on_failure
     paths:
-      - wikijs-debug/
+      - /tmp/wikijs-*.json
   rules:
+    # publish on main and schedules by default (keep MR pipelines lighter)
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     - if: $CI_PIPELINE_SOURCE == "schedule"
-
 
 
 # # Security scans for a JS/TS frontend repo
