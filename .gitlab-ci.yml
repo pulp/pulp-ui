@@ -47,24 +47,44 @@ semgrep-sast:
 # Runs on: schedules; when lockfiles change; on MRs; on main pushes;
 # and once on any new branch (baseline) *if lockfiles exist*
 gemnasium-dependency_scanning:
+  variables:
+    # help Gemnasium find nested lockfiles
+    DS_LOCK_FILE_PATHS: "yarn.lock,package-lock.json,pnpm-lock.yaml,**/yarn.lock,**/package-lock.json,**/pnpm-lock.yaml"
   rules:
+    # schedules: always
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: on_success
+
+    # run when lockfiles change (any branch/MR)
     - changes:
-        - package-lock.json
         - yarn.lock
+        - package-lock.json
         - pnpm-lock.yaml
+        - **/yarn.lock
+        - **/package-lock.json
+        - **/pnpm-lock.yaml
       when: on_success
+
+    # first push on a new non-default branch (baseline) if lockfiles exist (root or nested)
     - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH && $CI_COMMIT_BEFORE_SHA == "0000000000000000000000000000000000000000"
       exists:
-        - package-lock.json
         - yarn.lock
+        - package-lock.json
         - pnpm-lock.yaml
+        - **/yarn.lock
+        - **/package-lock.json
+        - **/pnpm-lock.yaml
       when: on_success
+
+    # all MRs
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: on_success
+
+    # pushes to default branch (main)
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: on_success
+
+    # fallback: never
     - when: never
 
 # Secret Detection (Gitleaks ruleset)
@@ -104,6 +124,25 @@ generate_security_report:
 
     md=out/security-report.md
     html=out/security-report.html
+    echo "== Debug: downloaded security artifacts =="
+    find . -maxdepth 3 -type f \( -name "gl-*-report.json" -o -name "gl-sbom-*.cdx.json" \) | sort || true
+
+    SAST_JSON="${SAST_JSON:-gl-sast-report.json}"
+    DS_JSON="${DS_JSON:-gl-dependency-scanning-report.json}"
+    SECRETS_JSON="${SECRETS_JSON:-gl-secret-detection-report.json}"
+
+    # locate DS report if not at root
+    DS_NOTE=""
+    if [ ! -f "$DS_JSON" ]; then
+      DS_JSON_FOUND=$(find . -type f -name "gl-dependency-scanning-report.json" | head -n1 || true)
+      if [ -n "$DS_JSON_FOUND" ]; then
+        echo "Using DS report at: $DS_JSON_FOUND"
+        DS_JSON="$DS_JSON_FOUND"
+        DS_NOTE="_(Using: $DS_JSON_FOUND)_"
+      else
+        echo "WARNING: Dependency Scanning report not found. Was the job skipped?"
+      fi
+    fi
 
     echo "# Security Report" > "$md"
     echo "" >> "$md"
@@ -145,9 +184,11 @@ generate_security_report:
       echo "" >> "$md"
     }
 
-    summarize "SAST" "gl-sast-report.json"
-    summarize "Dependency Scanning" "gl-dependency-scanning-report.json"
-    summarize "Secret Detection" "gl-secret-detection-report.json"
+    + summarize "SAST" "$SAST_JSON"
+    + summarize "Dependency Scanning" "$DS_JSON"
+    # append the note right after the DS section header/body
+    [ -n "$DS_NOTE" ] && echo "$DS_NOTE" >> "$md" && echo "" >> "$md"
+    + summarize "Secret Detection" "$SECRETS_JSON"
 
     # Minimal HTML wrapper so it renders nicely if you publish it
     {
@@ -239,7 +280,7 @@ publish_wikijs:
     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
     ARCHIVE_PATH="security/${PROJECT_SLUG}/$(date -u +%F)"
 
-    MD_JSON=$(jq -Rs . out/security-report.md)
+    MD_RAW="$(cat out/security-report.md)"
     TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" | jq -Rs 'split(",") | map(gsub("^\\s+|\\s+$";"")) | map(select(length>0))')
 
     call_gql () {
@@ -266,7 +307,7 @@ publish_wikijs:
     if [ -n "$id" ]; then
       # 2a) Update
       echo "Updating page id=$id at $TARGET_PATH"
-      mut_payload=$(jq -cn --argjson id "$id" --arg content "$MD_JSON" \
+      mut_payload=$(jq -cn --argjson id "$id" --arg content "$MD_RAW" \
         '{query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
           variables:{id:$id, content:$content}}')
       echo "$mut_payload" > wikijs-debug/update_payload.json
@@ -281,7 +322,7 @@ publish_wikijs:
         --arg title "${WIKI_TITLE}" \
         --arg locale "$WIKI_LOCALE" \
         --arg desc "${WIKI_DESCRIPTION}" \
-        --arg content "$MD_JSON" \
+        --arg content "$MD_RAW" \
         --argjson tags "$TAGS_JSON" \
         '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
           variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
@@ -299,7 +340,7 @@ publish_wikijs:
         --arg title "${WIKI_TITLE} ($(date -u +%F))" \
         --arg locale "$WIKI_LOCALE" \
         --arg desc "${WIKI_DESCRIPTION}" \
-        --arg content "$MD_JSON" \
+        --arg content "$MD_RAW" \
         --argjson tags "$TAGS_JSON" \
         '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
           variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
@@ -315,39 +356,3 @@ publish_wikijs:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     - if: $CI_PIPELINE_SOURCE == "schedule"
-
-
-
-# # Security scans for a JS/TS frontend repo
-
-# include:
-#   # SAST (Semgrep; Advanced SAST if enabled)
-#   - template: Jobs/SAST.gitlab-ci.yml
-#   # Dependency Scanning (npm/yarn/pnpm)
-#   - template: Jobs/Dependency-Scanning.gitlab-ci.yml
-#   # Secret Detection (Gitleaks ruleset)
-#   - template: Jobs/Secret-Detection.gitlab-ci.yml
-
-# variables:
-#   # Turn on deeper taint analysis if you have Ultimate
-#   GITLAB_ADVANCED_SAST_ENABLED: "true"
-
-#   # Trim scan scope for a frontend repo
-#   SAST_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static,cypress,playwright-report,**/*.min.js,**/*.map"
-#   DS_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
-#   SECRET_DETECTION_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
-
-# # Run on MRs and default branch
-# sast:
-#   rules:
-#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-
-# dependency_scanning:
-#   rules:
-#     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-
-# secret_detection:
-#   rules:
-#     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
