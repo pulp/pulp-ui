@@ -1,4 +1,4 @@
-# .gitlab-ci.yml — Stable rollback: working scans + report + WikiJS publish with proper Markdown
+# .gitlab-ci.yml — Stable: working scans + clean HTML for Pages + WikiJS publish (proper Markdown)
 
 include:
   - template: Jobs/SAST.gitlab-ci.yml
@@ -107,6 +107,7 @@ generate_security_report:
 
     md=out/security-report.md
     html=out/security-report.html
+
     echo "== Debug: downloaded security artifacts =="
     find . -maxdepth 3 -type f \( -name "gl-*-report.json" -o -name "gl-sbom-*.cdx.json" \) | sort || true
 
@@ -169,22 +170,62 @@ generate_security_report:
     summarize "Dependency Scanning" "$DS_JSON"
     summarize "Secret Detection" "$SECRETS_JSON"
 
+    # Build real HTML (no markdown-to-html awk to avoid table issues)
     {
-      echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
-      echo "<style>body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:8px} th{background:#f5f5f5;text-align:left}</style>"
-      echo "<article>"
-      awk '
-        /^# /{print "<h1>"substr($0,3)"</h1>";next}
-        /^## /{print "<h2>"substr($0,4)"</h2>";next}
-        /^\|/{
-          if (!intable){print "<table>"; intable=1}
-          gsub(/^\||\|$/,""); n=split($0, a, /\|/)
-          if (!header_done){ print "<tr>"; for(i=1;i<=n;i++) print "<th>"a[i]"</th>"; print "</tr>"; header_done=1; next }
-          print "<tr>"; for(i=1;i<=n;i++) print "<td>"a[i]"</td>"; print "</tr>"; next
-        }
-        { if (intable){print "</table>"; intable=0; header_done=0} print "<p>"$0"</p>"}
-        END{ if (intable){print "</table>"} }
-      ' "$md"
+      cat <<'HEAD'
+        <!doctype html>
+        <meta charset="utf-8">
+        <title>Security Report</title>
+        <style>
+          body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px}
+          table{border-collapse:collapse;width:100%}
+          th,td{border:1px solid #ddd;padding:8px}
+          th{background:#f5f5f5;text-align:left}
+          h1,h2{margin:0.6em 0}
+          .muted{color:#666}
+        </style>
+        <article>
+        HEAD
+
+      echo "<h1>Security Report</h1>"
+      echo "<p class='muted'>Generated on $(date -u +"%Y-%m-%d %H:%M:%SZ")</p>"
+
+      render_html_section () {
+        title="$1"; file="$2"
+        echo "<h2>${title}</h2>"
+        if [ -f "$file" ]; then
+          count=$(jq '.vulnerabilities | length' "$file" 2>/dev/null || echo 0)
+          echo "<p><strong>Findings:</strong> $count</p>"
+          if [ "$count" -gt 0 ]; then
+            echo "<table><thead><tr><th>Severity</th><th>Category</th><th>Name</th><th>File</th><th>Lines</th></tr></thead><tbody>"
+            jq -r '
+              def esc: tostring | gsub("&";"&amp;") | gsub("<";"&lt;");
+              (.vulnerabilities // [])[] as $v
+              | [
+                  ($v.severity // "unknown") | esc,
+                  ($v.category // "unknown") | esc,
+                  ($v.name // "n/a") | esc,
+                  ($v.location.file // "n/a") | esc,
+                  (
+                    ( ($v.location.start_line // "")|tostring )
+                    + (if $v.location.end_line then "-" + (($v.location.end_line)|tostring) else "" end)
+                  ) | esc
+                ]
+              | "<tr><td>" + .[0] + "</td><td>" + .[1] + "</td><td>" + .[2] + "</td><td>" + .[3] + "</td><td>" + .[4] + "</td></tr>"
+            ' "$file"
+            echo "</tbody></table>"
+          else
+            echo "<p><em>No vulnerabilities detected.</em></p>"
+          fi
+        else
+          echo "<p><em>Report not found (job may have been skipped).</em></p>"
+        fi
+      }
+
+      render_html_section "SAST" "$SAST_JSON"
+      render_html_section "Dependency Scanning" "$DS_JSON"
+      render_html_section "Secret Detection" "$SECRETS_JSON"
+
       echo "</article>"
     } > "$html"
 
