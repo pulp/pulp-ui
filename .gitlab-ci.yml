@@ -206,7 +206,7 @@ publish_wikijs:
       artifacts: true
   variables:
     WIKI_LOCALE: "en"
-    WIKI_TITLE: "Security Report"
+    WIKI_TITLE: "Pulp UI Security Report"
     WIKI_ARCHIVE: "true"
     # Optional overrides:
     WIKI_DESCRIPTION: "Security report for pulp-ui (auto-generated)"
@@ -225,16 +225,14 @@ publish_wikijs:
     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
     ARCHIVE_PATH="security/${PROJECT_SLUG}/$(date -u +%F)"
 
-    HTML_JSON=$(jq -Rs . out/security-report.html)
+    MD_JSON=$(jq -Rs . out/security-report.md)
 
     # Defaults if not provided
     DESC_DEFAULT="Generated on $(date -u +%F) – pipeline: ${CI_PIPELINE_URL:-n/a}"
     DESC="${WIKI_DESCRIPTION:-$DESC_DEFAULT}"
-    # Build JSON array from comma-separated WIKI_TAGS (empty -> [])
+    # Build JSON array from comma-separated tags (empty -> [])
     TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" \
-      | jq -Rs 'split(",")
-                | map(gsub("^\\s+|\\s+$";""))    # trim
-                | map(select(length>0))')        # remove empties
+      | jq -Rs 'split(",") | map(gsub("^\\s+|\\s+$";"")) | map(select(length>0))')
 
     call_gql () {
       local payload="$1" out="$2"
@@ -252,49 +250,47 @@ publish_wikijs:
     upsert_page () {
       local path="$1" title="$2" content_json="$3"
 
-      get_payload=$(jq -cn --arg path "$path" --arg locale "${WIKI_LOCALE}" '
-        {query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title } } }",
-         variables:{path:$path, locale:$locale}}')
-
-      call_gql "$get_payload" "wikijs-debug/get-$(echo "$path" | tr '/' '_').json" || {
-        echo "Lookup failed"; cat "wikijs-debug/get-$(echo "$path" | tr '/' '_').json" || true; exit 1; }
+      # Lookup by path (NOTE: no stray quotes around locale)
+      get_payload=$(jq -cn --arg path "$path" --arg locale "$WIKI_LOCALE" \
+        '{query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title } } }",
+          variables:{path:$path, locale:$locale}}')
+      call_gql "$get_payload" "wikijs-debug/get-$(echo "$path" | tr '/' '_').json" \
+        || { echo "Lookup failed"; cat "wikijs-debug/get-$(echo "$path" | tr '/' '_').json" || true; exit 1; }
 
       id=$(jq -r '.data.pages.singleByPath.id // empty' "wikijs-debug/get-$(echo "$path" | tr '/' '_').json")
 
       if [ -n "$id" ]; then
-        echo "Updating $path (id=$id)"
-        mut_payload=$(jq -cn --argjson id "$id" --arg content "$content_json" '
-          {query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } } } }",
-           variables:{id:$id, content:$content}}')
-        call_gql "$mut_payload" "wikijs-debug/update-$(echo "$path" | tr '/' '_').json" || {
-          echo "Update failed"; cat "wikijs-debug/update-$(echo "$path" | tr '/' '_').json" || true; exit 1; }
+        echo "Updating $path"
+        mut_payload=$(jq -cn --argjson id "$id" --arg content "$content_json" \
+          '{query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } } } }",
+            variables:{id:$id, content:$content}}')
+        call_gql "$mut_payload" "wikijs-debug/update-$(echo "$path" | tr '/' '_').json" \
+          || { echo "Update failed"; cat "wikijs-debug/update-$(echo "$path" | tr '/' '_').json" || true; exit 1; }
         jq -e '.errors|not and .data.pages.update.responseResult.succeeded==true' \
-          "wikijs-debug/update-$(echo "$path" | tr '/' '_').json" >/dev/null || {
-            jq '.errors // .data.pages.update.responseResult' \
-              "wikijs-debug/update-$(echo "$path" | tr '/' '_').json"; exit 1; }
+          "wikijs-debug/update-$(echo "$path" | tr '/' '_').json" >/dev/null \
+          || { jq '.errors // .data.pages.update.responseResult' "wikijs-debug/update-$(echo "$path" | tr '/' '_').json"; exit 1; }
       else
         echo "Creating $path"
         mut_payload=$(jq -cn \
           --arg path "$path" \
           --arg title "$title" \
-          --arg locale "${WIKI_LOCALE}" \
-          --arg desc "$DESC" \
+          --arg locale "$WIKI_LOCALE" \
+          --arg desc "${WIKI_DESCRIPTION}" \
           --arg content "$content_json" \
-          --argjson tags "$TAGS_JSON" '
-          {query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"html\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } } } }",
-           variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
-        call_gql "$mut_payload" "wikijs-debug/create-$(echo "$path" | tr '/' '_').json" || {
-          echo "Create failed"; cat "wikijs-debug/create-$(echo "$path" | tr '/' '_').json" || true; exit 1; }
+          --argjson tags "$TAGS_JSON" \
+          '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } } } }",
+            variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
+        call_gql "$mut_payload" "wikijs-debug/create-$(echo "$path" | tr '/' '_').json" \
+          || { echo "Create failed"; cat "wikijs-debug/create-$(echo "$path" | tr '/' '_').json" || true; exit 1; }
         jq -e '.errors|not and .data.pages.create.responseResult.succeeded==true' \
-          "wikijs-debug/create-$(echo "$path" | tr '/' '_').json" >/dev/null || {
-            jq '.errors // .data.pages.create.responseResult' \
-              "wikijs-debug/create-$(echo "$path" | tr '/' '_').json"; exit 1; }
+          "wikijs-debug/create-$(echo "$path" | tr '/' '_').json" >/dev/null \
+          || { jq '.errors // .data.pages.create.responseResult' "wikijs-debug/create-$(echo "$path" | tr '/' '_').json"; exit 1; }
       fi
     }
 
-    upsert_page "$TARGET_PATH" "${WIKI_TITLE} (Latest)" "$HTML_JSON"
+    upsert_page "$TARGET_PATH" "${WIKI_TITLE} (Latest)" "$MD_JSON"
     if [ "${WIKI_ARCHIVE,,}" = "true" ]; then
-      upsert_page "$ARCHIVE_PATH" "${WIKI_TITLE} ($(date -u +%F))" "$HTML_JSON"
+      upsert_page "$ARCHIVE_PATH" "${WIKI_TITLE} ($(date -u +%F))" "$MD_JSON"
     fi
   artifacts:
     when: on_failure
