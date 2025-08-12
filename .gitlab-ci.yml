@@ -209,12 +209,13 @@ publish_wikijs:
     WIKI_TITLE: "Security Report"
     WIKI_ARCHIVE: "false"  # set true to also write YYYY-MM-DD snapshot
   before_script:
-    - set -eux
-    - apk add --no-cache curl jq coreutils ca-certificates
-    - test -f out/security-report.html
-    - : "${WIKI_URL:?WIKI_URL is required (e.g. http://172.16.111.195:3000)}"
-    - : "${WIKI_TOKEN:?WIKI_TOKEN is required (Wiki.js API token with manage:pages)}"
-    - mkdir -p wikijs-debug
+  - set -eux
+  - apk add --no-cache curl jq coreutils ca-certificates
+  - test -f out/security-report.html
+  # Require vars without using the ":" builtin
+  - test -n "${WIKI_URL:-}"   || { echo "WIKI_URL is required (e.g. http://172.16.111.195:3000)"; exit 1; }
+  - test -n "${WIKI_TOKEN:-}" || { echo "WIKI_TOKEN is required (Wiki.js API token with manage:pages)"; exit 1; }
+  - mkdir -p wikijs-debug
   script: |
     set -euo pipefail
 
