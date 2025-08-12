@@ -79,12 +79,12 @@ secret_detection:
       when: on_success
     - when: never
 
-# stages:
-#   - test
-#   - build
-#   - deploy
-#   - security
-#   - report
+stages:
+  - test
+  - build
+  - deploy
+  - security
+  - report
 
 generate_security_report:
   stage: report
