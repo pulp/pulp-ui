@@ -112,7 +112,7 @@ generate_security_report:
       artifacts: true
   before_script:
     - apk add --no-cache jq
-    script: |
+  script: |
     set -e
     mkdir -p out
 
