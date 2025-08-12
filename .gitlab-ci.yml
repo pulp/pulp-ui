@@ -205,7 +205,7 @@ publish_wikijs:
     - job: generate_security_report
       artifacts: true
   variables:
-    WIKI_LOCALE: "en"
+    WIKI_LOCALE: en
     WIKI_TITLE: "Pulp UI Security Report"
     WIKI_ARCHIVE: "true"
     # Optional overrides:
