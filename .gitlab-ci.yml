@@ -1,8 +1,34 @@
+# Security scans for a JS/TS frontend repo
+
 include:
-  - project: 'cyberdev/ci-templates'
-    file: '/sast-template.yml'
-# build-ui:
-#   image: node:18
-#   script:
-#     - npm install
-#     - npm run build 
+  # SAST (Semgrep; Advanced SAST if enabled)
+  - template: Jobs/SAST.gitlab-ci.yml
+  # Dependency Scanning (npm/yarn/pnpm)
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+  # Secret Detection (Gitleaks ruleset)
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+
+variables:
+  # Turn on deeper taint analysis if you have Ultimate
+  GITLAB_ADVANCED_SAST_ENABLED: "true"
+
+  # Trim scan scope for a frontend repo
+  SAST_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static,cypress,playwright-report,**/*.min.js,**/*.map"
+  DS_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
+  SECRET_DETECTION_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
+
+# Run on MRs and default branch
+sast:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+dependency_scanning:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+secret_detection:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
