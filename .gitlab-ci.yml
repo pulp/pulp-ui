@@ -240,7 +240,7 @@ publish_wikijs:
     PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
     MD_RAW="$(cat out/security-report.md)"
-    TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" | jq -Rs 'split(",") | map(gsub("^\s+|\s+$";"")) | map(select(length>0))')
+    TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" | jq -Rs 'split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0))')
 
     call_gql () {
       curl -sS -H "Authorization: Bearer ${WIKI_TOKEN}" -H "Content-Type: application/json"         --data "$1" "${WIKI_URL%/}/graphql"
