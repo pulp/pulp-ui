@@ -1,34 +1,116 @@
-# Security scans for a JS/TS frontend repo
+# .gitlab-ci.yml — Security scans for a JS/TS frontend repo
 
 include:
-  # SAST (Semgrep; Advanced SAST if enabled)
   - template: Jobs/SAST.gitlab-ci.yml
-  # Dependency Scanning (npm/yarn/pnpm)
   - template: Jobs/Dependency-Scanning.gitlab-ci.yml
-  # Secret Detection (Gitleaks ruleset)
   - template: Jobs/Secret-Detection.gitlab-ci.yml
 
 variables:
-  # Turn on deeper taint analysis if you have Ultimate
+  # Set to "false" if you don't have Ultimate
   GITLAB_ADVANCED_SAST_ENABLED: "true"
 
-  # Trim scan scope for a frontend repo
+  # Speed up scans by skipping noise
   SAST_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static,cypress,playwright-report,**/*.min.js,**/*.map"
   DS_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
   SECRET_DETECTION_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
 
-# Run on MRs and default branch
-sast:
+# Only create pipelines for: MRs, default branch pushes, or schedules
+workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - when: never
 
-dependency_scanning:
+# SAST (Semgrep or Advanced SAST)
+# Runs when JS/TS files change, on schedules, on main pushes,
+# and once on any new branch for a baseline scan
+semgrep-sast:
   rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: on_success
+    - changes:
+        - "**/*.js"
+        - "**/*.jsx"
+        - "**/*.ts"
+        - "**/*.tsx"
+      when: on_success
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH && $CI_COMMIT_BEFORE_SHA == "0000000000000000000000000000000000000000"
+      when: on_success
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: on_success
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: on_success
+    - when: never
 
+# Dependency Scanning (Gemnasium)
+# Runs on: schedules; when lockfiles change; on MRs; on main pushes;
+# and once on any new branch (baseline) *if lockfiles exist*
+gemnasium-dependency_scanning:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: on_success
+    - changes:
+        - package-lock.json
+        - yarn.lock
+        - pnpm-lock.yaml
+      when: on_success
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH && $CI_COMMIT_BEFORE_SHA == "0000000000000000000000000000000000000000"
+      exists:
+        - package-lock.json
+        - yarn.lock
+        - pnpm-lock.yaml
+      when: on_success
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: on_success
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: on_success
+    - when: never
+
+# Secret Detection (Gitleaks ruleset)
+# Runs on: schedules, MRs, and main pushes
 secret_detection:
   rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: on_success
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: on_success
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: on_success
+    - when: never
+
+
+
+# # Security scans for a JS/TS frontend repo
+
+# include:
+#   # SAST (Semgrep; Advanced SAST if enabled)
+#   - template: Jobs/SAST.gitlab-ci.yml
+#   # Dependency Scanning (npm/yarn/pnpm)
+#   - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+#   # Secret Detection (Gitleaks ruleset)
+#   - template: Jobs/Secret-Detection.gitlab-ci.yml
+
+# variables:
+#   # Turn on deeper taint analysis if you have Ultimate
+#   GITLAB_ADVANCED_SAST_ENABLED: "true"
+
+#   # Trim scan scope for a frontend repo
+#   SAST_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static,cypress,playwright-report,**/*.min.js,**/*.map"
+#   DS_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
+#   SECRET_DETECTION_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
+
+# # Run on MRs and default branch
+# sast:
+#   rules:
+#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+# dependency_scanning:
+#   rules:
+#     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+# secret_detection:
+#   rules:
+#     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
