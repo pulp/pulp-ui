@@ -112,12 +112,13 @@ generate_security_report:
       artifacts: true
   before_script:
     - apk add --no-cache jq
-  script: |
+    script: |
     set -e
     mkdir -p out
 
     md=out/security-report.md
     html=out/security-report.html
+
     echo "== Debug: downloaded security artifacts =="
     find . -maxdepth 3 -type f \( -name "gl-*-report.json" -o -name "gl-sbom-*.cdx.json" \) | sort || true
 
@@ -125,7 +126,7 @@ generate_security_report:
     DS_JSON="${DS_JSON:-gl-dependency-scanning-report.json}"
     SECRETS_JSON="${SECRETS_JSON:-gl-secret-detection-report.json}"
 
-    # locate DS report if not at root
+    # Try to locate DS report if not at repo root
     DS_NOTE=""
     if [ ! -f "$DS_JSON" ]; then
       DS_JSON_FOUND=$(find . -type f -name "gl-dependency-scanning-report.json" | head -n1 || true)
@@ -138,19 +139,22 @@ generate_security_report:
       fi
     fi
 
-    echo "# Security Report" > "$md"
-    echo "" >> "$md"
-    echo "_Generated on $(date -u +"%Y-%m-%d %H:%M:%SZ")_" >> "$md"
-    echo "" >> "$md"
+    # Build Markdown
+    {
+      echo "# Security Report"
+      echo
+      echo "_Generated on $(date -u +"%Y-%m-%d %H:%M:%SZ")_"
+      echo
+    } > "$md"
 
     summarize() {
       title="$1"; file="$2"
       echo "## $title" >> "$md"
       if [ -f "$file" ]; then
         count=$(jq '.vulnerabilities | length' "$file" 2>/dev/null || echo 0)
-        echo "" >> "$md"
+        echo >> "$md"
         echo "**Findings:** $count" >> "$md"
-        echo "" >> "$md"
+        echo >> "$md"
         if [ "$count" -gt 0 ]; then
           echo "| Severity | Category | Name | File | Lines |" >> "$md"
           echo "|---|---|---|---|---|" >> "$md"
@@ -172,29 +176,26 @@ generate_security_report:
           echo "_No vulnerabilities detected._" >> "$md"
         fi
       else
-        echo "" >> "$md"
+        echo >> "$md"
         echo "_Report not found (job may have been skipped)._" >> "$md"
       fi
-      echo "" >> "$md"
+      echo >> "$md"
     }
 
-    + summarize "SAST" "$SAST_JSON"
-    + summarize "Dependency Scanning" "$DS_JSON"
-    # append the note right after the DS section header/body
-    [ -n "$DS_NOTE" ] && echo "$DS_NOTE" >> "$md" && echo "" >> "$md"
-    + summarize "Secret Detection" "$SECRETS_JSON"
+    summarize "SAST" "$SAST_JSON"
+    summarize "Dependency Scanning" "$DS_JSON"
+    [ -n "$DS_NOTE" ] && echo "$DS_NOTE" >> "$md" && echo >> "$md"
+    summarize "Secret Detection" "$SECRETS_JSON"
 
-    # Minimal HTML wrapper so it renders nicely if you publish it
+    # Minimal HTML wrapper
     {
       echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
       echo "<style>body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:8px} th{background:#f5f5f5;text-align:left}</style>"
       echo "<article>"
-      # Convert simple Markdown to HTML-ish (headings + tables)
       awk '
         /^# /{print "<h1>"substr($0,3)"</h1>";next}
         /^## /{print "<h2>"substr($0,4)"</h2>";next}
         /^\|/{
-          # table rows
           if (!intable){print "<table>"; intable=1}
           gsub(/^\||\|$/,""); n=split($0, a, /\|/)
           if (!header_done){ print "<tr>"; for(i=1;i<=n;i++) print "<th>"a[i]"</th>"; print "</tr>"; header_done=1; next }
