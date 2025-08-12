@@ -60,9 +60,6 @@ gemnasium-dependency_scanning:
         - yarn.lock
         - package-lock.json
         - pnpm-lock.yaml
-        - **/yarn.lock
-        - **/package-lock.json
-        - **/pnpm-lock.yaml
       when: on_success
 
     # first push on a new non-default branch (baseline) if lockfiles exist (root or nested)
@@ -71,9 +68,6 @@ gemnasium-dependency_scanning:
         - yarn.lock
         - package-lock.json
         - pnpm-lock.yaml
-        - **/yarn.lock
-        - **/package-lock.json
-        - **/pnpm-lock.yaml
       when: on_success
 
     # all MRs
