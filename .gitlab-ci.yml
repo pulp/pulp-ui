@@ -231,8 +231,10 @@ publish_wikijs:
     DESC_DEFAULT="Generated on $(date -u +%F) – pipeline: ${CI_PIPELINE_URL:-n/a}"
     DESC="${WIKI_DESCRIPTION:-$DESC_DEFAULT}"
     # Build JSON array from comma-separated WIKI_TAGS (empty -> [])
-    TAGS_JSON=$(jq -cn --arg tags "${WIKI_TAGS:-}" '
-      ($tags | split(",") | map(.|strip) | map(select(length>0))) // []')
+    TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" \
+      | jq -Rs 'split(",")
+                | map(gsub("^\\s+|\\s+$";""))    # trim
+                | map(select(length>0))')        # remove empties
 
     call_gql () {
       local payload="$1" out="$2"
