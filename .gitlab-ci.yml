@@ -1,4 +1,4 @@
-# .gitlab-ci.yml — Security scans for a JS/TS frontend repo
+# .gitlab-ci.yml — Security scans for a JS/TS frontend repo, with HTML coloring, CWE links, and WikiJS auto-archive
 
 include:
   - template: Jobs/SAST.gitlab-ci.yml
@@ -60,6 +60,9 @@ gemnasium-dependency_scanning:
         - yarn.lock
         - package-lock.json
         - pnpm-lock.yaml
+        - "**/yarn.lock"
+        - "**/package-lock.json"
+        - "**/pnpm-lock.yaml"
       when: on_success
 
     # first push on a new non-default branch (baseline) if lockfiles exist (root or nested)
@@ -68,6 +71,9 @@ gemnasium-dependency_scanning:
         - yarn.lock
         - package-lock.json
         - pnpm-lock.yaml
+        - "**/yarn.lock"
+        - "**/package-lock.json"
+        - "**/pnpm-lock.yaml"
       when: on_success
 
     # all MRs
@@ -156,22 +162,43 @@ generate_security_report:
         echo "**Findings:** $count" >> "$md"
         echo >> "$md"
         if [ "$count" -gt 0 ]; then
-          echo "| Severity | Category | Name | File | Lines |" >> "$md"
-          echo "|---|---|---|---|---|" >> "$md"
+          # Enhanced columns: add CWE (with link) and emit severity as HTML span with class
+          echo "| Severity | Category | Name | File | Lines | CWE |" >> "$md"
+          echo "|---|---|---|---|---|---|" >> "$md"
           jq -r '
             (.vulnerabilities // [])[]
-            | [
-                (.severity // "unknown"),
-                (.category // "unknown"),
-                (.name // "n/a"),
-                (.location.file // "n/a"),
+            | . as $v
+            | ($v.severity // "unknown") as $sev_raw
+            | ($sev_raw | ascii_downcase) as $sev_lc
+            | ("<span class=\"sev sev-" + $sev_lc + "\">" + ($sev_raw) + "</span>") as $sev_html
+            | (
                 (
-                  ( (.location.start_line // "")|tostring )
-                  + (if .location.end_line then "-" + ((.location.end_line)|tostring) else "" end)
-                )
+                  [ ($v.identifiers // [])[]
+                      | select((.type // "") == "cwe")
+                      | (.name // .value // "")
+                      | capture("CWE-(?<n>[0-9]+)")?.n
+                  ]
+                  | map(select(. != null)) | .[0]
+                ) // ($v.cwe // null)
+              ) as $cwe
+            | (
+                if $cwe then
+                  ("<a href=\"https://cwe.mitre.org/data/definitions/" + ($cwe|tostring) + ".html\" target=\"_blank\">CWE-" + ($cwe|tostring) + "</a>")
+                else "" end
+              ) as $cwe_html
+            | [
+                $sev_html,
+                ($v.category // "unknown"),
+                ($v.name // "n/a"),
+                ($v.location.file // "n/a"),
+                (
+                  ( ($v.location.start_line // "")|tostring )
+                  + (if $v.location.end_line then "-" + (($v.location.end_line)|tostring) else "" end)
+                ),
+                $cwe_html
               ]
             | @tsv
-          ' "$file" | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
+          ' "$file" | awk -F"\t" '{printf("| %s | %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5,$6)}' >> "$md"
         else
           echo "_No vulnerabilities detected._" >> "$md"
         fi
@@ -187,10 +214,22 @@ generate_security_report:
     [ -n "$DS_NOTE" ] && echo "$DS_NOTE" >> "$md" && echo >> "$md"
     summarize "Secret Detection" "$SECRETS_JSON"
 
-    # Minimal HTML wrapper
+    # Minimal HTML wrapper with severity colors
     {
       echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
-      echo "<style>body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:8px} th{background:#f5f5f5;text-align:left}</style>"
+      cat <<'CSS'
+      <style>
+        body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px}
+        table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:8px}
+        th{background:#f5f5f5;text-align:left}
+        .sev{border-radius:14px;padding:2px 10px;display:inline-block;font-weight:600}
+        .sev-critical{background:#3b0d0d;color:#ffe4e4;border:1px solid #a11}
+        .sev-high{background:#fee2e2;color:#9f1239;border:1px solid #fecaca}
+        .sev-medium{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+        .sev-low{background:#ecfeff;color:#075985;border:1px solid #bae6fd}
+        .sev-info,.sev-unknown{background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}
+      </style>
+      CSS
       echo "<article>"
       awk '
         /^# /{print "<h1>"substr($0,3)"</h1>";next}
@@ -244,9 +283,9 @@ publish_wikijs:
     WIKI_TITLE: "Pulp UI Security Report"
     WIKI_DESCRIPTION: "Security report for pulp-ui (auto-generated)"
     WIKI_TAGS: "security,report,pulp-ui"
-    # WIKI_URL: http://172.16.111.195:3000     # set in CI/CD → Variables
-    # WIKI_TOKEN: <your working Postman token>  # set in CI/CD → Variables (masked)
-    # WIKI_LOCALE: en                           # optional; we’ll auto-detect if unset
+    WIKI_ARCHIVE: "true"            # <-- auto-archive dated snapshot
+    # Set these in CI/CD → Variables
+    # WIKI_URL, WIKI_TOKEN, (optional) WIKI_LOCALE=en, (optional) WIKI_PATH
   before_script:
     - set -eux
     - apk add --no-cache curl jq ca-certificates coreutils
@@ -254,95 +293,57 @@ publish_wikijs:
     - test -n "${WIKI_URL:-}"   || { echo "WIKI_URL required"; exit 1; }
     - test -n "${WIKI_TOKEN:-}" || { echo "WIKI_TOKEN required"; exit 1; }
     - mkdir -p wikijs-debug
-    # Show exactly which URL we’ll hit (should match Postman)
-    - echo "Using WIKI_URL=${WIKI_URL%/}/graphql" | tee wikijs-debug/info.txt
-    # Auto-detect default locale if not provided (your Postman query worked on this path)
+    # Auto-detect default locale if not provided
     - |
       if [ -z "${WIKI_LOCALE:-}" ]; then
-        curl -sS -o wikijs-debug/locale.json -w '%{http_code}' \
-          -H "Authorization: Bearer ${WIKI_TOKEN}" \
-          -H "Content-Type: application/json" \
-          --data '{"query":"{ localization { config { locale } } }"}' \
-          "${WIKI_URL%/}/graphql" > wikijs-debug/locale_http.txt
+        curl -sS -o wikijs-debug/locale.json -w '%{http_code}'           -H "Authorization: Bearer ${WIKI_TOKEN}"           -H "Content-Type: application/json"           --data '{"query":"{ localization { config { locale } } }"}'           "${WIKI_URL%/}/graphql" > wikijs-debug/locale_http.txt
         export WIKI_LOCALE=$(jq -r '.data.localization.config.locale' wikijs-debug/locale.json)
         [ -n "$WIKI_LOCALE" ] || { echo "Could not auto-detect locale"; cat wikijs-debug/locale.json; exit 1; }
       fi
-    - echo "Using locale=$WIKI_LOCALE" | tee -a wikijs-debug/info.txt
   script: |
     set -euo pipefail
 
     PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
     ARCHIVE_PATH="security/${PROJECT_SLUG}/$(date -u +%F)"
-
     MD_RAW="$(cat out/security-report.md)"
-    TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" | jq -Rs 'split(",") | map(gsub("^\\s+|\\s+$";"")) | map(select(length>0))')
+    TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" | jq -Rs 'split(",") | map(gsub("^\s+|\s+$";"")) | map(select(length>0))')
 
     call_gql () {
-      local payload="$1" out="$2"
-      http=$(
-        curl -sS -o "$out" -w "%{http_code}" \
-          -H "Authorization: Bearer ${WIKI_TOKEN}" \
-          -H "Content-Type: application/json" \
-          --data "$payload" \
-          "${WIKI_URL%/}/graphql"
-      )
-      echo "HTTP $http" >> wikijs-debug/http.log
-      [ "$http" = "200" ]
+      curl -sS -H "Authorization: Bearer ${WIKI_TOKEN}" -H "Content-Type: application/json"         --data "$1" "${WIKI_URL%/}/graphql"
     }
 
-    # 1) Lookup page by path
-    get_payload=$(jq -cn --arg path "$TARGET_PATH" --arg locale "$WIKI_LOCALE" \
-      '{query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title } } }",
+    # lookup
+    GET=$(jq -cn --arg path "$TARGET_PATH" --arg locale "$WIKI_LOCALE"       '{query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id } } }",
         variables:{path:$path, locale:$locale}}')
-    echo "$get_payload" > wikijs-debug/get_payload.json
-    call_gql "$get_payload" "wikijs-debug/get_result.json" || { echo "Lookup failed"; cat wikijs-debug/get_result.json; exit 1; }
-    id=$(jq -r '.data.pages.singleByPath.id // empty' wikijs-debug/get_result.json)
+    RES=$(call_gql "$GET"); ID=$(echo "$RES" | jq -r '.data.pages.singleByPath.id // empty')
 
-    if [ -n "$id" ]; then
-      # 2a) Update
-      echo "Updating page id=$id at $TARGET_PATH"
-      mut_payload=$(jq -cn --argjson id "$id" --arg content "$MD_RAW" \
-        '{query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
+    create_payload () {
+      jq -cn         --arg path "$1" --arg title "$2" --arg locale "$WIKI_LOCALE"         --arg desc "${WIKI_DESCRIPTION}" --arg content "$MD_RAW" --argjson tags "$TAGS_JSON"         '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:"markdown", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
+          variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}'
+    }
+
+    if [ -n "$ID" ]; then
+      # update; if it fails, delete+create
+      UP=$(jq -cn --argjson id "$ID" --arg content "$MD_RAW"         '{query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } } } }",
           variables:{id:$id, content:$content}}')
-      echo "$mut_payload" > wikijs-debug/update_payload.json
-      call_gql "$mut_payload" "wikijs-debug/update_result.json" || { echo "Update failed"; cat wikijs-debug/update_result.json; exit 1; }
-      jq -e '.errors|not and .data.pages.update.responseResult.succeeded==true' wikijs-debug/update_result.json >/dev/null \
-        || { jq '.errors // .data.pages.update.responseResult' wikijs-debug/update_result.json; exit 1; }
+      RES=$(call_gql "$UP"); OK=$(echo "$RES" | jq -r '.data.pages.update.responseResult.succeeded // false')
+      if [ "$OK" != "true" ]; then
+        DEL=$(jq -cn --argjson id "$ID"           '{query:"mutation($id:Int!){ pages { delete(id:$id){ responseResult{ succeeded message } } } }",
+            variables:{id:$id}}')
+        call_gql "$DEL" >/dev/null
+        RES=$(call_gql "$(create_payload "$TARGET_PATH" "${WIKI_TITLE} (Latest)")")
+        echo "$RES" | jq -e '.errors|not and .data.pages.create.responseResult.succeeded==true' >/dev/null
+      fi
     else
-      # 2b) Create (matches your working Postman mutation)
-      echo "Creating page at $TARGET_PATH"
-      mut_payload=$(jq -cn \
-        --arg path "$TARGET_PATH" \
-        --arg title "${WIKI_TITLE}" \
-        --arg locale "$WIKI_LOCALE" \
-        --arg desc "${WIKI_DESCRIPTION}" \
-        --arg content "$MD_RAW" \
-        --argjson tags "$TAGS_JSON" \
-        '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
-          variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
-      echo "$mut_payload" > wikijs-debug/create_payload.json
-      call_gql "$mut_payload" "wikijs-debug/create_result.json" || { echo "Create failed"; cat wikijs-debug/create_result.json; exit 1; }
-      jq -e '.errors|not and .data.pages.create.responseResult.succeeded==true' wikijs-debug/create_result.json >/dev/null \
-        || { jq '.errors // .data.pages.create.responseResult' wikijs-debug/create_result.json; exit 1; }
+      RES=$(call_gql "$(create_payload "$TARGET_PATH" "${WIKI_TITLE} (Latest)")")
+      echo "$RES" | jq -e '.errors|not and .data.pages.create.responseResult.succeeded==true' >/dev/null
     fi
 
-    # Optional archive
-    if [ "${WIKI_ARCHIVE:-false}" = "true" ]; then
-      echo "Creating archive at $ARCHIVE_PATH"
-      arch_payload=$(jq -cn \
-        --arg path "$ARCHIVE_PATH" \
-        --arg title "${WIKI_TITLE} ($(date -u +%F))" \
-        --arg locale "$WIKI_LOCALE" \
-        --arg desc "${WIKI_DESCRIPTION}" \
-        --arg content "$MD_RAW" \
-        --argjson tags "$TAGS_JSON" \
-        '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
-          variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
-      echo "$arch_payload" > wikijs-debug/archive_payload.json
-      call_gql "$arch_payload" "wikijs-debug/archive_result.json" || { echo "Archive create failed"; cat wikijs-debug/archive_result.json; exit 1; }
-      jq -e '.errors|not and .data.pages.create.responseResult.succeeded==true' wikijs-debug/archive_result.json >/dev/null \
-        || { jq '.errors // .data.pages.create.responseResult' wikijs-debug/archive_result.json; exit 1; }
+    # Auto-archive snapshot (dated)
+    if [ "${WIKI_ARCHIVE,,}" = "true" ]; then
+      RES=$(call_gql "$(create_payload "$ARCHIVE_PATH" "${WIKI_TITLE} ($(date -u +%F))")")
+      echo "$RES" | jq -e '.errors|not and .data.pages.create.responseResult.succeeded==true' >/dev/null
     fi
   artifacts:
     when: on_failure
