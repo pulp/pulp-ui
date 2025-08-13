@@ -254,7 +254,10 @@ publish_wikijs:
     PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
     MD_RAW="$(cat out/security-report.md)"
-    TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" | jq -Rs 'split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0))')
+    TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" \
+      jq -Rs 'if length>0 then split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0)) else [] end')
+
+    DESC="${WIKI_DESCRIPTION:-Security report for ${CI_PROJECT_NAME:-project} (auto-generated)}"
 
     mkdir -p wikijs-debug
 
@@ -286,9 +289,11 @@ publish_wikijs:
     if [ -n "${ID:-}" ]; then
       echo "Updating page id=$ID ($TARGET_PATH)"
       # 2) Update existing page: set content, keep editor as-is, force published
-      jq -cn --argjson id "$ID" --arg content "$MD_RAW" '
-        {query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content, isPublished:true){ responseResult{ succeeded message } } } }",
-         variables:{id:$id, content:$content}}' > wikijs-debug/update.payload.json
+      # update existing page — include tags + description + publish
+      jq -cn --argjson id "$ID" --arg content "$MD_RAW" --arg desc "$DESC" --argjson tags "$TAGS_JSON" '
+        {query:"mutation($id:Int!,$content:String!,$description:String!,$tags:[String]!){ pages { update(id:$id, content:$content, description:$description, tags:$tags, isPublished:true){ responseResult{ succeeded message } } } }",
+        variables:{id:$id, content:$content, description:$desc, tags:$tags}}' \
+        > wikijs-debug/update.payload.json
       call_gql wikijs-debug/update.payload.json wikijs-debug/update.json
       jq -e '.data.pages.update.responseResult.succeeded == true' wikijs-debug/update.json >/dev/null || {
         echo "Update failed:"; jq '.data.pages.update.responseResult // .errors' wikijs-debug/update.json; exit 1; }
