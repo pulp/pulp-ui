@@ -254,11 +254,8 @@ publish_wikijs:
     PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
     MD_RAW="$(cat out/security-report.md)"
-    TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" \
-      jq -Rs 'if length>0 then split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0)) else [] end')
-
     DESC="${WIKI_DESCRIPTION:-Security report for ${CI_PROJECT_NAME:-project} (auto-generated)}"
-
+    TAGS_RAW="${WIKI_TAGS:-}"
     mkdir -p wikijs-debug
 
     call_gql () {
@@ -271,11 +268,10 @@ publish_wikijs:
       [ "$http" = "200" ] || { echo "GraphQL HTTP $http (see $2)"; cat "$2" || true; exit 1; }
     }
 
-    # 1) Lookup by path with MINIMAL selection set (works on your instance)
+    # 1) Lookup by path (minimal fields)
     jq -cn --arg path "$TARGET_PATH" --arg locale "${WIKI_LOCALE:-en}" '
       {query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title } } }",
        variables:{path:$path, locale:$locale}}' > wikijs-debug/get.payload.json
-
     if ! call_gql wikijs-debug/get.payload.json wikijs-debug/get.json; then
       echo "Retrying singleByPath without locale..."
       jq -cn --arg path "$TARGET_PATH" '
@@ -284,33 +280,43 @@ publish_wikijs:
       call_gql wikijs-debug/get.nolocale.payload.json wikijs-debug/get.json
     fi
 
-    ID=$(jq -r '.data.pages.singleByPath.id // empty' wikijs-debug/get.json)
+    ID="$(jq -r '.data.pages.singleByPath.id // empty' wikijs-debug/get.json)"
 
-    if [ -n "${ID:-}" ]; then
+    if [ -n "$ID" ]; then
       echo "Updating page id=$ID ($TARGET_PATH)"
-      # 2) Update existing page: set content, keep editor as-is, force published
-      # update existing page — include tags + description + publish
-      jq -cn --argjson id "$ID" --arg content "$MD_RAW" --arg desc "$DESC" --argjson tags "$TAGS_JSON" '
-        {query:"mutation($id:Int!,$content:String!,$description:String!,$tags:[String]!){ pages { update(id:$id, content:$content, description:$description, tags:$tags, isPublished:true){ responseResult{ succeeded message } } } }",
-        variables:{id:$id, content:$content, description:$desc, tags:$tags}}' \
-        > wikijs-debug/update.payload.json
+      # 2) Update existing page — send description & tags (array built inside jq), publish=true
+      jq -cn --arg id "$ID" --arg content "$MD_RAW" --arg desc "$DESC" --arg tags_raw "$TAGS_RAW" '
+        def mk_tags($s):
+          if ($s|length)>0 then
+            ($s|split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0)))
+          else [] end;
+        {
+          query:"mutation($id:Int!,$content:String!,$description:String!,$tags:[String]!){ pages { update(id:$id, content:$content, description:$description, tags:$tags, isPublished:true){ responseResult{ succeeded message } } } }",
+          variables:{ id:($id|tonumber), content:$content, description:$desc, tags: mk_tags($tags_raw) }
+        }' > wikijs-debug/update.payload.json
       call_gql wikijs-debug/update.payload.json wikijs-debug/update.json
       jq -e '.data.pages.update.responseResult.succeeded == true' wikijs-debug/update.json >/dev/null || {
         echo "Update failed:"; jq '.data.pages.update.responseResult // .errors' wikijs-debug/update.json; exit 1; }
     else
       echo "Creating new page at $TARGET_PATH"
-      # 3) Create with markdown + publish (creation accepts editor)
-      jq -cn \
-        --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "${WIKI_LOCALE:-en}" \
-        --arg desc "${WIKI_DESCRIPTION}" --arg content "$MD_RAW" --argjson tags "$TAGS_JSON" '
-        {query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
-         variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}' > wikijs-debug/create.payload.json
+      # 3) Create new page — editor markdown + published, tags built in jq
+      jq -cn --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "${WIKI_LOCALE:-en}" \
+             --arg desc "$DESC" --arg content "$MD_RAW" --arg tags_raw "$TAGS_RAW" '
+        def mk_tags($s):
+          if ($s|length)>0 then
+            ($s|split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0)))
+          else [] end;
+        {
+          query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
+          variables:{ path:$path, title:$title, locale:$locale, description:$desc, tags: mk_tags($tags_raw), content:$content }
+        }' > wikijs-debug/create.payload.json
       call_gql wikijs-debug/create.payload.json wikijs-debug/create.json
       jq -e '.data.pages.create.responseResult.succeeded == true' wikijs-debug/create.json >/dev/null || {
         echo "Create failed:"; jq '.data.pages.create.responseResult // .errors' wikijs-debug/create.json; exit 1; }
     fi
 
     echo "WikiJS page up to date: $TARGET_PATH"
+
   artifacts:
     when: always
     paths:
