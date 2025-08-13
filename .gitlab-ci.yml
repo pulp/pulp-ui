@@ -143,6 +143,8 @@ generate_security_report:
           if [ "$count" -gt 0 ]; then
             echo "| Severity | Category | Name | File | Lines |"
             echo "|---|---|---|---|---|"
+            # inside summarize() in generate_security_report
+            # header stays: | Severity | Category | Name | File | Lines |
             jq -r '
               def esc: tostring | gsub("\\|"; "&#124;");
               (.vulnerabilities // [])[] as $v
@@ -257,7 +259,7 @@ publish_wikijs:
     mkdir -p wikijs-debug
 
     call_gql () {
-      # $1 = payload file, $2 = output json
+      # $1 payload file, $2 output json
       http=$(curl -sS -o "$2" -w '%{http_code}' \
         -H "Authorization: Bearer ${WIKI_TOKEN}" \
         -H "Content-Type: application/json" \
@@ -265,53 +267,50 @@ publish_wikijs:
       echo "HTTP $http" >> wikijs-debug/http.log
       if [ "$http" != "200" ]; then
         echo "GraphQL HTTP error $http (see $2)"
-        return 1
+        cat "$2" || true
+        exit 1
       fi
-      return 0
     }
 
-    # ---------- 1) Lookup page by path/locale (correct field: pages.single) ----------
-    jq -cn --arg path "$TARGET_PATH" --arg locale "${WIKI_LOCALE:-en}" \
-      '{query:"query($path:String!,$locale:String!){ pages { single(path:$path, locale:$locale){ id path title isPublished editorKey } } }",
-        variables:{path:$path, locale:$locale}}' > wikijs-debug/get.payload.json
+    # 1) Search by path to get page id; some instances accept locale, some don’t
+    jq -cn --arg q "$TARGET_PATH" --arg locale "${WIKI_LOCALE:-en}" '
+      {query:"query($q:String!,$locale:String!){ pages { search(query:$q, locale:$locale){ results { id path title isPublished editor } } } }",
+       variables:{q:$q, locale:$locale}}' > wikijs-debug/search.payload.json
 
-    if ! call_gql wikijs-debug/get.payload.json wikijs-debug/get.json; then
-      echo "Primary lookup failed; retrying without locale..."
-      # ---- Fallback: omit locale arg entirely (some setups don’t need it) ----
-      jq -cn --arg path "$TARGET_PATH" \
-        '{query:"query($path:String!){ pages { single(path:$path){ id path title isPublished editorKey } } }",
-          variables:{path:$path}}' > wikijs-debug/get.nolocale.payload.json
-
-      if ! call_gql wikijs-debug/get.nolocale.payload.json wikijs-debug/get.json; then
-        echo "Lookup still failing; see wikijs-debug/get.json and payloads"; exit 1
-      fi
+    if ! call_gql wikijs-debug/search.payload.json wikijs-debug/search.json; then
+      echo "Retrying search without locale..."
+      jq -cn --arg q "$TARGET_PATH" '
+        {query:"query($q:String!){ pages { search(query:$q){ results { id path title isPublished editor } } } }",
+         variables:{q:$q}}' > wikijs-debug/search.nolocale.payload.json
+      call_gql wikijs-debug/search.nolocale.payload.json wikijs-debug/search.json
     fi
 
-    ID=$(jq -r '.data.pages.single.id // empty' wikijs-debug/get.json)
+    ID=$(jq -r --arg p "$TARGET_PATH" '
+      .data.pages.search.results[]? | select(.path == $p) | .id | select(.!=null) | tostring
+    ' wikijs-debug/search.json || true)
 
-    # ---------- 2) Delete (if exists) to force fresh editor/Published state ----------
-    if [ -n "$ID" ]; then
-      echo "Deleting existing page id=$ID ($TARGET_PATH)..."
-      jq -cn --argjson id "$ID" \
-        '{query:"mutation($id:Int!){ pages { delete(id:$id){ responseResult{ succeeded message } } } }",
-          variables:{id:$id}}' > wikijs-debug/delete.payload.json
-      call_gql wikijs-debug/delete.payload.json wikijs-debug/delete.json
-      jq -e '.data.pages.delete.responseResult.succeeded == true' wikijs-debug/delete.json >/dev/null || {
-        echo "Delete failed:"; jq '.data.pages.delete.responseResult // .errors' wikijs-debug/delete.json; exit 1; }
+    if [ -n "${ID:-}" ]; then
+      echo "Updating existing page id=$ID ($TARGET_PATH) ..."
+      jq -cn --argjson id "$ID" --arg content "$MD_RAW" '
+        {query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content, editor:\"markdown\", isPublished:true){ responseResult{ succeeded message } } } }",
+         variables:{id:$id, content:$content}}' > wikijs-debug/update.payload.json
+      call_gql wikijs-debug/update.payload.json wikijs-debug/update.json
+      jq -e '.data.pages.update.responseResult.succeeded == true' wikijs-debug/update.json >/dev/null || {
+        echo "Update failed:"; jq '.data.pages.update.responseResult // .errors' wikijs-debug/update.json; exit 1; }
+    else
+      echo "Creating new page at $TARGET_PATH ..."
+      jq -cn \
+        --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "${WIKI_LOCALE:-en}" \
+        --arg desc "${WIKI_DESCRIPTION}" --arg content "$MD_RAW" --argjson tags "$TAGS_JSON" '
+        {query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path isPublished editor } } } }",
+         variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}' > wikijs-debug/create.payload.json
+      call_gql wikijs-debug/create.payload.json wikijs-debug/create.json
+      jq -e '.data.pages.create.responseResult.succeeded == true' wikijs-debug/create.json >/dev/null || {
+        echo "Create failed:"; jq '.data.pages.create.responseResult // .errors' wikijs-debug/create.json; exit 1; }
     fi
 
-    # ---------- 3) Create fresh page (markdown + published) ----------
-    jq -cn \
-      --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "${WIKI_LOCALE:-en}" \
-      --arg desc "${WIKI_DESCRIPTION}" --arg content "$MD_RAW" --argjson tags "$TAGS_JSON" \
-      '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path isPublished editorKey } } } }",
-        variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}' \
-      > wikijs-debug/create.payload.json
-    call_gql wikijs-debug/create.payload.json wikijs-debug/create.json
-    jq -e '.data.pages.create.responseResult.succeeded == true' wikijs-debug/create.json >/dev/null || {
-      echo "Create failed:"; jq '.data.pages.create.responseResult // .errors' wikijs-debug/create.json; exit 1; }
+    echo "WikiJS page up to date: $TARGET_PATH"
 
-    echo "WikiJS page updated: $TARGET_PATH"
   artifacts:
     when: always
     paths:
