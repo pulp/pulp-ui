@@ -37,6 +37,11 @@ semgrep-sast:
     - when: never
 
 gemnasium-dependency_scanning:
+  artifacts:
+    when: always
+    paths:
+      - gl-dependency-scanning-report.json
+      - gl-sbom-*.cdx.json
   variables:
     DS_LOCK_FILE_PATHS: "yarn.lock,package-lock.json,pnpm-lock.yaml,**/yarn.lock,**/package-lock.json,**/pnpm-lock.yaml"
   rules:
@@ -253,24 +258,31 @@ publish_wikijs:
         --data "$1" "${WIKI_URL%/}/graphql"
     }
 
-    GET=$(jq -cn --arg path "$TARGET_PATH" --arg locale "$WIKI_LOCALE" \
-      '{query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id } } }",
-        variables:{path:$path, locale:$locale}}')
-    RES=$(call_gql "$GET"); ID=$(echo "$RES" | jq -r '.data.pages.singleByPath.id // empty')
+    # 1) Lookup page
+    GET=$(jq -cn --arg path "$TARGET_PATH" --arg locale "$WIKI_LOCALE" '
+      {query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title isPublished editorKey } } }",
+       variables:{path:$path, locale:$locale}}')
+    RES=$(call_gql "$GET")
+    ID=$(echo "$RES" | jq -r '.data.pages.singleByPath.id // empty')
+    PUBLISHED=$(echo "$RES" | jq -r '.data.pages.singleByPath.isPublished // false')
+    EDITOR=$(echo "$RES" | jq -r '.data.pages.singleByPath.editorKey // empty')
 
     if [ -n "$ID" ]; then
-      UP=$(jq -cn --argjson id "$ID" --arg content "$MD_RAW" \
-        '{query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } } } }",
-          variables:{id:$id, content:$content}}')
+      # 2) Update existing page: enforce markdown + published
+      UP=$(jq -cn --argjson id "$ID" --arg content "$MD_RAW" '
+        {query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content, isPublished:true, editor:\"markdown\"){ responseResult{ succeeded message } } } }",
+         variables:{id:$id, content:$content}}')
       call_gql "$UP" >/dev/null || true
     else
+      # 3) Create page with markdown + published
       CR=$(jq -cn \
         --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "$WIKI_LOCALE" \
-        --arg desc "${WIKI_DESCRIPTION}" --arg content "$MD_RAW" --argjson tags "$TAGS_JSON" \
-        '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
-          variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
+        --arg desc "${WIKI_DESCRIPTION}" --arg content "$MD_RAW" --argjson tags "$TAGS_JSON" '
+        {query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
+         variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
       call_gql "$CR" >/dev/null
     fi
+  
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: on_success
