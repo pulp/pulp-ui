@@ -136,6 +136,8 @@ generate_security_report:
     html=out/security-report.html
 
     echo "== Debug: downloaded security artifacts =="
+        test -f "$md" && echo "MD exists: $md" || echo "MD missing"
+        test -f "$html" && echo "HTML exists: $html" || echo "HTML missing"
     find . -maxdepth 3 -type f \( -name "gl-*-report.json" -o -name "gl-sbom-*.cdx.json" \) | sort || true
 
     SAST_JSON="${SAST_JSON:-gl-sast-report.json}"
@@ -213,29 +215,29 @@ generate_security_report:
       count=$(jq '[.Results[]?.Vulnerabilities[]?] | length' "$TRIVY_JSON" 2>/dev/null || echo 0)
       echo "" >> "$md"
       echo "Findings: $count" >> "$md"
-      echo "" >> "$md"
-      if [ "$count" -gt 0 ]; then
-        echo "| Severity | ID | Title | Package@Version (Target) | Fix |" >> "$md"
-        echo "|---|---|---|---|---|" >> "$md"
-        jq -r '
-          (.Results[]? | .Target as $t
-            | (.Vulnerabilities // [])[]?
-            | [
-                (.Severity // "UNKNOWN"),
-                (.VulnerabilityID // "n/a"),
-                (.Title // .PkgName // "n/a"),
-                ((.PkgName // "pkg") + "@" + (.InstalledVersion // "?") + " (" + $t + ")"),
-                (.FixedVersion // "n/a")
-              ] | @tsv
-          )
-        ' "$TRIVY_JSON" 2>/dev/null             | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
-      else
-        echo "_No vulnerabilities detected by Trivy._" >> "$md"
-      fi
-    else
-      echo "" >> "$md"
-      echo "_Trivy report not found (job may have been skipped)._" >> "$md"
-    fi
+            echo "" >> "$md"
+            if [ "$count" -gt 0 ]; then
+              echo "| Severity | ID | Title | Package@Version (Target) | Fix |" >> "$md"
+              echo "|---|---|---|---|---|" >> "$md"
+              jq -r '
+                (.Results[]? | .Target as $t
+                  | (.Vulnerabilities // [])[]?
+                  | [
+                      (.Severity // "UNKNOWN"),
+                      (.VulnerabilityID // "n/a"),
+                      (.Title // .PkgName // "n/a"),
+                      ((.PkgName // "pkg") + "@" + (.InstalledVersion // "?") + " (" + $t + ")"),
+                      (.FixedVersion // "n/a")
+                    ] | @tsv
+                )
+              ' "$TRIVY_JSON" 2>/dev/null             | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
+            else
+              echo "_No vulnerabilities detected by Trivy._" >> "$md"
+            fi
+          else
+            echo "" >> "$md"
+            echo "_Trivy report not found (job may have been skipped)._" >> "$md"
+          fi
 
     {
       echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
@@ -389,6 +391,7 @@ publish_wikijs:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: on_success
     - when: never
+
 
 ### LAST WORKING VERSION
 # # .gitlab-ci.yml — Stable with bulletproof report + Pages + WikiJS (fixed before_script)
