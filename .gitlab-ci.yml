@@ -136,33 +136,14 @@ generate_security_report:
     html=out/security-report.html
 
     echo "== Debug: downloaded security artifacts =="
-        test -f "$md" && echo "MD exists: $md" || echo "MD missing"
-        test -f "$html" && echo "HTML exists: $html" || echo "HTML missing"
-    find . -maxdepth 3 -type f \( -name "gl-*-report.json" -o -name "gl-sbom-*.cdx.json" \) | sort || true
+    find . -maxdepth 3 -type f \( -name "gl-*-report.json" -o -name "gl-sbom-*.cdx.json" -o -name "trivy-report.json" \) | sort || true
 
     SAST_JSON="${SAST_JSON:-gl-sast-report.json}"
     DS_JSON="${DS_JSON:-gl-dependency-scanning-report.json}"
     SECRETS_JSON="${SECRETS_JSON:-gl-secret-detection-report.json}"
     TRIVY_JSON="${TRIVY_JSON:-trivy-report.json}"
 
-    # Create a colorized copy for GitLab Pages (original MD stays clean for WikiJS/raw)
-    COLOR_MD="out/security-report.color.md"
-    cp "$md" "$COLOR_MD"
-
-    # Wrap severities with colored <span> (handles Title Case and UPPERCASE)
-    sed -Ei \
-      -e 's/\b([Cc]ritical|CRITICAL)\b/<span style="color:#d32f2f"><strong>\1<\/strong><\/span>/g' \
-      -e 's/\b([Hh]igh|HIGH)\b/<span style="color:#ef6c00"><strong>\1<\/strong><\/span>/g' \
-      -e 's/\b([Mm]edium|MEDIUM)\b/<span style="color:#f9a825"><strong>\1<\/strong><\/span>/g' \
-      -e 's/\b([Ll]ow|LOW)\b/<span style="color:#2e7d32"><strong>\1<\/strong><\/span>/g' \
-      -e 's/\b([Ii]nfo|INFO)\b/<span style="color:#1565c0"><strong>\1<\/strong><\/span>/g' \
-      -e 's/\b([Uu]nknown|UNKNOWN)\b/<span style="color:#757575"><strong>\1<\/strong><\/span>/g' \
-      "$COLOR_MD"
-
-    # Safety: if somehow empty, fall back to original MD
-    [ -s "$COLOR_MD" ] || cp "$md" "$COLOR_MD"
-
-    # locate DS report if not at root
+    # Locate DS report if it isn't at repo root
     if [ ! -f "$DS_JSON" ]; then
       DS_JSON_FOUND=$(find . -type f -name "gl-dependency-scanning-report.json" | head -n1 || true)
       if [ -n "$DS_JSON_FOUND" ]; then
@@ -173,6 +154,7 @@ generate_security_report:
       fi
     fi
 
+    # ---------- Build Markdown (clean; no colors) ----------
     {
       echo "# Security Report"
       echo
@@ -190,10 +172,8 @@ generate_security_report:
           echo "Findings: $count"
           echo
           if [ "$count" -gt 0 ]; then
-            echo "| Severity |  | Name | Lines | Issue |"
+            echo "| Severity | Category | Name | File | Lines |"
             echo "|---|---|---|---|---|"
-            # inside summarize() in generate_security_report
-            # header: | Severity |  | Name | Lines | Issue |
             jq -r '
               def esc: tostring | gsub("\\|"; "&#124;");
               (.vulnerabilities // [])[] as $v
@@ -227,38 +207,55 @@ generate_security_report:
     summarize "Dependency Scanning" "$DS_JSON"
     summarize "Secret Detection" "$SECRETS_JSON"
 
+    # Trivy section
     echo "## Trivy" >> "$md"
     if [ -f "$TRIVY_JSON" ]; then
       count=$(jq '[.Results[]?.Vulnerabilities[]?] | length' "$TRIVY_JSON" 2>/dev/null || echo 0)
       echo "" >> "$md"
       echo "Findings: $count" >> "$md"
-            echo "" >> "$md"
-            if [ "$count" -gt 0 ]; then
-              echo "| Severity | ID | Title | Package@Version (Target) | Fix |" >> "$md"
-              echo "|---|---|---|---|---|" >> "$md"
-              jq -r '
-                (.Results[]? | .Target as $t
-                  | (.Vulnerabilities // [])[]?
-                  | [
-                      (.Severity // "UNKNOWN"),
-                      (.VulnerabilityID // "n/a"),
-                      (.Title // .PkgName // "n/a"),
-                      ((.PkgName // "pkg") + "@" + (.InstalledVersion // "?") + " (" + $t + ")"),
-                      (.FixedVersion // "n/a")
-                    ] | @tsv
-                )
-              ' "$TRIVY_JSON" 2>/dev/null             | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
-            else
-              echo "_No vulnerabilities detected by Trivy._" >> "$md"
-            fi
-          else
-            echo "" >> "$md"
-            echo "_Trivy report not found (job may have been skipped)._" >> "$md"
-          fi
+      echo "" >> "$md"
+      if [ "$count" -gt 0 ]; then
+        echo "| Severity | ID | Title | Package@Version (Target) | Fix |" >> "$md"
+        echo "|---|---|---|---|---|" >> "$md"
+        jq -r '
+          (.Results[]? | .Target as $t
+            | (.Vulnerabilities // [])[]?
+            | [
+                (.Severity // "UNKNOWN"),
+                (.VulnerabilityID // "n/a"),
+                (.Title // .PkgName // "n/a"),
+                ((.PkgName // "pkg") + "@" + (.InstalledVersion // "?") + " (" + $t + ")"),
+                (.FixedVersion // "n/a")
+              ] | @tsv
+          )
+        ' "$TRIVY_JSON" 2>/dev/null \
+        | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
+      else
+        echo "_No vulnerabilities detected by Trivy._" >> "$md"
+      fi
+    else
+      echo "" >> "$md"
+      echo "_Trivy report not found (job may have been skipped)._" >> "$md"
+    fi
 
+    # ---------- Colorize copy for Pages HTML (leave original MD clean for WikiJS) ----------
+    COLOR_MD="out/security-report.color.md"
+    cp "$md" "$COLOR_MD"
+
+    # BusyBox sed prefers -r (ERE). Color both Title Case and ALL CAPS.
+    sed -ri \
+      -e 's/\b([Cc]ritical|CRITICAL)\b/<span style="color:#d32f2f"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b([Hh]igh|HIGH)\b/<span style="color:#ef6c00"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b([Mm]edium|MEDIUM)\b/<span style="color:#f9a825"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b([Ll]ow|LOW)\b/<span style="color:#2e7d32"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b([Ii]nfo|INFO)\b/<span style="color:#1565c0"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b([Uu]nknown|UNKNOWN)\b/<span style="color:#757575"><strong>\1<\/strong><\/span>/g' \
+      "$COLOR_MD"
+
+    # ---------- Build HTML from the colorized MD ----------
     {
       echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
-      echo "<style>body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:8px} th{background:#f5f5f5;text-align:left}</style>"
+      echo "<style>body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:8px} th{background:#f5f5f5;text-align:left} code{background:#f6f8fa;padding:2px 4px;border-radius:4px}</style>"
       echo "<article>"
       awk '
         /^# /{print "<h1>"substr($0,3)"</h1>";next}
@@ -275,11 +272,12 @@ generate_security_report:
       echo "</article>"
     } > "$html" || true
 
+    # Fallback in case HTML somehow ends empty
     if [ ! -s "$html" ]; then
       echo "HTML was empty or missing; writing fallback."
       {
         echo "<!doctype html><meta charset='utf-8'><title>Security Report</title><pre>"
-        sed 's/&/\&amp;/g; s/</\&lt;/g' "$md"
+        sed 's/&/\&amp;/g; s/</\&lt;/g' "$COLOR_MD"
         echo "</pre>"
       } > "$html"
     fi
