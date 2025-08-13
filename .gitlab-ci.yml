@@ -80,6 +80,29 @@ secret_detection:
       when: on_success
     - when: never
 
+trivy_scan:
+  stage: test
+  image: aquasec/trivy:latest
+  variables:
+    # Speed up repeated runs by caching DB in CI (optional)
+    TRIVY_CACHE_DIR: .trivycache
+  script:
+    # Fail the job only on CRITICAL/HIGH, but still emit reports
+    - trivy fs --exit-code 0 --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL --format table --output trivy-report.txt .
+    - trivy fs --exit-code 0 --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL --format json --output trivy-report.json .
+    # Optional SBOM via CycloneDX:
+    - trivy fs --exit-code 0 --format cyclonedx --output trivy-report.cdx.json .
+  cache:
+    key: trivy-db
+    paths:
+      - .trivycache/
+  artifacts:
+    when: always
+    paths:
+      - trivy-report.txt
+      - trivy-report.json
+      - trivy-report.cdx.json
+
 stages:
   - test
   - build
@@ -105,13 +128,14 @@ generate_security_report:
 
     md=out/security-report.md
     html=out/security-report.html
-
+    
     echo "== Debug: downloaded security artifacts =="
     find . -maxdepth 3 -type f \( -name "gl-*-report.json" -o -name "gl-sbom-*.cdx.json" \) | sort || true
 
     SAST_JSON="${SAST_JSON:-gl-sast-report.json}"
     DS_JSON="${DS_JSON:-gl-dependency-scanning-report.json}"
     SECRETS_JSON="${SECRETS_JSON:-gl-secret-detection-report.json}"
+    TRIVY_JSON="${TRIVY_JSON:-trivy-report.json}"
 
     # locate DS report if not at root
     if [ ! -f "$DS_JSON" ]; then
@@ -177,6 +201,43 @@ generate_security_report:
     summarize "SAST" "$SAST_JSON"
     summarize "Dependency Scanning" "$DS_JSON"
     summarize "Secret Detection" "$SECRETS_JSON"
+
+    # ---- Trivy section (JSON) ----
+    echo "## Trivy" >> "$md"
+    if [ -f "$TRIVY_JSON" ]; then
+      # Count total vulns across all targets
+      count=$(jq '[.Results[]?.Vulnerabilities[]?] | length' "$TRIVY_JSON" 2>/dev/null || echo 0)
+      echo "" >> "$md"
+      echo "Findings: $count" >> "$md"
+      echo "" >> "$md"
+
+      if [ "$count" -gt 0 ]; then
+        echo "| Severity | ID | Title | Package@Version (Target) | Fix |" >> "$md"
+        echo "|---|---|---|---|---|" >> "$md"
+        jq -r '
+          (.Results[]? | .Target as $t
+            | (.Vulnerabilities // [])[]?
+            | [
+                (.Severity // "UNKNOWN"),
+                (.VulnerabilityID // "n/a"),
+                (.Title // .PkgName // "n/a"),
+                ((.PkgName // "pkg") + "@" + (.InstalledVersion // "?") + " (" + $t + ")"),
+                (.FixedVersion // "n/a")
+              ] | @tsv
+          )
+        ' "$TRIVY_JSON" 2>/dev/null \
+        | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
+      else
+        echo "_No vulnerabilities detected by Trivy._" >> "$md"
+      fi
+    else
+      echo "" >> "$md"
+      echo "_Trivy report not found (job may have been skipped)._" >> "$md"
+    fi
+
+    echo "" >> "$md"
+
+
     # Create colorized copy for Pages HTML (leave original Markdown for WikiJS)
     COLOR_MD="out/security-report.color.md"
     sed -E \
