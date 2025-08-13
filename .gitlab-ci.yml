@@ -1,7 +1,4 @@
-# .gitlab-ci.yml — Back to the last known working logic
-# - Keeps original HTML generation (awk-based) that worked for you
-# - Fixes Markdown table cells by escaping "|" so Pages table doesn't break
-# - Keeps WikiJS publish with RAW Markdown and fixed tag trimming
+# .gitlab-ci.yml — Stable with bulletproof report + Pages + WikiJS (fixed before_script)
 
 include:
   - template: Jobs/SAST.gitlab-ci.yml
@@ -122,7 +119,6 @@ generate_security_report:
       fi
     fi
 
-    # ---- build Markdown (never fail hard on jq) ----
     {
       echo "# Security Report"
       echo
@@ -142,7 +138,6 @@ generate_security_report:
           if [ "$count" -gt 0 ]; then
             echo "| Severity | Category | Name | File | Lines |"
             echo "|---|---|---|---|---|"
-            # Escape pipes in cells so the markdown table stays intact
             jq -r '
               def esc: tostring | gsub("\\|"; "&#124;");
               (.vulnerabilities // [])[] as $v
@@ -176,7 +171,6 @@ generate_security_report:
     summarize "Dependency Scanning" "$DS_JSON"
     summarize "Secret Detection" "$SECRETS_JSON"
 
-    # ---- HTML: use the original simple wrapper; never fail if awk stumbles ----
     {
       echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
       echo "<style>body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:8px} th{background:#f5f5f5;text-align:left}</style>"
@@ -196,12 +190,10 @@ generate_security_report:
       echo "</article>"
     } > "$html" || true
 
-    # ---- final safety net: if HTML missing/empty, emit a minimal one ----
     if [ ! -s "$html" ]; then
       echo "HTML was empty or missing; writing fallback."
       {
         echo "<!doctype html><meta charset='utf-8'><title>Security Report</title><pre>"
-        # Escape &, < to avoid breaking HTML
         sed 's/&/\&amp;/g; s/</\&lt;/g' "$md"
         echo "</pre>"
       } > "$html"
@@ -217,7 +209,6 @@ generate_security_report:
     expose_as: "Security Report"
   rules:
     - when: always
-
 
 pages:
   stage: report
@@ -244,31 +235,40 @@ publish_wikijs:
     WIKI_DESCRIPTION: "Security report for pulp-ui (auto-generated)"
     WIKI_TAGS: "security,report,pulp-ui"
     WIKI_LOCALE: "en"
-    # Set CI/CD variables: WIKI_URL, WIKI_TOKEN, (optional) WIKI_PATH
   before_script:
-    - set -eux
+    - set -euo pipefail
     - apk add --no-cache curl jq ca-certificates coreutils
-    - test -f out/security-report.md
-     - test -n "${WIKI_URL:-}"   || { echo "WIKI_URL required"; exit 1; }
-     - test -n "${WIKI_TOKEN:-}" || { echo "WIKI_TOKEN required"; exit 1; }
+    - test -f out/security-report.md || { echo "security-report.md missing"; ls -la out || true; exit 1; }
+    - if [ -z "${WIKI_URL:-}" ]; then echo "WIKI_URL required"; exit 1; fi
+    - if [ -z "${WIKI_TOKEN:-}" ]; then echo "WIKI_TOKEN required"; exit 1; fi
   script: |
     set -euo pipefail
     PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
     MD_RAW="$(cat out/security-report.md)"
     TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" | jq -Rs 'split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0))')
-    call_gql () { curl -sS -H "Authorization: Bearer ${WIKI_TOKEN}" -H "Content-Type: application/json" --data "$1" "${WIKI_URL%/}/graphql"; }
+
+    call_gql () {
+      curl -sS -H "Authorization: Bearer ${WIKI_TOKEN}" -H "Content-Type: application/json" \
+        --data "$1" "${WIKI_URL%/}/graphql"
+    }
+
     GET=$(jq -cn --arg path "$TARGET_PATH" --arg locale "$WIKI_LOCALE" \
-      '{query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id } } }", variables:{path:$path, locale:$locale}}')
+      '{query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id } } }",
+        variables:{path:$path, locale:$locale}}')
     RES=$(call_gql "$GET"); ID=$(echo "$RES" | jq -r '.data.pages.singleByPath.id // empty')
+
     if [ -n "$ID" ]; then
       UP=$(jq -cn --argjson id "$ID" --arg content "$MD_RAW" \
-        '{query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } } } }", variables:{id:$id, content:$content}}')
+        '{query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } } } }",
+          variables:{id:$id, content:$content}}')
       call_gql "$UP" >/dev/null || true
     else
-      CR=$(jq -cn --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "$WIKI_LOCALE" \
+      CR=$(jq -cn \
+        --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "$WIKI_LOCALE" \
         --arg desc "${WIKI_DESCRIPTION}" --arg content "$MD_RAW" --argjson tags "$TAGS_JSON" \
-        '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }", variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
+        '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
+          variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
       call_gql "$CR" >/dev/null
     fi
   rules:
