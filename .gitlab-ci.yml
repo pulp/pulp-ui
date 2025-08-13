@@ -141,7 +141,7 @@ generate_security_report:
           echo "Findings: $count"
           echo
           if [ "$count" -gt 0 ]; then
-            echo "| Severity | Category | Name | File | Lines |"
+            echo "| Severity |  | File | Lines | Result |"
             echo "|---|---|---|---|---|"
             # inside summarize() in generate_security_report
             # header: | Severity | Category | Name | File | Lines |
