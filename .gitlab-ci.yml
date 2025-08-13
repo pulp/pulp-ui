@@ -144,7 +144,7 @@ generate_security_report:
             echo "| Severity | Category | Name | File | Lines |"
             echo "|---|---|---|---|---|"
             # inside summarize() in generate_security_report
-            # header stays: | Severity | Category | Name | File | Lines |
+            # header: | Severity | Category | Name | File | Lines |
             jq -r '
               def esc: tostring | gsub("\\|"; "&#124;");
               (.vulnerabilities // [])[] as $v
@@ -250,47 +250,37 @@ publish_wikijs:
     - if [ -z "${WIKI_TOKEN:-}" ]; then echo "WIKI_TOKEN required"; exit 1; fi
   script: |
     set -euo pipefail
-
     PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
     MD_RAW="$(cat out/security-report.md)"
     TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" | jq -Rs 'split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0))')
-
     mkdir -p wikijs-debug
 
     call_gql () {
-      # $1 payload file, $2 output json
       http=$(curl -sS -o "$2" -w '%{http_code}' \
         -H "Authorization: Bearer ${WIKI_TOKEN}" \
         -H "Content-Type: application/json" \
         --data @"$1" "${WIKI_URL%/}/graphql")
       echo "HTTP $http" >> wikijs-debug/http.log
-      if [ "$http" != "200" ]; then
-        echo "GraphQL HTTP error $http (see $2)"
-        cat "$2" || true
-        exit 1
-      fi
+      [ "$http" = "200" ] || { echo "GraphQL HTTP $http (see $2)"; cat "$2" || true; exit 1; }
     }
 
-    # 1) Search by path to get page id; some instances accept locale, some don’t
-    jq -cn --arg q "$TARGET_PATH" --arg locale "${WIKI_LOCALE:-en}" '
-      {query:"query($q:String!,$locale:String!){ pages { search(query:$q, locale:$locale){ results { id path title isPublished editor } } } }",
-       variables:{q:$q, locale:$locale}}' > wikijs-debug/search.payload.json
-
-    if ! call_gql wikijs-debug/search.payload.json wikijs-debug/search.json; then
-      echo "Retrying search without locale..."
-      jq -cn --arg q "$TARGET_PATH" '
-        {query:"query($q:String!){ pages { search(query:$q){ results { id path title isPublished editor } } } }",
-         variables:{q:$q}}' > wikijs-debug/search.nolocale.payload.json
-      call_gql wikijs-debug/search.nolocale.payload.json wikijs-debug/search.json
+    # 1) Lookup by path (works on your instance). Try with locale, then without.
+    jq -cn --arg path "$TARGET_PATH" --arg locale "${WIKI_LOCALE:-en}" '
+      {query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title isPublished editor } } }",
+       variables:{path:$path, locale:$locale}}' > wikijs-debug/get.payload.json
+    if ! call_gql wikijs-debug/get.payload.json wikijs-debug/get.json; then
+      echo "Retrying singleByPath without locale..."
+      jq -cn --arg path "$TARGET_PATH" '
+        {query:"query($path:String!){ pages { singleByPath(path:$path){ id path title isPublished editor } } }",
+         variables:{path:$path}}' > wikijs-debug/get.nolocale.payload.json
+      call_gql wikijs-debug/get.nolocale.payload.json wikijs-debug/get.json
     fi
 
-    ID=$(jq -r --arg p "$TARGET_PATH" '
-      .data.pages.search.results[]? | select(.path == $p) | .id | select(.!=null) | tostring
-    ' wikijs-debug/search.json || true)
+    ID=$(jq -r '.data.pages.singleByPath.id // empty' wikijs-debug/get.json)
 
     if [ -n "${ID:-}" ]; then
-      echo "Updating existing page id=$ID ($TARGET_PATH) ..."
+      echo "Updating page id=$ID ($TARGET_PATH)"
       jq -cn --argjson id "$ID" --arg content "$MD_RAW" '
         {query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content, editor:\"markdown\", isPublished:true){ responseResult{ succeeded message } } } }",
          variables:{id:$id, content:$content}}' > wikijs-debug/update.payload.json
@@ -298,7 +288,7 @@ publish_wikijs:
       jq -e '.data.pages.update.responseResult.succeeded == true' wikijs-debug/update.json >/dev/null || {
         echo "Update failed:"; jq '.data.pages.update.responseResult // .errors' wikijs-debug/update.json; exit 1; }
     else
-      echo "Creating new page at $TARGET_PATH ..."
+      echo "Creating new page at $TARGET_PATH"
       jq -cn \
         --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "${WIKI_LOCALE:-en}" \
         --arg desc "${WIKI_DESCRIPTION}" --arg content "$MD_RAW" --argjson tags "$TAGS_JSON" '
@@ -310,12 +300,9 @@ publish_wikijs:
     fi
 
     echo "WikiJS page up to date: $TARGET_PATH"
-
   artifacts:
     when: always
-    paths:
-      - wikijs-debug
-
+    paths: [wikijs-debug]
   
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
