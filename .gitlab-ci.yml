@@ -270,22 +270,24 @@ publish_wikijs:
       return 0
     }
 
-    # ---------- 1) Lookup page by path/locale (variables-based) ----------
+    # ---------- 1) Lookup page by path/locale (correct field: pages.single) ----------
     jq -cn --arg path "$TARGET_PATH" --arg locale "${WIKI_LOCALE:-en}" \
-      '{query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title isPublished editorKey } } }",
+      '{query:"query($path:String!,$locale:String!){ pages { single(path:$path, locale:$locale){ id path title isPublished editorKey } } }",
         variables:{path:$path, locale:$locale}}' > wikijs-debug/get.payload.json
 
     if ! call_gql wikijs-debug/get.payload.json wikijs-debug/get.json; then
-      echo "Primary lookup failed; retrying with literal query (no variables)..."
-      # ---------- Fallback with literals embedded (avoids variables parsing edge cases) ----------
-      # Use jq to escape values safely into the query string
-      jq -rn --arg path "$TARGET_PATH" --arg locale "${WIKI_LOCALE:-en}" '
-        {query: ("{ pages { singleByPath(path:\"" + ($path|gsub("\\\\";"\\\\")|gsub("\"";"\\\"")) + "\", locale:\"" + ($locale|gsub("\\\\";"\\\\")|gsub("\"";"\\\"")) + "\"){ id path title isPublished editorKey } } }")} 
-      ' > wikijs-debug/get.literal.payload.json
-      call_gql wikijs-debug/get.literal.payload.json wikijs-debug/get.json
+      echo "Primary lookup failed; retrying without locale..."
+      # ---- Fallback: omit locale arg entirely (some setups don’t need it) ----
+      jq -cn --arg path "$TARGET_PATH" \
+        '{query:"query($path:String!){ pages { single(path:$path){ id path title isPublished editorKey } } }",
+          variables:{path:$path}}' > wikijs-debug/get.nolocale.payload.json
+
+      if ! call_gql wikijs-debug/get.nolocale.payload.json wikijs-debug/get.json; then
+        echo "Lookup still failing; see wikijs-debug/get.json and payloads"; exit 1
+      fi
     fi
 
-    ID=$(jq -r '.data.pages.singleByPath.id // empty' wikijs-debug/get.json)
+    ID=$(jq -r '.data.pages.single.id // empty' wikijs-debug/get.json)
 
     # ---------- 2) Delete (if exists) to force fresh editor/Published state ----------
     if [ -n "$ID" ]; then
