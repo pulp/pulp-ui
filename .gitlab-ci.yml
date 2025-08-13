@@ -145,6 +145,23 @@ generate_security_report:
     SECRETS_JSON="${SECRETS_JSON:-gl-secret-detection-report.json}"
     TRIVY_JSON="${TRIVY_JSON:-trivy-report.json}"
 
+    # Create a colorized copy for GitLab Pages (original MD stays clean for WikiJS/raw)
+    COLOR_MD="out/security-report.color.md"
+    cp "$md" "$COLOR_MD"
+
+    # Wrap severities with colored <span> (handles Title Case and UPPERCASE)
+    sed -Ei \
+      -e 's/\b([Cc]ritical|CRITICAL)\b/<span style="color:#d32f2f"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b([Hh]igh|HIGH)\b/<span style="color:#ef6c00"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b([Mm]edium|MEDIUM)\b/<span style="color:#f9a825"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b([Ll]ow|LOW)\b/<span style="color:#2e7d32"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b([Ii]nfo|INFO)\b/<span style="color:#1565c0"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b([Uu]nknown|UNKNOWN)\b/<span style="color:#757575"><strong>\1<\/strong><\/span>/g' \
+      "$COLOR_MD"
+
+    # Safety: if somehow empty, fall back to original MD
+    [ -s "$COLOR_MD" ] || cp "$md" "$COLOR_MD"
+
     # locate DS report if not at root
     if [ ! -f "$DS_JSON" ]; then
       DS_JSON_FOUND=$(find . -type f -name "gl-dependency-scanning-report.json" | head -n1 || true)
@@ -173,10 +190,10 @@ generate_security_report:
           echo "Findings: $count"
           echo
           if [ "$count" -gt 0 ]; then
-            echo "| Severity | Category | Name | File | Lines |"
+            echo "| Severity |  | Name | Lines | Issue |"
             echo "|---|---|---|---|---|"
             # inside summarize() in generate_security_report
-            # header: | Severity | Category | Name | File | Lines |
+            # header: | Severity |  | Name | Lines | Issue |
             jq -r '
               def esc: tostring | gsub("\\|"; "&#124;");
               (.vulnerabilities // [])[] as $v
@@ -262,7 +279,7 @@ generate_security_report:
       echo "HTML was empty or missing; writing fallback."
       {
         echo "<!doctype html><meta charset='utf-8'><title>Security Report</title><pre>"
-        sed 's/&/\&amp;/g; s/</\&lt;/g' "$COLOR_MD"
+        sed 's/&/\&amp;/g; s/</\&lt;/g' "$md"
         echo "</pre>"
       } > "$html"
     fi
