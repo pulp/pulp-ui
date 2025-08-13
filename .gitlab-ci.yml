@@ -208,34 +208,34 @@ generate_security_report:
     summarize "Dependency Scanning" "$DS_JSON"
     summarize "Secret Detection" "$SECRETS_JSON"
 
-echo "## Trivy" >> "$md"
-if [ -f "$TRIVY_JSON" ]; then
-  count=$(jq '[.Results[]?.Vulnerabilities[]?] | length' "$TRIVY_JSON" 2>/dev/null || echo 0)
-  echo "" >> "$md"
-  echo "Findings: $count" >> "$md"
-  echo "" >> "$md"
-  if [ "$count" -gt 0 ]; then
-    echo "| Severity | ID | Title | Package@Version (Target) | Fix |" >> "$md"
-    echo "|---|---|---|---|---|" >> "$md"
-    jq -r '
-      (.Results[]? | .Target as $t
-        | (.Vulnerabilities // [])[]?
-        | [
-            (.Severity // "UNKNOWN"),
-            (.VulnerabilityID // "n/a"),
-            (.Title // .PkgName // "n/a"),
-            ((.PkgName // "pkg") + "@" + (.InstalledVersion // "?") + " (" + $t + ")"),
-            (.FixedVersion // "n/a")
-          ] | @tsv
-      )
-    ' "$TRIVY_JSON" 2>/dev/null             | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
-  else
-    echo "_No vulnerabilities detected by Trivy._" >> "$md"
-  fi
-else
-  echo "" >> "$md"
-  echo "_Trivy report not found (job may have been skipped)._" >> "$md"
-fi
+    echo "## Trivy" >> "$md"
+    if [ -f "$TRIVY_JSON" ]; then
+      count=$(jq '[.Results[]?.Vulnerabilities[]?] | length' "$TRIVY_JSON" 2>/dev/null || echo 0)
+      echo "" >> "$md"
+      echo "Findings: $count" >> "$md"
+      echo "" >> "$md"
+      if [ "$count" -gt 0 ]; then
+        echo "| Severity | ID | Title | Package@Version (Target) | Fix |" >> "$md"
+        echo "|---|---|---|---|---|" >> "$md"
+        jq -r '
+          (.Results[]? | .Target as $t
+            | (.Vulnerabilities // [])[]?
+            | [
+                (.Severity // "UNKNOWN"),
+                (.VulnerabilityID // "n/a"),
+                (.Title // .PkgName // "n/a"),
+                ((.PkgName // "pkg") + "@" + (.InstalledVersion // "?") + " (" + $t + ")"),
+                (.FixedVersion // "n/a")
+              ] | @tsv
+          )
+        ' "$TRIVY_JSON" 2>/dev/null             | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
+      else
+        echo "_No vulnerabilities detected by Trivy._" >> "$md"
+      fi
+    else
+      echo "" >> "$md"
+      echo "_Trivy report not found (job may have been skipped)._" >> "$md"
+    fi
 
     {
       echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
