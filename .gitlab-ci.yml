@@ -1,4 +1,7 @@
-# .gitlab-ci.yml — Stable: working scans + clean HTML for Pages + WikiJS publish (proper Markdown)
+# .gitlab-ci.yml — Back to the last known working logic
+# - Keeps original HTML generation (awk-based) that worked for you
+# - Fixes Markdown table cells by escaping "|" so Pages table doesn't break
+# - Keeps WikiJS publish with RAW Markdown and fixed tag trimming
 
 include:
   - template: Jobs/SAST.gitlab-ci.yml
@@ -6,15 +9,11 @@ include:
   - template: Jobs/Secret-Detection.gitlab-ci.yml
 
 variables:
-  # Set to "false" if you don't have Ultimate
   GITLAB_ADVANCED_SAST_ENABLED: "true"
-
-  # Speed up scans by skipping noise
   SAST_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static,cypress,playwright-report,**/*.min.js,**/*.map"
   DS_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
   SECRET_DETECTION_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
 
-# Only create pipelines for: MRs, default branch pushes, or schedules
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -22,7 +21,6 @@ workflow:
     - if: $CI_PIPELINE_SOURCE == "schedule"
     - when: never
 
-# SAST (Semgrep or Advanced SAST)
 semgrep-sast:
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
@@ -41,7 +39,6 @@ semgrep-sast:
       when: on_success
     - when: never
 
-# Dependency Scanning (Gemnasium)
 gemnasium-dependency_scanning:
   variables:
     DS_LOCK_FILE_PATHS: "yarn.lock,package-lock.json,pnpm-lock.yaml,**/yarn.lock,**/package-lock.json,**/pnpm-lock.yaml"
@@ -71,7 +68,6 @@ gemnasium-dependency_scanning:
       when: on_success
     - when: never
 
-# Secret Detection (Gitleaks ruleset)
 secret_detection:
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
@@ -107,7 +103,6 @@ generate_security_report:
 
     md=out/security-report.md
     html=out/security-report.html
-
     echo "== Debug: downloaded security artifacts =="
     find . -maxdepth 3 -type f \( -name "gl-*-report.json" -o -name "gl-sbom-*.cdx.json" \) | sort || true
 
@@ -143,19 +138,20 @@ generate_security_report:
           echo "| Severity | Category | Name | File | Lines |" >> "$md"
           echo "|---|---|---|---|---|" >> "$md"
           jq -r '
+            def esc(s): s | gsub("\\|"; "&#124;");    # escape pipes for markdown table
             (.vulnerabilities // [])[]
             | [
-                (.severity // "unknown"),
-                (.category // "unknown"),
-                (.name // "n/a"),
-                (.location.file // "n/a"),
+                (.severity // "unknown") | esc(.),
+                (.category // "unknown") | esc(.),
+                (.name // "n/a") | esc(.),
+                (.location.file // "n/a") | esc(.),
                 (
                   ( (.location.start_line // "")|tostring )
                   + (if .location.end_line then "-" + ((.location.end_line)|tostring) else "" end)
-                )
+                ) | esc(.)
               ]
             | @tsv
-          ' "$file" | awk -F'	' '{printf("| %s | %s | %s | %s | %s |",$1,$2,$3,$4,$5)}' >> "$md"
+          ' "$file" | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
         else
           echo "_No vulnerabilities detected._" >> "$md"
         fi
@@ -170,62 +166,23 @@ generate_security_report:
     summarize "Dependency Scanning" "$DS_JSON"
     summarize "Secret Detection" "$SECRETS_JSON"
 
-    # Build real HTML (no markdown-to-html awk to avoid table issues)
+    # Original simple HTML wrapper (worked before). It just wraps the markdown.
     {
-      cat <<'HEAD'
-        <!doctype html>
-        <meta charset="utf-8">
-        <title>Security Report</title>
-        <style>
-          body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px}
-          table{border-collapse:collapse;width:100%}
-          th,td{border:1px solid #ddd;padding:8px}
-          th{background:#f5f5f5;text-align:left}
-          h1,h2{margin:0.6em 0}
-          .muted{color:#666}
-        </style>
-        <article>
-        HEAD
-
-      echo "<h1>Security Report</h1>"
-      echo "<p class='muted'>Generated on $(date -u +"%Y-%m-%d %H:%M:%SZ")</p>"
-
-      render_html_section () {
-        title="$1"; file="$2"
-        echo "<h2>${title}</h2>"
-        if [ -f "$file" ]; then
-          count=$(jq '.vulnerabilities | length' "$file" 2>/dev/null || echo 0)
-          echo "<p><strong>Findings:</strong> $count</p>"
-          if [ "$count" -gt 0 ]; then
-            echo "<table><thead><tr><th>Severity</th><th>Category</th><th>Name</th><th>File</th><th>Lines</th></tr></thead><tbody>"
-            jq -r '
-              def esc: tostring | gsub("&";"&amp;") | gsub("<";"&lt;");
-              (.vulnerabilities // [])[] as $v
-              | [
-                  ($v.severity // "unknown") | esc,
-                  ($v.category // "unknown") | esc,
-                  ($v.name // "n/a") | esc,
-                  ($v.location.file // "n/a") | esc,
-                  (
-                    ( ($v.location.start_line // "")|tostring )
-                    + (if $v.location.end_line then "-" + (($v.location.end_line)|tostring) else "" end)
-                  ) | esc
-                ]
-              | "<tr><td>" + .[0] + "</td><td>" + .[1] + "</td><td>" + .[2] + "</td><td>" + .[3] + "</td><td>" + .[4] + "</td></tr>"
-            ' "$file"
-            echo "</tbody></table>"
-          else
-            echo "<p><em>No vulnerabilities detected.</em></p>"
-          fi
-        else
-          echo "<p><em>Report not found (job may have been skipped).</em></p>"
-        fi
-      }
-
-      render_html_section "SAST" "$SAST_JSON"
-      render_html_section "Dependency Scanning" "$DS_JSON"
-      render_html_section "Secret Detection" "$SECRETS_JSON"
-
+      echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
+      echo "<style>body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:8px} th{background:#f5f5f5;text-align:left}</style>"
+      echo "<article>"
+      awk '
+        /^# /{print "<h1>"substr($0,3)"</h1>";next}
+        /^## /{print "<h2>"substr($0,4)"</h2>";next}
+        /^\|/{
+          if (!intable){print "<table>"; intable=1}
+          gsub(/^\||\|$/,""); n=split($0, a, /\|/)
+          if (!header_done){ print "<tr>"; for(i=1;i<=n;i++) print "<th>"a[i]"</th>"; print "</tr>"; header_done=1; next }
+          print "<tr>"; for(i=1;i<=n;i++) print "<td>"a[i]"</td>"; print "</tr>"; next
+        }
+        { if (intable){print "</table>"; intable=0; header_done=0} print "<p>"$0"</p>"}
+        END{ if (intable){print "</table>"} }
+      ' "$md"
       echo "</article>"
     } > "$html"
 
@@ -240,7 +197,6 @@ generate_security_report:
   rules:
     - when: always
 
-# Publish the HTML report on GitLab Pages
 pages:
   stage: report
   needs:
@@ -255,7 +211,6 @@ pages:
   rules:
     - when: always
 
-# Publish to WikiJS with RAW Markdown (no escaped \n)
 publish_wikijs:
   stage: report
   image: alpine:3.19
@@ -266,41 +221,32 @@ publish_wikijs:
     WIKI_TITLE: "Pulp UI Security Report (Latest)"
     WIKI_DESCRIPTION: "Security report for pulp-ui (auto-generated)"
     WIKI_TAGS: "security,report,pulp-ui"
-    WIKI_LOCALE: "en"   # set your default locale here
-    # Set these in CI/CD → Variables:
-    # WIKI_URL, WIKI_TOKEN, (optional) WIKI_PATH
+    WIKI_LOCALE: "en"
+    # Set CI/CD variables: WIKI_URL, WIKI_TOKEN, (optional) WIKI_PATH
   before_script:
     - set -eux
     - apk add --no-cache curl jq ca-certificates coreutils
     - test -f out/security-report.md
-    - test -n "${WIKI_URL:-}"   || { echo "WIKI_URL required"; exit 1; }
-    - test -n "${WIKI_TOKEN:-}" || { echo "WIKI_TOKEN required"; exit 1; }
+     - test -n "${WIKI_URL:-}"   || { echo "WIKI_URL required"; exit 1; }
+     - test -n "${WIKI_TOKEN:-}" || { echo "WIKI_TOKEN required"; exit 1; }
   script: |
     set -euo pipefail
-
     PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
     MD_RAW="$(cat out/security-report.md)"
     TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" | jq -Rs 'split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0))')
-
-    call_gql () {
-      curl -sS -H "Authorization: Bearer ${WIKI_TOKEN}" -H "Content-Type: application/json"         --data "$1" "${WIKI_URL%/}/graphql"
-    }
-
-    # Lookup page by path
-    GET=$(jq -cn --arg path "$TARGET_PATH" --arg locale "$WIKI_LOCALE"       '{query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id } } }",
-        variables:{path:$path, locale:$locale}}')
+    call_gql () { curl -sS -H "Authorization: Bearer ${WIKI_TOKEN}" -H "Content-Type: application/json" --data "$1" "${WIKI_URL%/}/graphql"; }
+    GET=$(jq -cn --arg path "$TARGET_PATH" --arg locale "$WIKI_LOCALE" \
+      '{query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id } } }", variables:{path:$path, locale:$locale}}')
     RES=$(call_gql "$GET"); ID=$(echo "$RES" | jq -r '.data.pages.singleByPath.id // empty')
-
     if [ -n "$ID" ]; then
-      # Update existing page with RAW markdown
-      UP=$(jq -cn --argjson id "$ID" --arg content "$MD_RAW"         '{query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } } } }",
-          variables:{id:$id, content:$content}}')
-      call_gql "$UP" >/dev/null || true  # do not fail pipeline on update quirks
+      UP=$(jq -cn --argjson id "$ID" --arg content "$MD_RAW" \
+        '{query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } } } }", variables:{id:$id, content:$content}}')
+      call_gql "$UP" >/dev/null || true
     else
-      # Create new page with RAW markdown
-      CR=$(jq -cn         --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "$WIKI_LOCALE"         --arg desc "${WIKI_DESCRIPTION}" --arg content "$MD_RAW" --argjson tags "$TAGS_JSON"         '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:"markdown", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
-          variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
+      CR=$(jq -cn --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "$WIKI_LOCALE" \
+        --arg desc "${WIKI_DESCRIPTION}" --arg content "$MD_RAW" --argjson tags "$TAGS_JSON" \
+        '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }", variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
       call_gql "$CR" >/dev/null
     fi
   rules:
@@ -311,3 +257,279 @@ publish_wikijs:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: on_success
     - when: never
+
+
+
+
+# # .gitlab-ci.yml — Stable rollback: working scans + report + WikiJS publish with proper Markdown
+
+# include:
+#   - template: Jobs/SAST.gitlab-ci.yml
+#   - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+#   - template: Jobs/Secret-Detection.gitlab-ci.yml
+
+# variables:
+#   # Set to "false" if you don't have Ultimate
+#   GITLAB_ADVANCED_SAST_ENABLED: "true"
+
+#   # Speed up scans by skipping noise
+#   SAST_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static,cypress,playwright-report,**/*.min.js,**/*.map"
+#   DS_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
+#   SECRET_DETECTION_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
+
+# # Only create pipelines for: MRs, default branch pushes, or schedules
+# workflow:
+#   rules:
+#     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+#     - if: $CI_PIPELINE_SOURCE == "schedule"
+#     - when: never
+
+# # SAST (Semgrep or Advanced SAST)
+# semgrep-sast:
+#   rules:
+#     - if: $CI_PIPELINE_SOURCE == "schedule"
+#       when: on_success
+#     - changes:
+#         - "**/*.js"
+#         - "**/*.jsx"
+#         - "**/*.ts"
+#         - "**/*.tsx"
+#       when: on_success
+#     - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH && $CI_COMMIT_BEFORE_SHA == "0000000000000000000000000000000000000000"
+#       when: on_success
+#     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+#       when: on_success
+#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+#       when: on_success
+#     - when: never
+
+# # Dependency Scanning (Gemnasium)
+# gemnasium-dependency_scanning:
+#   variables:
+#     DS_LOCK_FILE_PATHS: "yarn.lock,package-lock.json,pnpm-lock.yaml,**/yarn.lock,**/package-lock.json,**/pnpm-lock.yaml"
+#   rules:
+#     - if: $CI_PIPELINE_SOURCE == "schedule"
+#       when: on_success
+#     - changes:
+#         - yarn.lock
+#         - package-lock.json
+#         - pnpm-lock.yaml
+#         - "**/yarn.lock"
+#         - "**/package-lock.json"
+#         - "**/pnpm-lock.yaml"
+#       when: on_success
+#     - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH && $CI_COMMIT_BEFORE_SHA == "0000000000000000000000000000000000000000"
+#       exists:
+#         - yarn.lock
+#         - package-lock.json
+#         - pnpm-lock.yaml
+#         - "**/yarn.lock"
+#         - "**/package-lock.json"
+#         - "**/pnpm-lock.yaml"
+#       when: on_success
+#     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+#       when: on_success
+#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+#       when: on_success
+#     - when: never
+
+# # Secret Detection (Gitleaks ruleset)
+# secret_detection:
+#   rules:
+#     - if: $CI_PIPELINE_SOURCE == "schedule"
+#       when: on_success
+#     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+#       when: on_success
+#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+#       when: on_success
+#     - when: never
+
+# stages:
+#   - test
+#   - build
+#   - deploy
+#   - security
+#   - report
+
+# generate_security_report:
+#   stage: report
+#   image: alpine:3.19
+#   needs:
+#     - job: semgrep-sast
+#       artifacts: true
+#     - job: gemnasium-dependency_scanning
+#       artifacts: true
+#     - job: secret_detection
+#       artifacts: true
+#   before_script:
+#     - apk add --no-cache jq
+#   script: |
+#     set -e
+#     mkdir -p out
+
+#     md=out/security-report.md
+#     html=out/security-report.html
+#     echo "== Debug: downloaded security artifacts =="
+#     find . -maxdepth 3 -type f \( -name "gl-*-report.json" -o -name "gl-sbom-*.cdx.json" \) | sort || true
+
+#     SAST_JSON="${SAST_JSON:-gl-sast-report.json}"
+#     DS_JSON="${DS_JSON:-gl-dependency-scanning-report.json}"
+#     SECRETS_JSON="${SECRETS_JSON:-gl-secret-detection-report.json}"
+
+#     # locate DS report if not at root
+#     if [ ! -f "$DS_JSON" ]; then
+#       DS_JSON_FOUND=$(find . -type f -name "gl-dependency-scanning-report.json" | head -n1 || true)
+#       if [ -n "$DS_JSON_FOUND" ]; then
+#         echo "Using DS report at: $DS_JSON_FOUND"
+#         DS_JSON="$DS_JSON_FOUND"
+#       else
+#         echo "WARNING: Dependency Scanning report not found. Was the job skipped?"
+#       fi
+#     fi
+
+#     echo "# Security Report" > "$md"
+#     echo "" >> "$md"
+#     echo "_Generated on $(date -u +"%Y-%m-%d %H:%M:%SZ")_" >> "$md"
+#     echo "" >> "$md"
+
+#     summarize() {
+#       title="$1"; file="$2"
+#       echo "## $title" >> "$md"
+#       if [ -f "$file" ]; then
+#         count=$(jq '.vulnerabilities | length' "$file" 2>/dev/null || echo 0)
+#         echo "" >> "$md"
+#         echo "Findings: $count" >> "$md"
+#         echo "" >> "$md"
+#         if [ "$count" -gt 0 ]; then
+#           echo "| Severity | Category | Name | File | Lines |" >> "$md"
+#           echo "|---|---|---|---|---|" >> "$md"
+#           jq -r '
+#             (.vulnerabilities // [])[]
+#             | [
+#                 (.severity // "unknown"),
+#                 (.category // "unknown"),
+#                 (.name // "n/a"),
+#                 (.location.file // "n/a"),
+#                 (
+#                   ( (.location.start_line // "")|tostring )
+#                   + (if .location.end_line then "-" + ((.location.end_line)|tostring) else "" end)
+#                 )
+#               ]
+#             | @tsv
+#           ' "$file" | awk -F'	' '{printf("| %s | %s | %s | %s | %s |",$1,$2,$3,$4,$5)}' >> "$md"
+#         else
+#           echo "_No vulnerabilities detected._" >> "$md"
+#         fi
+#       else
+#         echo "" >> "$md"
+#         echo "_Report not found (job may have been skipped)._" >> "$md"
+#       fi
+#       echo "" >> "$md"
+#     }
+
+#     summarize "SAST" "$SAST_JSON"
+#     summarize "Dependency Scanning" "$DS_JSON"
+#     summarize "Secret Detection" "$SECRETS_JSON"
+
+#     {
+#       echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
+#       echo "<style>body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:8px} th{background:#f5f5f5;text-align:left}</style>"
+#       echo "<article>"
+#       awk '
+#         /^# /{print "<h1>"substr($0,3)"</h1>";next}
+#         /^## /{print "<h2>"substr($0,4)"</h2>";next}
+#         /^\|/{
+#           if (!intable){print "<table>"; intable=1}
+#           gsub(/^\||\|$/,""); n=split($0, a, /\|/)
+#           if (!header_done){ print "<tr>"; for(i=1;i<=n;i++) print "<th>"a[i]"</th>"; print "</tr>"; header_done=1; next }
+#           print "<tr>"; for(i=1;i<=n;i++) print "<td>"a[i]"</td>"; print "</tr>"; next
+#         }
+#         { if (intable){print "</table>"; intable=0; header_done=0} print "<p>"$0"</p>"}
+#         END{ if (intable){print "</table>"} }
+#       ' "$md"
+#       echo "</article>"
+#     } > "$html"
+
+#   artifacts:
+#     name: "security-report"
+#     when: always
+#     expire_in: 30 days
+#     paths:
+#       - out/security-report.md
+#       - out/security-report.html
+#     expose_as: "Security Report"
+#   rules:
+#     - when: always
+
+# # Publish the HTML report on GitLab Pages
+# pages:
+#   stage: report
+#   needs:
+#     - job: generate_security_report
+#       artifacts: true
+#   script:
+#     - mkdir -p public
+#     - cp out/security-report.html public/index.html
+#   artifacts:
+#     paths:
+#       - public
+#   rules:
+#     - when: always
+
+# # Publish to WikiJS with RAW Markdown (no escaped \n)
+# publish_wikijs:
+#   stage: report
+#   image: alpine:3.19
+#   needs:
+#     - job: generate_security_report
+#       artifacts: true
+#   variables:
+#     WIKI_TITLE: "Pulp UI Security Report (Latest)"
+#     WIKI_DESCRIPTION: "Security report for pulp-ui (auto-generated)"
+#     WIKI_TAGS: "security,report,pulp-ui"
+#     WIKI_LOCALE: "en"   # set your default locale here
+#     # Set these in CI/CD → Variables:
+#     # WIKI_URL, WIKI_TOKEN, (optional) WIKI_PATH
+#   before_script:
+#     - set -eux
+#     - apk add --no-cache curl jq ca-certificates coreutils
+#     - test -f out/security-report.md
+#     - test -n "${WIKI_URL:-}"   || { echo "WIKI_URL required"; exit 1; }
+#     - test -n "${WIKI_TOKEN:-}" || { echo "WIKI_TOKEN required"; exit 1; }
+#   script: |
+#     set -euo pipefail
+
+#     PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
+#     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
+#     MD_RAW="$(cat out/security-report.md)"
+#     TAGS_JSON=$(printf '%s' "${WIKI_TAGS:-}" | jq -Rs 'split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0))')
+
+#     call_gql () {
+#       curl -sS -H "Authorization: Bearer ${WIKI_TOKEN}" -H "Content-Type: application/json"         --data "$1" "${WIKI_URL%/}/graphql"
+#     }
+
+#     # Lookup page by path
+#     GET=$(jq -cn --arg path "$TARGET_PATH" --arg locale "$WIKI_LOCALE"       '{query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id } } }",
+#         variables:{path:$path, locale:$locale}}')
+#     RES=$(call_gql "$GET"); ID=$(echo "$RES" | jq -r '.data.pages.singleByPath.id // empty')
+
+#     if [ -n "$ID" ]; then
+#       # Update existing page with RAW markdown
+#       UP=$(jq -cn --argjson id "$ID" --arg content "$MD_RAW"         '{query:"mutation($id:Int!,$content:String!){ pages { update(id:$id, content:$content){ responseResult{ succeeded message } } } }",
+#           variables:{id:$id, content:$content}}')
+#       call_gql "$UP" >/dev/null || true  # do not fail pipeline on update quirks
+#     else
+#       # Create new page with RAW markdown
+#       CR=$(jq -cn         --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "$WIKI_LOCALE"         --arg desc "${WIKI_DESCRIPTION}" --arg content "$MD_RAW" --argjson tags "$TAGS_JSON"         '{query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:"markdown", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
+#           variables:{path:$path, title:$title, locale:$locale, description:$desc, tags:$tags, content:$content}}')
+#       call_gql "$CR" >/dev/null
+#     fi
+#   rules:
+#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+#       when: on_success
+#     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+#       when: on_success
+#     - if: $CI_PIPELINE_SOURCE == "schedule"
+#       when: on_success
+#     - when: never
