@@ -407,7 +407,6 @@ publish_wikijs:
       when: on_success
     - when: never
 
-
 ### LAST WORKING VERSION
 # # .gitlab-ci.yml — Stable with bulletproof report + Pages + WikiJS (fixed before_script)
 
