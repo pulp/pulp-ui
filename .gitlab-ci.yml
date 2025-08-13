@@ -177,6 +177,16 @@ generate_security_report:
     summarize "SAST" "$SAST_JSON"
     summarize "Dependency Scanning" "$DS_JSON"
     summarize "Secret Detection" "$SECRETS_JSON"
+    # Create colorized copy for Pages HTML (leave original Markdown for WikiJS)
+    COLOR_MD="out/security-report.color.md"
+    sed -E \
+      -e 's/\b(Critical)\b/<span style="color:#d32f2f"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b(High)\b/<span style="color:#ef6c00"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b(Medium)\b/<span style="color:#f9a825"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b(Low)\b/<span style="color:#2e7d32"><strong>\1<\/strong><\/span>/g' \
+      -e 's/\b(Info)\b/<span style="color:#1565c0"><strong>\1<\/strong><\/span>/g' \
+      "$md" > "$COLOR_MD"
+
 
     {
       echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
@@ -193,7 +203,7 @@ generate_security_report:
         }
         { if (intable){print "</table>"; intable=0; header_done=0} print "<p>"$0"</p>"}
         END{ if (intable){print "</table>"} }
-      ' "$md" || true
+      ' "$COLOR_MD" || true
       echo "</article>"
     } > "$html" || true
 
@@ -201,7 +211,7 @@ generate_security_report:
       echo "HTML was empty or missing; writing fallback."
       {
         echo "<!doctype html><meta charset='utf-8'><title>Security Report</title><pre>"
-        sed 's/&/\&amp;/g; s/</\&lt;/g' "$md"
+        sed 's/&/\&amp;/g; s/</\&lt;/g' "$COLOR_MD"
         echo "</pre>"
       } > "$html"
     fi
@@ -534,7 +544,7 @@ publish_wikijs:
 #         }
 #         { if (intable){print "</table>"; intable=0; header_done=0} print "<p>"$0"</p>"}
 #         END{ if (intable){print "</table>"} }
-#       ' "$md" || true
+#       ' "$COLOR_MD" || true
 #       echo "</article>"
 #     } > "$html" || true
 
@@ -542,7 +552,7 @@ publish_wikijs:
 #       echo "HTML was empty or missing; writing fallback."
 #       {
 #         echo "<!doctype html><meta charset='utf-8'><title>Security Report</title><pre>"
-#         sed 's/&/\&amp;/g; s/</\&lt;/g' "$md"
+#         sed 's/&/\&amp;/g; s/</\&lt;/g' "$COLOR_MD"
 #         echo "</pre>"
 #       } > "$html"
 #     fi
@@ -861,7 +871,7 @@ publish_wikijs:
 # #         }
 # #         { if (intable){print "</table>"; intable=0; header_done=0} print "<p>"$0"</p>"}
 # #         END{ if (intable){print "</table>"} }
-# #       ' "$md"
+# #       ' "$COLOR_MD"
 # #       echo "</article>"
 # #     } > "$html"
 
