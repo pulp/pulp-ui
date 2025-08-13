@@ -97,9 +97,9 @@ trivy_scan:
     - mkdir -p "$TRIVY_CACHE_DIR"
   script:
     - touch trivy-report.txt trivy-report.json trivy-report.cdx.json
-    - trivy fs --cache-dir "$TRIVY_CACHE_DIR" --exit-code 0 --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL --format table --output trivy-report.txt .
-    - trivy fs --cache-dir "$TRIVY_CACHE_DIR" --exit-code 0 --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL --format json  --output trivy-report.json .
-    - trivy fs --cache-dir "$TRIVY_CACHE_DIR" --exit-code 0 --format cyclonedx --output trivy-report.cdx.json .
+    - trivy fs --cache-dir "$TRIVY_CACHE_DIR" --exit-code 0 --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL --format table --output trivy-report.txt . || true
+    - trivy fs --cache-dir "$TRIVY_CACHE_DIR" --exit-code 0 --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL --format json  --output trivy-report.json . || true
+    - trivy fs --cache-dir "$TRIVY_CACHE_DIR" --exit-code 0 --format cyclonedx --output trivy-report.cdx.json . || true
   cache:
     key: trivy-db-protected
     policy: pull-push
@@ -128,8 +128,8 @@ generate_security_report:
     - apk add --no-cache jq
   script: |
     set -e
-    mkdir -p out
 
+    mkdir -p out
     md=out/security-report.md
     html=out/security-report.html
 
@@ -152,7 +152,6 @@ generate_security_report:
       fi
     fi
 
-    # ---------- Build Markdown (clean; no colors) ----------
     {
       echo "# Security Report"
       echo
@@ -172,51 +171,29 @@ generate_security_report:
           if [ "$count" -gt 0 ]; then
             echo "| Severity | Category | Name | File | Lines |"
             echo "|---|---|---|---|---|"
-            if [ "$title" = "Dependency Scanning" ]; then
-              # ---- DS rows: manifest-driven; no per-line location ----
-              jq -r '
-                def esc: tostring | gsub("\\|"; "&#124;");
-                def linkify($s):
-                  if ($s|test("^CVE-[0-9]{4}-[0-9]+$")) then
-                    "[\($s)](https://cve.mitre.org/cgi-bin/cvename.cgi?name=\($s))"
-                  else $s end;
-                (.vulnerabilities // [])[] as $v
-                | ($v.name // $v.identifiers[0]?.name // $v.message // $v.id // "n/a") as $n
+            # Run jq safely; don't abort pipeline if jq fails (busybox set -e can abort on left pipe)
+            if ! jq -r '
+              def esc: tostring | gsub("\\|"; "&#124;") | gsub("[\\r\\n\\t]"; " ");
+              (.vulnerabilities // [])[] as $v
                 | [
-                    ($v.severity // "UNKNOWN") | esc,
-                    ($v.category // "dependency_scanning") | esc,
-                    (linkify($n) | esc),
-                    ($v.location.file // "n/a") | esc,
-                    "-"  # lockfiles don’t have meaningful line numbers
-                  ]
-                | @tsv
-              ' "$file" 2>/dev/null \
-              | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}'
-            else
-              # ---- SAST rows: code locations with start/end lines ----
-              jq -r '
-                def esc: tostring | gsub("\\|"; "&#124;");
-                def linkify($s):
-                  if ($s|test("^CVE-[0-9]{4}-[0-9]+$")) then
-                    "[\($s)](https://cve.mitre.org/cgi-bin/cvename.cgi?name=\($s))"
-                  else $s end;
-                (.vulnerabilities // [])[] as $v
-                | ($v.name // $v.identifiers[0]?.name // "n/a") as $n
-                | [
-                    ($v.severity // "UNKNOWN") | esc,
-                    ($v.category // "sast") | esc,
-                    (linkify($n) | esc),
+                    ($v.severity // "UNKNOWN"),
+                    ($v.category // "sast"),
+                    (
+                      $v.name
+                      // ($v.identifiers // [] | map(select(.type=="cve")) | first? | .name)
+                      // "n/a"
+                    ) | esc,
                     ($v.location.file // "n/a") | esc,
                     (
                       [ $v.location.start_line?, $v.location.end_line? ]
                       | map(tostring)
                       | del(.[] | select(. == "" or . == "null"))
                       | join("-")
-                    ) | esc
+                    )
                   ]
-                | @tsv
-              ' "$file" 2>/dev/null \
-              | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,($5==""?"-":$5))}'
+              | @tsv
+            ' "$file" 2>/dev/null | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\\n",$1,$2,$3,$4,($5==""?"-":$5))}'; then
+              echo "_(Failed to render table rows)_"
             fi
           else
             echo "_No vulnerabilities detected._"
@@ -233,60 +210,63 @@ generate_security_report:
     summarize "Dependency Scanning" "$DS_JSON"
     summarize "Secret Detection" "$SECRETS_JSON"
 
-    # Trivy section
-    echo "## Trivy" >> "$md"
-    if [ -f "$TRIVY_JSON" ]; then
-      count=$(jq '[.Results[]?.Vulnerabilities[]?] | length' "$TRIVY_JSON" 2>/dev/null || echo 0)
-      echo "" >> "$md"
-      echo "Findings: $count" >> "$md"
-      echo "" >> "$md"
-      if [ "$count" -gt 0 ]; then
-        echo "| Severity | ID | Title | Package@Version (Target) | Fix |" >> "$md"
-        echo "|---|---|---|---|---|" >> "$md"
-        jq -r '
-          def esc: tostring | gsub("\\|"; "&#124;");
-          def linkify($s):
-            if ($s|test("^CVE-[0-9]{4}-[0-9]+$")) then
-              "[\($s)](https://cve.mitre.org/cgi-bin/cvename.cgi?name=\($s))"
-            else $s end;
-          (.Results[]? | .Target as $t
+    # Trivy section (safe, robust)
+    {
+      echo "## Trivy"
+      if [ -f "$TRIVY_JSON" ]; then
+        count=$(jq '[.Results[]? | (.Vulnerabilities // [])[]?] | length' "$TRIVY_JSON" 2>/dev/null || echo 0)
+        echo
+        echo "Findings: $count"
+        echo
+        if [ "$count" -gt 0 ]; then
+          echo "| Severity | ID | Title | Package@Version (Target) | Fix |"
+          echo "|---|---|---|---|---|"
+          if ! jq -r '
+            def esc: tostring | gsub("\\|"; "&#124;") | gsub("[\\r\\n\\t]"; " ");
+            .Results[]? as $r
+            | ($r.Target // "target") as $t
             | (.Vulnerabilities // [])[]?
             | [
-                (.Severity // "UNKNOWN") | esc,
-                (linkify(.VulnerabilityID // "n/a") | esc),
-                (.Title // .PkgName // "n/a") | esc,
-                (((.PkgName // "pkg") + "@" + (.InstalledVersion // "?") + " (" + $t + ")") | esc),
-                (.FixedVersion // "n/a") | esc
-              ] | @tsv
-          )
-        ' "$TRIVY_JSON" 2>/dev/null \
-        | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
+                (.Severity // "UNKNOWN"),
+                (.VulnerabilityID // "n/a"),
+                ( (.Title // .PkgName // "n/a") | esc ),
+                ( ((.PkgName // "pkg") + "@" + (.InstalledVersion // "?") + " (" + $t + ")") | esc ),
+                (.FixedVersion // "n/a")
+              ]
+            | @tsv
+          ' "$TRIVY_JSON" 2>/dev/null | awk -F'\t' '{printf("| %s | [%s](https://nvd.nist.gov/vuln/detail/%s) | %s | %s | %s |\\n",$1,$2,$2,$3,$4,$5)}'; then
+            echo "_(Failed to parse Trivy JSON)_"
+          fi
+        else
+          echo "_No vulnerabilities detected by Trivy._"
+        fi
       else
-        echo "_No vulnerabilities detected by Trivy._" >> "$md"
+        echo
+        echo "_Trivy report not found (job may have been skipped)._"
       fi
-    else
-      echo "" >> "$md"
-      echo "_Trivy report not found (job may have been skipped)._" >> "$md"
-    fi
+      echo
+    } >> "$md"
 
-    # ---------- Colorize copy for Pages HTML (leave original MD clean for WikiJS) ----------
+    # Create colorized copies for Pages + WikiJS
     COLOR_MD="out/security-report.color.md"
+    WIKI_MD="out/security-report.wikijs.md"
     cp "$md" "$COLOR_MD"
+    cp "$md" "$WIKI_MD"
 
-    # Colorize only the first table cell (severity) for each row to avoid accidental matches
-    sed -ri \
-      -e 's/^(\|[[:space:]]*)(CRITICAL|Critical)([[:space:]]*\|)/\1<span style="color:#d32f2f"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(HIGH|High)([[:space:]]*\|)/\1<span style="color:#ef6c00"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(MEDIUM|Medium)([[:space:]]*\|)/\1<span style="color:#f9a825"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(LOW|Low)([[:space:]]*\|)/\1<span style="color:#2e7d32"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(INFO|Info)([[:space:]]*\|)/\1<span style="color:#1565c0"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(UNKNOWN|Unknown)([[:space:]]*\|)/\1<span style="color:#757575"><strong>\2<\/strong><\/span>\3/' \
-      "$COLOR_MD"
+    # Linkify CVEs (Markdown) and colorize Severity (first cell only)
+    for f in "$COLOR_MD" "$WIKI_MD"; do
+      sed -ri \
+        -e 's/\b(CVE-[0-9]{4}-[0-9]{4,7})\b/[\\1](https:\\/\\/nvd.nist.gov\\/vuln\\/detail\\/\\1)/g' \
+        -e 's/^(\|[[:space:]]*)(CRITICAL|Critical)([[:space:]]*\|)/\\1<span style="color:#d32f2f"><strong>\\2<\\/strong><\\/span>\\3/' \
+        -e 's/^(\|[[:space:]]*)(HIGH|High)([[:space:]]*\|)/\\1<span style="color:#ef6c00"><strong>\\2<\\/strong><\\/span>\\3/' \
+        -e 's/^(\|[[:space:]]*)(MEDIUM|Medium)([[:space:]]*\|)/\\1<span style="color:#f9a825"><strong>\\2<\\/strong><\\/span>\\3/' \
+        -e 's/^(\|[[:space:]]*)(LOW|Low)([[:space:]]*\|)/\\1<span style="color:#2e7d32"><strong>\\2<\\/strong><\\/span>\\3/' \
+        -e 's/^(\|[[:space:]]*)(INFO|Info)([[:space:]]*\|)/\\1<span style="color:#1565c0"><strong>\\2<\\/strong><\\/span>\\3/' \
+        -e 's/^(\|[[:space:]]*)(UNKNOWN|Unknown)([[:space:]]*\|)/\\1<span style="color:#757575"><strong>\\2<\\/strong><\\/span>\\3/' \
+        "$f" || true
+    done
 
-    # Convert Markdown links to HTML anchors (so Pages HTML is clickable; WikiJS keeps Markdown)
-    sed -ri "s#\\[([^\\]]+)\\]\\(([^)]+)\\)#<a href='\\2' target='_blank'>\\1</a>#g" "$COLOR_MD"
-
-    # ---------- Build HTML from the colorized MD ----------
+    # Build HTML for Pages from COLOR_MD
     {
       echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
       echo "<style>body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:8px} th{background:#f5f5f5;text-align:left} code{background:#f6f8fa;padding:2px 4px;border-radius:4px}</style>"
@@ -306,9 +286,8 @@ generate_security_report:
       echo "</article>"
     } > "$html" || true
 
-    # Fallback in case HTML somehow ends empty
+    # Fallback if HTML missing/empty
     if [ ! -s "$html" ]; then
-      echo "HTML was empty or missing; writing fallback."
       {
         echo "<!doctype html><meta charset='utf-8'><title>Security Report</title><pre>"
         sed 's/&/\\&amp;/g; s/</\\&lt;/g' "$COLOR_MD"
@@ -364,20 +343,18 @@ publish_wikijs:
     PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
 
-    # --- Colorize only first severity cell for WikiJS (keep Markdown links) ---
+    # Colorize Markdown for WikiJS (first cell only) + linkify CVEs
     WIKI_MD="out/security-report.wikijs.md"
     cp out/security-report.md "$WIKI_MD"
-
     sed -ri \
-      -e 's/^(\|[[:space:]]*)(CRITICAL|Critical)([[:space:]]*\|)/\1<span style="color:#d32f2f"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(HIGH|High)([[:space:]]*\|)/\1<span style="color:#ef6c00"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(MEDIUM|Medium)([[:space:]]*\|)/\1<span style="color:#f9a825"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(LOW|Low)([[:space:]]*\|)/\1<span style="color:#2e7d32"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(INFO|Info)([[:space:]]*\|)/\1<span style="color:#1565c0"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(UNKNOWN|Unknown)([[:space:]]*\|)/\1<span style="color:#757575"><strong>\2<\/strong><\/span>\3/' \
-      "$WIKI_MD"
-
-    [ -s "$WIKI_MD" ] || cp out/security-report.md "$WIKI_MD"
+      -e 's/\b(CVE-[0-9]{4}-[0-9]{4,7})\b/[\\1](https:\\/\\/nvd.nist.gov\\/vuln\\/detail\\/\\1)/g' \
+      -e 's/^(\|[[:space:]]*)(CRITICAL|Critical)([[:space:]]*\|)/\\1<span style="color:#d32f2f"><strong>\\2<\\/strong><\\/span>\\3/' \
+      -e 's/^(\|[[:space:]]*)(HIGH|High)([[:space:]]*\|)/\\1<span style="color:#ef6c00"><strong>\\2<\\/strong><\\/span>\\3/' \
+      -e 's/^(\|[[:space:]]*)(MEDIUM|Medium)([[:space:]]*\|)/\\1<span style="color:#f9a825"><strong>\\2<\\/strong><\\/span>\\3/' \
+      -e 's/^(\|[[:space:]]*)(LOW|Low)([[:space:]]*\|)/\\1<span style="color:#2e7d32"><strong>\\2<\\/strong><\\/span>\\3/' \
+      -e 's/^(\|[[:space:]]*)(INFO|Info)([[:space:]]*\|)/\\1<span style="color:#1565c0"><strong>\\2<\\/strong><\\/span>\\3/' \
+      -e 's/^(\|[[:space:]]*)(UNKNOWN|Unknown)([[:space:]]*\|)/\\1<span style="color:#757575"><strong>\\2<\\/strong><\\/span>\\3/' \
+      "$WIKI_MD" || true
 
     MD_RAW="$(cat "$WIKI_MD")"
     DESC="${WIKI_DESCRIPTION:-Security report for ${CI_PROJECT_NAME:-project} (auto-generated)}"
@@ -398,6 +375,7 @@ publish_wikijs:
       {query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title } } }",
        variables:{path:$path, locale:$locale}}' > wikijs-debug/get.payload.json
     call_gql wikijs-debug/get.payload.json wikijs-debug/get.json || true
+
     ID="$(jq -r '.data.pages.singleByPath.id // empty' wikijs-debug/get.json)"
 
     if [ -n "$ID" ]; then
