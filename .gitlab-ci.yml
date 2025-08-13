@@ -103,6 +103,7 @@ generate_security_report:
 
     md=out/security-report.md
     html=out/security-report.html
+
     echo "== Debug: downloaded security artifacts =="
     find . -maxdepth 3 -type f \( -name "gl-*-report.json" -o -name "gl-sbom-*.cdx.json" \) | sort || true
 
@@ -121,52 +122,61 @@ generate_security_report:
       fi
     fi
 
-    echo "# Security Report" > "$md"
-    echo "" >> "$md"
-    echo "_Generated on $(date -u +"%Y-%m-%d %H:%M:%SZ")_" >> "$md"
-    echo "" >> "$md"
+    # ---- build Markdown (never fail hard on jq) ----
+    {
+      echo "# Security Report"
+      echo
+      echo "_Generated on $(date -u +"%Y-%m-%d %H:%M:%SZ")_"
+      echo
+    } > "$md"
 
     summarize() {
       title="$1"; file="$2"
-      echo "## $title" >> "$md"
-      if [ -f "$file" ]; then
-        count=$(jq '.vulnerabilities | length' "$file" 2>/dev/null || echo 0)
-        echo "" >> "$md"
-        echo "Findings: $count" >> "$md"
-        echo "" >> "$md"
-        if [ "$count" -gt 0 ]; then
-          echo "| Severity | Category | Name | File | Lines |" >> "$md"
-          echo "|---|---|---|---|---|" >> "$md"
-          jq -r '
-            def esc(s): s | gsub("\\|"; "&#124;");    # escape pipes for markdown table
-            (.vulnerabilities // [])[]
-            | [
-                (.severity // "unknown") | esc(.),
-                (.category // "unknown") | esc(.),
-                (.name // "n/a") | esc(.),
-                (.location.file // "n/a") | esc(.),
-                (
-                  ( (.location.start_line // "")|tostring )
-                  + (if .location.end_line then "-" + ((.location.end_line)|tostring) else "" end)
-                ) | esc(.)
-              ]
-            | @tsv
-          ' "$file" | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
+      {
+        echo "## $title"
+        if [ -f "$file" ]; then
+          count=$(jq '.vulnerabilities | length' "$file" 2>/dev/null || echo 0)
+          echo
+          echo "Findings: $count"
+          echo
+          if [ "$count" -gt 0 ]; then
+            echo "| Severity | Category | Name | File | Lines |"
+            echo "|---|---|---|---|---|"
+            # Escape pipes in cells so the markdown table stays intact
+            jq -r '
+              def esc: tostring | gsub("\\|"; "&#124;");
+              (.vulnerabilities // [])[] as $v
+              | [
+                  ($v.severity // "unknown") | esc,
+                  ($v.category // "unknown") | esc,
+                  ($v.name // "n/a") | esc,
+                  ($v.location.file // "n/a") | esc,
+                  (
+                    ( ($v.location.start_line // "")|tostring )
+                    + (if $v.location.end_line then "-" + (($v.location.end_line)|tostring) else "" end)
+                  ) | esc
+                ]
+              | @tsv
+            ' "$file" 2>/dev/null \
+            | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' || {
+              echo "_(Failed to render table rows)_"
+            }
+          else
+            echo "_No vulnerabilities detected._"
+          fi
         else
-          echo "_No vulnerabilities detected._" >> "$md"
+          echo
+          echo "_Report not found (job may have been skipped)._"
         fi
-      else
-        echo "" >> "$md"
-        echo "_Report not found (job may have been skipped)._" >> "$md"
-      fi
-      echo "" >> "$md"
+        echo
+      } >> "$md" || true
     }
 
     summarize "SAST" "$SAST_JSON"
     summarize "Dependency Scanning" "$DS_JSON"
     summarize "Secret Detection" "$SECRETS_JSON"
 
-    # Original simple HTML wrapper (worked before). It just wraps the markdown.
+    # ---- HTML: use the original simple wrapper; never fail if awk stumbles ----
     {
       echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
       echo "<style>body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:8px} th{background:#f5f5f5;text-align:left}</style>"
@@ -182,9 +192,20 @@ generate_security_report:
         }
         { if (intable){print "</table>"; intable=0; header_done=0} print "<p>"$0"</p>"}
         END{ if (intable){print "</table>"} }
-      ' "$md"
+      ' "$md" || true
       echo "</article>"
-    } > "$html"
+    } > "$html" || true
+
+    # ---- final safety net: if HTML missing/empty, emit a minimal one ----
+    if [ ! -s "$html" ]; then
+      echo "HTML was empty or missing; writing fallback."
+      {
+        echo "<!doctype html><meta charset='utf-8'><title>Security Report</title><pre>"
+        # Escape &, < to avoid breaking HTML
+        sed 's/&/\&amp;/g; s/</\&lt;/g' "$md"
+        echo "</pre>"
+      } > "$html"
+    fi
 
   artifacts:
     name: "security-report"
@@ -196,6 +217,7 @@ generate_security_report:
     expose_as: "Security Report"
   rules:
     - when: always
+
 
 pages:
   stage: report
