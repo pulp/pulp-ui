@@ -239,19 +239,24 @@ generate_security_report:
     fi
 
     # ---------- Colorize copy for Pages HTML (leave original MD clean for WikiJS) ----------
+    # Create a colorized copy for GitLab Pages
     COLOR_MD="out/security-report.color.md"
     cp "$md" "$COLOR_MD"
 
-    # BusyBox sed prefers -r (ERE). Color both Title Case and ALL CAPS.
+    # Colorize ONLY the first table cell (severity) on each row to avoid overmatching "info" in filenames, etc.
+    # BusyBox sed -> use -r (ERE)
     sed -ri \
-      -e 's/\b([Cc]ritical|CRITICAL)\b/<span style="color:#d32f2f"><strong>\1<\/strong><\/span>/g' \
-      -e 's/\b([Hh]igh|HIGH)\b/<span style="color:#ef6c00"><strong>\1<\/strong><\/span>/g' \
-      -e 's/\b([Mm]edium|MEDIUM)\b/<span style="color:#f9a825"><strong>\1<\/strong><\/span>/g' \
-      -e 's/\b([Ll]ow|LOW)\b/<span style="color:#2e7d32"><strong>\1<\/strong><\/span>/g' \
-      -e 's/\b([Ii]nfo|INFO)\b/<span style="color:#1565c0"><strong>\1<\/strong><\/span>/g' \
-      -e 's/\b([Uu]nknown|UNKNOWN)\b/<span style="color:#757575"><strong>\1<\/strong><\/span>/g' \
+      -e 's/^(\|[[:space:]]*)(CRITICAL|Critical)([[:space:]]*\|)/\1<span style="color:#d32f2f"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(HIGH|High)([[:space:]]*\|)/\1<span style="color:#ef6c00"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(MEDIUM|Medium)([[:space:]]*\|)/\1<span style="color:#f9a825"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(LOW|Low)([[:space:]]*\|)/\1<span style="color:#2e7d32"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(INFO|Info)([[:space:]]*\|)/\1<span style="color:#1565c0"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(UNKNOWN|Unknown)([[:space:]]*\|)/\1<span style="color:#757575"><strong>\2<\/strong><\/span>\3/' \
       "$COLOR_MD"
 
+    # Safety fallback
+    [ -s "$COLOR_MD" ] || cp "$md" "$COLOR_MD"
+    # If colorized MD is empty, use the original clean MD
     # ---------- Build HTML from the colorized MD ----------
     {
       echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
@@ -329,7 +334,25 @@ publish_wikijs:
 
     PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
-    MD_RAW="$(cat out/security-report.md)"
+    # MD_RAW="$(cat out/security-report.md)"
+    # --- Colorize Markdown for WikiJS (first cell only) ---
+    WIKI_MD="out/security-report.wikijs.md"
+    cp out/security-report.md "$WIKI_MD"
+
+    sed -ri \
+      -e 's/^(\|[[:space:]]*)(CRITICAL|Critical)([[:space:]]*\|)/\1<span style="color:#d32f2f"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(HIGH|High)([[:space:]]*\|)/\1<span style="color:#ef6c00"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(MEDIUM|Medium)([[:space:]]*\|)/\1<span style="color:#f9a825"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(LOW|Low)([[:space:]]*\|)/\1<span style="color:#2e7d32"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(INFO|Info)([[:space:]]*\|)/\1<span style="color:#1565c0"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(UNKNOWN|Unknown)([[:space:]]*\|)/\1<span style="color:#757575"><strong>\2<\/strong><\/span>\3/' \
+      "$WIKI_MD"
+
+    [ -s "$WIKI_MD" ] || cp out/security-report.md "$WIKI_MD"
+
+    # Now read the colorized Markdown into MD_RAW
+    MD_RAW="$(cat "$WIKI_MD")"
+    # --- Prepare WikiJS API payloads ---
     DESC="${WIKI_DESCRIPTION:-Security report for ${CI_PROJECT_NAME:-project} (auto-generated)}"
     TAGS_RAW="${WIKI_TAGS:-}"
     mkdir -p wikijs-debug
