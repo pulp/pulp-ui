@@ -313,8 +313,8 @@ generate_security_report:
 
     # Archive copies
     TS="$(date -u +%Y-%m-%d_%H-%M-%S)"
-    cp "$md"   "out/archive/security-report-${TS}.md"
-    cp "$html" "out/archive/security-report-${TS}.html"
+    cp "$md"   "out/security-report-${TS}.md"
+    cp "$html" "out/security-report-${TS}.html"
 
   artifacts:
     name: "security-report-${CI_PIPELINE_ID}"
@@ -336,7 +336,7 @@ pages:
   script:
     - mkdir -p public public/reports
     - cp out/security-report.html public/index.html
-    - cp out/archive/*.html public/reports/ || true
+    - cp out/*.html public/reports/ || true
   artifacts:
     paths:
       - public
