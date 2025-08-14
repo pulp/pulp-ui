@@ -11,13 +11,13 @@ stages:
   - deploy
   - security
   - report
-  
+
 variables:
   GITLAB_ADVANCED_SAST_ENABLED: "true"
   SAST_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static,cypress,playwright-report,**/*.min.js,**/*.map"
   DS_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
   SECRET_DETECTION_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
-  REPORTS_EXPIRE_IN: "180 days"
+  REPORTS_EXPIRE_IN: 180 days
 
 workflow:
   rules:
