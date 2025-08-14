@@ -319,7 +319,7 @@ generate_security_report:
   artifacts:
     name: "security-report-${CI_PIPELINE_ID}"
     when: always
-    expire_in: ${REPORTS_EXPIRE_IN}
+    expire_in: '180 days'
     paths:
       - out/security-report.md
       - out/security-report.html
@@ -341,7 +341,7 @@ pages:
   artifacts:
     paths:
       - public
-    expire_in: ${REPORTS_EXPIRE_IN}
+    expire_in: '180 days'
   rules:
     - when: always
 
