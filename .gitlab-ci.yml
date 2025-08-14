@@ -1,23 +1,15 @@
-# .gitlab-ci.yml — Stable with bulletproof report + Pages + WikiJS (fixed before_script)
+# --- Security scans & reporting for a JS/TS frontend repo (pulp-ui) ---
 
 include:
   - template: Jobs/SAST.gitlab-ci.yml
   - template: Jobs/Dependency-Scanning.gitlab-ci.yml
   - template: Jobs/Secret-Detection.gitlab-ci.yml
 
-stages:
-  - test
-  - build
-  - deploy
-  - security
-  - report
-
 variables:
   GITLAB_ADVANCED_SAST_ENABLED: "true"
   SAST_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static,cypress,playwright-report,**/*.min.js,**/*.map"
   DS_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
   SECRET_DETECTION_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
-  REPORTS_EXPIRE_IN: 180 days
 
 workflow:
   rules:
@@ -51,8 +43,6 @@ gemnasium-dependency_scanning:
       - gl-dependency-scanning-report.json
       - gl-sbom-*.cdx.json
   variables:
-    DS_MAX_DEPTH: "10"
-    DS_INCLUDE_DEV_DEPENDENCIES: "true"
     DS_LOCK_FILE_PATHS: "yarn.lock,package-lock.json,pnpm-lock.yaml,**/yarn.lock,**/package-lock.json,**/pnpm-lock.yaml"
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
@@ -90,6 +80,12 @@ secret_detection:
       when: on_success
     - when: never
 
+stages:
+  - test
+  - build
+  - deploy
+  - security
+  - report
 
 # ---- Trivy CVE scan (filesystem; always pass) ----
 trivy_scan:
@@ -113,30 +109,48 @@ trivy_scan:
       - .trivycache/
   artifacts:
     when: always
+    expire_in: "30 days"
     paths:
       - trivy-report.txt
       - trivy-report.json
       - trivy-report.cdx.json
 
+# ---- npm audit (always pass; JSON artifact) ----
 npm_audit:
   stage: test
   image: node:18
   script:
-    - npm ci --ignore-scripts
-    - echo "== Running npm audit in project root =="
-    - npm audit --audit-level=low --json > npm-audit.json || true # never fail the pipeline
-    - npm audit --json | tee out/npm-audit.json
+    - |
+      if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ] || find . -maxdepth 2 -name "yarn.lock" | grep -q . ; then
+        npm --version
+        npm ci --ignore-scripts || true
+        npm audit --json > npm-audit.json || echo '{}' > npm-audit.json
+      else
+        echo "No lockfile found; skipping npm audit"
+        echo '{}' > npm-audit.json
+      fi
   artifacts:
     when: always
+    expire_in: "30 days"
     paths:
       - npm-audit.json
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: on_success
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: on_success
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: on_success
+    - when: never
 
-# --- Generate colorized MD + HTML + archive copies ---
+# ---- Build combined report (MD + colorized HTML for Pages; colorized MD for WikiJS) ----
 generate_security_report:
   stage: report
   image: alpine:3.19
   needs:
     - job: trivy_scan
+      artifacts: true
+    - job: npm_audit
       artifacts: true
     - job: semgrep-sast
       artifacts: true
@@ -144,8 +158,6 @@ generate_security_report:
       artifacts: true
     - job: secret_detection
       artifacts: true
-    - job: npm_audit
-      artifacts: true  
   before_script:
     - apk add --no-cache jq
   script: |
@@ -156,19 +168,13 @@ generate_security_report:
     html=out/security-report.html
 
     echo "== Debug: downloaded security artifacts =="
-    find . -maxdepth 3 -type f \( -name "gl-*-report.json" -o -name "gl-sbom-*.cdx.json" -o -name "trivy-report.json" \) | sort || true
+    find . -maxdepth 3 -type f \( -name "gl-*-report.json" -o -name "gl-sbom-*.cdx.json" -o -name "trivy-report.json" -o -name "npm-audit.json" \) | sort || true
 
     SAST_JSON="${SAST_JSON:-gl-sast-report.json}"
     DS_JSON="${DS_JSON:-gl-dependency-scanning-report.json}"
     SECRETS_JSON="${SECRETS_JSON:-gl-secret-detection-report.json}"
     TRIVY_JSON="${TRIVY_JSON:-trivy-report.json}"
-
-    # Optional: set a variable and locate it if absent
-    NPM_AUDIT_JSON="${NPM_AUDIT_JSON:-npm-audit.json}"
-    if [ ! -f "$NPM_AUDIT_JSON" ]; then
-      FOUND=$(find . -type f -name "npm-audit.json" | head -n1 || true)
-      [ -n "$FOUND" ] && NPM_AUDIT_JSON="$FOUND"
-    fi
+    NPM_JSON="${NPM_JSON:-npm-audit.json}"
 
     # Locate DS report if it isn't at repo root
     if [ ! -f "$DS_JSON" ]; then
@@ -181,10 +187,7 @@ generate_security_report:
       fi
     fi
 
-    md="out/security-report.md"
-    color_md="out/security-report.color.md"
-    html="out/security-report.html"
-
+    # ---------- Build clean Markdown (no HTML tags yet) ----------
     {
       echo "# Security Report"
       echo
@@ -202,54 +205,32 @@ generate_security_report:
           echo "Findings: $count"
           echo
           if [ "$count" -gt 0 ]; then
-            echo "| Severity |  | File | Lines | Issue |"
+            echo "| Severity | Category | Name | File | Lines |"
             echo "|---|---|---|---|---|"
-            if [ "$title" = "Dependency Scanning" ]; then
-              # ---- DS rows: manifest-driven; no per-line location ----
-              jq -r '
-                def esc: tostring | gsub("\\|"; "&#124;");
-                (.vulnerabilities // [])[] as $v
+            jq -r '
+              def esc: tostring | gsub("\\|"; "&#124;");
+              (.vulnerabilities // [])[] as $v
                 | [
-                    ($v.severity // "UNKNOWN") | esc,
-                    ($v.category // "dependency_scanning") | esc,
+                    ($v.severity // "UNKNOWN"),
+                    ($v.category // "n/a"),
                     (
                       $v.name
-                      // $v.identifiers[0]?.name
-                      // $v.message
-                      // $v.id
+                      // ($v.identifiers[]?.name // empty)
                       // "n/a"
-                    ) | esc,
-                    ($v.location.file // "n/a") | esc,
-                    "-"  # lockfiles don’t have meaningful line numbers
-                  ]
-                | @tsv
-              ' "$file" 2>/dev/null \
-              | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}'
-            else
-              # ---- SAST rows: code locations with start/end lines ----
-              jq -r '
-                def esc: tostring | gsub("\\|"; "&#124;");
-                (.vulnerabilities // [])[] as $v
-                | [
-                    ($v.severity // "UNKNOWN") | esc,
-                    ($v.category // "sast") | esc,
-                    (
-                      $v.name
-                      // $v.identifiers[0]?.name
-                      // "n/a"
-                    ) | esc,
-                    ($v.location.file // "n/a") | esc,
+                    ),
+                    ($v.location.file // "n/a"),
                     (
                       [ $v.location.start_line?, $v.location.end_line? ]
                       | map(tostring)
                       | del(.[] | select(. == "" or . == "null"))
                       | join("-")
-                    ) | esc
+                    )
                   ]
-                | @tsv
-              ' "$file" 2>/dev/null \
-              | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,($5==""?"-":$5))}'
-            fi
+              | @tsv
+            ' "$file" 2>/dev/null \
+            | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,($5==""?"-":$5))}' || {
+              echo "_(Failed to render table rows)_"
+            }
           else
             echo "_No vulnerabilities detected._"
           fi
@@ -265,118 +246,82 @@ generate_security_report:
     summarize "Dependency Scanning" "$DS_JSON"
     summarize "Secret Detection" "$SECRETS_JSON"
 
-    # Trivy section
-    echo "## Trivy" >> "$md"
-    if [ -f "$TRIVY_JSON" ]; then
-      count=$(jq '[.Results[]?.Vulnerabilities[]?] | length' "$TRIVY_JSON" 2>/dev/null || echo 0)
-      echo "" >> "$md"
-      echo "Findings: $count" >> "$md"
-      echo "" >> "$md"
-      if [ "$count" -gt 0 ]; then
-        echo "| Severity | ID | Title | Package@Version (Target) | Fix |" >> "$md"
-        echo "|---|---|---|---|---|" >> "$md"
-        jq -r '
-          (.Results[]? | .Target as $t
-            | (.Vulnerabilities // [])[]?
-            | [
-                (.Severity // "UNKNOWN"),
-                (.VulnerabilityID // "n/a"),
-                (.Title // .PkgName // "n/a"),
-                ((.PkgName // "pkg") + "@" + (.InstalledVersion // "?") + " (" + $t + ")"),
-                (.FixedVersion // "n/a")
-              ] | @tsv
-          )
-        ' "$TRIVY_JSON" 2>/dev/null \
-        | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
-      else
-        echo "_No vulnerabilities detected by Trivy._" >> "$md"
-      fi
-    else
-      echo "" >> "$md"
-      echo "_Trivy report not found (job may have been skipped)._" >> "$md"
-    fi
-
-    # ---------- NPM Audit (optional) ----------
-    # If npm_audit job produced npm-audit.json, include a summary table.
-    if [ -f "npm-audit.json" ]; then
-      echo "## NPM Audit" >> "$md"
-      AUDIT_COUNT=$(jq '[.. | objects | select(has("severity") and has("module_name"))] | length' npm-audit.json 2>/dev/null || echo 0)
-      echo "" >> "$md"
-      echo "Findings: $AUDIT_COUNT" >> "$md"
-      echo "" >> "$md"
-      if [ "$AUDIT_COUNT" -gt 0 ]; then
-        echo "| Severity | Module | Title | Via | Fix |" >> "$md"
-        echo "|---|---|---|---|---|" >> "$md"
-        jq -r '
-          # npm audit v7+ structure:
-          ( .advisories // empty ) as $advOld
-          | ( .vulnerabilities // {} ) as $vulnNew
-          |
-          # Old format (advisories map)
-          ( $advOld | to_entries[]? |
-              [ (.value.severity // "unknown"),
-                (.value.module_name // "n/a"),
-                (.value.title // "n/a"),
-                ( ((.value.cves // []) | join(", ")) as $cves
-                  | if ($cves|length)>0 then $cves else ((.value.via // []) | join(", ")) end
-                ),
-                (.value.recommendation // .value.fixAvailable // "n/a")
-              ] | @tsv
-            ),
-          # New format (vulnerabilities object)
-          ( $vulnNew | to_entries[]? | .value as $v |
-              [ ($v.severity // "unknown"),
-                ($v.name // "n/a"),
-                ($v.title // "n/a"),
-                ( ($v.via // []) | map( if type=="string" then . else (.title // .name // "advisory") end ) | unique | join(", ") ),
-                ( ($v.fixAvailable|tostring) // "n/a" )
-              ] | @tsv
+    # ---------- Trivy ----------
+    {
+      echo "## Trivy"
+      if [ -f "$TRIVY_JSON" ]; then
+        count=$(jq '[.Results[]?.Vulnerabilities[]?] | length' "$TRIVY_JSON" 2>/dev/null || echo 0)
+        echo
+        echo "Findings: $count"
+        echo
+        if [ "$count" -gt 0 ]; then
+          echo "| Severity | ID | Title | Package@Version (Target) | Fix |"
+          echo "|---|---|---|---|---|"
+          jq -r '
+            (.Results[]? | .Target as $t
+              | (.Vulnerabilities // [])[]?
+              | [
+                  (.Severity // "UNKNOWN"),
+                  (.VulnerabilityID // "n/a"),
+                  (.Title // .PkgName // "n/a"),
+                  ((.PkgName // "pkg") + "@" + (.InstalledVersion // "?") + " (" + $t + ")"),
+                  (.FixedVersion // "n/a")
+                ] | @tsv
             )
-        ' npm-audit.json 2>/dev/null \
-        | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
+          ' "$TRIVY_JSON" 2>/dev/null \
+          | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}'
+        else
+          echo "_No vulnerabilities detected by Trivy._"
+        fi
       else
-        echo "_No vulnerabilities detected by npm audit._" >> "$md"
+        echo
+        echo "_Trivy report not found (job may have been skipped)._"
       fi
-      echo "" >> "$md"
-    fi
+      echo
+    } >> "$md"
 
-    echo "## NPM Audit" >> out/security-report.md
-    NPM_RESULTS=$(jq -r '.metadata.vulnerabilities | to_entries[] | select(.value > 0) | "\(.key): \(.value)"' out/npm-audit.json)
-    if [ -z "$NPM_RESULTS" ]; then
-      echo "Findings: 0" >> out/security-report.md
-      echo "" >> out/security-report.md
-      echo "No vulnerabilities detected by npm audit." >> out/security-report.md
-    else
-      echo "Findings:" >> out/security-report.md
-      jq -r '.advisories[] | [.severity, .id, .title, (.module_name + "@" + .findings[0].version), .recommendation] | @tsv' out/npm-audit.json \
-        | awk -F'\t' 'BEGIN {print "| Severity | ID | Title | Package@Version | Fix |"; print "|---|---|---|---|---|"} {print "| " $1 " | " $2 " | " $3 " | " $4 " | " $5 " |"}' \
-        >> out/security-report.md
-    fi
+    # ---------- NPM Audit ----------
+    {
+      echo "## NPM Audit"
+      if [ -f "$NPM_JSON" ]; then
+        ncount=$(jq '
+          [ (.vulnerabilities? // {}) | to_entries[] | .value.via[]? | select(type=="object") ] | length
+        ' "$NPM_JSON" 2>/dev/null || echo 0)
+        echo
+        echo "Findings: $ncount"
+        echo
+        if [ "$ncount" -gt 0 ]; then
+          echo "| Severity | ID | Title | Package (Range) |"
+          echo "|---|---|---|---|"
+          jq -r '
+            (.vulnerabilities? // {} | to_entries[]) as $e
+            | ($e.key) as $pkg
+            | ($e.value.range // "") as $range
+            | ($e.value.via // [])[]
+            | select(type=="object")
+            | [
+                ((.severity // "unknown") | ascii_upcase),
+                (.id // .source // ""),
+                (.title // "n/a"),
+                ($pkg + (if $range != "" then " ("+$range+")" else "" end))
+              ] | @tsv
+          ' "$NPM_JSON" 2>/dev/null \
+          | awk -F'\t' '{printf("| %s | %s | %s | %s |\n",$1,$2,$3,$4)}'
+        else
+          echo "_No vulnerabilities detected by npm audit._"
+        fi
+      else
+        echo
+        echo "_npm-audit.json not found (job may have been skipped)._"
+      fi
+      echo
+    } >> "$md"
 
-    # ---------- Linkify CVE IDs in Markdown (BEFORE colorization/HTML) ----------
-    # Default NVD; set CVE_LINK_BASE in CI to switch (e.g. https://cve.mitre.org/cgi-bin/cvename.cgi?name=)
-    CVE_BASE="${CVE_LINK_BASE:-https://nvd.nist.gov/vuln/detail}"
-    case "$CVE_BASE" in *\?*) CVE_JOIN='' ;; *) CVE_JOIN='/' ;; esac
-
-    # BusyBox sed: use -r (not -E) and a non-/ delimiter to avoid escaping URLs
-    if ! sed -r -i \
-      "s#(CVE-[0-9]{4}-[0-9]{4,7})#<a href=\"${CVE_BASE}${CVE_JOIN}\1\" target=\"_blank\" rel=\"noopener noreferrer\">\\1</a>#g" \
-      "$md"; then
-      echo "sed failed; applying awk fallback for CVE linkification"
-      awk -v base="$CVE_BASE" -v join="$CVE_JOIN" '{
-        gsub(/CVE-[0-9]{4}-[0-9]{4,7}/,
-             "<a href=\"" base join "&\" target=\"_blank\" rel=\"noopener noreferrer\">" "&" "</a>")
-        print
-      }' "$md" > "$md.tmp" && mv "$md.tmp" "$md"
-    fi
-
-    # ---------- Colorize copy for Pages HTML (leave original MD clean for WikiJS) ----------
-    # Create a colorized copy for GitLab Pages
+    # ---------- Colorize copy for Pages HTML (leave original MD clean) ----------
     COLOR_MD="out/security-report.color.md"
     cp "$md" "$COLOR_MD"
 
-    # Colorize ONLY the first table cell (severity) on each row to avoid overmatching "info" in filenames, etc.
-    # BusyBox sed -> use -r (ERE)
+    # Color only the first cell (Severity) of each table row
     sed -ri \
       -e 's/^(\|[[:space:]]*)(CRITICAL|Critical)([[:space:]]*\|)/\1<span style="color:#d32f2f"><strong>\2<\/strong><\/span>\3/' \
       -e 's/^(\|[[:space:]]*)(HIGH|High)([[:space:]]*\|)/\1<span style="color:#ef6c00"><strong>\2<\/strong><\/span>\3/' \
@@ -384,12 +329,9 @@ generate_security_report:
       -e 's/^(\|[[:space:]]*)(LOW|Low)([[:space:]]*\|)/\1<span style="color:#2e7d32"><strong>\2<\/strong><\/span>\3/' \
       -e 's/^(\|[[:space:]]*)(INFO|Info)([[:space:]]*\|)/\1<span style="color:#1565c0"><strong>\2<\/strong><\/span>\3/' \
       -e 's/^(\|[[:space:]]*)(UNKNOWN|Unknown)([[:space:]]*\|)/\1<span style="color:#757575"><strong>\2<\/strong><\/span>\3/' \
-      "$COLOR_MD"
+      "$COLOR_MD" || true
 
-    # Safety fallback
-    [ -s "$COLOR_MD" ] || cp "$md" "$COLOR_MD"
-    # If colorized MD is empty, use the original clean MD
-    # ---------- Build HTML from the colorized MD ----------
+    # Build HTML from the colorized MD
     {
       echo "<!doctype html><meta charset='utf-8'><title>Security Report</title>"
       echo "<style>body{font-family:sans-serif;max-width:980px;margin:32px auto;padding:0 16px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:8px} th{background:#f5f5f5;text-align:left} code{background:#f6f8fa;padding:2px 4px;border-radius:4px}</style>"
@@ -409,41 +351,44 @@ generate_security_report:
       echo "</article>"
     } > "$html" || true
 
-    # Archive copies
-    TS="$(date -u +%Y-%m-%d_%H-%M-%S)"
-    cp "$md"   "out/security-report-${TS}.md"
-    cp "$html" "out/security-report-${TS}.html"
+    # Linkify CVE-IDs in the HTML (open in new tab)
+    sed -ri 's/(CVE-[0-9]{4}-[0-9]{4,7})/<a href="https:\/\/nvd.nist.gov\/vuln\/detail\/\1" target="_blank" rel="noopener">\1<\/a>/g' "$html" || true
+
+    # Fallback: if HTML ended up empty, dump preformatted MD
+    [ -s "$html" ] || {
+      echo "HTML was empty or missing; writing fallback."
+      { echo "<!doctype html><meta charset='utf-8'><title>Security Report</title><pre>";
+        sed 's/&/\&amp;/g; s/</\&lt;/g' "$COLOR_MD";
+        echo "</pre>"; } > "$html"
+    }
 
   artifacts:
-    name: "security-report-${CI_PIPELINE_ID}"
+    name: "security-report"
     when: always
-    expire_in: '180 days'
+    expire_in: "30 days"
     paths:
       - out/security-report.md
       - out/security-report.html
-      - out/npm-audit.json
     expose_as: "Security Report"
   rules:
     - when: always
 
-# --- GitLab Pages (latest + all archived HTML) ---
+# ---- GitLab Pages (colorized HTML) ----
 pages:
   stage: report
   needs:
     - job: generate_security_report
       artifacts: true
   script:
-    - mkdir -p public public/reports
+    - mkdir -p public
     - cp out/security-report.html public/index.html
-    - cp out/*.html public/reports/ || true
   artifacts:
     paths:
       - public
-    expire_in: '180 days'
   rules:
     - when: always
 
-# --- WikiJS publish (optional; set WIKI_URL + WIKI_TOKEN) ---
+# ---- WikiJS publish (colorized Markdown + CVE links) ----
 publish_wikijs:
   stage: report
   image: alpine:3.19
@@ -457,15 +402,39 @@ publish_wikijs:
     WIKI_LOCALE: "en"
   before_script:
     - set -euo pipefail
-    - apk add --no-cache curl jq ca-certificates coreutils >/dev/null
+    - apk add --no-cache curl jq ca-certificates coreutils sed
     - test -f out/security-report.md || { echo "security-report.md missing"; ls -la out || true; exit 1; }
     - if [ -z "${WIKI_URL:-}" ]; then echo "WIKI_URL required"; exit 1; fi
     - if [ -z "${WIKI_TOKEN:-}" ]; then echo "WIKI_TOKEN required"; exit 1; fi
   script: |
     set -euo pipefail
 
+    PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
+    TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
+
+    # Colorize + linkify CVEs for WikiJS (Markdown)
+    WIKI_MD="out/security-report.wikijs.md"
+    cp out/security-report.md "$WIKI_MD"
+
+    # Severity color (first table cell only)
+    sed -ri \
+      -e 's/^(\|[[:space:]]*)(CRITICAL|Critical)([[:space:]]*\|)/\1<span style="color:#d32f2f"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(HIGH|High)([[:space:]]*\|)/\1<span style="color:#ef6c00"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(MEDIUM|Medium)([[:space:]]*\|)/\1<span style="color:#f9a825"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(LOW|Low)([[:space:]]*\|)/\1<span style="color:#2e7d32"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(INFO|Info)([[:space:]]*\|)/\1<span style="color:#1565c0"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(UNKNOWN|Unknown)([[:space:]]*\|)/\1<span style="color:#757575"><strong>\2<\/strong><\/span>\3/' \
+      "$WIKI_MD" || true
+
+    # Linkify CVE IDs in Markdown
+    sed -ri 's/(CVE-[0-9]{4}-[0-9]{4,7})/[\1](https:\/\/nvd.nist.gov\/vuln\/detail\/\1)/g' "$WIKI_MD" || true
+
+    MD_RAW="$(cat "$WIKI_MD")"
+    DESC="${WIKI_DESCRIPTION:-Security report for ${CI_PROJECT_NAME:-project} (auto-generated)}"
+    TAGS_RAW="${WIKI_TAGS:-}"
+    mkdir -p wikijs-debug
+
     call_gql () {
-      # $1 payload file, $2 output json
       http=$(curl -sS -o "$2" -w '%{http_code}' \
         -H "Authorization: Bearer ${WIKI_TOKEN}" \
         -H "Content-Type: application/json" \
@@ -474,85 +443,49 @@ publish_wikijs:
       [ "$http" = "200" ] || { echo "GraphQL HTTP $http (see $2)"; cat "$2" || true; exit 1; }
     }
 
-    upsert () {
-      # args: path title content desc tags locale
-      local path="$1" title="$2" content="$3" desc="$4" tags_raw="$5" locale="$6"
+    # Lookup by path
+    jq -cn --arg path "$TARGET_PATH" --arg locale "${WIKI_LOCALE:-en}" '
+      {query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title } } }",
+       variables:{path:$path, locale:$locale}}' > wikijs-debug/get.payload.json
+    call_gql wikijs-debug/get.payload.json wikijs-debug/get.json || true
 
-      mkdir -p wikijs-debug
+    ID="$(jq -r '.data.pages.singleByPath.id // empty' wikijs-debug/get.json)"
 
-      # Lookup by path
-      jq -cn --arg path "$path" --arg locale "$locale" '
-        {query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title } } }",
-         variables:{path:$path, locale:$locale}}' > wikijs-debug/get.payload.json
-      call_gql wikijs-debug/get.payload.json wikijs-debug/get.json
-
-      id="$(jq -r '.data.pages.singleByPath.id // empty' wikijs-debug/get.json)"
-      if [ -n "$id" ]; then
-        echo "Updating page id=$id ($path)"
-        jq -cn --arg id "$id" --arg content "$content" --arg desc "$desc" --arg tags_raw "$tags_raw" '
-          def mk_tags($s):
-            if ($s|length)>0 then ($s|split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0))) else [] end;
-          {query:"mutation($id:Int!,$content:String!,$description:String!,$tags:[String]!){ pages { update(id:$id, content:$content, description:$description, tags:$tags, isPublished:true){ responseResult{ succeeded message } } } }",
-           variables:{ id:($id|tonumber), content:$content, description:$desc, tags: mk_tags($tags_raw) }}' > wikijs-debug/update.payload.json
-        call_gql wikijs-debug/update.payload.json wikijs-debug/update.json
-        jq -e '.data.pages.update.responseResult.succeeded == true' wikijs-debug/update.json >/dev/null || {
-          echo "Update failed:"; jq '.data.pages.update.responseResult // .errors' wikijs-debug/update.json; exit 1; }
-      else
-        echo "Creating new page at $path"
-        jq -cn --arg path "$path" --arg title "$title" --arg locale "$locale" \
-               --arg desc "$desc" --arg content "$content" --arg tags_raw "$tags_raw" '
-          def mk_tags($s):
-            if ($s|length)>0 then ($s|split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0))) else [] end;
-          {query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
-           variables:{ path:$path, title:$title, locale:$locale, description:$desc, tags: mk_tags($tags_raw), content:$content }}' > wikijs-debug/create.payload.json
-        call_gql wikijs-debug/create.payload.json wikijs-debug/create.json
-        jq -e '.data.pages.create.responseResult.succeeded == true' wikijs-debug/create.json >/dev/null || {
-          echo "Create failed:"; jq '.data.pages.create.responseResult // .errors' wikijs-debug/create.json; exit 1; }
-      fi
-    }
-
-    PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
-    TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
-
-    # Colorize Markdown severity for WikiJS (first cell only)
-    WIKI_MD="out/security-report.wikijs.md"
-    cp out/security-report.md "$WIKI_MD"
-    sed -ri \
-      -e 's/^(\|[[:space:]]*)(CRITICAL|Critical)([[:space:]]*\|)/\1<span style="color:#d32f2f"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(HIGH|High)([[:space:]]*\|)/\1<span style="color:#ef6c00"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(MEDIUM|Medium)([[:space:]]*\|)/\1<span style="color:#f9a825"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(LOW|Low)([[:space:]]*\|)/\1<span style="color:#2e7d32"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(INFO|Info)([[:space:]]*\|)/\1<span style="color:#1565c0"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(UNKNOWN|Unknown)([[:space:]]*\|)/\1<span style="color:#757575"><strong>\2<\/strong><\/span>\3/' \
-      "$WIKI_MD"
-    [ -s "$WIKI_MD" ] || cp out/security-report.md "$WIKI_MD"
-
-    MD_RAW="$(cat "$WIKI_MD")"
-    DESC="${WIKI_DESCRIPTION:-Security report for ${CI_PROJECT_NAME:-project} (auto-generated)}"
-    TAGS_RAW="${WIKI_TAGS:-}"
-
-    mkdir -p wikijs-debug
-    # Update "latest"
-    upsert "$TARGET_PATH" "${WIKI_TITLE}" "$MD_RAW" "$DESC" "$TAGS_RAW" "${WIKI_LOCALE:-en}"
-    echo "WikiJS page up to date: $TARGET_PATH"
-    # --- Archive this exact run (UTC timestamp, URL-safe) ---
-    # UTC
-    # DATESTAMP="${REPORT_TIMESTAMP:-$(date -u '+%Y-%m-%d_%H-%M-%SZ')}"
-    # local time (Asia/Jerusalem) 
-    DATESTAMP="$(TZ='Asia/Jerusalem' date '+%Y-%m-%d_%H-%M-%S%z' | sed 's/+/-/')"  # e.g. 2025-08-14_16-03-00+0300 → 2025-08-14_16-03-00-0300
-    ARCHIVE_PATH="${WIKI_ARCHIVE_PATH:-security/${PROJECT_SLUG}/${DATESTAMP}}"
-    ARCHIVE_TITLE="${WIKI_TITLE} - ${DATESTAMP}"
-
-    upsert "$ARCHIVE_PATH" "$ARCHIVE_TITLE" "$MD_RAW" "$DESC" "$TAGS_RAW" "${WIKI_LOCALE:-en}"
-    echo "WikiJS archive page up to date: $ARCHIVE_PATH"
+    if [ -n "$ID" ]; then
+      echo "Updating page id=$ID ($TARGET_PATH)"
+      jq -cn --arg id "$ID" --arg content "$MD_RAW" --arg desc "$DESC" --arg tags_raw "$TAGS_RAW" '
+        def mk_tags($s):
+          if ($s|length)>0 then ($s|split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0))) else [] end;
+        {
+          query:"mutation($id:Int!,$content:String!,$description:String!,$tags:[String]!){ pages { update(id:$id, content:$content, description:$description, tags:$tags, isPublished:true){ responseResult{ succeeded message } } } }",
+          variables:{ id:($id|tonumber), content:$content, description:$desc, tags: mk_tags($tags_raw) }
+        }' > wikijs-debug/update.payload.json
+      call_gql wikijs-debug/update.payload.json wikijs-debug/update.json
+      jq -e '.data.pages.update.responseResult.succeeded == true' wikijs-debug/update.json >/dev/null || {
+        echo "Update failed:"; jq '.data.pages.update.responseResult // .errors' wikijs-debug/update.json; exit 1; }
+    else
+      echo "Creating new page at $TARGET_PATH"
+      jq -cn --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "${WIKI_LOCALE:-en}" \
+             --arg desc "$DESC" --arg content "$MD_RAW" --arg tags_raw "$TAGS_RAW" '
+        def mk_tags($s):
+          if ($s|length)>0 then ($s|split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0))) else [] end;
+        {
+          query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
+          variables:{ path:$path, title:$title, locale:$locale, description:$desc, tags: mk_tags($tags_raw), content:$content }
+        }' > wikijs-debug/create.payload.json
+      call_gql wikijs-debug/create.payload.json wikijs-debug/create.json
+      jq -e '.data.pages.create.responseResult.succeeded == true' wikijs-debug/create.json >/dev/null || {
+        echo "Create failed:"; jq '.data.pages.create.responseResult // .errors' wikijs-debug/create.json; exit 1; }
+    fi
 
     echo "WikiJS page up to date: $TARGET_PATH"
 
   artifacts:
     when: always
-    expire_in: '180 days'
+    expire_in: "30 days"
     paths:
       - wikijs-debug
+
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: on_success
@@ -561,6 +494,7 @@ publish_wikijs:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: on_success
     - when: never
+
 
 
 ### LAST WORKING VERSION
