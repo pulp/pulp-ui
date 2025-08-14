@@ -5,11 +5,19 @@ include:
   - template: Jobs/Dependency-Scanning.gitlab-ci.yml
   - template: Jobs/Secret-Detection.gitlab-ci.yml
 
+stages:
+  - test
+  - build
+  - deploy
+  - security
+  - report
+  
 variables:
   GITLAB_ADVANCED_SAST_ENABLED: "true"
   SAST_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static,cypress,playwright-report,**/*.min.js,**/*.map"
   DS_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
   SECRET_DETECTION_EXCLUDED_PATHS: "node_modules,dist,build,coverage,.next,.cache,storybook-static"
+  REPORTS_EXPIRE_IN: "180 days"
 
 workflow:
   rules:
@@ -80,12 +88,6 @@ secret_detection:
       when: on_success
     - when: never
 
-stages:
-  - test
-  - build
-  - deploy
-  - security
-  - report
 
 # ---- Trivy CVE scan (filesystem; always pass) ----
 trivy_scan:
@@ -114,6 +116,7 @@ trivy_scan:
       - trivy-report.json
       - trivy-report.cdx.json
 
+# --- Generate colorized MD + HTML + archive copies ---
 generate_security_report:
   stage: report
   image: alpine:3.19
@@ -154,7 +157,10 @@ generate_security_report:
       fi
     fi
 
-    # ---------- Build Markdown (clean; no colors) ----------
+    md="out/security-report.md"
+    color_md="out/security-report.color.md"
+    html="out/security-report.html"
+
     {
       echo "# Security Report"
       echo
@@ -305,41 +311,41 @@ generate_security_report:
       echo "</article>"
     } > "$html" || true
 
-    # Fallback in case HTML somehow ends empty
-    if [ ! -s "$html" ]; then
-      echo "HTML was empty or missing; writing fallback."
-      {
-        echo "<!doctype html><meta charset='utf-8'><title>Security Report</title><pre>"
-        sed 's/&/\&amp;/g; s/</\&lt;/g' "$COLOR_MD"
-        echo "</pre>"
-      } > "$html"
-    fi
+    # Archive copies
+    TS="$(date -u +%Y-%m-%d_%H-%M-%S)"
+    cp "$md"   "out/archive/security-report-${TS}.md"
+    cp "$html" "out/archive/security-report-${TS}.html"
 
   artifacts:
-    name: "security-report"
+    name: "security-report-${CI_PIPELINE_ID}"
     when: always
-    expire_in: 30 days
+    expire_in: $REPORTS_EXPIRE_IN
     paths:
       - out/security-report.md
       - out/security-report.html
+      - out/archive/
     expose_as: "Security Report"
   rules:
     - when: always
 
+# --- GitLab Pages (latest + all archived HTML) ---
 pages:
   stage: report
   needs:
     - job: generate_security_report
       artifacts: true
   script:
-    - mkdir -p public
+    - mkdir -p public public/reports
     - cp out/security-report.html public/index.html
+    - cp out/archive/*.html public/reports/ || true
   artifacts:
     paths:
       - public
+    expire_in: $REPORTS_EXPIRE_IN
   rules:
     - when: always
 
+# --- WikiJS publish (optional; set WIKI_URL + WIKI_TOKEN) ---
 publish_wikijs:
   stage: report
   image: alpine:3.19
@@ -352,18 +358,24 @@ publish_wikijs:
     WIKI_TAGS: "security,report,pulp-ui"
     WIKI_LOCALE: "en"
   before_script:
-    - set -euo pipefail
-    - apk add --no-cache curl jq ca-certificates coreutils
+    - apk add --no-cache jq curl >/dev/null
     - test -f out/security-report.md || { echo "security-report.md missing"; ls -la out || true; exit 1; }
     - if [ -z "${WIKI_URL:-}" ]; then echo "WIKI_URL required"; exit 1; fi
     - if [ -z "${WIKI_TOKEN:-}" ]; then echo "WIKI_TOKEN required"; exit 1; fi
   script: |
     set -euo pipefail
+    mkdir -p wikijs-debug
 
     PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
     TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
-    # MD_RAW="$(cat out/security-report.md)"
-    # --- Colorize Markdown for WikiJS (first cell only) ---
+    LOCALE="${WIKI_LOCALE:-en}"
+    TITLE="${WIKI_TITLE:-Pulp UI Security Report (Latest)}"
+    DESC="${WIKI_DESCRIPTION:-Security report for ${CI_PROJECT_NAME:-project} (auto-generated)}"
+    REPORT_DATE="$(date -u +%F)"
+    ARCHIVE_PATH="${WIKI_ARCHIVE_PATH:-security/${PROJECT_SLUG}/${REPORT_DATE}}"
+    ARCHIVE_TITLE="${WIKI_TITLE% (Latest)} (${REPORT_DATE})"
+
+    # Colorize for WikiJS (first cell only)
     WIKI_MD="out/security-report.wikijs.md"
     cp out/security-report.md "$WIKI_MD"
 
@@ -407,42 +419,9 @@ publish_wikijs:
       call_gql wikijs-debug/get.nolocale.payload.json wikijs-debug/get.json
     fi
 
-    ID="$(jq -r '.data.pages.singleByPath.id // empty' wikijs-debug/get.json)"
-
-    if [ -n "$ID" ]; then
-      echo "Updating page id=$ID ($TARGET_PATH)"
-      # 2) Update existing page — send description & tags (array built inside jq), publish=true
-      jq -cn --arg id "$ID" --arg content "$MD_RAW" --arg desc "$DESC" --arg tags_raw "$TAGS_RAW" '
-        def mk_tags($s):
-          if ($s|length)>0 then
-            ($s|split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0)))
-          else [] end;
-        {
-          query:"mutation($id:Int!,$content:String!,$description:String!,$tags:[String]!){ pages { update(id:$id, content:$content, description:$description, tags:$tags, isPublished:true){ responseResult{ succeeded message } } } }",
-          variables:{ id:($id|tonumber), content:$content, description:$desc, tags: mk_tags($tags_raw) }
-        }' > wikijs-debug/update.payload.json
-      call_gql wikijs-debug/update.payload.json wikijs-debug/update.json
-      jq -e '.data.pages.update.responseResult.succeeded == true' wikijs-debug/update.json >/dev/null || {
-        echo "Update failed:"; jq '.data.pages.update.responseResult // .errors' wikijs-debug/update.json; exit 1; }
-    else
-      echo "Creating new page at $TARGET_PATH"
-      # 3) Create new page — editor markdown + published, tags built in jq
-      jq -cn --arg path "$TARGET_PATH" --arg title "${WIKI_TITLE}" --arg locale "${WIKI_LOCALE:-en}" \
-             --arg desc "$DESC" --arg content "$MD_RAW" --arg tags_raw "$TAGS_RAW" '
-        def mk_tags($s):
-          if ($s|length)>0 then
-            ($s|split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0)))
-          else [] end;
-        {
-          query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
-          variables:{ path:$path, title:$title, locale:$locale, description:$desc, tags: mk_tags($tags_raw), content:$content }
-        }' > wikijs-debug/create.payload.json
-      call_gql wikijs-debug/create.payload.json wikijs-debug/create.json
-      jq -e '.data.pages.create.responseResult.succeeded == true' wikijs-debug/create.json >/dev/null || {
-        echo "Create failed:"; jq '.data.pages.create.responseResult // .errors' wikijs-debug/create.json; exit 1; }
-    fi
-
-    echo "WikiJS page up to date: $TARGET_PATH"
+    # latest + archive
+    upsert "$TARGET_PATH" "$TITLE"
+    upsert "$ARCHIVE_PATH" "$ARCHIVE_TITLE"
 
   artifacts:
     when: always
