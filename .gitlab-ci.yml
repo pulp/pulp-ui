@@ -272,22 +272,23 @@ generate_security_report:
       echo "_Trivy report not found (job may have been skipped)._" >> "$md"
     fi
 
-     # ---------- Linkify CVE IDs in Markdown (do this BEFORE HTML & colorization) ----------
-    # Default dest = NVD. To use MITRE instead, set CVE_LINK_BASE to:
-    #   https://cve.mitre.org/cgi-bin/cvename.cgi?name=
+    # ---------- Linkify CVE IDs in Markdown (BEFORE colorization/HTML) ----------
+    # Default NVD; set CVE_LINK_BASE in CI to switch (e.g. https://cve.mitre.org/cgi-bin/cvename.cgi?name=)
     CVE_BASE="${CVE_LINK_BASE:-https://nvd.nist.gov/vuln/detail}"
-    # If base has a query (?name=...), don't add a slash; otherwise add /CVE-...
-    if printf '%s' "$CVE_BASE" | grep -q '?'; then
-      CVE_JOIN=''     # e.g., https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-27789
-    else
-      CVE_JOIN='/'    # e.g., https://nvd.nist.gov/vuln/detail/CVE-2025-27789
+    case "$CVE_BASE" in *\?*) CVE_JOIN='' ;; *) CVE_JOIN='/' ;; esac
+
+    # BusyBox sed: use -r (not -E) and a non-/ delimiter to avoid escaping URLs
+    if ! sed -r -i \
+      "s#(CVE-[0-9]{4}-[0-9]{4,7})#<a href=\"${CVE_BASE}${CVE_JOIN}\1\" target=\"_blank\" rel=\"noopener noreferrer\">\\1</a>#g" \
+      "$md"; then
+      echo "sed failed; applying awk fallback for CVE linkification"
+      awk -v base="$CVE_BASE" -v join="$CVE_JOIN" '{
+        gsub(/CVE-[0-9]{4}-[0-9]{4,7}/,
+             "<a href=\"" base join "&\" target=\"_blank\" rel=\"noopener noreferrer\">" "&" "</a>")
+        print
+      }' "$md" > "$md.tmp" && mv "$md.tmp" "$md"
     fi
 
-    # Replace plain CVE tokens with HTML anchors in the Markdown
-    # BusyBox sed compatible: escape slashes in the base URL
-    CVE_BASE_ESCAPED="${CVE_BASE//\//\\/}"
-    sed -E -i "s/(CVE-[0-9]{4}-[0-9]{4,7})/<a href=\\\"${CVE_BASE_ESCAPED}${CVE_JOIN}\\1\\\" target=\\\"_blank\\\" rel=\\\"noopener noreferrer\\\">\\1<\\/a>/g" "$md"
-    
     # ---------- Colorize copy for Pages HTML (leave original MD clean for WikiJS) ----------
     # Create a colorized copy for GitLab Pages
     COLOR_MD="out/security-report.color.md"
@@ -449,7 +450,9 @@ publish_wikijs:
     TAGS_RAW="${WIKI_TAGS:-}"
 
     mkdir -p wikijs-debug
-    # upsert "$TARGET_PATH" "${WIKI_TITLE}" "$MD_RAW" "$DESC" "$TAGS_RAW" "${WIKI_LOCALE:-en}"
+    # Update "latest"
+    upsert "$TARGET_PATH" "${WIKI_TITLE}" "$MD_RAW" "$DESC" "$TAGS_RAW" "${WIKI_LOCALE:-en}"
+    echo "WikiJS page up to date: $TARGET_PATH"
     # --- Archive this exact run (UTC timestamp, URL-safe) ---
     # UTC
     # DATESTAMP="${REPORT_TIMESTAMP:-$(date -u '+%Y-%m-%d_%H-%M-%SZ')}"
