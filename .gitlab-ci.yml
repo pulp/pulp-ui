@@ -142,6 +142,8 @@ generate_security_report:
       artifacts: true
     - job: secret_detection
       artifacts: true
+    - job: npm_audit
+      artifacts: true  
   before_script:
     - apk add --no-cache jq
   script: |
@@ -158,6 +160,13 @@ generate_security_report:
     DS_JSON="${DS_JSON:-gl-dependency-scanning-report.json}"
     SECRETS_JSON="${SECRETS_JSON:-gl-secret-detection-report.json}"
     TRIVY_JSON="${TRIVY_JSON:-trivy-report.json}"
+
+    # Optional: set a variable and locate it if absent
+    NPM_AUDIT_JSON="${NPM_AUDIT_JSON:-npm-audit.json}"
+    if [ ! -f "$NPM_AUDIT_JSON" ]; then
+      FOUND=$(find . -type f -name "npm-audit.json" | head -n1 || true)
+      [ -n "$FOUND" ] && NPM_AUDIT_JSON="$FOUND"
+    fi
 
     # Locate DS report if it isn't at repo root
     if [ ! -f "$DS_JSON" ]; then
@@ -285,7 +294,7 @@ generate_security_report:
       echo "_Trivy report not found (job may have been skipped)._" >> "$md"
     fi
 
-        # ---------- NPM Audit (optional) ----------
+    # ---------- NPM Audit (optional) ----------
     # If npm_audit job produced npm-audit.json, include a summary table.
     if [ -f "npm-audit.json" ]; then
       echo "## NPM Audit" >> "$md"
