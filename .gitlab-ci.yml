@@ -51,6 +51,8 @@ gemnasium-dependency_scanning:
       - gl-dependency-scanning-report.json
       - gl-sbom-*.cdx.json
   variables:
+    DS_MAX_DEPTH: "10"
+    DS_INCLUDE_DEV_DEPENDENCIES: "true"
     DS_LOCK_FILE_PATHS: "yarn.lock,package-lock.json,pnpm-lock.yaml,**/yarn.lock,**/package-lock.json,**/pnpm-lock.yaml"
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
@@ -115,6 +117,17 @@ trivy_scan:
       - trivy-report.txt
       - trivy-report.json
       - trivy-report.cdx.json
+
+npm_audit:
+  stage: test
+  image: node:18
+  script:
+    - npm ci --ignore-scripts
+    - npm audit --json > npm-audit.json || true   # never fail the pipeline
+  artifacts:
+    when: always
+    paths:
+      - npm-audit.json
 
 # --- Generate colorized MD + HTML + archive copies ---
 generate_security_report:
@@ -270,6 +283,50 @@ generate_security_report:
     else
       echo "" >> "$md"
       echo "_Trivy report not found (job may have been skipped)._" >> "$md"
+    fi
+
+        # ---------- NPM Audit (optional) ----------
+    # If npm_audit job produced npm-audit.json, include a summary table.
+    if [ -f "npm-audit.json" ]; then
+      echo "## NPM Audit" >> "$md"
+      AUDIT_COUNT=$(jq '[.. | objects | select(has("severity") and has("module_name"))] | length' npm-audit.json 2>/dev/null || echo 0)
+      echo "" >> "$md"
+      echo "Findings: $AUDIT_COUNT" >> "$md"
+      echo "" >> "$md"
+      if [ "$AUDIT_COUNT" -gt 0 ]; then
+        echo "| Severity | Module | Title | Via | Fix |" >> "$md"
+        echo "|---|---|---|---|---|" >> "$md"
+        jq -r '
+          # npm audit v7+ structure:
+          ( .advisories // empty ) as $advOld
+          | ( .vulnerabilities // {} ) as $vulnNew
+          |
+          # Old format (advisories map)
+          ( $advOld | to_entries[]? |
+              [ (.value.severity // "unknown"),
+                (.value.module_name // "n/a"),
+                (.value.title // "n/a"),
+                ( ((.value.cves // []) | join(", ")) as $cves
+                  | if ($cves|length)>0 then $cves else ((.value.via // []) | join(", ")) end
+                ),
+                (.value.recommendation // .value.fixAvailable // "n/a")
+              ] | @tsv
+            ),
+          # New format (vulnerabilities object)
+          ( $vulnNew | to_entries[]? | .value as $v |
+              [ ($v.severity // "unknown"),
+                ($v.name // "n/a"),
+                ($v.title // "n/a"),
+                ( ($v.via // []) | map( if type=="string" then . else (.title // .name // "advisory") end ) | unique | join(", ") ),
+                ( ($v.fixAvailable|tostring) // "n/a" )
+              ] | @tsv
+            )
+        ' npm-audit.json 2>/dev/null \
+        | awk -F'\t' '{printf("| %s | %s | %s | %s | %s |\n",$1,$2,$3,$4,$5)}' >> "$md"
+      else
+        echo "_No vulnerabilities detected by npm audit._" >> "$md"
+      fi
+      echo "" >> "$md"
     fi
 
     # ---------- Linkify CVE IDs in Markdown (BEFORE colorization/HTML) ----------
