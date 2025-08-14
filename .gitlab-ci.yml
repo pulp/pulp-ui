@@ -323,7 +323,6 @@ generate_security_report:
     paths:
       - out/security-report.md
       - out/security-report.html
-      - out/archive/
     expose_as: "Security Report"
   rules:
     - when: always
