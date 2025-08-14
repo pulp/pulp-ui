@@ -434,13 +434,16 @@ publish_wikijs:
 
     mkdir -p wikijs-debug
     # upsert "$TARGET_PATH" "${WIKI_TITLE}" "$MD_RAW" "$DESC" "$TAGS_RAW" "${WIKI_LOCALE:-en}"
-    # Update "latest"
-    upsert "$TARGET_PATH" "${WIKI_TITLE}" "$MD_RAW" "$DESC" "$TAGS_RAW" "${WIKI_LOCALE:-en}"
+    # --- Archive this exact run (UTC timestamp, URL-safe) ---
+    # UTC
+    # DATESTAMP="${REPORT_TIMESTAMP:-$(date -u '+%Y-%m-%d_%H-%M-%SZ')}"
+    # local time (Asia/Jerusalem) 
+    DATESTAMP="$(TZ='Asia/Jerusalem' date '+%Y-%m-%d_%H-%M-%S%z' | sed 's/+/-/')"  # e.g. 2025-08-14_16-03-00+0300 → 2025-08-14_16-03-00-0300
+    ARCHIVE_PATH="${WIKI_ARCHIVE_PATH:-security/${PROJECT_SLUG}/${DATESTAMP}}"
+    ARCHIVE_TITLE="${WIKI_TITLE} - ${DATESTAMP}"
 
-    # Archive version with date stamp
-    DATE_PATH="security/${PROJECT_SLUG}/$(date +%Y-%m-%d)"
-    upsert "$DATE_PATH" "${WIKI_TITLE} - $(date +%Y-%m-%d)" "$MD_RAW" "$DESC" "$TAGS_RAW" "${WIKI_LOCALE:-en}"
-
+    upsert "$ARCHIVE_PATH" "$ARCHIVE_TITLE" "$MD_RAW" "$DESC" "$TAGS_RAW" "${WIKI_LOCALE:-en}"
+    echo "WikiJS archive page up to date: $ARCHIVE_PATH"
 
     echo "WikiJS page up to date: $TARGET_PATH"
 
