@@ -433,7 +433,14 @@ publish_wikijs:
     TAGS_RAW="${WIKI_TAGS:-}"
 
     mkdir -p wikijs-debug
+    # upsert "$TARGET_PATH" "${WIKI_TITLE}" "$MD_RAW" "$DESC" "$TAGS_RAW" "${WIKI_LOCALE:-en}"
+    # Update "latest"
     upsert "$TARGET_PATH" "${WIKI_TITLE}" "$MD_RAW" "$DESC" "$TAGS_RAW" "${WIKI_LOCALE:-en}"
+
+    # Archive version with date stamp
+    DATE_PATH="security/${PROJECT_SLUG}/$(date +%Y-%m-%d)"
+    upsert "$DATE_PATH" "${WIKI_TITLE} - $(date +%Y-%m-%d)" "$MD_RAW" "$DESC" "$TAGS_RAW" "${WIKI_LOCALE:-en}"
+
 
     echo "WikiJS page up to date: $TARGET_PATH"
 
