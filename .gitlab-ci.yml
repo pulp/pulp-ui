@@ -357,44 +357,13 @@ publish_wikijs:
     WIKI_TAGS: "security,report,pulp-ui"
     WIKI_LOCALE: "en"
   before_script:
-    - apk add --no-cache jq curl >/dev/null
+    - set -euo pipefail
+    - apk add --no-cache curl jq ca-certificates coreutils >/dev/null
     - test -f out/security-report.md || { echo "security-report.md missing"; ls -la out || true; exit 1; }
     - if [ -z "${WIKI_URL:-}" ]; then echo "WIKI_URL required"; exit 1; fi
     - if [ -z "${WIKI_TOKEN:-}" ]; then echo "WIKI_TOKEN required"; exit 1; fi
   script: |
     set -euo pipefail
-    mkdir -p wikijs-debug
-
-    PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
-    TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
-    LOCALE="${WIKI_LOCALE:-en}"
-    TITLE="${WIKI_TITLE:-Pulp UI Security Report (Latest)}"
-    DESC="${WIKI_DESCRIPTION:-Security report for ${CI_PROJECT_NAME:-project} (auto-generated)}"
-    REPORT_DATE="$(date -u +%F)"
-    ARCHIVE_PATH="${WIKI_ARCHIVE_PATH:-security/${PROJECT_SLUG}/${REPORT_DATE}}"
-    ARCHIVE_TITLE="${WIKI_TITLE% (Latest)} (${REPORT_DATE})"
-
-    # Colorize for WikiJS (first cell only)
-    WIKI_MD="out/security-report.wikijs.md"
-    cp out/security-report.md "$WIKI_MD"
-
-    sed -ri \
-      -e 's/^(\|[[:space:]]*)(CRITICAL|Critical)([[:space:]]*\|)/\1<span style="color:#d32f2f"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(HIGH|High)([[:space:]]*\|)/\1<span style="color:#ef6c00"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(MEDIUM|Medium)([[:space:]]*\|)/\1<span style="color:#f9a825"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(LOW|Low)([[:space:]]*\|)/\1<span style="color:#2e7d32"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(INFO|Info)([[:space:]]*\|)/\1<span style="color:#1565c0"><strong>\2<\/strong><\/span>\3/' \
-      -e 's/^(\|[[:space:]]*)(UNKNOWN|Unknown)([[:space:]]*\|)/\1<span style="color:#757575"><strong>\2<\/strong><\/span>\3/' \
-      "$WIKI_MD"
-
-    [ -s "$WIKI_MD" ] || cp out/security-report.md "$WIKI_MD"
-
-    # Now read the colorized Markdown into MD_RAW
-    MD_RAW="$(cat "$WIKI_MD")"
-    # --- Prepare WikiJS API payloads ---
-    DESC="${WIKI_DESCRIPTION:-Security report for ${CI_PROJECT_NAME:-project} (auto-generated)}"
-    TAGS_RAW="${WIKI_TAGS:-}"
-    mkdir -p wikijs-debug
 
     call_gql () {
       # $1 payload file, $2 output json
@@ -406,27 +375,73 @@ publish_wikijs:
       [ "$http" = "200" ] || { echo "GraphQL HTTP $http (see $2)"; cat "$2" || true; exit 1; }
     }
 
-    # 1) Lookup by path (minimal fields)
-    jq -cn --arg path "$TARGET_PATH" --arg locale "${WIKI_LOCALE:-en}" '
-      {query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title } } }",
-       variables:{path:$path, locale:$locale}}' > wikijs-debug/get.payload.json
-    if ! call_gql wikijs-debug/get.payload.json wikijs-debug/get.json; then
-      echo "Retrying singleByPath without locale..."
-      jq -cn --arg path "$TARGET_PATH" '
-        {query:"query($path:String!){ pages { singleByPath(path:$path){ id path title } } }",
-         variables:{path:$path}}' > wikijs-debug/get.nolocale.payload.json
-      call_gql wikijs-debug/get.nolocale.payload.json wikijs-debug/get.json
-    fi
+    upsert () {
+      # args: path title content desc tags locale
+      local path="$1" title="$2" content="$3" desc="$4" tags_raw="$5" locale="$6"
 
-    # latest + archive
-    upsert "$TARGET_PATH" "$TITLE"
-    upsert "$ARCHIVE_PATH" "$ARCHIVE_TITLE"
+      mkdir -p wikijs-debug
+
+      # Lookup by path
+      jq -cn --arg path "$path" --arg locale "$locale" '
+        {query:"query($path:String!,$locale:String!){ pages { singleByPath(path:$path, locale:$locale){ id path title } } }",
+         variables:{path:$path, locale:$locale}}' > wikijs-debug/get.payload.json
+      call_gql wikijs-debug/get.payload.json wikijs-debug/get.json
+
+      id="$(jq -r '.data.pages.singleByPath.id // empty' wikijs-debug/get.json)"
+      if [ -n "$id" ]; then
+        echo "Updating page id=$id ($path)"
+        jq -cn --arg id "$id" --arg content "$content" --arg desc "$desc" --arg tags_raw "$tags_raw" '
+          def mk_tags($s):
+            if ($s|length)>0 then ($s|split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0))) else [] end;
+          {query:"mutation($id:Int!,$content:String!,$description:String!,$tags:[String]!){ pages { update(id:$id, content:$content, description:$description, tags:$tags, isPublished:true){ responseResult{ succeeded message } } } }",
+           variables:{ id:($id|tonumber), content:$content, description:$desc, tags: mk_tags($tags_raw) }}' > wikijs-debug/update.payload.json
+        call_gql wikijs-debug/update.payload.json wikijs-debug/update.json
+        jq -e '.data.pages.update.responseResult.succeeded == true' wikijs-debug/update.json >/dev/null || {
+          echo "Update failed:"; jq '.data.pages.update.responseResult // .errors' wikijs-debug/update.json; exit 1; }
+      else
+        echo "Creating new page at $path"
+        jq -cn --arg path "$path" --arg title "$title" --arg locale "$locale" \
+               --arg desc "$desc" --arg content "$content" --arg tags_raw "$tags_raw" '
+          def mk_tags($s):
+            if ($s|length)>0 then ($s|split(",") | map(gsub("^[[:space:]]+|[[:space:]]+$";"")) | map(select(length>0))) else [] end;
+          {query:"mutation($path:String!,$title:String!,$locale:String!,$description:String!,$tags:[String]!, $content:String!){ pages { create(path:$path, title:$title, locale:$locale, editor:\"markdown\", isPublished:true, isPrivate:false, description:$description, tags:$tags, content:$content){ responseResult{ succeeded message } page{ id path } } } }",
+           variables:{ path:$path, title:$title, locale:$locale, description:$desc, tags: mk_tags($tags_raw), content:$content }}' > wikijs-debug/create.payload.json
+        call_gql wikijs-debug/create.payload.json wikijs-debug/create.json
+        jq -e '.data.pages.create.responseResult.succeeded == true' wikijs-debug/create.json >/dev/null || {
+          echo "Create failed:"; jq '.data.pages.create.responseResult // .errors' wikijs-debug/create.json; exit 1; }
+      fi
+    }
+
+    PROJECT_SLUG="${CI_PROJECT_PATH_SLUG:-${CI_PROJECT_NAME:-project}}"
+    TARGET_PATH="${WIKI_PATH:-security/${PROJECT_SLUG}/latest}"
+
+    # Colorize Markdown severity for WikiJS (first cell only)
+    WIKI_MD="out/security-report.wikijs.md"
+    cp out/security-report.md "$WIKI_MD"
+    sed -ri \
+      -e 's/^(\|[[:space:]]*)(CRITICAL|Critical)([[:space:]]*\|)/\1<span style="color:#d32f2f"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(HIGH|High)([[:space:]]*\|)/\1<span style="color:#ef6c00"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(MEDIUM|Medium)([[:space:]]*\|)/\1<span style="color:#f9a825"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(LOW|Low)([[:space:]]*\|)/\1<span style="color:#2e7d32"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(INFO|Info)([[:space:]]*\|)/\1<span style="color:#1565c0"><strong>\2<\/strong><\/span>\3/' \
+      -e 's/^(\|[[:space:]]*)(UNKNOWN|Unknown)([[:space:]]*\|)/\1<span style="color:#757575"><strong>\2<\/strong><\/span>\3/' \
+      "$WIKI_MD"
+    [ -s "$WIKI_MD" ] || cp out/security-report.md "$WIKI_MD"
+
+    MD_RAW="$(cat "$WIKI_MD")"
+    DESC="${WIKI_DESCRIPTION:-Security report for ${CI_PROJECT_NAME:-project} (auto-generated)}"
+    TAGS_RAW="${WIKI_TAGS:-}"
+
+    mkdir -p wikijs-debug
+    upsert "$TARGET_PATH" "${WIKI_TITLE}" "$MD_RAW" "$DESC" "$TAGS_RAW" "${WIKI_LOCALE:-en}"
+
+    echo "WikiJS page up to date: $TARGET_PATH"
 
   artifacts:
     when: always
+    expire_in: '180 days'
     paths:
       - wikijs-debug
-  
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: on_success
@@ -435,6 +450,7 @@ publish_wikijs:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: on_success
     - when: never
+
 
 ### LAST WORKING VERSION
 # # .gitlab-ci.yml — Stable with bulletproof report + Pages + WikiJS (fixed before_script)
