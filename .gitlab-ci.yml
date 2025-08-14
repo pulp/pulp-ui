@@ -123,7 +123,9 @@ npm_audit:
   image: node:18
   script:
     - npm ci --ignore-scripts
-    - npm audit --json > npm-audit.json || true   # never fail the pipeline
+    - echo "== Running npm audit in project root =="
+    - npm audit --audit-level=low --json > npm-audit.json || true # never fail the pipeline
+    - npm audit --json | tee out/npm-audit.json
   artifacts:
     when: always
     paths:
@@ -338,6 +340,19 @@ generate_security_report:
       echo "" >> "$md"
     fi
 
+    echo "## NPM Audit" >> out/security-report.md
+    NPM_RESULTS=$(jq -r '.metadata.vulnerabilities | to_entries[] | select(.value > 0) | "\(.key): \(.value)"' out/npm-audit.json)
+    if [ -z "$NPM_RESULTS" ]; then
+      echo "Findings: 0" >> out/security-report.md
+      echo "" >> out/security-report.md
+      echo "No vulnerabilities detected by npm audit." >> out/security-report.md
+    else
+      echo "Findings:" >> out/security-report.md
+      jq -r '.advisories[] | [.severity, .id, .title, (.module_name + "@" + .findings[0].version), .recommendation] | @tsv' out/npm-audit.json \
+        | awk -F'\t' 'BEGIN {print "| Severity | ID | Title | Package@Version | Fix |"; print "|---|---|---|---|---|"} {print "| " $1 " | " $2 " | " $3 " | " $4 " | " $5 " |"}' \
+        >> out/security-report.md
+    fi
+
     # ---------- Linkify CVE IDs in Markdown (BEFORE colorization/HTML) ----------
     # Default NVD; set CVE_LINK_BASE in CI to switch (e.g. https://cve.mitre.org/cgi-bin/cvename.cgi?name=)
     CVE_BASE="${CVE_LINK_BASE:-https://nvd.nist.gov/vuln/detail}"
@@ -406,6 +421,7 @@ generate_security_report:
     paths:
       - out/security-report.md
       - out/security-report.html
+      - out/npm-audit.json
     expose_as: "Security Report"
   rules:
     - when: always
