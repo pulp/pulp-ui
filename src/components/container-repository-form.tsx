@@ -18,15 +18,14 @@ import {
   ExecutionEnvironmentRemoteAPI,
 } from 'src/api';
 import {
-  AlertList,
-  type AlertType,
   FormFieldHelper,
   HelpButton,
   LabelGroup,
   Spinner,
   Typeahead,
-  closeAlert,
+  useAddAlert,
 } from 'src/components';
+import { type AlertType } from 'src/components/alerts';
 import {
   type ErrorMessagesType,
   alertErrorsWithoutFields,
@@ -53,13 +52,15 @@ interface IProps {
   registry?: string; // pk
   upstreamName?: string;
   remoteId?: string;
-  addAlert?: (variant, title, description?) => void;
+}
+
+interface IPropsImpl extends IProps {
+  addAlert: (alert: AlertType) => void;
 }
 
 interface IState {
   name: string;
   description: string;
-  alerts: AlertType[];
   addTagsInclude: string;
   addTagsExclude: string;
   excludeTags?: string[];
@@ -70,7 +71,13 @@ interface IState {
   formErrors: ErrorMessagesType;
 }
 
-export class ContainerRepositoryForm extends Component<IProps, IState> {
+export const ContainerRepositoryForm = (props: IProps) => {
+  const addAlert = useAddAlert();
+
+  return <ContainerRepositoryFormImpl {...props} addAlert={addAlert} />;
+};
+
+class ContainerRepositoryFormImpl extends Component<IPropsImpl, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -85,7 +92,6 @@ export class ContainerRepositoryForm extends Component<IProps, IState> {
       registrySelection: [],
       upstreamName: this.props.upstreamName || '',
       formErrors: {},
-      alerts: [],
     };
   }
 
@@ -105,7 +111,7 @@ export class ContainerRepositoryForm extends Component<IProps, IState> {
         .catch((e) => {
           const { status, statusText } = e.response;
           const errorTitle = t`Registries list could not be displayed.`;
-          this.addAlert({
+          this.props.addAlert({
             variant: 'danger',
             title: errorTitle,
             description: jsxErrorMessage(status, statusText),
@@ -122,7 +128,6 @@ export class ContainerRepositoryForm extends Component<IProps, IState> {
     const {
       addTagsExclude,
       addTagsInclude,
-      alerts,
       description,
       excludeTags,
       formErrors,
@@ -153,15 +158,6 @@ export class ContainerRepositoryForm extends Component<IProps, IState> {
           </Button>,
         ]}
       >
-        <AlertList
-          alerts={alerts}
-          closeAlert={(i) =>
-            closeAlert(i, {
-              alerts,
-              setAlerts: (alerts) => this.setState({ alerts }),
-            })
-          }
-        />
         <Form>
           {!isRemote ? (
             <>
@@ -518,17 +514,11 @@ export class ContainerRepositoryForm extends Component<IProps, IState> {
       alertErrorsWithoutFields(
         this.state.formErrors,
         ['name', 'registry', 'registries'],
-        (alert) => this.addAlert(alert),
+        this.props.addAlert,
         t`Error when saving registry.`,
         (state) => this.setState({ formErrors: state }),
       );
       return Promise.reject(new Error(e));
-    });
-  }
-
-  private addAlert(alert) {
-    this.setState({
-      alerts: [...this.state.alerts, alert],
     });
   }
 }
