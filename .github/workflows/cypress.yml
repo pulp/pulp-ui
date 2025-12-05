@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: 'Checkout pulp-ui (${{ github.ref }})'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 'backend setup'
         run: |
