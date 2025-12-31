@@ -40,10 +40,10 @@ jobs:
             --volume "$(pwd)/containers":/var/lib/containers \
             docker.io/pulp/pulp
 
-      - name: 'Install node 22'
+      - name: 'Install node 24'
         uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          node-version: '24'
 
       - name: 'Install python 3.13'
         uses: actions/setup-python@v6

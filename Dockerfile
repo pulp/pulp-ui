@@ -2,7 +2,7 @@
 # This Dockerfile is intended for development purposes only. Do not use it for production deployments
 # Copied from https://github.com/ansible/ansible-hub-ui/blob/master/Dockerfile
 
-FROM node:22-alpine
+FROM node:24-alpine
 WORKDIR /pulp/
 
 RUN mkdir -p /pulp/app/ && \
