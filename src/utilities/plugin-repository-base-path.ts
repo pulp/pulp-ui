@@ -4,6 +4,7 @@ import {
   AnsibleRepositoryAPI,
   FileDistributionAPI,
   FileRepositoryAPI,
+  RPMDistributionAPI,
   RPMRepositoryAPI,
 } from 'src/api';
 
@@ -29,6 +30,7 @@ export function plugin2api(plugin) {
       return {
         // FIXME: DistributionAPI: RPMDistributionAPI,
         RepositoryAPI: RPMRepositoryAPI,
+        DistributionAPI: RPMDistributionAPI
       };
     default:
       return {};

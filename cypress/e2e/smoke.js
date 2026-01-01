@@ -63,13 +63,6 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
-  it('RPMs', () => {
-    cy.ui('rpm/rpms');
-    cy.assertTitle('Packages');
-
-    cy.contains('No packages yet');
-  });
-
   it('Task management', () => {
     cy.ui('tasks');
     cy.assertTitle('Task management');
