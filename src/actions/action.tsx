@@ -34,7 +34,10 @@ export const Action = ({
   title,
   visible = () => true,
 }: ActionParams): ActionType => ({
-  title: i18n._(title),
+  // getter to prevent lingui from throwing when instantiated before lingui activate
+  get title() {
+    return i18n._(title);
+  },
   button: (item, actionContext) =>
     condition(actionContext, item) && visible(item, actionContext) ? (
       disabled(item, actionContext) ? (
