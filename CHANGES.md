@@ -1,3 +1,15 @@
+## 0.1.24 (2026-01-02) {: #0.1.24 }
+
+### What's Changed
+* CHANGES.md fixup [#248](https://github.com/pulp/pulp-ui/pull/248)
+* Update docs workflow version [#262](https://github.com/pulp/pulp-ui/pull/262)
+* Bump everything but pf6 & react19 [#278](https://github.com/pulp/pulp-ui/pull/278)
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.23...v0.1.24
+
+---
+
 ## 0.1.23 (2025-07-23) {: #0.1.23 }
 
 ### What's Changed
