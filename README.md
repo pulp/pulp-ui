@@ -4,12 +4,12 @@ A community driven UI for [Pulp](https://pulpproject.org/).
 
 ## How to run
 
-### backend
+### Backend
 
 You can follow the [pulp-oci-images quickstart](https://pulpproject.org/pulp-oci-images/docs/admin/tutorials/quickstart/),
 TLDR:
 
-#### setup:
+#### Setup:
 
 ```sh
 mkdir -p ~/pulp-backend-oci/{settings/certs,pulp_storage,pgsql,containers}
@@ -21,7 +21,7 @@ ANSIBLE_CONTENT_HOSTNAME='http://$(hostname):8080/pulp/content'
 " >> settings/settings.py
 ```
 
-#### run:
+#### Run:
 
 ```sh
 cd ~/pulp-backend-oci/
@@ -34,7 +34,7 @@ podman run --publish 8080:80 \
            docker.io/pulp/pulp
 ```
 
-#### check:
+#### Check:
 
 ```sh
 curl localhost:8080/pulp/api/v3/status/ | jq
@@ -42,7 +42,7 @@ curl localhost:8080/pulp/api/v3/status/ | jq
 
 or open http://localhost:8080/pulp/api/v3/status/
 
-#### change password:
+#### Change password:
 
 ```sh
 podman exec -it pulp pulpcore-manager reset-admin-password --password admin
@@ -51,7 +51,7 @@ podman exec -it pulp pulpcore-manager reset-admin-password --password admin
 docker exec -it compose-pulp_api-1 pulpcore-manager reset-admin-password --password admin
 ```
 
-#### configure `pulp-cli`:
+#### Configure `pulp-cli`:
 
 ```sh
 pip install pulp-cli[pygments]
@@ -61,7 +61,25 @@ pulp --help
 pulp user list
 ```
 
-### frontend
+### Setup (run_container.sh script)
+
+The `tests/run_container.sh` script is provided and allows you to run a command with a [Pulp OCI-image](https://pulpproject.org/pulp-oci-images/docs/admin/tutorials/quickstart/) container running.
+
+It requires Docker or Podman to be installed.
+
+The default credentials are:
+ * Username: admin
+ * Password: admin
+
+```
+./tests/run_container sleep inf
+```
+
+The following optional environment variable is availble to be set:
+
+* `IMAGE_TAG`: Change the Pulp OCI image tage to use, defaults to `latest`
+
+### Frontend
 
 You can clone the frontend from https://github.com/pulp/pulp-ui .
 
@@ -72,12 +90,12 @@ npm run start
 
 and open http://localhost:8002/ :tada: :)
 
-If your API listens elsewhere, you can use `API_PROXY=http://elsewhere:12345 npm run start` instead. Do note that the server at `elsewhere` has to be configured to allow CORS requests for `localhost` (where UI actually listens); using something like `changeOrigin` is out of scope for pulp-ui, and breaks pulp API URLs (because the domains are based on the Origin header). Do NOT use webpack proxy in production.
+If your PULP API listens elsewhere, you can use `API_PROXY=http://elsewhere:12345 npm run start` instead. Do note that the server at `elsewhere` has to be configured to allow CORS requests for `localhost` (where UI actually listens); using something like `changeOrigin` is out of scope for pulp-ui, and breaks pulp API URLs (because the domains are based on the Origin header). Do NOT use webpack proxy in production.
 
 
 ## Misc
 
-### post-build configuration
+### Post-build configuration
 
 The UI builds produced by `npm run build` can be further configured by serving a `/pulp-ui-config.json` alongside the built UI.
 (Note it has to be mapped at `/`, not just wherever `index.html` is served from.)
