@@ -5,7 +5,7 @@
   "author": "Martin Hradil, Zita Pospisil Nemeckova",
   "private": true,
   "dependencies": {
-    "@babel/runtime": "^7.28.4",
+    "@babel/runtime": "^7.28.6",
     "@lingui/core": "^5.7.0",
     "@lingui/react": "^5.7.0",
     "@patternfly/patternfly": "^5.4.2",
@@ -24,9 +24,9 @@
     "react-router": "^7.11.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
+    "@babel/core": "^7.28.6",
     "@babel/plugin-transform-runtime": "^7.28.5",
-    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-env": "^7.28.6",
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
     "@lingui/babel-plugin-lingui-macro": "^5.7.0",
