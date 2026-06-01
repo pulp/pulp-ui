@@ -1,16 +1,19 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:8002';
+const runningInPipeline: boolean = process.env.CI === 'true' ? true : false;
+
 export default defineConfig({
   testDir: './playwright',
   fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: process.env.CI ? 'github' : "html",
+  forbidOnly: runningInPipeline,
+  retries: runningInPipeline ? 2 : 0,
+  workers: runningInPipeline ? 1 : undefined,
+  reporter: runningInPipeline ? 'github' : 'html',
   use: {
-    baseURL: process.env.BASE_URL ?? 'http://localhost:8002',
+    baseURL: baseUrl,
     trace: 'on-first-retry',
-    screenshot: 'only-on-failure'
+    screenshot: 'only-on-failure',
   },
   projects: [
     {
@@ -30,13 +33,12 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npm run start',
-    url: 'http://localhost:8002',
-    reuseExistingServer: !process.env.CI,
+    url: baseUrl,
     timeout: 120_000,
-    stdout: "ignore",
-    stderr: "pipe",
+    stdout: 'ignore',
+    stderr: 'pipe',
     env: {
-      API_PROXY: process.env.API_PROXY ?? "http://localhost:8080"
-    }
+      API_PROXY: process.env.API_PROXY ?? 'http://localhost:8080',
+    },
   },
 });
