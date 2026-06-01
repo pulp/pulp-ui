@@ -13,6 +13,7 @@
       "src/*": ["src/*"],
       "static/*": ["static/*"]
     },
+    "types": ["node"],
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
