@@ -1,6 +1,7 @@
 describe('UI smoke tests', () => {
   beforeEach(() => cy.login());
 
+  // Seperate out into own test
   it('Logout + login', () => {
     cy.ui();
 
@@ -22,12 +23,14 @@ describe('UI smoke tests', () => {
     cy.get('[data-cy=user-dropdown]');
   });
 
+  // Get rid
   it('Navigation', () => {
     cy.ui();
 
     // TODO
   });
 
+  // Unauthenticated
   it('Status', () => {
     cy.ui();
     cy.assertTitle('Status');
@@ -35,6 +38,7 @@ describe('UI smoke tests', () => {
     cy.contains('Online workers');
   });
 
+  // authenticated
   it('Ansible repositories', () => {
     cy.ui('ansible/repositories');
     cy.assertTitle('Repositories');
@@ -42,6 +46,7 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
+  // authenticated
   it('Ansible remotes', () => {
     cy.ui('ansible/remotes');
     cy.assertTitle('Remotes');
@@ -49,6 +54,7 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
+  // authenticated
   it('File repositories', () => {
     cy.ui('file/repositories');
     cy.assertTitle('Repositories');
@@ -56,6 +62,7 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
+  // authenticated
   it('File remotes', () => {
     cy.ui('file/remotes');
     cy.assertTitle('Remotes');
@@ -63,6 +70,7 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
+  // authenticated
   it('RPMs', () => {
     cy.ui('rpm/rpms');
     cy.assertTitle('Packages');
@@ -70,6 +78,7 @@ describe('UI smoke tests', () => {
     cy.contains('No packages yet');
   });
 
+  // authenticated
   it('Task management', () => {
     cy.ui('tasks');
     cy.assertTitle('Task management');
@@ -77,6 +86,7 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
+  // authenticated
   it('Users', () => {
     cy.ui('users');
     cy.assertTitle('Users');
@@ -84,6 +94,7 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
+  // authenticated
   it('Groups', () => {
     cy.ui('groups');
     cy.assertTitle('Groups');
@@ -91,6 +102,7 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
+  // authenticated
   it('Roles', () => {
     cy.ui('roles');
     cy.assertTitle('Roles');
@@ -98,6 +110,7 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
+  // unauthenticated
   it('About project', () => {
     cy.ui('about');
     cy.assertTitle('About project');
