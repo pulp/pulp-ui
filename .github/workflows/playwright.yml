@@ -121,17 +121,24 @@ jobs:
         run: |
           pulp user list
 
-      - name: 'Run cypress'
-        run: |
-          npm run cypress:chrome
+      - name: 'Install Playwright browsers'
+        run: npx playwright install --with-deps chromium webkit firefox
 
-      - uses: actions/upload-artifact@v6
-        if: failure()
+      - name: 'Run Playwright'
+        run: npm run playwright -- --project=chromium
+        env:
+          CI: 'true'
+          BASE_URL: http://localhost:8002
+          PULP_USERNAME: admin
+          PULP_PASSWORD: admin
+
+      - name: 'Upload Playwright report'
+        uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: screenshots_and_videos
-          path: |
-            cypress/screenshots
-            cypress/videos
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
 
       - name: 'Kill container, show logs'
         if: always()
