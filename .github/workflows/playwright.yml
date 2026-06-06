@@ -125,7 +125,7 @@ jobs:
         run: npx playwright install --with-deps chromium webkit firefox
 
       - name: 'Run Playwright'
-        run: npm run playwright -- --project=chromium
+        run: npm run playwright
         env:
           CI: 'true'
           BASE_URL: http://localhost:8002
