@@ -66,10 +66,9 @@
   },
   "scripts": {
     "build": "NODE_ENV=production webpack --config config/build.config.js",
-    "cypress": "cypress open",
-    "cypress:chrome": "cypress run --e2e --browser chrome --headless",
-    "cypress:chromium": "cypress run --e2e --browser chromium-browser --headless",
-    "cypress:firefox": "cypress run --e2e --browser firefox --headless",
+    "playwright": "playwright test",
+    "playwright:ui": "playwright test --ui",
+    "playwright:report": "playwright show-report",
     "eslint": "eslint src/ config/ cypress/",
     "eslint:fix": "eslint --fix src/ config/ cypress/",
     "find-unused-exports": "npx find-unused-exports --module-glob 'src/**/*.{js,ts,jsx,tsx}' --resolve-file-extensions 'tsx,ts,jsx,js' --resolve-index-files",
