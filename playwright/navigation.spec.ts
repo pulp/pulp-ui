@@ -1,42 +1,47 @@
 import { expect, test as unauthenticatedTest } from '@playwright/test';
-import { test as authenticatedTest } from './fixtures';
+import { test as authenticatedTest, basePath } from './fixtures';
 
-// TODO: Create fixture to remove the need for /ui/ all the time
-// TODO: Type Safety??
-const authenticatedRoutes = [
-  { route: '/ui/ansible/repositories', title: 'Repositories' },
-  { route: '/ui/file/repositories', title: 'Repositories' },
-  // FIXME: 401 Error causing visibility issue of title
-  // { route: '/ui/ansible/remotes', title: 'Remotes' },
-  // { route: '/ui/file/remotes', title: 'Remotes' },
-  // { route: '/ui/rpm/rpms', title: 'Packages' },
-  // { route: '/ui/tasks', title: 'Task management' },
-  // { route: '/ui/users', title: 'Users' },
-  // { route: '/ui/roles', title: 'Roles' },
-  // { route: '/ui/groups', title: 'Groups' },
-];
-
-const unauthenticatedRoutes = [
-  { route: '/ui/status', title: 'Status' },
-  { route: '/ui/about', title: 'About project' },
-];
-
-// TODO: Move to https://playwright.dev/docs/test-parameterize
-for (const { route, title } of authenticatedRoutes) {
-  authenticatedTest(
-    `${route} renders with ${title}`,
-    async ({ page, assertTitle }) => {
-      await page.goto(route);
-      await assertTitle('Repositories');
-    },
-  );
+interface Testpath {
+  path: string;
+  title: string;
 }
 
-for (const { route, title } of unauthenticatedRoutes) {
-  unauthenticatedTest(`${route} renders with ${title}`, async ({ page }) => {
-    await page.goto(route);
-    await expect(
-      page.getByRole('heading', { name: title, level: 1 }),
-    ).toBeVisible();
+const authenticatedPaths = [
+  { path: '/ansible/repositories', title: 'Repositories' },
+  { path: '/file/repositories', title: 'Repositories' },
+  { path: '/ansible/remotes', title: 'Remotes' },
+  { path: '/file/remotes', title: 'Remotes' },
+  { path: '/rpm/rpms', title: 'Packages' },
+  { path: '/tasks', title: 'Task management' },
+  { path: '/users', title: 'Users' },
+  { path: '/roles', title: 'Roles' },
+  { path: '/groups', title: 'Groups' },
+] satisfies Testpath[];
+
+const unauthenticatedPaths = [
+  { path: '/status', title: 'Status' },
+  { path: '/about', title: 'About project' },
+] satisfies Testpath[];
+
+authenticatedTest.describe('Smoke: Authenticated Navigation paths', () => {
+  authenticatedPaths.forEach(({ path, title }) => {
+    authenticatedTest(
+      `${path} renders with ${title}`,
+      async ({ assertTitle, goTo }) => {
+        await goTo(path);
+        await assertTitle(title);
+      },
+    );
   });
-}
+});
+
+unauthenticatedTest.describe('Smoke: Unauthenticated Navigation paths', () => {
+  unauthenticatedPaths.forEach(({ path, title }) => {
+    unauthenticatedTest(`${path} renders with ${title}`, async ({ page }) => {
+      await page.goto(basePath + path);
+      await expect(
+        page.getByRole('heading', { name: title, level: 1 }),
+      ).toBeVisible();
+    });
+  });
+});
