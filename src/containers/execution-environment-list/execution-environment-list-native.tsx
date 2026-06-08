@@ -20,7 +20,6 @@ import {
   CompoundFilter,
   ContainerRepositorySidebar,
   DateComponent,
-  DeleteExecutionEnvironmentModal,
   EmptyStateFilter,
   EmptyStateNoData,
   ExternalLink,
@@ -62,8 +61,6 @@ interface IState {
     page?: number;
     page_size?: number;
   };
-  showDeleteModal: boolean;
-  selectedItem: ExecutionEnvironmentType;
   inputText: string;
 }
 
@@ -92,8 +89,6 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
       items: [],
       loading: true,
       params,
-      showDeleteModal: false,
-      selectedItem: null,
       inputText: '',
     };
   }
@@ -106,15 +101,7 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
   }
 
   render() {
-    const {
-      alerts,
-      itemCount,
-      items,
-      loading,
-      params,
-      showDeleteModal,
-      selectedItem,
-    } = this.state;
+    const { alerts, itemCount, items, loading, params } = this.state;
 
     const noData =
       items.length === 0 && !filterIsSet(params, ['name__icontains']);
@@ -162,22 +149,6 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
         />
         <BaseHeader title={t`Containers`} />
 
-        {showDeleteModal && (
-          <DeleteExecutionEnvironmentModal
-            selectedItem={selectedItem ? selectedItem.name : ''}
-            closeAction={() =>
-              this.setState({ showDeleteModal: false, selectedItem: null })
-            }
-            afterDelete={() => this.queryEnvironments()}
-            addAlert={(text, variant, description = undefined) =>
-              this.setState({
-                alerts: alerts.concat([
-                  { title: text, variant: variant, description: description },
-                ]),
-              })
-            }
-          />
-        )}
         {noData && !loading ? (
           <EmptyStateNoData
             title={t`No container repositories yet`}
@@ -350,7 +321,9 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
         <Td>
           <Label>{item.remote ? t`Remote` : t`Local`}</Label>
         </Td>
-        <ListItemActions kebabItems={[]} />
+        <Td isActionCell>
+          <ListItemActions kebabItems={[]} />
+        </Td>
       </Tr>
     );
   }
@@ -365,9 +338,10 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
             loading: false,
           });
         })
-        .catch((e) =>
-          this.addAlert(t`Error loading environments.`, 'danger', e?.message),
-        ),
+        .catch((e) => {
+          this.setState({ loading: false });
+          this.addAlert(t`Error loading environments.`, 'danger', e?.message);
+        }),
     );
   }
 
@@ -392,8 +366,6 @@ class ExecutionEnvironmentList extends Component<RouteProps, IState> {
       alerts: [...this.state.alerts, alert],
     });
   }
-
-
 }
 
 export default withRouter(ExecutionEnvironmentList);

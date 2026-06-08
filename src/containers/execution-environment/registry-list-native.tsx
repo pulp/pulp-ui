@@ -1,5 +1,4 @@
 import { t } from '@lingui/core/macro';
-import { Trans } from '@lingui/react/macro';
 import {
   Button,
   Toolbar,
@@ -11,8 +10,8 @@ import { Table, Tbody, Td, Tr } from '@patternfly/react-table';
 import { Component } from 'react';
 import {
   ContainerRemoteNativeAPI,
-  ExecutionEnvironmentRegistryAPI,
   type ContainerRemoteNativeType,
+  ExecutionEnvironmentRegistryAPI,
   type RemoteType,
 } from 'src/api';
 import { AppContext, type IAppContextType } from 'src/app-context';
@@ -24,7 +23,6 @@ import {
   CompoundFilter,
   CopyURL,
   DateComponent,
-  DeleteModal,
   EmptyStateFilter,
   EmptyStateNoData,
   ListItemActions,
@@ -40,9 +38,7 @@ import {
   ParamHelper,
   type RouteProps,
   filterIsSet,
-  jsxErrorMessage,
   mapErrorMessages,
-  taskAlert,
   withRouter,
 } from 'src/utilities';
 
@@ -59,7 +55,6 @@ interface IState {
   remoteFormNew: boolean;
   remoteToEdit?: RemoteType;
   remoteUnmodified?: RemoteType;
-  showDeleteModal: boolean;
   showRemoteFormModal: boolean;
   inputText: string;
 }
@@ -93,7 +88,6 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
       remoteFormNew: false,
       remoteToEdit: null,
       remoteUnmodified: null,
-      showDeleteModal: false,
       showRemoteFormModal: false,
       inputText: '',
     };
@@ -114,7 +108,6 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
       remoteFormNew,
       remoteToEdit,
       remoteUnmodified,
-      showDeleteModal,
       showRemoteFormModal,
     } = this.state;
     const noData =
@@ -215,19 +208,6 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
             }
             updateRemote={(r: RemoteType) => this.setState({ remoteToEdit: r })}
           />
-        )}
-        {showDeleteModal && remoteToEdit && (
-          <DeleteModal
-            cancelAction={() =>
-              this.setState({ showDeleteModal: false, remoteToEdit: null })
-            }
-            deleteAction={() => this.deleteRegistry(remoteToEdit)}
-            title={t`Delete remote registry?`}
-          >
-            <Trans>
-              <b>{remoteToEdit.name}</b> will be deleted.
-            </Trans>
-          </DeleteModal>
         )}
         <BaseHeader title={t`Remote registries`} />
         {noData && !loading ? (
@@ -373,7 +353,9 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
         <Td>
           <CopyURL url={item.url} />
         </Td>
-        <ListItemActions kebabItems={[]} buttons={[]} />
+        <Td isActionCell>
+          <ListItemActions kebabItems={[]} buttons={[]} />
+        </Td>
       </Tr>
     );
   }
@@ -393,67 +375,6 @@ class ExecutionEnvironmentRegistryList extends Component<RouteProps, IState> {
           this.addAlert(t`Remotes could not be loaded.`, 'danger');
         }),
     );
-  }
-
-  private deleteRegistry({ id, name }) {
-    ExecutionEnvironmentRegistryAPI.delete(id)
-      .then(() =>
-        this.addAlert(
-          t`Remote registry "${name}" has been successfully deleted.`,
-          'success',
-        ),
-      )
-      .catch((err) => {
-        const { status, statusText } = err.response;
-        this.addAlert(
-          t`Remote registry "${name}" could not be deleted.`,
-          'danger',
-          jsxErrorMessage(status, statusText),
-        );
-      })
-      .then(() => {
-        this.queryRegistries();
-        this.setState({ showDeleteModal: false, remoteToEdit: null });
-      });
-  }
-
-  private syncRegistry({ id, name }) {
-    ExecutionEnvironmentRegistryAPI.sync(id)
-      .then(({ data }) => {
-        this.addAlertObj(
-          taskAlert(data.task, t`Sync started for remote registry "${name}".`),
-        );
-        this.queryRegistries(true);
-      })
-      .catch((err) => {
-        const { status, statusText } = err.response;
-        this.addAlert(
-          t`Remote registry "${name}" could not be synced.`,
-          'danger',
-          jsxErrorMessage(status, statusText),
-        );
-      });
-  }
-
-  private indexRegistry({ id, name }) {
-    ExecutionEnvironmentRegistryAPI.index(id)
-      .then(({ data }) => {
-        this.addAlertObj(
-          taskAlert(
-            data.task,
-            t`Indexing started for container "${name}".`,
-            'success',
-          ),
-        );
-      })
-      .catch((err) => {
-        const { status, statusText } = err.response;
-        this.addAlert(
-          t`Container "${name}" could not be indexed.`,
-          'danger',
-          jsxErrorMessage(status, statusText),
-        );
-      });
   }
 
   private addAlertObj(alert: AlertType) {
