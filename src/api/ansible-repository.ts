@@ -3,7 +3,7 @@ import { PulpAPI } from './pulp';
 
 /**
  * Ansible Repository Type.
- * 
+ *
  * @see https://github.com/pulp/pulp_ansible/blob/main/pulp_ansible/app/serializers.py
  */
 interface AnsibleRepositoryType extends GenericRepository {
@@ -87,4 +87,4 @@ export const AnsibleRepositoryAPI = {
     base.http.put(`repositories/ansible/ansible/${id}/`, data),
 };
 
-export type { AnsibleRepositoryType }
+export type { AnsibleRepositoryType };

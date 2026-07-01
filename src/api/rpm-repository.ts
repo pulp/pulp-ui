@@ -1,13 +1,21 @@
 import type { GenericRepository } from './common';
 import { PulpAPI } from './pulp';
 
-type RPMChecksumType = "unknown" | "md5" | "sha" | "sha1" | "sha224" | "sha256" | "sha384" | "sha512";
-type RPMCompressionType = "zstd" | "gz" | "none";
-type RPMLayoutType = "nested_alphabetically" | "flat" | "nested_by_digest";
+type RPMChecksumType =
+  | 'unknown'
+  | 'md5'
+  | 'sha'
+  | 'sha1'
+  | 'sha224'
+  | 'sha256'
+  | 'sha384'
+  | 'sha512';
+type RPMCompressionType = 'zstd' | 'gz' | 'none';
+type RPMLayoutType = 'nested_alphabetically' | 'flat' | 'nested_by_digest';
 
 /**
  * RPM Repository Type.
- * 
+ *
  * @see https://github.com/pulp/pulp_rpm/blob/main/pulp_rpm/app/serializers/repository.py
  */
 interface RPMRepositoryType extends GenericRepository {
