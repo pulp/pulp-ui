@@ -1,5 +1,19 @@
-import type { GenericRepository, LastSyncType } from './common';
+import type { GenericRepository, TaskErrorType } from './common';
 import { PulpAPI } from './pulp';
+import type { PulpStatus } from './response-types/pulp';
+
+/**
+ * Last Sync Task Type.
+ *
+ * @see https://github.com/pulp/pulp_ansible/blob/main/pulp_ansible/app/utils.py
+ */
+interface LastSyncType {
+  pk: string;
+  state: PulpStatus;
+  pulp_created: string;
+  finished_at: string | null;
+  error: TaskErrorType | null;
+}
 
 /**
  * Ansible Repository Type.
@@ -9,9 +23,12 @@ import { PulpAPI } from './pulp';
 interface AnsibleRepositoryType extends GenericRepository {
   last_synced_metadata_time?: string | null;
   gpgkey?: string | null;
-  readonly last_sync_task?: LastSyncType;
+  readonly last_sync_task?: LastSyncType | null;
   private?: boolean;
-  // NOTE: Not part of the Ansible serializer, populated separately.
+  /**
+   * NOTE: Not part of the Ansible serializer, populated separately. 
+   * This should be broken out into its own type and extend the interface.
+   */
   my_permissions?: string[];
 }
 

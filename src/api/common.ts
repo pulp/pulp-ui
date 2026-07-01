@@ -1,5 +1,3 @@
-import type { PulpStatus } from './response-types/pulp';
-
 /**
  * Generic PulpCore Exceptions based on dictionary representation.
  * @see https://github.com/pulp/pulpcore/blob/main/pulpcore/exceptions/base.py
@@ -38,23 +36,4 @@ interface GenericRepository extends GenericResource {
   remote?: string | null;
 }
 
-/**
- * --------------------
- * Shared types reused across multiple resource types but not part of pulpcore generic types.
- * --------------------
- */
-
-/**
- * Last Sync Task Type.
- *
- * @see https://github.com/pulp/pulp_ansible/blob/main/pulp_ansible/app/utils.py
- */
-interface LastSyncType {
-  pk: string;
-  state: PulpStatus;
-  pulp_created: string;
-  finished_at: string;
-  error: TaskErrorType;
-}
-
-export type { TaskErrorType, GenericRepository, LastSyncType };
+export type { TaskErrorType, GenericRepository };
