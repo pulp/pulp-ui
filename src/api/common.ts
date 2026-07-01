@@ -16,14 +16,14 @@ interface GenericResource {
  * @see https://github.com/pulp/pulpcore/blob/main/pulpcore/app/serializers/repository.py
  */
 interface GenericRepository extends GenericResource {
-    readonly pulp_labels?: Record<string, string>;
+    pulp_labels?: Record<string, string>;
     readonly versions_href?: string;
     readonly latest_version_href?: string;
-    readonly name: string;
-    readonly description: string | null;
-    readonly retain_repo_versions: string | null;
-    readonly retain_checkpoints: string | null;
-    readonly remote: string | null;
+    name: string;
+    description?: string | null;
+    retain_repo_versions?: number | null;
+    retain_checkpoints?: number | null;
+    remote?: string | null;
 }
 
 export type { GenericRepository }
