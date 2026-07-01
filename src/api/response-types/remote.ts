@@ -1,5 +1,11 @@
 import { type PulpStatus } from './pulp';
 
+/**
+ * @deprecated
+ * Use `LastSyncType` from `common.ts` instead.
+ * 
+ * Known issue: `started_at` doesn't match real API field, and `finished_at` / `error` are actually nullable.
+ */
 export class LastSyncType {
   state: PulpStatus;
   started_at: string;
