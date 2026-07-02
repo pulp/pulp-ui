@@ -1,29 +1,15 @@
-import type { GenericRepository, TaskErrorType } from './common';
+import type { AnsibleLastSyncType, GenericRepository } from './common';
 import { PulpAPI } from './pulp';
-import type { PulpStatus } from './response-types/pulp';
-
-/**
- * Last Sync Task Type.
- *
- * @see https://github.com/pulp/pulp_ansible/blob/main/pulp_ansible/app/utils.py
- */
-interface LastSyncType {
-  pk: string;
-  state: PulpStatus;
-  pulp_created: string;
-  finished_at: string | null;
-  error: TaskErrorType | null;
-}
 
 /**
  * Ansible Repository Type.
  *
- * @see https://github.com/pulp/pulp_ansible/blob/main/pulp_ansible/app/serializers.py
+ * @see https://github.com/pulp/pulp_ansible/blob/0043923641fc7fd3893f8489fd29ff04addc9d71/pulp_ansible/app/serializers.py#L148
  */
 interface AnsibleRepositoryType extends GenericRepository {
   last_synced_metadata_time?: string | null;
   gpgkey?: string | null;
-  readonly last_sync_task?: LastSyncType | null;
+  readonly last_sync_task?: AnsibleLastSyncType | null;
   private?: boolean;
   /**
    * NOTE: Not part of the Ansible serializer, populated separately. 

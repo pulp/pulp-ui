@@ -1,36 +1,17 @@
+import type { AnsibleLastSyncType, GenericRemote } from './common';
 import { PulpAPI } from './pulp';
 
-export class AnsibleRemoteType {
-  auth_url: string;
-  ca_cert: string;
-  client_cert: string;
-  download_concurrency: number;
-  name: string;
-  proxy_url: string;
-  pulp_href?: string;
-  rate_limit: number;
-  requirements_file: string;
-  tls_validation: boolean;
-  url: string;
-  signed_only: boolean;
+interface AnsibleRemoteType extends GenericRemote {
+  requirements_file?: string | null;
+  auth_url?: string | null;
+  token?: string | null;
   sync_dependencies?: boolean;
-
-  // connect_timeout
-  // headers
-  // max_retries
-  // policy
-  // pulp_created
-  // pulp_labels
-  // pulp_last_updated
-  // sock_connect_timeout
-  // sock_read_timeout
-  // total_timeout
-
-  hidden_fields: {
-    is_set: boolean;
-    name: string;
-  }[];
-
+  signed_only?: boolean;
+  readonly last_sync_task?: AnsibleLastSyncType | null;
+  /**
+   * NOTE: Not part of the Ansible serializer, populated separately. 
+   * This should be broken out into its own type and extend the interface.
+   */
   my_permissions?: string[];
 }
 
@@ -90,3 +71,5 @@ export const AnsibleRemoteAPI = {
       smartUpdate(newValue, oldValue),
     ),
 };
+
+export type { AnsibleRemoteType }

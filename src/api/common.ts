@@ -1,3 +1,5 @@
+import type { PulpStatus } from "./response-types/pulp";
+
 /**
  * Generic PulpCore Exceptions based on dictionary representation.
  * @see https://github.com/pulp/pulpcore/blob/main/pulpcore/exceptions/base.py
@@ -64,4 +66,55 @@ interface GenericPublication extends GenericResource {
   repository?: string;
 }
 
-export type { TaskErrorType, GenericRepository, GenericDistribution, GenericPublication };
+/**
+ * Generic Remote shared across Pulp Remote plugins.
+ * 
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/repository.py#L85
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/base.py#L612
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/base.py#L367
+ */
+interface GenericRemote extends GenericResource {
+  pulp_labels?: Record<string, string>;
+  name: string;
+  url: string;
+  policy?: string;
+  readonly hidden_fields?: { name: string; is_set: boolean; }[];
+  ca_cert?: string | null;
+  client_cert?: string | null;
+  client_key?: string | null;
+  tls_validation?: boolean;
+  proxy_url?: string | null;
+  proxy_username?: string | null;
+  proxy_password?: string | null;
+  username?: string | null;
+  password?: string | null;
+  max_retries?: number | null;
+  total_timeout?: number | null;
+  connect_timeout?: number | null;
+  sock_connect_timeout?: number | null;
+  sock_read_timeout?: number | null;
+  headers?: unknown[];
+  download_concurrency?: number | null;
+  rate_limit?: number | null;
+}
+
+/**
+ * --------------------
+ * These are shared Plugin Types outside the PulpCore Generics.
+ * --------------------
+ */
+
+/**
+ * Last Sync Task Type.
+ *
+ * @see https://github.com/pulp/pulp_ansible/blob/main/pulp_ansible/app/utils.py
+ */
+interface AnsibleLastSyncType {
+  pk: string;
+  state: PulpStatus;
+  pulp_created: string;
+  finished_at: string | null;
+  error: TaskErrorType | null;
+}
+
+export type { TaskErrorType, GenericRepository, GenericDistribution, GenericPublication, GenericRemote, AnsibleLastSyncType };
