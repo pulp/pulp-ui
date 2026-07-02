@@ -54,4 +54,14 @@ interface GenericDistribution extends GenericResource {
   repository_version?: string;
 }
 
-export type { TaskErrorType, GenericRepository, GenericDistribution };
+/**
+ * Generic Publication shared across Pulp Publication plugins.
+ * 
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/publication.py#L23
+ */
+interface GenericPublication extends GenericResource {
+  repository_version?: string;
+  repository?: string;
+}
+
+export type { TaskErrorType, GenericRepository, GenericDistribution, GenericPublication };
