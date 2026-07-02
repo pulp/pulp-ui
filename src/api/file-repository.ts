@@ -3,7 +3,7 @@ import { PulpAPI } from './pulp';
 
 /**
  * Type for syncing metadata set on FileRepository after each sync.
- * @see https://github.com/pulp/pulpcore/blob/main/pulp_file/app/tasks/synchronizing.py
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulp_file/app/tasks/synchronizing.py#L97
  */
 interface FileLastSyncDetailsType {
   remote_pk: string;
@@ -17,7 +17,7 @@ interface FileLastSyncDetailsType {
 /**
  * File Repository Type.
  *
- * @see https://github.com/pulp/pulpcore/blob/main/pulp_file/app/serializers.py
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulp_file/app/serializers.py#L122
  */
 interface FileRepositoryType extends GenericRepository {
   autopublish?: boolean;

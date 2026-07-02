@@ -3,7 +3,7 @@ import { PulpAPI } from './pulp';
 
 /**
  * File Publication Type.
- * 
+ *
  * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulp_file/app/serializers.py#L200
  */
 interface FilePublicationType extends GenericPublication {

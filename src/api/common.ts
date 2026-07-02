@@ -1,8 +1,8 @@
-import type { PulpStatus } from "./response-types/pulp";
+import type { PulpStatus } from './response-types/pulp';
 
 /**
  * Generic PulpCore Exceptions based on dictionary representation.
- * @see https://github.com/pulp/pulpcore/blob/main/pulpcore/exceptions/base.py
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/exceptions/base.py#L37
  */
 interface TaskErrorType {
   description: string;
@@ -25,7 +25,7 @@ interface GenericResource {
 /**
  * Generic Repository shared across Pulp Repository plugins.
  *
- * @see https://github.com/pulp/pulpcore/blob/main/pulpcore/app/serializers/repository.py
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/repository.py#L26
  */
 interface GenericRepository extends GenericResource {
   pulp_labels?: Record<string, string>;
@@ -40,7 +40,7 @@ interface GenericRepository extends GenericResource {
 
 /**
  * Generic Distribution shared across Pulp Distribution plugins.
- * 
+ *
  * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/publication.py
  */
 interface GenericDistribution extends GenericResource {
@@ -58,7 +58,7 @@ interface GenericDistribution extends GenericResource {
 
 /**
  * Generic Publication shared across Pulp Publication plugins.
- * 
+ *
  * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/publication.py#L23
  */
 interface GenericPublication extends GenericResource {
@@ -68,7 +68,7 @@ interface GenericPublication extends GenericResource {
 
 /**
  * Generic Remote shared across Pulp Remote plugins.
- * 
+ *
  * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/repository.py#L85
  * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/base.py#L612
  * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/base.py#L367
@@ -78,7 +78,7 @@ interface GenericRemote extends GenericResource {
   name: string;
   url: string;
   policy?: string;
-  readonly hidden_fields?: { name: string; is_set: boolean; }[];
+  readonly hidden_fields?: { name: string; is_set: boolean }[];
   ca_cert?: string | null;
   client_cert?: string | null;
   client_key?: string | null;
@@ -107,7 +107,7 @@ interface GenericRemote extends GenericResource {
 /**
  * Last Sync Task Type.
  *
- * @see https://github.com/pulp/pulp_ansible/blob/main/pulp_ansible/app/utils.py
+ * @see https://github.com/pulp/pulp_ansible/blob/0043923641fc7fd3893f8489fd29ff04addc9d71/pulp_ansible/app/utils.py#L47
  */
 interface AnsibleLastSyncType {
   pk: string;
@@ -117,4 +117,11 @@ interface AnsibleLastSyncType {
   error: TaskErrorType | null;
 }
 
-export type { TaskErrorType, GenericRepository, GenericDistribution, GenericPublication, GenericRemote, AnsibleLastSyncType };
+export type {
+  TaskErrorType,
+  GenericRepository,
+  GenericDistribution,
+  GenericPublication,
+  GenericRemote,
+  AnsibleLastSyncType,
+};

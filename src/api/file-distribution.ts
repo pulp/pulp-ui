@@ -3,7 +3,7 @@ import { PulpAPI } from './pulp';
 
 /**
  * File Distribution Type.
- * 
+ *
  * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulp_file/app/serializers.py#L225
  */
 interface FileDistributionType extends GenericDistribution {
@@ -21,4 +21,4 @@ export const FileDistributionAPI = {
   list: (params?) => base.list(`distributions/file/file/`, params),
 };
 
-export type { FileDistributionType }
+export type { FileDistributionType };

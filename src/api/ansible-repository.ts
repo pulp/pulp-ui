@@ -12,7 +12,7 @@ interface AnsibleRepositoryType extends GenericRepository {
   readonly last_sync_task?: AnsibleLastSyncType | null;
   private?: boolean;
   /**
-   * NOTE: Not part of the Ansible serializer, populated separately. 
+   * NOTE: Not part of the Ansible serializer, populated separately.
    * This should be broken out into its own type and extend the interface.
    */
   my_permissions?: string[];
