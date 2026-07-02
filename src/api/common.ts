@@ -11,7 +11,7 @@ interface TaskErrorType {
 /**
  * Generic Resource shared across every Pulp resource.
  *
- * @see https://github.com/pulp/pulpcore/blob/main/pulpcore/app/serializers/base.py
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/base.py#L448
  */
 interface GenericResource {
   readonly pulp_href?: string;
@@ -36,4 +36,22 @@ interface GenericRepository extends GenericResource {
   remote?: string | null;
 }
 
-export type { TaskErrorType, GenericRepository };
+/**
+ * Generic Distribution shared across Pulp Distribution plugins.
+ * 
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/publication.py
+ */
+interface GenericDistribution extends GenericResource {
+  base_path: string;
+  readonly base_url?: string;
+  content_guard?: string | null;
+  readonly content_guard_prn?: string | null;
+  readonly no_content_change_since?: string | null;
+  hidden?: boolean;
+  pulp_labels?: Record<string, string>;
+  name: string;
+  repository?: string;
+  repository_version?: string;
+}
+
+export type { TaskErrorType, GenericRepository, GenericDistribution };
