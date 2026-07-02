@@ -8,7 +8,7 @@ import { PulpAPI } from './pulp';
  */
 interface FileRemoteType extends GenericRemote {
   /**
-   * NOTE: Not part of the Ansible serializer, populated separately.
+   * NOTE: Not part of the File serializer, populated separately.
    * This should be broken out into its own type and extend the interface.
    */
   my_permissions?: string[];
