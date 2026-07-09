@@ -36,12 +36,14 @@ interface RPMRepositoryType extends GenericRepository {
   osv_config?: { name: string; releases: unknown }[] | null;
 }
 
+// FIXME: Move AxiosResponse type to PulpAPI Base Class.
 interface RPMRepositoryClient {
   list: (
     params?: GenericRepositoryFilterParams,
-    // FIXME: Move AxiosResponse type to PulpAPI Base Class.
-  ) => Promise<AxiosResponse<GenericPaginatedResponse<RPMRepositoryType[]>>>;
-  // retrieve: () => Promise<unknown>;
+  ) => Promise<AxiosResponse<GenericPaginatedResponse<RPMRepositoryType>>>;
+  retrieve: (
+    id: string,
+  ) => Promise<AxiosResponse<RPMRepositoryType>>;
   // create: () => Promise<unknown>;
   // update: () => Promise<unknown>;
 }
@@ -55,9 +57,9 @@ interface RPMRepositoryClient {
  */
 function createRepositoryAPI(base: PulpAPI): RPMRepositoryClient {
   return {
-    list: (params?: GenericRepositoryFilterParams) =>
+    list: (params?) =>
       base.list(`repositories/rpm/rpm/`, params),
-    // retrieve: () => {},
+    retrieve: (id) => base.http.get(`repositories/rpm/rpm/${id}`),
     // create: () => {},
     // update: () => {},
   };
