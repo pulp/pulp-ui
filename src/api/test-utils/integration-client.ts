@@ -1,5 +1,5 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
-import { type PulpAPI } from '../pulp';
+import type { PulpAPI } from '../pulp.ts';
 
 const baseUrl: string =
   process.env.PULP_BASE_URL ?? 'http://localhost:8080/pulp/api/v3/';
@@ -37,6 +37,16 @@ function testPulpAPI(): PulpAPI {
       get: (url: string, config: { params?: Record<string, unknown> }) =>
         testAxiosClient(`${url}${buildQueryParams(config?.params)}`, {
           method: 'GET',
+        }),
+      post: (url: string, data: unknown) =>
+        testAxiosClient(url, { method: 'POST', data }),
+      patch: (
+        url: string,
+        config: { params?: Record<string, unknown>; data: unknown },
+      ) =>
+        testAxiosClient(`${url}${buildQueryParams(config?.params)}`, {
+          method: 'PATCH',
+          data: config.data,
         }),
     },
   } as unknown as PulpAPI;
