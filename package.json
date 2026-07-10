@@ -96,7 +96,7 @@
     "test:check-ts": "node -e \"process.versions.node.localeCompare('22.10.0',undefined,{numeric:true})>=0||(console.error('Testing uses feature flags requiring Node >= 22.10.0, but is using '+process.versions.node),process.exit(1))\"",
     "test:unit": "npm run test:check-ts && node --test --experimental-strip-types --test-name-pattern '^Unit: '",
     "test:integration": "npm run test:check-ts && node --test --experimental-strip-types --test-name-pattern '^Integration: '",
-    "test:coverage": "npm run test:check-ts && node --test --experimental-strip-types --experimental-test-coverage --test-coverage-exclude '**/*.test.ts'",
+    "test:coverage": "npm run test:check-ts && node --test --experimental-strip-types --experimental-test-coverage --test-coverage-exclude '**/*.test.ts' --test-coverage-exclude 'src/api/test-utils/**'",
     "upgrade": "npx npm-check-updates -u -t minor"
   },
   "engines": {

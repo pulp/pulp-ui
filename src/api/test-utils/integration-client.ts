@@ -48,6 +48,10 @@ function testPulpAPI(): PulpAPI {
           method: 'PATCH',
           data: config.data,
         }),
+      delete: (url: string, config: { params?: Record<string, unknown> }) =>
+        testAxiosClient(`${url}${buildQueryParams(config?.params)}`, {
+          method: 'DELETE',
+        }),
     },
   } as unknown as PulpAPI;
 }
@@ -65,4 +69,35 @@ function buildQueryParams(params?: Record<string, unknown>): string {
   return queryString ? `?${queryString}` : '';
 }
 
-export { testPulpAPI, testAxiosClient };
+async function waitForTaskCompletion(
+  taskHref: string,
+  {
+    waitMs = 500,
+    attemptsLeft = 10,
+  }: { waitMs?: number; attemptsLeft?: number } = {},
+): Promise<void> {
+  const res = await testAxiosClient(taskHref, { method: 'GET' });
+  const state: string = res.data.state;
+
+  // TODO: Update Error Message
+  if (['skipped', 'failed', 'canceled'].includes(state)) {
+    throw new Error('Another Error');
+  }
+
+  if (state === 'completed') {
+    return;
+  }
+
+  // TODO: Update Error Message
+  if (attemptsLeft <= 0) {
+    throw new Error(`Task did not complete`);
+  }
+
+  await new Promise((r) => setTimeout(r, waitMs));
+  return waitForTaskCompletion(taskHref, {
+    waitMs: Math.round(waitMs * 1.5),
+    attemptsLeft: attemptsLeft - 1,
+  });
+}
+
+export { testPulpAPI, testAxiosClient, waitForTaskCompletion };

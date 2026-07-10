@@ -39,7 +39,7 @@ interface RPMRepositoryType extends GenericRepository {
 
 /**
  * RPM Create / Update Type.
- * 
+ *
  * @see https://github.com/pulp/pulp_rpm/blob/dc333a99db6c44d70d6103540cb592f6e55a8682/pulp_rpm/app/serializers/repository.py#L326
  */
 interface RPMRepositoryUpsertType extends Omit<
@@ -49,7 +49,8 @@ interface RPMRepositoryUpsertType extends Omit<
   checksum_type?: RPMAllowedUpsertChecksumsType | null;
 }
 
-// FIXME: Move AxiosResponse type to PulpAPI Base Class.
+// FIXME: Move AxiosResponse type to PulpAPI Base Class. 
+// NOTE: The FIXME implementation is not easy as to avoid major type issues with legacy API calls.
 interface RPMRepositoryClient {
   list: (
     params?: GenericRepositoryFilterParams,
@@ -61,10 +62,10 @@ interface RPMRepositoryClient {
   update: (
     id: string,
     data: Partial<RPMRepositoryUpsertType>,
-    // TODO: Update Reponse Type
+    // TODO: Update Response Type to union of Upsert Type & Task Type
   ) => Promise<AxiosResponse<RPMRepositoryUpsertType>>;
-  // delete: () => Promise<unknown>;
-  // sync: () => Promise<unknown>;
+  // TOOO: Update Response Type to Task Type Response
+  delete: (id: string) => Promise<AxiosResponse<unknown>>;
 }
 
 /**
@@ -81,8 +82,7 @@ function createRepositoryAPI(base: PulpAPI): RPMRepositoryClient {
     create: (data) => base.http.post(`repositories/rpm/rpm/`, data),
     update: (id, data) =>
       base.http.patch(`repositories/rpm/rpm/${id}`, { data }),
-    // delete: () => {},
-    // sync: () => {},
+    delete: (id) => base.http.delete(`repositories/rpm/rpm/${id}`),
   };
 }
 

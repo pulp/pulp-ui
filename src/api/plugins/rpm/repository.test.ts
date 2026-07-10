@@ -4,6 +4,7 @@ import { after, afterEach, before, beforeEach, describe, it } from 'node:test';
 import {
   testAxiosClient,
   testPulpAPI,
+  waitForTaskCompletion,
 } from '../../test-utils/integration-client.ts';
 import {
   type RPMRepositoryType,
@@ -254,7 +255,22 @@ describe('Integration: RPM Repository API Client', () => {
       repositoryPrn = undefined;
     });
 
-    it('update() with a single changed field updates only that field', async () => {
+    it('update() when updating a field with the same value returns 200', async () => {
+      const sameNameValue = 'test-rpm-repo-update';
+      const repositoryIdentifier = repositoryPrn.split(':', 3)[2];
+      assert.strictEqual(typeof repositoryIdentifier, 'string');
+      const client = createRepositoryAPI(testPulpAPI());
+
+      const res = await client.update(repositoryIdentifier, {
+        name: sameNameValue,
+      });
+      const expected = await client.retrieve(repositoryIdentifier);
+
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(expected.data.name, sameNameValue);
+    });
+
+    it('update() with a single changed field returns 202 and updates only that field once the task completes', async () => {
       const repositoryIdentifier = repositoryPrn.split(':', 3)[2];
       assert.strictEqual(typeof repositoryIdentifier, 'string');
       const client = createRepositoryAPI(testPulpAPI());
@@ -262,13 +278,20 @@ describe('Integration: RPM Repository API Client', () => {
       const res = await client.update(repositoryIdentifier, {
         description: 'Updated description',
       });
-      const expected = await client.retrieve(repositoryIdentifier);
+
+      let actual: RPMRepositoryType;
+      assert.strictEqual(res.status, 202);
+      if (res.status === 202) {
+        // TODO: Fix broken return type on Update
+        await waitForTaskCompletion(res.data.task);
+        actual = (await client.retrieve(repositoryIdentifier)).data;
+      }
 
       assert.strictEqual(res.status, 202);
-      assert.strictEqual(expected.data.description, 'Updated description');
+      assert.strictEqual(actual.description, 'Updated description');
     });
 
-    it('update() with multiple changed fields updates all associated', async () => {
+    it('update() when changing multiple fields returns 202, and all changes are reflected after the task completes', async () => {
       const repositoryIdentifier = repositoryPrn.split(':', 3)[2];
       assert.strictEqual(typeof repositoryPrn, 'string');
       const client = createRepositoryAPI(testPulpAPI());
@@ -280,13 +303,19 @@ describe('Integration: RPM Repository API Client', () => {
       } satisfies Partial<RPMRepositoryUpsertType>;
 
       const res = await client.update(repositoryIdentifier, payload);
-      const actual = await client.retrieve(repositoryIdentifier);
 
+      let actual: RPMRepositoryType;
       assert.strictEqual(res.status, 202);
-      assert.strictEqual(actual.data.autopublish, true);
-      assert.strictEqual(actual.data.retain_package_versions, 5);
-      assert.strictEqual(actual.data.checksum_type, 'sha256');
-      assert.strictEqual(actual.data.compression_type, 'zstd');
+      if (res.status === 202) {
+        // TODO: Fix broken return type on Update
+        await waitForTaskCompletion(res.data.task);
+        actual = (await client.retrieve(repositoryIdentifier)).data;
+      }
+
+      assert.strictEqual(actual.autopublish, true);
+      assert.strictEqual(actual.retain_package_versions, 5);
+      assert.strictEqual(actual.checksum_type, 'sha256');
+      assert.strictEqual(actual.compression_type, 'zstd');
     });
 
     it('update() when a not allowed checksum_type is passed returns 400', async () => {
@@ -316,6 +345,59 @@ describe('Integration: RPM Repository API Client', () => {
           client.update(nonExistentRepositoryIdentifier, {
             description: 'This will not update',
           }),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 404);
+          return true;
+        },
+      );
+    });
+  });
+
+  describe('RPM Repository - delete()', () => {
+    it('delete() returns 202 and dispatches a task', async () => {
+      const created = await testAxiosClient('repositories/rpm/rpm/', {
+        method: 'POST',
+        data: JSON.stringify({ name: 'test-rpm-repo-delete-valid' }),
+      });
+      const repositoryIdentifier = created.data.prn.split(':', 3)[2];
+      const client = createRepositoryAPI(testPulpAPI());
+
+      const res = await client.delete(repositoryIdentifier);
+
+      assert.strictEqual(res.status, 202);
+      // TODO: Fix broken return type on Delete
+      assert.notStrictEqual(res.data.task, undefined);
+    });
+
+    it('delete() when passed a non-existent identifier returns 404', async () => {
+      const nonExistentRepositoryIdentifier = '1234567890';
+      const client = createRepositoryAPI(testPulpAPI());
+
+      await assert.rejects(
+        () => client.delete(nonExistentRepositoryIdentifier),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 404);
+          return true;
+        },
+      );
+    });
+
+    it('delete() removes the repository once the dispatched task completes', async () => {
+      const created = await testAxiosClient('repositories/rpm/rpm/', {
+        method: 'POST',
+        data: JSON.stringify({ name: 'test-rpm-repo-delete-completion' }),
+      });
+      const repositoryIdentifier = created.data.prn.split(':', 3)[2];
+      const client = createRepositoryAPI(testPulpAPI());
+
+      const res = await client.delete(repositoryIdentifier);
+      // TODO: Fix broken return type on Delete
+      await waitForTaskCompletion(res.data.task);
+
+      await assert.rejects(
+        () => client.retrieve(repositoryIdentifier),
         (err: unknown) => {
           assert.ok(isAxiosError(err));
           assert.strictEqual(err.response?.status, 404);
