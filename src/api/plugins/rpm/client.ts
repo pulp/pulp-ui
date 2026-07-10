@@ -1,8 +1,8 @@
-import { PulpAPI } from "src/api/pulp";
-import { createRepositoryAPI } from "./repository";
+import { PulpAPI } from 'src/api/pulp';
+import { createRepositoryAPI } from './repository';
 
 class RpmClient extends PulpAPI {
-    repository = createRepositoryAPI(this);
+  repository = createRepositoryAPI(this);
 }
 
 export { RpmClient };

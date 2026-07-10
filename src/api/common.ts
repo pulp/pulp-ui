@@ -154,7 +154,7 @@ type RetainCheckpointsFilterParams = LookupFilterParams<
 
 /**
  * Generic Repository Filters shared across PulpCore & Plugin Endpoints.
- * 
+ *
  * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/viewsets/repository.py#L88
  */
 interface GenericRepositoryFilterParams
@@ -170,16 +170,25 @@ interface GenericRepositoryFilterParams
 }
 
 /**
- * Generic Paginated Response shared across PulpCore & Plugin Endpoints.
- * 
+ * Paginated Response shared across PulpCore & Plugin Endpoints.
+ *
  * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/settings.py#L186
  * @see https://github.com/encode/django-rest-framework/blob/6f0b74def3fcc81e126b87b08e59abdb6c2ad056/rest_framework/pagination.py#L364
  */
-interface GenericPaginatedResponse<TResult> {
+interface PaginatedResponse<TResult> {
   count: number;
   next: string | null;
   previous: string | null;
   results: TResult[];
+}
+
+/**
+ * Async Task Dispatch Response shared across PulpCore & Plugin Endpoints.
+ *
+ * @see https://github.com/pulp/pulpcore/blob/dea04fa79a6ca590f2943a0a7754c219061be10c/pulpcore/app/response.py#L6
+ */
+interface DispatchedTaskResponse {
+  task: string;
 }
 
 /**
@@ -208,6 +217,7 @@ export type {
   GenericPublication,
   GenericRemote,
   GenericRepositoryFilterParams,
-  GenericPaginatedResponse,
+  PaginatedResponse,
+  DispatchedTaskResponse,
   AnsibleLastSyncType,
 };

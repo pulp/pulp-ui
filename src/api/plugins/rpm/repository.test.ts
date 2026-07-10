@@ -23,9 +23,8 @@ describe('Integration: RPM Repository API Client', () => {
         data: JSON.stringify({ name: testRpmRepoName }),
       });
 
-      // TODO: Update Error Message and Error Check
       if (!res.data.pulp_href) {
-        throw new Error();
+        throw new Error('Failed to create test repository');
       }
 
       repositoryHref = res.data.pulp_href;
@@ -71,9 +70,8 @@ describe('Integration: RPM Repository API Client', () => {
         data: JSON.stringify({ name: testRpmRepoName }),
       });
 
-      // TODO: Update Error Message and Error Check
       if (!res.data.prn || !res.data.pulp_href) {
-        throw new Error();
+        throw new Error('Failed to create test repository');
       }
 
       repositoryPrn = res.data.prn;
@@ -240,9 +238,8 @@ describe('Integration: RPM Repository API Client', () => {
         data: JSON.stringify({ name: 'test-rpm-repo-update' }),
       });
 
-      // TODO: Update Error Message and Error Check
       if (!res.data.prn || !res.data.pulp_href) {
-        throw new Error();
+        throw new Error('Failed to create test repository');
       }
 
       repositoryHref = res.data.pulp_href;
@@ -281,8 +278,7 @@ describe('Integration: RPM Repository API Client', () => {
 
       let actual: RPMRepositoryType;
       assert.strictEqual(res.status, 202);
-      if (res.status === 202) {
-        // TODO: Fix broken return type on Update
+      if (res.status === 202 && 'task' in res.data) {
         await waitForTaskCompletion(res.data.task);
         actual = (await client.retrieve(repositoryIdentifier)).data;
       }
@@ -306,8 +302,7 @@ describe('Integration: RPM Repository API Client', () => {
 
       let actual: RPMRepositoryType;
       assert.strictEqual(res.status, 202);
-      if (res.status === 202) {
-        // TODO: Fix broken return type on Update
+      if (res.status === 202 && 'task' in res.data) {
         await waitForTaskCompletion(res.data.task);
         actual = (await client.retrieve(repositoryIdentifier)).data;
       }
@@ -366,7 +361,6 @@ describe('Integration: RPM Repository API Client', () => {
       const res = await client.delete(repositoryIdentifier);
 
       assert.strictEqual(res.status, 202);
-      // TODO: Fix broken return type on Delete
       assert.notStrictEqual(res.data.task, undefined);
     });
 
@@ -393,7 +387,6 @@ describe('Integration: RPM Repository API Client', () => {
       const client = createRepositoryAPI(testPulpAPI());
 
       const res = await client.delete(repositoryIdentifier);
-      // TODO: Fix broken return type on Delete
       await waitForTaskCompletion(res.data.task);
 
       await assert.rejects(

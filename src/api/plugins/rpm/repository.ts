@@ -1,8 +1,9 @@
 import type { AxiosResponse } from 'axios';
 import type {
-  GenericPaginatedResponse,
+  DispatchedTaskResponse,
   GenericRepository,
   GenericRepositoryFilterParams,
+  PaginatedResponse,
 } from '../../common';
 import type { PulpAPI } from '../../pulp';
 
@@ -49,12 +50,12 @@ interface RPMRepositoryUpsertType extends Omit<
   checksum_type?: RPMAllowedUpsertChecksumsType | null;
 }
 
-// FIXME: Move AxiosResponse type to PulpAPI Base Class. 
+// FIXME: Move AxiosResponse type to PulpAPI Base Class.
 // NOTE: The FIXME implementation is not easy as to avoid major type issues with legacy API calls.
 interface RPMRepositoryClient {
   list: (
     params?: GenericRepositoryFilterParams,
-  ) => Promise<AxiosResponse<GenericPaginatedResponse<RPMRepositoryType>>>;
+  ) => Promise<AxiosResponse<PaginatedResponse<RPMRepositoryType>>>;
   retrieve: (id: string) => Promise<AxiosResponse<RPMRepositoryType>>;
   create: (
     data: RPMRepositoryUpsertType,
@@ -62,10 +63,8 @@ interface RPMRepositoryClient {
   update: (
     id: string,
     data: Partial<RPMRepositoryUpsertType>,
-    // TODO: Update Response Type to union of Upsert Type & Task Type
-  ) => Promise<AxiosResponse<RPMRepositoryUpsertType>>;
-  // TOOO: Update Response Type to Task Type Response
-  delete: (id: string) => Promise<AxiosResponse<unknown>>;
+  ) => Promise<AxiosResponse<RPMRepositoryUpsertType | DispatchedTaskResponse>>;
+  delete: (id: string) => Promise<AxiosResponse<DispatchedTaskResponse>>;
 }
 
 /**
@@ -78,11 +77,10 @@ interface RPMRepositoryClient {
 function createRepositoryAPI(base: PulpAPI): RPMRepositoryClient {
   return {
     list: (params?) => base.list(`repositories/rpm/rpm/`, params),
-    retrieve: (id) => base.http.get(`repositories/rpm/rpm/${id}`),
+    retrieve: (id) => base.http.get(`repositories/rpm/rpm/${id}/`),
     create: (data) => base.http.post(`repositories/rpm/rpm/`, data),
-    update: (id, data) =>
-      base.http.patch(`repositories/rpm/rpm/${id}`, { data }),
-    delete: (id) => base.http.delete(`repositories/rpm/rpm/${id}`),
+    update: (id, data) => base.http.patch(`repositories/rpm/rpm/${id}/`, data),
+    delete: (id) => base.http.delete(`repositories/rpm/rpm/${id}/`),
   };
 }
 
