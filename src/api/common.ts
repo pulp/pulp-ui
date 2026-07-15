@@ -191,6 +191,18 @@ interface DispatchedTaskResponse {
   task: string;
 }
 
+type DateTimeFilterOptions = "lt" | "lte" | "gt" | "gte" | "range" | "isnull"
+type DateTimeFilterParams = LookupFilterParams<"pulp_last_updated", DateTimeFilterOptions, 'string'>
+
+/**
+ * Generic Remote Filters shared across PulpCore & Plugin Endpoints.
+ * 
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/viewsets/repository.py#L314
+ */
+interface GenericRemoteFilterParams extends GenericFilterParams, NameFilterParams, DateTimeFilterParams {
+  pulp_label_select?: string;
+}
+
 /**
  * --------------------
  * These are shared Plugin Types outside the PulpCore Generics.
@@ -219,5 +231,6 @@ export type {
   GenericRepositoryFilterParams,
   PaginatedResponse,
   DispatchedTaskResponse,
+  GenericRemoteFilterParams,
   AnsibleLastSyncType,
 };

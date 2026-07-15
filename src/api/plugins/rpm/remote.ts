@@ -1,0 +1,39 @@
+import type { AxiosResponse } from 'axios';
+import type {
+  GenericRemote,
+  GenericRemoteFilterParams,
+  PaginatedResponse,
+} from 'src/api/common';
+import type { PulpAPI } from 'src/api/pulp';
+
+/**
+ * RPM Remote Type.
+ *
+ * @see https://github.com/pulp/pulp_rpm/blob/dc333a99db6c44d70d6103540cb592f6e55a8682/pulp_rpm/app/serializers/repository.py#L392
+ */
+interface RPMRemoteType extends GenericRemote {
+  sles_auth_token: string | null;
+}
+
+interface RPMRemoteClient {
+  list: (
+    params?: GenericRemoteFilterParams,
+  ) => Promise<AxiosResponse<PaginatedResponse<RPMRemoteType>>>;
+  // retrieve
+  // create
+  // update
+  // delete
+}
+
+/**
+ * RPM Remote API Client
+ * @param {PulpAPI} base
+ * @returns {RPMRemoteClient}
+ */
+function createRemoteAPI(base: PulpAPI): RPMRemoteClient {
+  return {
+    list: (params?) => base.list(`remotes/rpm/rpm/`, params),
+  };
+}
+
+export { createRemoteAPI };
