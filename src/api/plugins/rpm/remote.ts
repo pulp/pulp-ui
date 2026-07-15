@@ -19,8 +19,8 @@ interface RPMRemoteClient {
   list: (
     params?: GenericRemoteFilterParams,
   ) => Promise<AxiosResponse<PaginatedResponse<RPMRemoteType>>>;
-  // retrieve
-  // create
+  retrieve: (id: string) => Promise<AxiosResponse<RPMRemoteType>>;
+  // create: (data: RPMRemoteType) => Promise<AxiosResponse<RPMRemoteType>>;
   // update
   // delete
 }
@@ -33,6 +33,7 @@ interface RPMRemoteClient {
 function createRemoteAPI(base: PulpAPI): RPMRemoteClient {
   return {
     list: (params?) => base.list(`remotes/rpm/rpm/`, params),
+    retrieve: (id) => base.http.get(`remotes/rpm/rpm/${id}/`),
   };
 }
 
