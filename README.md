@@ -84,5 +84,15 @@ The UI builds produced by `npm run build` can be further configured by serving a
 
 * `API_BASE_PATH` - defaults to `/pulp/api/v3/` - change when using domains or a different path
 * `UI_BASE_PATH` - defaults to `/ui/` - change when only serving index in a subdirectory, or want different browser path prefix
-* `UI_EXTERNAL_LOGIN_URI` - defaults to nothing - set to something like `/login/` when using an SSO
+* `UI_EXTERNAL_LOGIN_URI` - defaults to nothing. When unset, Pulp UI uses its
+  built-in HTTP Basic login. Set it to the backend login endpoint, for example
+  `/auth/login/`, to enable cookie-based external authentication such as SSO.
+  Pulp UI appends a URL-encoded `next` query parameter so the backend can return
+  the browser to the requested UI route after authentication. In this mode the
+  UI validates the Django session after every page load and does not persist a
+  session identity or password in browser storage. The UI and API must share an
+  origin, or be configured so the browser sends the Django session cookie to
+  both. The backend must expose its standard browsable users API and Django
+  logout endpoint. Session detection reads only the authenticated username
+  shown in the users API header; it does not depend on task permissions.
 * `EXTRA_VERSION` - an extra version string to display in about modal

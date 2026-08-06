@@ -1,3 +1,10 @@
+## Unreleased
+
+### What's Changed
+* Add cookie-based session authentication support while retaining HTTP Basic authentication
+
+---
+
 ## 0.1.24 (2026-01-02) {: #0.1.24 }
 
 ### What's Changed
