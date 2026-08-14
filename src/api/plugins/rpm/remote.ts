@@ -12,7 +12,7 @@ import type { PulpAPI } from 'src/api/pulp';
  * @see https://github.com/pulp/pulp_rpm/blob/dc333a99db6c44d70d6103540cb592f6e55a8682/pulp_rpm/app/serializers/repository.py#L392
  */
 interface RPMRemoteType extends GenericRemote {
-  sles_auth_token: string | null;
+  sles_auth_token?: string | null;
 }
 
 interface RPMRemoteClient {
@@ -20,7 +20,7 @@ interface RPMRemoteClient {
     params?: GenericRemoteFilterParams,
   ) => Promise<AxiosResponse<PaginatedResponse<RPMRemoteType>>>;
   retrieve: (id: string) => Promise<AxiosResponse<RPMRemoteType>>;
-  // create: (data: RPMRemoteType) => Promise<AxiosResponse<RPMRemoteType>>;
+  create: (data: RPMRemoteType) => Promise<AxiosResponse<RPMRemoteType>>;
   // update
   // delete
 }
@@ -34,7 +34,9 @@ function createRemoteAPI(base: PulpAPI): RPMRemoteClient {
   return {
     list: (params?) => base.list(`remotes/rpm/rpm/`, params),
     retrieve: (id) => base.http.get(`remotes/rpm/rpm/${id}/`),
+    create: (data) => base.http.post(`remotes/rpm/rpm/`, data),
   };
 }
 
 export { createRemoteAPI };
+export type { RPMRemoteType };

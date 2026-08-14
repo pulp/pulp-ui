@@ -1,12 +1,12 @@
 import { isAxiosError } from 'axios';
 import assert from 'node:assert/strict';
-import { after, before, describe, it } from 'node:test';
+import { after, afterEach, before, describe, it } from 'node:test';
 import {
   extractIdentifierFromPrn,
   testAxiosClient,
   testPulpAPI,
 } from '../../test-utils/integration-client.ts';
-import { createRemoteAPI } from './remote.ts';
+import { type RPMRemoteType, createRemoteAPI } from './remote.ts';
 
 describe('Integration: RPM Remote API Client', () => {
   describe('RPM Remote - list()', () => {
@@ -111,6 +111,153 @@ describe('Integration: RPM Remote API Client', () => {
         (err: unknown) => {
           assert.ok(isAxiosError(err));
           assert.strictEqual(err.response?.status, 404);
+          return true;
+        },
+      );
+    });
+  });
+
+  describe('RPM Remote - create()', () => {
+    const testRpmRemoteUrl = 'https://example.com/repo/';
+    let remoteHref: string | undefined;
+
+    afterEach(async () => {
+      if (remoteHref) {
+        await testAxiosClient(remoteHref, { method: 'DELETE' });
+        remoteHref = undefined;
+      }
+    });
+
+    it('create() when giving only the required fields returns the created remote with server default', async () => {
+      const testRpmRemoteName = 'test-rpm-remote-existent-create-minimal';
+      const client = createRemoteAPI(testPulpAPI());
+
+      const res = await client.create({
+        name: testRpmRemoteName,
+        url: testRpmRemoteUrl,
+      });
+      assert.notStrictEqual(res.data.pulp_href, undefined);
+      remoteHref = res.data.pulp_href;
+
+      assert.strictEqual(res.status, 201);
+      assert.strictEqual(res.data.name, testRpmRemoteName);
+      assert.strictEqual(res.data.url, testRpmRemoteUrl);
+      assert.strictEqual(res.data.policy, 'immediate');
+    });
+
+    it('create() when giving additional optional fields returns them back on the created remote', async () => {
+      const testRpmRemoteName = 'test-rpm-remote-existent-create';
+      const client = createRemoteAPI(testPulpAPI());
+      const payload = {
+        name: testRpmRemoteName,
+        url: testRpmRemoteUrl,
+        policy: 'on_demand',
+        tls_validation: false,
+        download_concurrency: 5,
+        sles_auth_token: 'test-token-123',
+      } satisfies RPMRemoteType;
+
+      const res = await client.create(payload);
+      assert.notStrictEqual(res.data.pulp_href, undefined);
+      remoteHref = res.data.pulp_href;
+
+      assert.strictEqual(res.status, 201);
+      assert.strictEqual(res.data.name, payload.name);
+      assert.strictEqual(res.data.url, payload.url);
+      assert.strictEqual(res.data.policy, payload.policy);
+      assert.strictEqual(res.data.tls_validation, payload.tls_validation);
+      assert.strictEqual(
+        res.data.download_concurrency,
+        payload.download_concurrency,
+      );
+      assert.strictEqual(res.data.sles_auth_token, payload.sles_auth_token);
+    });
+
+    it('create() when passed a duplicate name returns 400', async () => {
+      const testRpmRemoteName = 'test-rpm-existent-create-duplicate';
+      const client = createRemoteAPI(testPulpAPI());
+      const payload = {
+        name: testRpmRemoteName,
+        url: testRpmRemoteUrl,
+      } satisfies RPMRemoteType;
+
+      const res = await client.create(payload);
+      assert.notStrictEqual(res.data.pulp_href, undefined);
+      remoteHref = res.data.pulp_href;
+
+      await assert.rejects(
+        () => client.create(payload),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 400);
+          return true;
+        },
+      );
+    });
+
+    it('create() when missing the required name field returns 400', async () => {
+      const client = createRemoteAPI(testPulpAPI());
+
+      await assert.rejects(
+        () => client.create({} as RPMRemoteType),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 400);
+          return true;
+        },
+      );
+    });
+
+    it('create() when missing the required url field returns 400', async () => {
+      const testRpmRemoteName = 'test-rpm-remote-create-missing-url';
+      const client = createRemoteAPI(testPulpAPI());
+
+      await assert.rejects(
+        () => client.create({ name: testRpmRemoteName } as RPMRemoteType),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 400);
+          return true;
+        },
+      );
+    });
+
+    it('create() when an invalid url schema is passed returns 400', async () => {
+      const testRpmRemoteName = 'test-rpm-remote-create-invalid-url';
+      const testRpmRemoteInvalidUrl = 'ftp://example.com/repo/';
+      const client = createRemoteAPI(testPulpAPI());
+      const payload = {
+        name: testRpmRemoteName,
+        url: testRpmRemoteInvalidUrl,
+      } satisfies RPMRemoteType;
+
+      await assert.rejects(
+        () => client.create(payload),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 400);
+          return true;
+        },
+      );
+    });
+
+    // NOTE: Verifying if this is expected allowed behaviour for credentials
+    // TODO: Confirm with Pulp Developers
+    it.skip('create() when the url contains embedded credentials returns 400', async () => {
+      const testRpmRemoteName = 'test-rpm-remote-create-invalid-url';
+      const testRpmRemoteInvalidUrl =
+        'https://username:password@example.com/repo/';
+      const client = createRemoteAPI(testPulpAPI());
+      const payload = {
+        name: testRpmRemoteName,
+        url: testRpmRemoteInvalidUrl,
+      } satisfies RPMRemoteType;
+
+      await assert.rejects(
+        () => client.create(payload),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 400);
           return true;
         },
       );
