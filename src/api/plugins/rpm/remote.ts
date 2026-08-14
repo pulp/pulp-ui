@@ -16,6 +16,8 @@ interface RPMRemoteType extends GenericRemote {
   sles_auth_token?: string | null;
 }
 
+// FIXME: Move AxiosResponse type to PulpAPI Base Class.
+// NOTE: The FIXME implementation is not easy as to avoid major type issues with legacy API calls.
 interface RPMRemoteClient {
   list: (
     params?: GenericRemoteFilterParams,
@@ -26,7 +28,7 @@ interface RPMRemoteClient {
     id: string,
     data: Partial<RPMRemoteType>,
   ) => Promise<AxiosResponse<RPMRemoteType | DispatchedTaskResponse>>;
-  // delete
+  delete: (id: string) => Promise<AxiosResponse<DispatchedTaskResponse>>;
 }
 
 /**
@@ -40,6 +42,7 @@ function createRemoteAPI(base: PulpAPI): RPMRemoteClient {
     retrieve: (id) => base.http.get(`remotes/rpm/rpm/${id}/`),
     create: (data) => base.http.post(`remotes/rpm/rpm/`, data),
     update: (id, data) => base.http.patch(`remotes/rpm/rpm/${id}/`, data),
+    delete: (id) => base.http.delete(`remotes/rpm/rpm/${id}/`),
   };
 }
 

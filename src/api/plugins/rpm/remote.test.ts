@@ -91,7 +91,7 @@ describe('Integration: RPM Remote API Client', () => {
       remoteHref = undefined;
     });
 
-    it('retrieve() whe passed correct identifier returns expected remote', async () => {
+    it('retrieve() when passed correct identifier returns expected remote', async () => {
       const remoteIdentifier = extractIdentifierFromPrn(remotePrn);
       const client = createRemoteAPI(testPulpAPI());
 
@@ -354,6 +354,57 @@ describe('Integration: RPM Remote API Client', () => {
           client.update(nonExistentRemoteIdentifier, {
             rate_limit: 9000,
           }),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 404);
+          return true;
+        },
+      );
+    });
+  });
+
+  describe('RPM Remote - delete()', () => {
+    it('delete() returns 202 and dispatches a task', async () => {
+      const client = createRemoteAPI(testPulpAPI());
+      const created = await client.create({
+        name: 'test-rpm-remote-delete',
+        url: 'https://example.com/repo/',
+      });
+      const remoteIdentifier = extractIdentifierFromPrn(created.data.prn);
+
+      const res = await client.delete(remoteIdentifier);
+
+      assert.strictEqual(res.status, 202);
+      assert.notStrictEqual(res.data.task, undefined);
+    });
+
+    it('delete() when passes a non-existent identifier returns 404', async () => {
+      const nonExistentRemoteIdentifier = '1234567890';
+      const client = createRemoteAPI(testPulpAPI());
+
+      await assert.rejects(
+        () => client.delete(nonExistentRemoteIdentifier),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 404);
+          return true;
+        },
+      );
+    });
+
+    it('delete() removes the remote once the dispatched task completes', async () => {
+      const client = createRemoteAPI(testPulpAPI());
+      const created = await client.create({
+        name: 'test-rpm-remote-delete',
+        url: 'https://example.com/repo/',
+      });
+      const remoteIdentifier = extractIdentifierFromPrn(created.data.prn);
+
+      const res = await client.delete(remoteIdentifier);
+      await waitForTaskCompletion(res.data.task);
+
+      await assert.rejects(
+        () => client.retrieve(remoteIdentifier),
         (err: unknown) => {
           assert.ok(isAxiosError(err));
           assert.strictEqual(err.response?.status, 404);

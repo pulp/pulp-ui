@@ -103,4 +103,9 @@ async function waitForTaskCompletion(
 
 const extractIdentifierFromPrn = (prn: string): string => prn.split(':', 3)[2];
 
-export { testPulpAPI, testAxiosClient, waitForTaskCompletion, extractIdentifierFromPrn };
+export {
+  testPulpAPI,
+  testAxiosClient,
+  waitForTaskCompletion,
+  extractIdentifierFromPrn,
+};
