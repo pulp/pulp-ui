@@ -1,10 +1,11 @@
 import { isAxiosError } from 'axios';
 import assert from 'node:assert/strict';
-import { after, afterEach, before, describe, it } from 'node:test';
+import { after, afterEach, before, beforeEach, describe, it } from 'node:test';
 import {
   extractIdentifierFromPrn,
   testAxiosClient,
   testPulpAPI,
+  waitForTaskCompletion,
 } from '../../test-utils/integration-client.ts';
 import { type RPMRemoteType, createRemoteAPI } from './remote.ts';
 
@@ -240,24 +241,122 @@ describe('Integration: RPM Remote API Client', () => {
         },
       );
     });
+  });
 
-    // NOTE: Verifying if this is expected allowed behaviour for credentials
-    // TODO: Confirm with Pulp Developers
-    it.skip('create() when the url contains embedded credentials returns 400', async () => {
-      const testRpmRemoteName = 'test-rpm-remote-create-invalid-url';
-      const testRpmRemoteInvalidUrl =
-        'https://username:password@example.com/repo/';
+  describe('RPM Remote - update()', () => {
+    const testRpmRemoteName = 'test-rpm-remote-update';
+    const testRpmRemoteUrl = 'https://example.com/repo/';
+    let remotePrn: string | undefined;
+    let remoteHref: string | undefined;
+
+    beforeEach(async () => {
+      const res = await testAxiosClient('remotes/rpm/rpm/', {
+        method: 'POST',
+        data: JSON.stringify({
+          name: testRpmRemoteName,
+          url: testRpmRemoteUrl,
+        }),
+      });
+
+      if (!res.data.prn || !res.data.pulp_href) {
+        throw new Error('Failed to create test remote');
+      }
+
+      remotePrn = res.data.prn;
+      remoteHref = res.data.pulp_href;
+    });
+
+    afterEach(async () => {
+      await testAxiosClient(remoteHref, { method: 'DELETE' });
+      remotePrn = undefined;
+      remoteHref = undefined;
+    });
+
+    it('update() when updating a field with the same value returns 200', async () => {
+      const sameNameValue = 'test-rpm-remote-update';
+      const remoteIdentifier = extractIdentifierFromPrn(remotePrn);
+      const client = createRemoteAPI(testPulpAPI());
+
+      const res = await client.update(remoteIdentifier, {
+        name: sameNameValue,
+      });
+      const expected = await client.retrieve(remoteIdentifier);
+
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(expected.data.name, sameNameValue);
+    });
+
+    it('update() with a single changed field returns 202 and updates only that field once the task completes', async () => {
+      const remoteIdentifier = extractIdentifierFromPrn(remotePrn);
+      const client = createRemoteAPI(testPulpAPI());
+
+      const res = await client.update(remoteIdentifier, {
+        rate_limit: 12,
+      });
+
+      let actual: RPMRemoteType;
+      assert.strictEqual(res.status, 202);
+      if (res.status === 202 && 'task' in res.data) {
+        await waitForTaskCompletion(res.data.task);
+        actual = (await client.retrieve(remoteIdentifier)).data;
+      }
+
+      assert.strictEqual(actual.rate_limit, 12);
+    });
+
+    it('update() when changing multiple fields returns 202, and all changes are reflected after the task completes', async () => {
+      const remoteIdentifier = extractIdentifierFromPrn(remotePrn);
       const client = createRemoteAPI(testPulpAPI());
       const payload = {
-        name: testRpmRemoteName,
-        url: testRpmRemoteInvalidUrl,
-      } satisfies RPMRemoteType;
+        tls_validation: false,
+        download_concurrency: 3,
+        rate_limit: 3400,
+      } satisfies Partial<RPMRemoteType>;
+
+      const res = await client.update(remoteIdentifier, payload);
+
+      let actual: RPMRemoteType;
+      assert.strictEqual(res.status, 202);
+      if (res.status === 202 && 'task' in res.data) {
+        await waitForTaskCompletion(res.data.task);
+        actual = (await client.retrieve(remoteIdentifier)).data;
+      }
+
+      assert.strictEqual(actual.tls_validation, payload.tls_validation);
+      assert.strictEqual(
+        actual.download_concurrency,
+        payload.download_concurrency,
+      );
+      assert.strictEqual(actual.rate_limit, payload.rate_limit);
+    });
+
+    it('update() when an invalid url scheme is passed returns 400', async () => {
+      const remoteIdentifier = extractIdentifierFromPrn(remotePrn);
+      const client = createRemoteAPI(testPulpAPI());
 
       await assert.rejects(
-        () => client.create(payload),
+        () =>
+          client.update(remoteIdentifier, { url: 'ftp://example.com/repo/' }),
         (err: unknown) => {
           assert.ok(isAxiosError(err));
           assert.strictEqual(err.response?.status, 400);
+          return true;
+        },
+      );
+    });
+
+    it('update() when passed a non-existent identifier returns 404', async () => {
+      const nonExistentRemoteIdentifier = '1234567890';
+      const client = createRemoteAPI(testPulpAPI());
+
+      await assert.rejects(
+        () =>
+          client.update(nonExistentRemoteIdentifier, {
+            rate_limit: 9000,
+          }),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 404);
           return true;
         },
       );

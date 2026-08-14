@@ -1,5 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import type {
+  DispatchedTaskResponse,
   GenericRemote,
   GenericRemoteFilterParams,
   PaginatedResponse,
@@ -21,7 +22,10 @@ interface RPMRemoteClient {
   ) => Promise<AxiosResponse<PaginatedResponse<RPMRemoteType>>>;
   retrieve: (id: string) => Promise<AxiosResponse<RPMRemoteType>>;
   create: (data: RPMRemoteType) => Promise<AxiosResponse<RPMRemoteType>>;
-  // update
+  update: (
+    id: string,
+    data: Partial<RPMRemoteType>,
+  ) => Promise<AxiosResponse<RPMRemoteType | DispatchedTaskResponse>>;
   // delete
 }
 
@@ -35,6 +39,7 @@ function createRemoteAPI(base: PulpAPI): RPMRemoteClient {
     list: (params?) => base.list(`remotes/rpm/rpm/`, params),
     retrieve: (id) => base.http.get(`remotes/rpm/rpm/${id}/`),
     create: (data) => base.http.post(`remotes/rpm/rpm/`, data),
+    update: (id, data) => base.http.patch(`remotes/rpm/rpm/${id}/`, data),
   };
 }
 
