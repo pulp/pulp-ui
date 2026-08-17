@@ -1,11 +1,16 @@
+import { isAxiosError } from 'axios';
 import assert from 'node:assert/strict';
 import { after, before, describe, it } from 'node:test';
 import {
+  createAndWaitForResource,
+  extractIdentifierFromPrn,
   testAxiosClient,
   testPulpAPI,
-  waitForTaskCompletion,
 } from '../../test-utils/integration-client.ts';
-import { createDistributionAPI } from './distribution.ts';
+import {
+  type RPMDistributionType,
+  createDistributionAPI,
+} from './distribution.ts';
 
 describe('Integration: RPM Distribution API Client', () => {
   describe('RPM Distribution - list()', () => {
@@ -14,27 +19,14 @@ describe('Integration: RPM Distribution API Client', () => {
     let distributionHref: string | undefined;
 
     before(async () => {
-      const created = await testAxiosClient('distributions/rpm/rpm/', {
-        method: 'POST',
-        data: JSON.stringify({
+      const created = await createAndWaitForResource<RPMDistributionType>(
+        'distributions/rpm/rpm/',
+        {
           name: testRpmDistributionName,
           base_path: testRpmDistributionBasePath,
-        }),
-      });
-
-      if (!created.data.task) {
-        throw new Error('Failed to dispatch distribution create task');
-      }
-
-      await waitForTaskCompletion(created.data.task);
-      const task = await testAxiosClient(created.data.task, { method: 'GET' });
-      distributionHref = task.data.created_resources?.[0];
-
-      if (!distributionHref) {
-        throw new Error(
-          'Failed to resolve created distribution href from task',
-        );
-      }
+        },
+      );
+      distributionHref = created.pulp_href;
     });
 
     after(async () => {
@@ -72,7 +64,57 @@ describe('Integration: RPM Distribution API Client', () => {
     });
   });
 
-  describe.skip('RPM Distribution - retrieve()');
+  describe('RPM Distribution - retrieve()', () => {
+    const testRpmDistributionName = 'test-rpm-distribution-existent-retrieve';
+    const testRpmDistributionBasePath =
+      'test-rpm-distribution-existent-retrieve';
+    let distributionPrn: string | undefined;
+    let distributionHref: string | undefined;
+
+    before(async () => {
+      const created = await createAndWaitForResource<RPMDistributionType>(
+        'distributions/rpm/rpm/',
+        {
+          name: testRpmDistributionName,
+          base_path: testRpmDistributionBasePath,
+        },
+      );
+      distributionHref = created.pulp_href;
+      distributionPrn = created.prn;
+    });
+
+    after(async () => {
+      await testAxiosClient(distributionHref, { method: 'DELETE' });
+      distributionHref = undefined;
+      distributionPrn = undefined;
+    });
+
+    it('retrieve() when passed correct identifier returns expected distribution', async () => {
+      const distributionIdentifier = extractIdentifierFromPrn(distributionPrn);
+      const client = createDistributionAPI(testPulpAPI());
+
+      const res = await client.retrieve(distributionIdentifier);
+
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(res.data.prn, distributionPrn);
+      assert.strictEqual(res.data.name, testRpmDistributionName);
+      assert.strictEqual(res.data.base_path, testRpmDistributionBasePath);
+    });
+
+    it('retrieve() when passed a non-existent identifier returns 404', async () => {
+      const nonExistentDistributionIdentifer = '1234567890';
+      const client = createDistributionAPI(testPulpAPI());
+
+      await assert.rejects(
+        () => client.retrieve(nonExistentDistributionIdentifer),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 404);
+          return true;
+        },
+      );
+    });
+  });
 
   describe.skip('RPM Distribution - create()');
 

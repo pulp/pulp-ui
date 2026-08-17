@@ -23,7 +23,7 @@ interface RPMDistributionClient {
   list: (
     params?: GenericDistributionFilterParams,
   ) => Promise<AxiosResponse<PaginatedResponse<RPMDistributionType>>>;
-  retrieve: () => void;
+  retrieve: (id: string) => Promise<AxiosResponse<RPMDistributionType>>;
   create: () => void;
   update: () => void;
   delete: () => void;
@@ -39,7 +39,7 @@ interface RPMDistributionClient {
 function createDistributionAPI(base: PulpAPI): RPMDistributionClient {
   return {
     list: (params?) => base.list(`distributions/rpm/rpm/`, params),
-    retrieve: () => undefined,
+    retrieve: (id) => base.http.get(`distributions/rpm/rpm/${id}/`),
     create: () => undefined,
     update: () => undefined,
     delete: () => undefined,

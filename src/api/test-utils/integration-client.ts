@@ -103,9 +103,43 @@ async function waitForTaskCompletion(
 
 const extractIdentifierFromPrn = (prn: string): string => prn.split(':', 3)[2];
 
+async function createAndWaitForResource<TResult>(
+  url: string,
+  data: Record<string, unknown>,
+): Promise<TResult> {
+  const res = await testAxiosClient(url, {
+    method: 'POST',
+    data: JSON.stringify(data),
+  });
+
+  if (res.data.pulp_href) {
+    return res.data;
+  }
+
+  if (res.data.task) {
+    await waitForTaskCompletion(res.data.task);
+    const task = await testAxiosClient(res.data.task, { method: 'GET' });
+    const href = task.data.created_resources?.[0];
+
+    if (!href) {
+      throw new Error(
+        `Failed to resolve created resource href from task ${res.data.task}`,
+      );
+    }
+
+    const resource = await testAxiosClient(href, { method: 'GET' });
+    return resource.data;
+  }
+
+  throw new Error(
+    `Failed to reate resource at ${url}: unexpected response shape`,
+  );
+}
+
 export {
   testPulpAPI,
   testAxiosClient,
   waitForTaskCompletion,
   extractIdentifierFromPrn,
+  createAndWaitForResource,
 };
