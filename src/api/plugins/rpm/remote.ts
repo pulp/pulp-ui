@@ -35,6 +35,8 @@ interface RPMRemoteClient {
  * RPM Remote API Client
  * @param {PulpAPI} base
  * @returns {RPMRemoteClient}
+ * 
+ * @see https://github.com/pulp/pulp_rpm/blob/dc333a99db6c44d70d6103540cb592f6e55a8682/pulp_rpm/app/viewsets/repository.py#L361
  */
 function createRemoteAPI(base: PulpAPI): RPMRemoteClient {
   return {
