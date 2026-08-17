@@ -208,6 +208,35 @@ interface GenericRemoteFilterParams
   pulp_label_select?: string;
 }
 
+type BasePathFilterOptions = 'contains' | 'icontains' | 'in';
+type BasePathFilterParams = LookupFilterParams<
+  'base_path',
+  BasePathFilterOptions,
+  string
+>;
+type RepositoryFilterOptions = 'in';
+type RepositoryFilterParams = LookupFilterParams<
+  'repository',
+  RepositoryFilterOptions,
+  string
+>;
+
+/**
+ * Generic Distribution Filters shared across PulpCore & Plugin Endpoints.
+ *
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/viewsets/publication.py#L486
+ */
+interface GenericDistributionFilterParams
+  extends
+    GenericFilterParams,
+    NameFilterParams,
+    BasePathFilterParams,
+    RepositoryFilterParams {
+  pulp_label_select?: string;
+  checkpoint?: boolean;
+  with_content?: string;
+}
+
 /**
  * --------------------
  * These are shared Plugin Types outside the PulpCore Generics.
@@ -237,5 +266,6 @@ export type {
   PaginatedResponse,
   DispatchedTaskResponse,
   GenericRemoteFilterParams,
+  GenericDistributionFilterParams,
   AnsibleLastSyncType,
 };
