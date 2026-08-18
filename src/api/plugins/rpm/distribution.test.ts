@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios';
 import assert from 'node:assert/strict';
-import { after, afterEach, before, describe, it } from 'node:test';
+import { after, afterEach, before, beforeEach, describe, it } from 'node:test';
 import {
   createAndWaitForResource,
   extractIdentifierFromPrn,
@@ -247,7 +247,140 @@ describe('Integration: RPM Distribution API Client', () => {
     });
   });
 
-  describe.skip('RPM Distribution - update()');
+  describe('RPM Distribution - update()', () => {
+    const testRpmDistributionName = 'test-rpm-distribution-existent-update';
+    const testRpmDistributionBasePath = 'test-rpm-distribution-existent-update';
+    let distributionPrn: string | undefined;
+    let distributionHref: string | undefined;
+    let otherDistributionHref: string | undefined;
+
+    beforeEach(async () => {
+      const created = await createAndWaitForResource<RPMDistributionType>(
+        'distributions/rpm/rpm/',
+        {
+          name: testRpmDistributionName,
+          base_path: testRpmDistributionBasePath,
+        },
+      );
+      distributionHref = created.pulp_href;
+      distributionPrn = created.prn;
+    });
+
+    afterEach(async () => {
+      await testAxiosClient(distributionHref, { method: 'DELETE' });
+      distributionHref = undefined;
+      distributionPrn = undefined;
+
+      if (otherDistributionHref) {
+        await testAxiosClient(otherDistributionHref, { method: 'DELETE' });
+        otherDistributionHref = undefined;
+      }
+    });
+
+    it('update() when updated a field with the same value returns 200', async () => {
+      const sameNameValue = testRpmDistributionName;
+      const distributionIdentifier = extractIdentifierFromPrn(distributionPrn);
+      const client = createDistributionAPI(testPulpAPI());
+
+      const res = await client.update(distributionIdentifier, {
+        name: sameNameValue,
+      });
+      const expected = await client.retrieve(distributionIdentifier);
+
+      assert.strictEqual(res.status, 200);
+      assert.strictEqual(expected.data.name, sameNameValue);
+    });
+
+    it('update() with a single changed field returns 202 and updates only that field on task completion', async () => {
+      const distributionIdentifier = extractIdentifierFromPrn(distributionPrn);
+      const client = createDistributionAPI(testPulpAPI());
+
+      const res = await client.update(distributionIdentifier, {
+        generate_repo_config: true,
+      });
+
+      let actual: RPMDistributionType;
+      assert.strictEqual(res.status, 202);
+      if (res.status === 202 && 'task' in res.data) {
+        await waitForTaskCompletion(res.data.task);
+        actual = (await client.retrieve(distributionIdentifier)).data;
+      }
+
+      assert.strictEqual(actual.generate_repo_config, true);
+    });
+
+    it('update() when changing multiple fields returns 202, and all changed fields are reflected on task completion', async () => {
+      const distributionIdentifier = extractIdentifierFromPrn(distributionPrn);
+      const client = createDistributionAPI(testPulpAPI());
+      const payload = {
+        generate_repo_config: true,
+        hidden: true,
+      } satisfies Partial<RPMDistributionType>;
+
+      const res = await client.update(distributionIdentifier, payload);
+
+      let actual: RPMDistributionType;
+      assert.strictEqual(res.status, 202);
+      if (res.status === 202 && 'task' in res.data) {
+        await waitForTaskCompletion(res.data.task);
+        actual = (await client.retrieve(distributionIdentifier)).data;
+      }
+
+      assert.strictEqual(
+        actual.generate_repo_config,
+        payload.generate_repo_config,
+      );
+      assert.strictEqual(
+        actual.hidden,
+        payload.hidden,
+      );
+    });
+
+    it('update() when passed a duplicate base_path returns 400', async () => {
+      const otherDistributionName = 'test-rpm-distribution-update-other';
+      const otherDistributionBasePath = 'test-rpm-distribution-update-other';
+      const created = await createAndWaitForResource<RPMDistributionType>(
+        'distributions/rpm/rpm/',
+        {
+          name: otherDistributionName,
+          base_path: otherDistributionBasePath,
+        },
+      );
+      otherDistributionHref = created.pulp_href;
+
+      const distributionIdentifier = extractIdentifierFromPrn(distributionPrn);
+      const client = createDistributionAPI(testPulpAPI());
+
+      await assert.rejects(
+        () =>
+          client.update(distributionIdentifier, {
+            base_path: otherDistributionBasePath,
+          }),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 400);
+          return true;
+        },
+      );
+    });
+
+    it('update() when passed a non-existent identifier returns 404', async () => {
+      const nonExistentDistributionIdentifier = '1234567890';
+      const client = createDistributionAPI(testPulpAPI());
+
+      await assert.rejects(
+        () =>
+          client.update(nonExistentDistributionIdentifier, {
+            generate_repo_config: true,
+          }),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 404);
+          return true;
+        },
+      );
+    });
+  });
 
   describe.skip('RPM Distribution - delete()');
 });
