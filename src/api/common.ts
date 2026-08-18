@@ -41,7 +41,7 @@ interface GenericRepository extends GenericResource {
 /**
  * Generic Distribution shared across Pulp Distribution plugins.
  *
- * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/publication.py
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/serializers/publication.py#L175
  */
 interface GenericDistribution extends GenericResource {
   base_path: string;

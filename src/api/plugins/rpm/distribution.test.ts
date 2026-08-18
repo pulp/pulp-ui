@@ -330,10 +330,7 @@ describe('Integration: RPM Distribution API Client', () => {
         actual.generate_repo_config,
         payload.generate_repo_config,
       );
-      assert.strictEqual(
-        actual.hidden,
-        payload.hidden,
-      );
+      assert.strictEqual(actual.hidden, payload.hidden);
     });
 
     it('update() when passed a duplicate base_path returns 400', async () => {
@@ -382,5 +379,60 @@ describe('Integration: RPM Distribution API Client', () => {
     });
   });
 
-  describe.skip('RPM Distribution - delete()');
+  describe('RPM Distribution - delete()', () => {
+    it('delete() returns 202 and dispatches a task', async () => {
+      const created = await createAndWaitForResource<RPMDistributionType>(
+        'distributions/rpm/rpm/',
+        {
+          name: 'test-rpm-distribution-delete-valid',
+          base_path: 'test-rpm-distribution-delete-valid',
+        },
+      );
+      const distributionIdentifier = extractIdentifierFromPrn(created.prn);
+      const client = createDistributionAPI(testPulpAPI());
+
+      const res = await client.delete(distributionIdentifier);
+
+      assert.strictEqual(res.status, 202);
+      assert.notStrictEqual(res.data.task, undefined);
+    });
+
+    it('delete() when passed a non-existent identifier returns 404', async () => {
+      const nonExistentDistributionIdentifer = '1234567890';
+      const client = createDistributionAPI(testPulpAPI());
+
+      await assert.rejects(
+        () => client.delete(nonExistentDistributionIdentifer),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 404);
+          return true;
+        },
+      );
+    });
+
+    it('delete() removes the distribution once the dispatched task completes', async () => {
+      const created = await createAndWaitForResource<RPMDistributionType>(
+        'distributions/rpm/rpm/',
+        {
+          name: 'test-rpm-distribution-delete-completion',
+          base_path: 'test-rpm-distribution-delete-completion',
+        },
+      );
+      const distributionIdentifier = extractIdentifierFromPrn(created.prn);
+      const client = createDistributionAPI(testPulpAPI());
+
+      const res = await client.delete(distributionIdentifier);
+      await waitForTaskCompletion(res.data.task);
+
+      await assert.rejects(
+        () => client.retrieve(distributionIdentifier),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 404);
+          return true;
+        },
+      );
+    });
+  });
 });

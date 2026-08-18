@@ -32,7 +32,7 @@ interface RPMDistributionClient {
     id: string,
     data: Partial<RPMDistributionType>,
   ) => Promise<AxiosResponse<RPMDistributionType | DispatchedTaskResponse>>;
-  delete: () => void;
+  delete: (id: string) => Promise<AxiosResponse<DispatchedTaskResponse>>;
 }
 
 /**
@@ -48,7 +48,7 @@ function createDistributionAPI(base: PulpAPI): RPMDistributionClient {
     retrieve: (id) => base.http.get(`distributions/rpm/rpm/${id}/`),
     create: (data) => base.http.post(`distributions/rpm/rpm/`, data),
     update: (id, data) => base.http.patch(`distributions/rpm/rpm/${id}/`, data),
-    delete: () => undefined,
+    delete: (id) => base.http.delete(`distributions/rpm/rpm/${id}/`),
   };
 }
 
