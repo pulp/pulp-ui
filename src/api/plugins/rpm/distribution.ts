@@ -1,5 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import type {
+  DispatchedTaskResponse,
   GenericDistribution,
   GenericDistributionFilterParams,
   PaginatedResponse,
@@ -24,7 +25,9 @@ interface RPMDistributionClient {
     params?: GenericDistributionFilterParams,
   ) => Promise<AxiosResponse<PaginatedResponse<RPMDistributionType>>>;
   retrieve: (id: string) => Promise<AxiosResponse<RPMDistributionType>>;
-  create: () => void;
+  create: (
+    data: RPMDistributionType,
+  ) => Promise<AxiosResponse<DispatchedTaskResponse>>;
   update: () => void;
   delete: () => void;
 }
@@ -40,7 +43,7 @@ function createDistributionAPI(base: PulpAPI): RPMDistributionClient {
   return {
     list: (params?) => base.list(`distributions/rpm/rpm/`, params),
     retrieve: (id) => base.http.get(`distributions/rpm/rpm/${id}/`),
-    create: () => undefined,
+    create: (data) => base.http.post(`distributions/rpm/rpm/`, data),
     update: () => undefined,
     delete: () => undefined,
   };
