@@ -30,6 +30,7 @@ jobs:
           echo "CONTENT_ORIGIN='http://$(hostname):8080'" >> settings/settings.py
           echo "ANSIBLE_API_HOSTNAME='http://$(hostname):8080'" >> settings/settings.py
           echo "ANSIBLE_CONTENT_HOSTNAME='http://$(hostname):8080/pulp/content'" >> settings/settings.py
+          echo "SECRET_KEY=\"$(python3 -c 'import secrets; print(secrets.token_urlsafe(50))')\"" >> settings/settings.py
 
       - name: 'backend run'
         run: |
