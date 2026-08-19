@@ -30,7 +30,7 @@ interface RPMPublicationClient {
   list: (
     params?: GenericPublicationFilterParams,
   ) => Promise<AxiosResponse<PaginatedResponse<RPMPublicationType>>>;
-  retrieve: () => void;
+  retrieve: (id: string) => Promise<AxiosResponse<RPMPublicationType>>;
   create: () => void;
   delete: () => void;
 }
@@ -45,7 +45,7 @@ interface RPMPublicationClient {
 function createPublicationAPI(base: PulpAPI): RPMPublicationClient {
   return {
     list: (params?) => base.list(`publications/rpm/rpm/`, params),
-    retrieve: () => undefined,
+    retrieve: (id) => base.http.get(`publications/rpm/rpm/${id}/`),
     create: () => undefined,
     delete: () => undefined,
   };
