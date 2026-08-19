@@ -1,14 +1,16 @@
 import { isAxiosError } from 'axios';
 import assert from 'node:assert/strict';
-import { after, before, describe, it } from 'node:test';
+import { after, afterEach, before, describe, it } from 'node:test';
 import {
   createAndWaitForResource,
   extractIdentifierFromPrn,
   testAxiosClient,
   testPulpAPI,
+  waitForTaskCompletion,
 } from '../../test-utils/integration-client.ts';
 import {
   type RPMPublicationType,
+  type RPMPublicationUpsertType,
   createPublicationAPI,
 } from './publication.ts';
 import type { RPMRepositoryType } from './repository.ts';
@@ -123,6 +125,196 @@ describe('Integration: RPM Publication API Client', () => {
         (err: unknown) => {
           assert.ok(isAxiosError(err));
           assert.strictEqual(err.response?.status, 404);
+          return true;
+        },
+      );
+    });
+  });
+
+  describe('RPM Publication - create()', () => {
+    let repositoryHref: string | undefined;
+    let publicationHref: string | undefined;
+
+    afterEach(async () => {
+      if (publicationHref) {
+        await testAxiosClient(publicationHref, { method: 'DELETE' });
+        publicationHref = undefined;
+      }
+
+      if (repositoryHref) {
+        await testAxiosClient(repositoryHref, { method: 'DELETE' });
+        repositoryHref = undefined;
+      }
+    });
+
+    it('create() when given only a repository dispatches task, and the publication exists on task completion', async () => {
+      const testRpmRepositoryName =
+        'test-rpm-repository-publication-create-repo';
+      const repo = await createAndWaitForResource<RPMRepositoryType>(
+        'repositories/rpm/rpm/',
+        {
+          name: testRpmRepositoryName,
+        },
+      );
+      repositoryHref = repo.pulp_href;
+      const client = createPublicationAPI(testPulpAPI());
+
+      const res = await client.create({ repository: repositoryHref });
+
+      assert.strictEqual(res.status, 202);
+      assert.notStrictEqual(res.data.task, undefined);
+
+      await waitForTaskCompletion(res.data.task);
+      const task = await testAxiosClient(res.data.task, { method: 'GET' });
+      publicationHref = task.data.created_resources?.[0];
+
+      const created = await testAxiosClient(publicationHref, { method: 'GET' });
+      assert.strictEqual(created.data.repository, repositoryHref);
+      assert.strictEqual(created.data.pulp_href, publicationHref);
+    });
+
+    it('create() when given only a repository_version dispatches task, and publication exists on task completion', async () => {
+      const testRpmRepositoryName =
+        'test-rpm-repository-publication-create-version';
+      const repo = await createAndWaitForResource<RPMRepositoryType>(
+        'repositories/rpm/rpm/',
+        {
+          name: testRpmRepositoryName,
+        },
+      );
+      repositoryHref = repo.pulp_href;
+      const repositoryVersionHref = `${repositoryHref}versions/0/`;
+      const client = createPublicationAPI(testPulpAPI());
+
+      const res = await client.create({
+        repository_version: repositoryVersionHref,
+      });
+
+      assert.strictEqual(res.status, 202);
+      assert.notStrictEqual(res.data.task, undefined);
+
+      await waitForTaskCompletion(res.data.task);
+      const task = await testAxiosClient(res.data.task, { method: 'GET' });
+      publicationHref = task.data.created_resources?.[0];
+
+      const created = await testAxiosClient(publicationHref, { method: 'GET' });
+      assert.strictEqual(
+        created.data.repository_version,
+        repositoryVersionHref,
+      );
+      assert.strictEqual(created.data.pulp_href, publicationHref);
+    });
+
+    it('create() when given additional optional fields dispatches task, and are shown on publication when task completes', async () => {
+      const repo = await createAndWaitForResource<RPMRepositoryType>(
+        'repositories/rpm/rpm/',
+        { name: 'test-rpm-repository-publication-create-optional' },
+      );
+      repositoryHref = repo.pulp_href;
+      const client = createPublicationAPI(testPulpAPI());
+      const payload = {
+        repository: repositoryHref,
+        checksum_type: 'sha256',
+        compression_type: 'gz',
+        layout: 'flat',
+      } satisfies RPMPublicationType;
+
+      const res = await client.create(payload);
+
+      assert.strictEqual(res.status, 202);
+      assert.notStrictEqual(res.data.task, undefined);
+
+      await waitForTaskCompletion(res.data.task);
+      const task = await testAxiosClient(res.data.task, { method: 'GET' });
+      publicationHref = task.data.created_resources?.[0];
+
+      const created = await testAxiosClient(publicationHref, { method: 'GET' });
+      assert.strictEqual(created.data.checksum_type, payload.checksum_type);
+      assert.strictEqual(created.data.repository, payload.repository);
+      assert.strictEqual(created.data.layout, payload.layout);
+      assert.strictEqual(
+        created.data.compression_type,
+        payload.compression_type,
+      );
+    });
+
+    it('create() with checkpoint and repository dispatches a task, and completes successfully', async () => {
+      const repo = await createAndWaitForResource<RPMRepositoryType>(
+        'repositories/rpm/rpm/',
+        { name: 'test-rpm-repository-publication-create-checkpoint' },
+      );
+      repositoryHref = repo.pulp_href;
+      const client = createPublicationAPI(testPulpAPI());
+
+      const res = await client.create({
+        repository: repositoryHref,
+        checkpoint: true,
+      });
+
+      assert.strictEqual(res.status, 202);
+      assert.notStrictEqual(res.data.task, undefined);
+
+      await waitForTaskCompletion(res.data.task);
+      const task = await testAxiosClient(res.data.task, { method: 'GET' });
+      publicationHref = task.data.created_resources?.[0];
+
+      const created = await testAxiosClient(publicationHref, { method: 'GET' });
+      assert.strictEqual(created.data.checkpoint, true);
+    });
+
+    it('create() when checkpoint is passed with repository_version returns 400', async () => {
+      const repo = await createAndWaitForResource<RPMRepositoryType>(
+        'repositories/rpm/rpm/',
+        { name: 'test-rpm-repository-publication-create-checkpoint-version' },
+      );
+      repositoryHref = repo.pulp_href;
+      const repositoryVersionHref = `${repositoryHref}versions/0/`;
+      const client = createPublicationAPI(testPulpAPI());
+
+      await assert.rejects(
+        () =>
+          client.create({
+            repository_version: repositoryVersionHref,
+            checkpoint: true,
+          }),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 400);
+          return true;
+        },
+      );
+    });
+
+    it('create() when missing both repository and repository_version returns 400', async () => {
+      const client = createPublicationAPI(testPulpAPI());
+
+      await assert.rejects(
+        () => client.create({}),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 400);
+          return true;
+        },
+      );
+    });
+
+    it('create() when an invalid checksum_type is passed returns 400', async () => {
+      const repo = await createAndWaitForResource<RPMRepositoryType>(
+        'repositories/rpm/rpm/',
+        { name: 'test-rpm-repository-publication-bad-checksum' },
+      );
+      repositoryHref = repo.pulp_href;
+      const client = createPublicationAPI(testPulpAPI());
+
+      await assert.rejects(
+        () =>
+          client.create({
+            repository: repositoryHref,
+            checksum_type: 'md5' as RPMPublicationUpsertType['checksum_type'],
+          }),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 400);
           return true;
         },
       );

@@ -195,7 +195,7 @@ type DateTimeFilterOptions = 'lt' | 'lte' | 'gt' | 'gte' | 'range' | 'isnull';
 type DateTimeFilterParams = LookupFilterParams<
   'pulp_last_updated',
   DateTimeFilterOptions,
-  'string'
+  string
 >;
 
 /**
