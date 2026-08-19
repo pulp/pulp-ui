@@ -6,19 +6,12 @@ import type {
   PaginatedResponse,
 } from '../../common';
 import type { PulpAPI } from '../../pulp';
-
-type RPMChecksumType =
-  | 'unknown'
-  | 'md5'
-  | 'sha'
-  | 'sha1'
-  | 'sha224'
-  | 'sha256'
-  | 'sha384'
-  | 'sha512';
-type RPMAllowedUpsertChecksumsType = 'sha256' | 'sha384' | 'sha512';
-type RPMCompressionType = 'zstd' | 'gz' | 'none';
-type RPMLayoutType = 'nested_alphabetically' | 'flat' | 'nested_by_digest';
+import type {
+  RPMAllowedUpsertChecksumsType,
+  RPMChecksumType,
+  RPMCompressionType,
+  RPMLayoutType,
+} from './types';
 
 /**
  * RPM Repository Type.
