@@ -3,7 +3,12 @@ import { Banner, Flex, FlexItem } from '@patternfly/react-core';
 import WrenchIcon from '@patternfly/react-icons/dist/esm/icons/wrench-icon';
 import { type ElementType } from 'react';
 import { Navigate, redirect, useLocation } from 'react-router';
-import { ErrorBoundary, ExternalLink, NotFound } from 'src/components';
+import {
+  ErrorBoundary,
+  ExternalLink,
+  LoadingSpinner,
+  NotFound,
+} from 'src/components';
 import {
   AboutProject,
   AnsibleRemoteDetail,
@@ -322,8 +327,12 @@ const AuthHandler = ({
   noAuth,
   path,
 }: IRouteConfig) => {
-  const { credentials } = useUserContext();
+  const { credentials, isLoading } = useUserContext();
   const { pathname } = useLocation();
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!credentials && !noAuth) {
     // NOTE: also update LoginLink when changing this

@@ -4,7 +4,8 @@ import { reject, some } from 'lodash';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { ExternalLink, NavList } from 'src/components';
-import { plugin_versions } from 'src/utilities';
+import { config } from 'src/ui-config';
+import { loginURL, plugin_versions } from 'src/utilities';
 import { Paths, formatPath } from './paths';
 import { useUserContext } from './user-context';
 
@@ -48,7 +49,10 @@ function standaloneMenu() {
       url: formatPath(Paths.core.status),
     }),
     menuItem(t`Login`, {
-      url: formatPath(Paths.meta.login),
+      url: config.UI_EXTERNAL_LOGIN_URI
+        ? loginURL(formatPath(Paths.core.status))
+        : formatPath(Paths.meta.login),
+      external: Boolean(config.UI_EXTERNAL_LOGIN_URI),
       condition: ({ user }) => !user, // not logged in
     }),
     menuItem(t`Search`, {

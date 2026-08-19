@@ -86,7 +86,7 @@ const UserDropdown = ({
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false);
-  const { credentials, clearCredentials } = useUserContext();
+  const { credentials, clearCredentials, isLoading } = useUserContext();
 
   const username = credentials?.username;
 
@@ -119,7 +119,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         {credentials ? (
           <UserDropdown username={username} logout={() => clearCredentials()} />
         ) : null}
-        {!credentials ? <LoginLink /> : null}
+        {!credentials && !isLoading ? <LoginLink /> : null}
       </MastheadContent>
     </Masthead>
   );
