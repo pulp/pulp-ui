@@ -37,7 +37,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^7.1.2",
-    "cypress": "^15.8.1",
+    "cypress": "^15.21.0",
     "eslint": "~9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-lingui": "^0.11.0",
@@ -61,7 +61,7 @@
     "url-join": "^5.0.0",
     "webpack": "^5.104.1",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.6"
+    "webpack-dev-server": "^6.0.0"
   },
   "scripts": {
     "build": "NODE_ENV=production webpack --config config/build.config.js",
