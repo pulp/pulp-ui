@@ -1,4 +1,9 @@
-import type { GenericPublication } from 'src/api/common';
+import type { AxiosResponse } from 'axios';
+import type {
+  GenericPublication,
+  GenericPublicationFilterParams,
+  PaginatedResponse,
+} from 'src/api/common';
 import type { PulpAPI } from 'src/api/pulp';
 import type {
   RPMChecksumType,
@@ -8,7 +13,7 @@ import type {
 
 /**
  * RPM Publication Type.
- * 
+ *
  * @see https://github.com/pulp/pulp_rpm/blob/dc333a99db6c44d70d6103540cb592f6e55a8682/pulp_rpm/app/serializers/repository.py#L474
  */
 interface RPMPublicationType extends GenericPublication {
@@ -22,7 +27,9 @@ interface RPMPublicationType extends GenericPublication {
 // FIXME: Move AxiosResponse type to PulpAPI Base Class.
 // NOTE: The FIXME implementation is not easy as to avoid major type issues with legacy API calls.
 interface RPMPublicationClient {
-  list: () => void;
+  list: (
+    params?: GenericPublicationFilterParams,
+  ) => Promise<AxiosResponse<PaginatedResponse<RPMPublicationType>>>;
   retrieve: () => void;
   create: () => void;
   delete: () => void;
@@ -30,14 +37,14 @@ interface RPMPublicationClient {
 
 /**
  * RPM Publication API Client.
- * @param {PulpAPI} base 
+ * @param {PulpAPI} base
  * @returns {RPMPublicationClient}
- * 
+ *
  * @see https://github.com/pulp/pulp_rpm/blob/dc333a99db6c44d70d6103540cb592f6e55a8682/pulp_rpm/app/viewsets/repository.py#L519
  */
 function createPublicationAPI(base: PulpAPI): RPMPublicationClient {
   return {
-    list: () => undefined,
+    list: (params?) => base.list(`publications/rpm/rpm/`, params),
     retrieve: () => undefined,
     create: () => undefined,
     delete: () => undefined,

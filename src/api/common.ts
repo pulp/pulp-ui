@@ -237,6 +237,24 @@ interface GenericDistributionFilterParams
   with_content?: string;
 }
 
+type PulpCreatedPublicationFilterParams = LookupFilterParams<
+  'pulp_created',
+  DateTimeFilterOptions,
+  string
+>;
+
+/**
+ * Generic Publication Filters shared across PulpCore & Plugin Endpoints.
+ */
+interface GenericPublicationFilterParams
+  extends GenericFilterParams, PulpCreatedPublicationFilterParams {
+  repository?: string;
+  respository_version?: string;
+  content?: string;
+  content__in?: string;
+  checkpoint?: boolean;
+}
+
 /**
  * --------------------
  * These are shared Plugin Types outside the PulpCore Generics.
@@ -267,5 +285,6 @@ export type {
   DispatchedTaskResponse,
   GenericRemoteFilterParams,
   GenericDistributionFilterParams,
+  GenericPublicationFilterParams,
   AnsibleLastSyncType,
 };
