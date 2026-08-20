@@ -1,34 +1,16 @@
+import type { GenericRemote } from './common';
 import { PulpAPI } from './pulp';
 
-export class FileRemoteType {
-  ca_cert: string;
-  client_cert: string;
-  download_concurrency: number;
-  name: string;
-  proxy_url: string;
-  pulp_href?: string;
-  rate_limit: number;
-  tls_validation: boolean;
-  url: string;
-  sync_dependencies?: boolean;
-
-  // connect_timeout
-  // headers
-  // max_retries
-  // policy
-  // prn
-  // pulp_created
-  // pulp_labels
-  // pulp_last_updated
-  // sock_connect_timeout
-  // sock_read_timeout
-  // total_timeout
-
-  hidden_fields: {
-    is_set: boolean;
-    name: string;
-  }[];
-
+/**
+ * File Remote Type.
+ *
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulp_file/app/serializers.py#L165
+ */
+interface FileRemoteType extends GenericRemote {
+  /**
+   * NOTE: Not part of the File serializer, populated separately.
+   * This should be broken out into its own type and extend the interface.
+   */
   my_permissions?: string[];
 }
 
@@ -62,3 +44,5 @@ export const FileRemoteAPI = {
   smartUpdate: (id, newValue: FileRemoteType, oldValue: FileRemoteType) =>
     base.http.put(`remotes/file/file/${id}/`, smartUpdate(newValue, oldValue)),
 };
+
+export type { FileRemoteType };
