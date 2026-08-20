@@ -1,19 +1,28 @@
+import type { GenericRepository } from './common';
 import { PulpAPI } from './pulp';
 
-export class FileRepositoryType {
+/**
+ * Type for syncing metadata set on FileRepository after each sync.
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulp_file/app/tasks/synchronizing.py#L97
+ */
+interface FileLastSyncDetailsType {
+  remote_pk: string;
+  url: string;
+  download_policy: string;
+  mirror: boolean;
+  most_recent_version: number;
+  manifest_checksum: string;
+}
+
+/**
+ * File Repository Type.
+ *
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulp_file/app/serializers.py#L122
+ */
+interface FileRepositoryType extends GenericRepository {
   autopublish?: boolean;
-  description: string | null;
-  latest_version_href?: string;
-  manifest?: string;
-  name: string;
-  prn?: string;
-  pulp_created?: string;
-  pulp_href?: string;
-  pulp_labels: Record<string, string>;
-  pulp_last_updated?: string;
-  remote: string | null;
-  retain_repo_versions: number;
-  versions_href?: string;
+  manifest?: string | null;
+  readonly last_sync_details?: FileLastSyncDetailsType | null;
 }
 
 const base = new PulpAPI();
@@ -39,3 +48,5 @@ export const FileRepositoryAPI = {
   update: (id: string, data) =>
     base.http.put(`repositories/file/file/${id}/`, data),
 };
+
+export type { FileRepositoryType };
