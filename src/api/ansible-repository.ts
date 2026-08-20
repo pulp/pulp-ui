@@ -1,22 +1,20 @@
+import type { AnsibleLastSyncType, GenericRepository } from './common';
 import { PulpAPI } from './pulp';
-import { type LastSyncType } from './response-types/remote';
 
-export class AnsibleRepositoryType {
-  description: string;
-  last_sync_task?: LastSyncType;
-  latest_version_href?: string;
-  name: string;
+/**
+ * Ansible Repository Type.
+ *
+ * @see https://github.com/pulp/pulp_ansible/blob/0043923641fc7fd3893f8489fd29ff04addc9d71/pulp_ansible/app/serializers.py#L148
+ */
+interface AnsibleRepositoryType extends GenericRepository {
+  last_synced_metadata_time?: string | null;
+  gpgkey?: string | null;
+  readonly last_sync_task?: AnsibleLastSyncType | null;
   private?: boolean;
-  pulp_created?: string;
-  pulp_href?: string;
-  pulp_labels?: Record<string, string>;
-  remote?: string;
-  retain_repo_versions: number;
-
-  // gpgkey
-  // last_synced_metadata_time
-  // versions_href
-
+  /**
+   * NOTE: Not part of the Ansible serializer, populated separately.
+   * This should be broken out into its own type and extend the interface.
+   */
   my_permissions?: string[];
 }
 
@@ -91,3 +89,5 @@ export const AnsibleRepositoryAPI = {
   update: (id: string, data) =>
     base.http.put(`repositories/ansible/ansible/${id}/`, data),
 };
+
+export type { AnsibleRepositoryType };
