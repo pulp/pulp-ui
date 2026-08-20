@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios';
 import assert from 'node:assert/strict';
-import { after, afterEach, before, describe, it } from 'node:test';
+import { after, afterEach, before, beforeEach, describe, it } from 'node:test';
 import {
   createAndWaitForResource,
   extractIdentifierFromPrn,
@@ -315,6 +315,76 @@ describe('Integration: RPM Publication API Client', () => {
         (err: unknown) => {
           assert.ok(isAxiosError(err));
           assert.strictEqual(err.response?.status, 400);
+          return true;
+        },
+      );
+    });
+  });
+
+  describe('RPM Publication - delete()', () => {
+    const testRpmRepositoryName = 'test-rpm-repository-publication-delete';
+    let repositoryHref: string | undefined;
+    let publicationHref: string | undefined;
+    let publicationPrn: string | undefined;
+
+    beforeEach(async () => {
+      const repo = await createAndWaitForResource<RPMRepositoryType>(
+        'repositories/rpm/rpm/',
+        {
+          name: testRpmRepositoryName,
+        },
+      );
+      repositoryHref = repo.pulp_href;
+
+      const pub = await createAndWaitForResource<RPMPublicationType>(
+        'publications/rpm/rpm/',
+        {
+          repository: repositoryHref,
+        },
+      );
+      publicationHref = pub.pulp_href;
+      publicationPrn = pub.prn;
+    });
+
+    afterEach(async () => {
+      if (publicationHref) {
+        await testAxiosClient(publicationHref, { method: 'DELETE' });
+      }
+
+      await testAxiosClient(repositoryHref, { method: 'DELETE' });
+      publicationHref = undefined;
+      publicationPrn = undefined;
+      repositoryHref = undefined;
+    });
+
+    it('delete() returns 204 and removes the publication', async () => {
+      const client = createPublicationAPI(testPulpAPI());
+      const publicationIdentifier = extractIdentifierFromPrn(publicationPrn);
+
+      const res = await client.delete(publicationIdentifier);
+
+      assert.strictEqual(res.status, 204);
+      await assert.rejects(
+        () => client.retrieve(publicationIdentifier),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 404);
+          return true;
+        },
+      );
+
+      publicationHref = undefined;
+    });
+
+    it('delete() when passed a non-existent identifier returns 404', async () => {
+      const nonExistentPublicationIdentifier = '1234567890';
+      const client = createPublicationAPI(testPulpAPI());
+
+      await assert.rejects(
+        () => client.delete(nonExistentPublicationIdentifier),
+        (err: unknown) => {
+          assert.ok(isAxiosError(err));
+          assert.strictEqual(err.response?.status, 404);
           return true;
         },
       );

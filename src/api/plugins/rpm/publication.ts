@@ -48,7 +48,7 @@ interface RPMPublicationClient {
   create: (
     data: RPMPublicationUpsertType,
   ) => Promise<AxiosResponse<DispatchedTaskResponse>>;
-  delete: () => void;
+  delete: (id: string) => Promise<AxiosResponse<void>>;
 }
 
 /**
@@ -63,7 +63,7 @@ function createPublicationAPI(base: PulpAPI): RPMPublicationClient {
     list: (params?) => base.list(`publications/rpm/rpm/`, params),
     retrieve: (id) => base.http.get(`publications/rpm/rpm/${id}/`),
     create: (data) => base.http.post(`publications/rpm/rpm/`, data),
-    delete: () => undefined,
+    delete: (id) => base.http.delete(`publications/rpm/rpm/${id}/`),
   };
 }
 
