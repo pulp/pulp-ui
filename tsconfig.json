@@ -7,6 +7,7 @@
     "lib": ["es2021", "dom"],
     "module": "es2020",
     "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
     "noImplicitAny": false,
     "outDir": "./dist/",
     "paths": {
