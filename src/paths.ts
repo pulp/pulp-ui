@@ -122,6 +122,18 @@ export const Paths = {
       profile: '/users/profile',
     },
   },
+  deb: {
+    remote: {
+      detail: '/deb/remotes/detail/:name',
+      edit: '/deb/remotes/edit/:name',
+      list: '/deb/remotes',
+    },
+    repository: {
+      detail: '/deb/repositories/detail/:name',
+      edit: '/deb/repositories/edit/:name',
+      list: '/deb/repositories',
+    },
+  },
   file: {
     remote: {
       detail: '/file/remotes/detail/:name',

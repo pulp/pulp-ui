@@ -2,6 +2,8 @@ import { t } from '@lingui/core/macro';
 import {
   AnsibleDistributionAPI,
   AnsibleRepositoryAPI,
+  DebDistributionAPI,
+  DebRepositoryAPI,
   FileDistributionAPI,
   FileRepositoryAPI,
   RPMRepositoryAPI,
@@ -19,6 +21,11 @@ export function plugin2api(plugin) {
       return {
         DistributionAPI: AnsibleDistributionAPI,
         RepositoryAPI: AnsibleRepositoryAPI,
+      };
+    case 'deb':
+      return {
+        DistributionAPI: DebDistributionAPI,
+        RepositoryAPI: DebRepositoryAPI,
       };
     case 'file':
       return {

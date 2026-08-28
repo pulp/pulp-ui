@@ -19,6 +19,12 @@ import {
   CollectionDistributions,
   CollectionDocs,
   CollectionImportLog,
+  DebRemoteDetail,
+  DebRemoteEdit,
+  DebRemoteList,
+  DebRepositoryDetail,
+  DebRepositoryEdit,
+  DebRepositoryList,
   EditNamespace,
   EditRole,
   EditUser,
@@ -160,6 +166,30 @@ const routes: IRouteConfig[] = [
   {
     component: AnsibleRepositoryList,
     path: Paths.ansible.repository.list,
+  },
+  {
+    component: DebRemoteDetail,
+    path: Paths.deb.remote.detail,
+  },
+  {
+    component: DebRemoteEdit,
+    path: Paths.deb.remote.edit,
+  },
+  {
+    component: DebRemoteList,
+    path: Paths.deb.remote.list,
+  },
+  {
+    component: DebRepositoryDetail,
+    path: Paths.deb.repository.detail,
+  },
+  {
+    component: DebRepositoryEdit,
+    path: Paths.deb.repository.edit,
+  },
+  {
+    component: DebRepositoryList,
+    path: Paths.deb.repository.list,
   },
   {
     component: FileRemoteDetail,

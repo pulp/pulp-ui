@@ -34,6 +34,15 @@ export class RemoteType {
   ca_cert?: string;
   sync_dependencies?: boolean;
 
+  // deb (remotes/deb/apt) only; `distributions` is required there
+  architectures?: string;
+  components?: string;
+  distributions?: string;
+  gpgkey?: string;
+  sync_installer?: boolean;
+  sync_sources?: boolean;
+  sync_udebs?: boolean;
+
   hidden_fields: { name: string; is_set: boolean }[];
 
   repositories: {
