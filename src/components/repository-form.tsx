@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import {
   AnsibleRemoteAPI,
   type AnsibleRepositoryType,
+  DebRemoteAPI,
   FileRemoteAPI,
 } from 'src/api';
 import {
@@ -32,7 +33,7 @@ interface IProps {
   errorMessages: ErrorMessagesType;
   onCancel: () => void;
   onSave: ({ createDistribution }) => void;
-  plugin: 'ansible' | 'file' | 'rpm';
+  plugin: 'ansible' | 'deb' | 'file' | 'rpm';
   repository: AnsibleRepositoryType;
   updateRepository: (r) => void;
 }
@@ -114,9 +115,11 @@ export const RepositoryForm = ({
     setRemotesError(null);
     (plugin === 'ansible'
       ? AnsibleRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
-      : plugin === 'file'
-        ? FileRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
-        : Promise.reject(plugin)
+      : plugin === 'deb'
+        ? DebRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
+        : plugin === 'file'
+          ? FileRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
+          : Promise.reject(plugin)
     )
       .then(({ data }) =>
         setRemotes(data.results.map((r) => ({ ...r, id: r.pulp_href }))),

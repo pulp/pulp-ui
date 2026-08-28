@@ -99,6 +99,14 @@ function standaloneMenu() {
         }),
       ],
     ),
+    menuSection('Pulp deb', { condition: and(loggedIn, hasPlugin('deb')) }, [
+      menuItem(t`Repositories`, {
+        url: formatPath(Paths.deb.repository.list),
+      }),
+      menuItem(t`Remotes`, {
+        url: formatPath(Paths.deb.remote.list),
+      }),
+    ]),
     menuSection('Pulp file', { condition: and(loggedIn, hasPlugin('file')) }, [
       menuItem(t`Repositories`, {
         url: formatPath(Paths.file.repository.list),
