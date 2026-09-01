@@ -6,7 +6,7 @@
     "jsx": "react-jsx",
     "lib": ["es2021", "dom"],
     "module": "es2020",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noImplicitAny": false,
     "outDir": "./dist/",
     "paths": {
