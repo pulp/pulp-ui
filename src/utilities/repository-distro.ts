@@ -9,7 +9,7 @@ import { ModelToApi, parsePulpResource } from 'src/utilities';
 // optional pulp_href param skips repo lookup
 // optional distributionAPI to avoid one API call
 
-interface Distribution {
+export interface Distribution {
   pulp_href: string;
   prn: string;
   name: string;

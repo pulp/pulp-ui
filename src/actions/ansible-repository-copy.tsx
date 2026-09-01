@@ -1,12 +1,13 @@
 import { msg, t } from '@lingui/core/macro';
 import { AnsibleDistributionAPI } from 'src/api';
 import { getDistroURL, repositoryDistro } from 'src/utilities';
+import type { Distribution } from 'src/utilities/repository-distro';
 import { Action } from './action';
 
 export const ansibleRepositoryCopyAction = Action({
   title: msg`Copy CLI configuration`,
   onClick: async (item, { addAlert }) => {
-    let distro = null;
+    let distro: Distribution | null;
 
     if (!item.distro) {
       addAlert({
