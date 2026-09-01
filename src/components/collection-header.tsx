@@ -768,7 +768,7 @@ export const CollectionHeader = ({
   }
 
   function deleteCollectionVersion(collectionVersion) {
-    let promise = null;
+    let promise;
 
     if (deleteAll) {
       promise = CollectionAPI.deleteCollectionVersion(deleteCollection);

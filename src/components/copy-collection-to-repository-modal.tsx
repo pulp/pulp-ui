@@ -34,7 +34,7 @@ export const CopyCollectionToRepositoryModal = ({
 
     const signingServiceName = settings.GALAXY_COLLECTION_SIGNING_SERVICE;
     if (signingServiceName) {
-      let signingService = null;
+      let signingService;
       try {
         const signingList = await SigningServiceAPI.list({
           name: signingServiceName,
