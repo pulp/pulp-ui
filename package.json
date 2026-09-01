@@ -34,6 +34,7 @@
     "@lingui/cli": "^5.8.0",
     "@ls-lint/ls-lint": "^2.3.1",
     "@trivago/prettier-plugin-sort-imports": "^6.0.0",
+    "@types/react": "^18.3.2",
     "babel-loader": "^10.0.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^14.0.0",
