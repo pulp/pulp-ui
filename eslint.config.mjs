@@ -1,57 +1,49 @@
-import eslint from '@eslint/js';
-import prettierConfig from 'eslint-config-prettier';
+import jsEslint from '@eslint/js';
+import eslintConfigPrettier from 'eslint-config-prettier';
+import pluginCypress from 'eslint-plugin-cypress';
 import pluginLingui from 'eslint-plugin-lingui';
-import reactPlugin from 'eslint-plugin-react';
+import pluginReact from 'eslint-plugin-react/configs/recommended.js';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
-import {
-  config,
-  parser,
-  configs as tsConfigs,
-  plugin as tsPlugin,
-} from 'typescript-eslint';
+import tsEslint from 'typescript-eslint';
+// NOTE: Whilst not fully bundling in ESM, this is needed when importing .json files.
+// REF: https://nodejs.org/api/esm.html#json-modules
+import pkg from './package.json' with { type: 'json' };
 
-// require('eslint-plugin-react/configs/recommended') does the right thing but can't be imported
-// and the .configs.recommended export adds flatconfig-invalid .plugins and .parserOptions .. remove
-const reactConfig = {
-  ...reactPlugin.configs.recommended,
-  plugins: { react: reactPlugin }, // fix for plugins: ['react']
-};
-delete reactConfig.parserOptions;
-
-export default config(
-  eslint.configs.recommended,
-  reactConfig,
-  ...tsConfigs.recommended,
-  ...tsConfigs.stylistic,
-  prettierConfig,
+export default defineConfig([
+  jsEslint.configs.recommended,
+  tsEslint.configs.recommended,
+  tsEslint.configs.stylistic,
   pluginLingui.configs['flat/recommended'],
+  eslintConfigPrettier,
   {
     files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
-    plugins: {
-      '@typescript-eslint': tsPlugin,
-      react: reactPlugin,
-    },
     languageOptions: {
+      globals: { ...globals.browser },
       ecmaVersion: 2022,
       sourceType: 'module',
-      parser,
+      parser: tsEslint.parser,
       parserOptions: {
         ecmaFeatures: {
           jsx: true,
         },
       },
-      globals: {
-        ...globals.browser,
-      },
     },
     settings: {
       react: {
-        version: 'detect',
+        // FIXME: This workaround uses the react version within package.json to avoid this plugin calling removed ESLint function in V10.
+        // REF: https://github.com/jsx-eslint/eslint-plugin-react/issues/3977
+        version: pkg.dependencies.react,
       },
     },
     linterOptions: {
       reportUnusedDisableDirectives: true,
     },
+    extends: [
+      // NOTE: This is a fix for the workaround using eslint-plugin-react within plugins. All functionality is still achieved by importing fully to `/configs/recommended.js`.
+      // REF: https://github.com/jsx-eslint/eslint-plugin-react/issues/3693
+      pluginReact,
+    ],
     rules: {
       curly: ['error', 'all'],
       'eol-last': ['error', 'always'],
@@ -99,9 +91,7 @@ export default config(
   {
     files: ['config/*.js'],
     languageOptions: {
-      globals: {
-        ...globals.node,
-      },
+      globals: { ...globals.node },
     },
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
@@ -116,22 +106,13 @@ export default config(
   },
   {
     files: ['cypress/**/*.{js,jsx,ts,tsx}'],
-    languageOptions: {
-      globals: {
-        ...globals.node,
-        Cypress: 'readonly',
-        after: 'readonly',
-        before: 'readonly',
-        beforeEach: 'readonly',
-        cy: 'readonly',
-        describe: 'readonly',
-        expect: 'readonly',
-        it: 'readonly',
-      },
+    plugins: {
+      cypress: pluginCypress,
     },
+    extends: [pluginCypress.configs.recommended, pluginCypress.configs.globals],
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/no-var-requires': 'off',
     },
   },
-);
+]);
