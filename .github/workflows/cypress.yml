@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: 'Checkout pulp-ui (${{ github.ref }})'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 'backend setup'
         run: |
@@ -30,6 +30,7 @@ jobs:
           echo "CONTENT_ORIGIN='http://$(hostname):8080'" >> settings/settings.py
           echo "ANSIBLE_API_HOSTNAME='http://$(hostname):8080'" >> settings/settings.py
           echo "ANSIBLE_CONTENT_HOSTNAME='http://$(hostname):8080/pulp/content'" >> settings/settings.py
+          echo "SECRET_KEY=\"$(python3 -c 'import secrets; print(secrets.token_urlsafe(50))')\"" >> settings/settings.py
 
       - name: 'backend run'
         run: |
@@ -41,17 +42,17 @@ jobs:
             docker.io/pulp/pulp
 
       - name: 'Install node 24'
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
 
       - name: 'Install python 3.13'
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: '3.13'
 
       - name: 'Cache ~/.npm & ~/.cache/Cypress'
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             ~/.npm
@@ -125,7 +126,7 @@ jobs:
         run: |
           npm run cypress:chrome
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: screenshots_and_videos

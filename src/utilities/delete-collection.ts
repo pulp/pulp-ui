@@ -32,7 +32,7 @@ export class DeleteCollectionUtils {
     addAlert,
     deleteFromRepo,
   }) {
-    let promise = null;
+    let promise;
     if (deleteFromRepo) {
       promise = repositoryRemoveCollection(
         deleteFromRepo,

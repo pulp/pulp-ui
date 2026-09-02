@@ -15,16 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout pulp-ui (${{ github.ref }})'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 'Install node 24'
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
           cache: 'npm'
 
       - name: 'Install python 3.13'
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: '3.13'
 
@@ -61,7 +61,7 @@ jobs:
       # need to checkout out head, the merge commit won't have any merges in history
       # also need more than 1 commit, assuming no PR will have more than 128
       - name: 'Checkout pulp-ui HEAD'
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 128
           ref: ${{ github.event.pull_request.head.sha }}

@@ -486,7 +486,7 @@ export class ContainerRepositoryForm extends Component<IProps, IState> {
       upstreamName: upstream_name,
     } = this.state;
 
-    let promise = null;
+    let promise;
     if (isRemote && isNew) {
       promise = ExecutionEnvironmentRemoteAPI.create({
         name,

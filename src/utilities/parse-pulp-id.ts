@@ -34,10 +34,7 @@ interface PulpResource {
 
 export function parsePulpResource(value: string): PulpResource {
   // value can be a url or a prn
-  let id = '',
-    plugin = '',
-    model = '',
-    resource_label;
+  let id: string, plugin: string, model: string, resource_label;
   if (value.startsWith(config.API_BASE_PATH)) {
     const url = value.replace(config.API_BASE_PATH, '');
     id = parsePulpIDFromURL(url);
