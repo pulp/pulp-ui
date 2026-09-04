@@ -99,6 +99,99 @@ interface GenericRemote extends GenericResource {
 }
 
 /**
+ * Generic Filters shared across PulpCore & Plugin Endpoints.
+ *
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/filters.py#L290
+ */
+interface GenericFilterParams {
+  pulp_id__in?: string;
+  pulp_href__in?: string;
+  prn__in?: string;
+  q?: string;
+  exclude_fields?: string;
+  fields?: string;
+  limit?: number;
+  minimal?: boolean;
+  offset?: number;
+  page_size?: number;
+  ordering?: string;
+  format?: string;
+}
+
+type LookupFilterParams<
+  Field extends string,
+  Lookup extends string,
+  Value,
+> = Partial<Record<Field | `${Field}__${Lookup}`, Value>>;
+type NameFilterOptions =
+  | 'iexact'
+  | 'in'
+  | 'contains'
+  | 'icontains'
+  | 'startswith'
+  | 'istartswith'
+  | 'regex'
+  | 'iregex';
+type NullableNumericFilterOptions =
+  | 'ne'
+  | 'lt'
+  | 'lte'
+  | 'gt'
+  | 'gte'
+  | 'range'
+  | 'isnull';
+type NameFilterParams = LookupFilterParams<'name', NameFilterOptions, string>;
+type RetainRepoVersionsFilterParams = LookupFilterParams<
+  'retain_repo_versions',
+  NullableNumericFilterOptions,
+  number | string
+>;
+type RetainCheckpointsFilterParams = LookupFilterParams<
+  'retain_checkpoints',
+  NullableNumericFilterOptions,
+  number | string
+>;
+
+/**
+ * Generic Repository Filters shared across PulpCore & Plugin Endpoints.
+ *
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/viewsets/repository.py#L88
+ */
+interface GenericRepositoryFilterParams
+  extends
+    GenericFilterParams,
+    NameFilterParams,
+    RetainRepoVersionsFilterParams,
+    RetainCheckpointsFilterParams {
+  pulp_label_select?: string;
+  remote?: string | null;
+  with_content?: string;
+  latest_with_content?: string;
+}
+
+/**
+ * Paginated Response shared across PulpCore & Plugin Endpoints.
+ *
+ * @see https://github.com/pulp/pulpcore/blob/934c752dae916857b2005e1fe0ef75496accc082/pulpcore/app/settings.py#L186
+ * @see https://github.com/encode/django-rest-framework/blob/6f0b74def3fcc81e126b87b08e59abdb6c2ad056/rest_framework/pagination.py#L364
+ */
+interface PaginatedResponse<TResult> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: TResult[];
+}
+
+/**
+ * Async Task Dispatch Response shared across PulpCore & Plugin Endpoints.
+ *
+ * @see https://github.com/pulp/pulpcore/blob/dea04fa79a6ca590f2943a0a7754c219061be10c/pulpcore/app/response.py#L6
+ */
+interface DispatchedTaskResponse {
+  task: string;
+}
+
+/**
  * --------------------
  * These are shared Plugin Types outside the PulpCore Generics.
  * --------------------
@@ -123,5 +216,8 @@ export type {
   GenericDistribution,
   GenericPublication,
   GenericRemote,
+  GenericRepositoryFilterParams,
+  PaginatedResponse,
+  DispatchedTaskResponse,
   AnsibleLastSyncType,
 };

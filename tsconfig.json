@@ -6,6 +6,7 @@
     "jsx": "react-jsx",
     "lib": ["es2021", "dom"],
     "module": "es2020",
+    "allowImportingTsExtensions": true,
     "moduleResolution": "bundler",
     "noImplicitAny": false,
     "outDir": "./dist/",
