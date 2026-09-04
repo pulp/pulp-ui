@@ -132,33 +132,57 @@ const StatusRedisConnection = ({
   redisConnection: { connected: boolean };
 }) => (redisConnection?.connected ? t`Connected` : `Not connected`);
 
-const StatusStorage = ({ storage }: { storage: { total; used; free } }) => {
-  const value = (100 / storage.total) * storage.used;
-  const total = getHumanSize(storage.total);
-  const used = getHumanSize(storage.used);
-  const free = getHumanSize(storage.free);
+// pulpcore measures total and free space only when artifacts live on a
+// filesystem. Every other backend reports both as null -- an object store has no
+// capacity to measure -- and `storage` itself is null if the filesystem lookup
+// raises. See _disk_usage() in pulpcore/app/views/status.py; the corresponding
+// serializer fields are allow_null=True.
+const isMeasured = (value): value is number =>
+  typeof value === 'number' && Number.isFinite(value);
+
+const StatusStorage = ({
+  storage,
+}: {
+  storage?: { total?: number; used?: number; free?: number };
+}) => {
+  const { total, used, free } = storage ?? {};
+
+  // Only a real capacity makes a percentage meaningful. Without this guard
+  // `(100 / null) * used` is Infinity, which Progress clamps to a full red bar,
+  // reporting every object-storage install as out of space.
+  const percentage =
+    isMeasured(total) && total > 0 && isMeasured(used)
+      ? (100 / total) * used
+      : null;
+
+  const size = (value) =>
+    isMeasured(value) ? getHumanSize(value) : t`Not reported`;
 
   return (
     <>
-      <Progress
-        value={value}
-        title={t`Storage`}
-        variant={
-          value > 88
-            ? 'danger'
-            : value > 66
-              ? 'warning'
-              : value > 33
-                ? null
-                : 'success'
-        }
-      />
+      {percentage === null ? null : (
+        <>
+          <Progress
+            value={percentage}
+            title={t`Storage`}
+            variant={
+              percentage > 88
+                ? 'danger'
+                : percentage > 66
+                  ? 'warning'
+                  : percentage > 33
+                    ? null
+                    : 'success'
+            }
+          />
+          <br />
+        </>
+      )}
+      <strong>{t`Total`}</strong>: {size(total)}
       <br />
-      <strong>{t`Total`}</strong>: {total}
+      <strong>{t`Used`}</strong>: {size(used)}
       <br />
-      <strong>{t`Used`}</strong>: {used}
-      <br />
-      <strong>{t`Free`}</strong>: {free}
+      <strong>{t`Free`}</strong>: {size(free)}
     </>
   );
 };
