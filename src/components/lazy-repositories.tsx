@@ -14,7 +14,7 @@ export const LazyRepositories = ({
 }: {
   content_href?: string;
   emptyText?: string;
-  plugin: 'ansible' | 'file' | 'rpm';
+  plugin: 'ansible' | 'deb' | 'file' | 'rpm';
   remote_href?: string;
 }) => {
   const [repositories, setRepositories] = useState([]);
