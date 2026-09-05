@@ -19,6 +19,7 @@ export { CollectionUsedbyDependenciesList } from './collection-usedby-dependenci
 export { CompoundFilter, type FilterOption } from './compound-filter';
 export { ConfirmModal } from './confirm-modal';
 export { ContainerRepositoryForm } from './container-repository-form';
+export { ContainerRepositorySidebar } from './container-repository-sidebar';
 export { CopyCollectionToRepositoryModal } from './copy-collection-to-repository-modal';
 export { CopyURL } from './copy-url';
 export { DarkmodeSwitcher } from './darkmode-switcher';

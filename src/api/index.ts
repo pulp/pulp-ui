@@ -12,6 +12,15 @@ export {
   ContainerDistributionAPI,
   ContainerPullThroughDistributionAPI,
 } from './container-distribution';
+export {
+  ContainerRepositoryNativeAPI,
+  type ContainerRepositoryNativeType,
+  type ContainerRepositoryVersionType,
+} from './container-repository-native';
+export {
+  ContainerRemoteNativeAPI,
+  type ContainerRemoteNativeType,
+} from './container-remote-native';
 export { ContainerTagAPI } from './container-tag';
 export { ExecutionEnvironmentAPI } from './execution-environment';
 export { ExecutionEnvironmentNamespaceAPI } from './execution-environment-namespace';
