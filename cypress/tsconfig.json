@@ -1,9 +1,9 @@
 {
-	"compilerOptions": {
-		"target": "es2024",
-		"lib": ["ES2024", "DOM"],
-		"sourceMap": true,
-		"types": ["cypress", "node"]
-	},
-	"include": ["**/*.ts", "support/e2e.js"]
+  "compilerOptions": {
+    "target": "es2024",
+    "lib": ["ES2024", "DOM"],
+    "sourceMap": true,
+    "types": ["cypress", "node"]
+  },
+  "include": ["**/*.ts", "support/e2e.js"]
 }
