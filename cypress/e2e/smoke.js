@@ -13,8 +13,10 @@ describe('UI smoke tests', () => {
     cy.assertTitle('Login');
 
     // fill in form manually, submit
-    cy.get('#pf-login-username-id').type(Cypress.env('username'));
-    cy.get('#pf-login-password-id').type(Cypress.env('password'));
+    cy.env(['username', 'password']).then(({ username, password }) => {
+      cy.get('#pf-login-username-id').type(username);
+      cy.get('#pf-login-password-id').type(password);
+    });
     cy.contains('button', 'Log in').click();
 
     // check on Status, logged in
