@@ -37,7 +37,7 @@ interface IProps {
   allowEditName?: boolean;
   closeModal: () => void;
   errorMessages: ErrorMessagesType;
-  plugin: 'ansible' | 'container' | 'file';
+  plugin: 'ansible' | 'container' | 'deb' | 'file';
   remote: RemoteType;
   saveRemote: () => void;
   showMain?: boolean;
@@ -62,6 +62,7 @@ interface IState {
     client_key: FormFilename;
     client_cert: FormFilename;
     ca_cert: FormFilename;
+    gpgkey: FormFilename;
   };
 }
 
@@ -120,7 +121,7 @@ export class RemoteForm extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 
-    const { requirements_file, client_key, client_cert, ca_cert } =
+    const { requirements_file, client_key, client_cert, ca_cert, gpgkey } =
       props.remote || {};
 
     this.state = {
@@ -140,6 +141,10 @@ export class RemoteForm extends Component<IProps, IState> {
         ca_cert: {
           name: ca_cert ? 'ca_cert' : '',
           original: !!ca_cert,
+        },
+        gpgkey: {
+          name: gpgkey ? 'gpgkey' : '',
+          original: !!gpgkey,
         },
       },
     };
@@ -169,7 +174,10 @@ export class RemoteForm extends Component<IProps, IState> {
       return null;
     }
 
-    const requiredFields = ['name', 'url'];
+    // pulp_deb rejects a remote with no suites to sync, so unlike every other
+    // plugin `distributions` is required rather than merely available.
+    const requiredFields =
+      plugin === 'deb' ? ['name', 'url', 'distributions'] : ['name', 'url'];
     let disabledFields = allowEditName ? [] : ['name'];
 
     const isCommunityRemote =
@@ -181,6 +189,7 @@ export class RemoteForm extends Component<IProps, IState> {
         break;
 
       case 'container':
+      case 'deb':
       case 'file':
         disabledFields = disabledFields.concat([
           'auth_url',
@@ -245,7 +254,7 @@ export class RemoteForm extends Component<IProps, IState> {
       isCommunityRemote,
     }: { extra?: ReactNode; isCommunityRemote: boolean },
   ) {
-    const { errorMessages, remote } = this.props;
+    const { errorMessages, plugin, remote } = this.props;
     const { filenames } = this.state;
     const { collection_signing } = (this.context as IAppContextType)
       .featureFlags;
@@ -328,6 +337,162 @@ export class RemoteForm extends Component<IProps, IState> {
             {...validateURLHelper(errorMessages['url'], remote.url)}
           />
         </FormGroup>
+
+        {plugin === 'deb' ? (
+          <>
+            <FormGroup
+              fieldId={'distributions'}
+              label={t`Distributions`}
+              labelIcon={
+                <HelpButton
+                  content={t`Whitespace separated list of distributions (also known as suites) to sync, for example "bookworm bookworm-updates".`}
+                />
+              }
+              isRequired={requiredFields.includes('distributions')}
+            >
+              <TextInput
+                validated={
+                  'distributions' in errorMessages ? 'error' : 'default'
+                }
+                isRequired={requiredFields.includes('distributions')}
+                isDisabled={disabledFields.includes('distributions')}
+                id='distributions'
+                type='text'
+                value={remote.distributions || ''}
+                onChange={(_event, value) =>
+                  this.updateRemote(value, 'distributions')
+                }
+              />
+              <FormFieldHelper
+                variant={'distributions' in errorMessages ? 'error' : 'default'}
+              >
+                {errorMessages['distributions']}
+              </FormFieldHelper>
+            </FormGroup>
+
+            <FormGroup
+              fieldId={'components'}
+              label={t`Components`}
+              labelIcon={
+                <HelpButton
+                  content={t`Whitespace separated list of components to sync, for example "main contrib". If none are supplied, all that are available will be synchronized.`}
+                />
+              }
+            >
+              <TextInput
+                validated={'components' in errorMessages ? 'error' : 'default'}
+                id='components'
+                type='text'
+                value={remote.components || ''}
+                onChange={(_event, value) =>
+                  this.updateRemote(value, 'components')
+                }
+              />
+              <FormFieldHelper
+                variant={'components' in errorMessages ? 'error' : 'default'}
+              >
+                {errorMessages['components']}
+              </FormFieldHelper>
+            </FormGroup>
+
+            <FormGroup
+              fieldId={'architectures'}
+              label={t`Architectures`}
+              labelIcon={
+                <HelpButton
+                  content={t`Whitespace separated list of architectures to sync, for example "amd64 arm64". If none are supplied, all that are available will be synchronized.`}
+                />
+              }
+            >
+              <TextInput
+                validated={
+                  'architectures' in errorMessages ? 'error' : 'default'
+                }
+                id='architectures'
+                type='text'
+                value={remote.architectures || ''}
+                onChange={(_event, value) =>
+                  this.updateRemote(value, 'architectures')
+                }
+              />
+              <FormFieldHelper
+                variant={'architectures' in errorMessages ? 'error' : 'default'}
+              >
+                {errorMessages['architectures']}
+              </FormFieldHelper>
+            </FormGroup>
+
+            <FormGroup
+              fieldId={'gpgkey'}
+              label={t`GPG key`}
+              labelIcon={
+                <HelpButton
+                  content={t`An armoured public key. When set, the signature on the upstream Release file is verified on every sync, which is what makes syncing over plain HTTP safe.`}
+                />
+              }
+            >
+              <FileUpload
+                validated={'gpgkey' in errorMessages ? 'error' : 'default'}
+                id='gpgkey'
+                type='text'
+                filename={filename('gpgkey')}
+                value={remote.gpgkey || ''}
+                hideDefaultPreview
+                onFileInputChange={fileOnChange('gpgkey')}
+                onClearClick={() => {
+                  this.setState({
+                    filenames: {
+                      ...filenames,
+                      gpgkey: { name: '', original: false },
+                    },
+                  });
+                  this.updateRemote(null, 'gpgkey');
+                }}
+              />
+              <FormFieldHelper
+                variant={'gpgkey' in errorMessages ? 'error' : 'default'}
+              >
+                {errorMessages['gpgkey']}
+              </FormFieldHelper>
+            </FormGroup>
+
+            <FormGroup fieldId={'sync_sources'} label={t`Sync sources`}>
+              <Switch
+                id='sync_sources'
+                isChecked={!!remote.sync_sources}
+                onChange={(_event, value) =>
+                  this.updateRemote(value, 'sync_sources')
+                }
+                label={t`Source packages will be synchronized`}
+                labelOff={t`Source packages will be skipped`}
+              />
+            </FormGroup>
+
+            <FormGroup fieldId={'sync_udebs'} label={t`Sync udebs`}>
+              <Switch
+                id='sync_udebs'
+                isChecked={!!remote.sync_udebs}
+                onChange={(_event, value) =>
+                  this.updateRemote(value, 'sync_udebs')
+                }
+                label={t`Installer packages will be synchronized`}
+                labelOff={t`Installer packages will be skipped`}
+              />
+            </FormGroup>
+
+            <FormGroup fieldId={'sync_installer'} label={t`Sync installer`}>
+              <Switch
+                id='sync_installer'
+                isChecked={!!remote.sync_installer}
+                onChange={(_event, value) =>
+                  this.updateRemote(value, 'sync_installer')
+                }
+                label={t`Installer files will be synchronized`}
+                labelOff={t`Installer files will be skipped`}
+              />
+            </FormGroup>
+          </>
+        ) : null}
 
         {!disabledFields.includes('signed_only') && collection_signing ? (
           <FormGroup

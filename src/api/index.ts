@@ -13,6 +13,9 @@ export {
   ContainerPullThroughDistributionAPI,
 } from './container-distribution';
 export { ContainerTagAPI } from './container-tag';
+export { DebDistributionAPI } from './deb-distribution';
+export { DebRemoteAPI, type DebRemoteType } from './deb-remote';
+export { DebRepositoryAPI, type DebRepositoryType } from './deb-repository';
 export { ExecutionEnvironmentAPI } from './execution-environment';
 export { ExecutionEnvironmentNamespaceAPI } from './execution-environment-namespace';
 export { ExecutionEnvironmentRegistryAPI } from './execution-environment-registry';

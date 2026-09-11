@@ -12,6 +12,12 @@ export { default as CollectionDetail } from './collection-detail/collection-deta
 export { default as CollectionDistributions } from './collection-detail/collection-distributions';
 export { default as CollectionDocs } from './collection-detail/collection-docs';
 export { default as CollectionImportLog } from './collection-detail/collection-import-log';
+export { default as DebRemoteDetail } from './deb-remote/detail';
+export { default as DebRemoteEdit } from './deb-remote/edit';
+export { default as DebRemoteList } from './deb-remote/list';
+export { default as DebRepositoryDetail } from './deb-repository/detail';
+export { default as DebRepositoryEdit } from './deb-repository/edit';
+export { default as DebRepositoryList } from './deb-repository/list';
 export { default as EditNamespace } from './edit-namespace/edit-namespace';
 export { default as ExecutionEnvironmentDetail } from './execution-environment-detail/execution-environment-detail';
 export { default as ExecutionEnvironmentDetailAccess } from './execution-environment-detail/execution-environment-detail-access';
