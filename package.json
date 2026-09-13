@@ -62,9 +62,9 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.69.0",
     "url-join": "^5.0.0",
-    "webpack": "^5.104.1",
-    "webpack-cli": "^7.2.3",
-    "webpack-dev-server": "^5.2.6"
+    "webpack": "5.110.3",
+    "webpack-cli": "7.2.3",
+    "webpack-dev-server": "6.0.0"
   },
   "scripts": {
     "build": "NODE_ENV=production webpack --config config/build.config.js",
@@ -99,7 +99,10 @@
     "upgrade": "npx npm-check-updates -u -t minor"
   },
   "engines": {
-    "node": ">=22",
+    "node": ">=22.32.2",
     "npm": ">=10"
+  },
+  "allowScripts": {
+    "cypress@16.0.0": true
   }
 }
