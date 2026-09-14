@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="static/images/pulp_logo.png" alt="Pulp logo" width="150">
+  <img src="https://raw.githubusercontent.com/pulp/pulp-ui/main/static/images/pulp_logo.png" alt="Pulp logo" width="150">
 </p>
 
 # PulpUI
 
-[![License: Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![Node](https://img.shields.io/badge/node-%3E%3D22.32.2-brightgreen)](package.json)
+[![License: Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://raw.githubusercontent.com/pulp/pulp-ui/main/LICENSE)
+[![Node](https://img.shields.io/badge/node-%3E%3D22.32.2-brightgreen)](https://raw.githubusercontent.com/pulp/pulp-ui/main/package.json)
 
 PulpUI is a community driven single-page application that talks to a running [pulpcore](https://github.com/pulp/pulpcore) instance over its REST API, giving that content - across whichever plugins your Pulp deployment has installed - a shared, consistent web UI instead of requiring the CLI or raw API calls.
 
@@ -116,4 +116,4 @@ A production build (`npm run build`) can be further configured by serving a `/pu
 See the [Pulp developer guide](https://pulpproject.org/dev/) to contribute, or reach the community on [Discourse](https://discourse.pulpproject.org) / Matrix ([#pulp](https://matrix.to/#/#pulp:matrix.org), [#pulp-dev](https://matrix.to/#/#pulp-dev:matrix.org))
 
 ## License
-[Apache-2.0](LICENSE)
+[Apache-2.0](https://raw.githubusercontent.com/pulp/pulp-ui/main/LICENSE)
