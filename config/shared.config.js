@@ -54,7 +54,7 @@ module.exports = (inputConfigs) => {
 
   return {
     devtool: 'source-map',
-
+    experiments: { typescript: false },
     ...(isBuild
       ? {}
       : {
