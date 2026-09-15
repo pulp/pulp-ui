@@ -8,12 +8,7 @@ import {
   TextInput,
 } from '@patternfly/react-core';
 import { useEffect, useState } from 'react';
-import {
-  AnsibleRemoteAPI,
-  type AnsibleRepositoryType,
-  DebRemoteAPI,
-  FileRemoteAPI,
-} from 'src/api';
+import { type AnsibleRepositoryType } from 'src/api';
 import {
   FormFieldHelper,
   HelpButton,
@@ -25,6 +20,7 @@ import {
 import {
   type ErrorMessagesType,
   errorMessage,
+  plugin2api,
   pluginRepositoryBasePath,
 } from 'src/utilities';
 
@@ -113,14 +109,8 @@ export const RepositoryForm = ({
   const [remotesError, setRemotesError] = useState(null);
   const loadRemotes = (name?) => {
     setRemotesError(null);
-    (plugin === 'ansible'
-      ? AnsibleRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
-      : plugin === 'deb'
-        ? DebRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
-        : plugin === 'file'
-          ? FileRemoteAPI.list({ ...(name ? { name__icontains: name } : {}) })
-          : Promise.reject(plugin)
-    )
+    const { RemoteAPI } = plugin2api(plugin);
+    RemoteAPI.list(name ? { name__icontains: name } : {})
       .then(({ data }) =>
         setRemotes(data.results.map((r) => ({ ...r, id: r.pulp_href }))),
       )
