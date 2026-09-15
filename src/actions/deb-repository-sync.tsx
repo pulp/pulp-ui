@@ -6,7 +6,13 @@ import { HelpButton, Spinner } from 'src/components';
 import { handleHttpError, parsePulpIDFromURL, taskAlert } from 'src/utilities';
 import { Action } from './action';
 
-// as in ansible-repository-sync and file-repository-sync
+// pulp_deb's own API default for a sync. ansible and file hardcode mirror: true
+// instead, and this deliberately does not follow them: mirroring deletes local
+// content the remote no longer has, so it is the direction to opt into rather
+// than out of.
+const DEFAULT_SYNC_PARAMS = { mirror: false, optimize: true };
+
+// otherwise as in ansible-repository-sync and file-repository-sync
 const SyncModal = ({
   closeAction,
   syncAction,
@@ -17,14 +23,11 @@ const SyncModal = ({
   name: string;
 }) => {
   const [pending, setPending] = useState(false);
-  const [syncParams, setSyncParams] = useState({
-    mirror: true,
-    optimize: true,
-  });
+  const [syncParams, setSyncParams] = useState(DEFAULT_SYNC_PARAMS);
 
   useEffect(() => {
     setPending(false);
-    setSyncParams({ mirror: true, optimize: true });
+    setSyncParams(DEFAULT_SYNC_PARAMS);
   }, [name]);
 
   if (!name) {
@@ -133,7 +136,7 @@ export const debRepositorySyncAction = Action({
 
 function syncRepository({ name, pulp_href }, { addAlert, query }, syncParams) {
   const pulpId = parsePulpIDFromURL(pulp_href);
-  return DebRepositoryAPI.sync(pulpId, syncParams || { mirror: true })
+  return DebRepositoryAPI.sync(pulpId, syncParams || DEFAULT_SYNC_PARAMS)
     .then(({ data }) => {
       addAlert(taskAlert(data.task, t`Sync started for repository "${name}".`));
 
