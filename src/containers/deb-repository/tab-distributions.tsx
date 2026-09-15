@@ -79,7 +79,9 @@ export const DistributionsTab = ({
         addAlert,
         query,
         hasPermission,
-        hasObjectPermission: (_p: string): boolean => true,
+        // No hasObjectPermission: an apt repository carries no my_permissions to
+        // check, and nothing in this list is gated on one. Whoever adds an action
+        // that is wants a real check here, not a stub that always agrees.
       }}
       defaultPageSize={10}
       defaultSort={'name'}
