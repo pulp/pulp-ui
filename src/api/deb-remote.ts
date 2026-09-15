@@ -1,6 +1,6 @@
 import { PulpAPI } from './pulp';
 
-export class DebRemoteType {
+export interface DebRemoteType {
   architectures: string;
   ca_cert: string;
   client_cert: string;
@@ -46,7 +46,7 @@ function smartUpdate(remote: DebRemoteType, unmodifiedRemote: DebRemoteType) {
       remote[field] = null;
     }
 
-    // API returns headers:null bull doesn't accept it .. and we don't edit headers
+    // API returns headers:null but doesn't accept it .. and we don't edit headers
     if (remote[field] === null && unmodifiedRemote[field] === null) {
       delete remote[field];
     }

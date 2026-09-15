@@ -1,6 +1,6 @@
 import { PulpAPI } from './pulp';
 
-export class DebRepositoryType {
+export interface DebRepositoryType {
   autopublish?: boolean;
   description: string | null;
   latest_version_href?: string;
