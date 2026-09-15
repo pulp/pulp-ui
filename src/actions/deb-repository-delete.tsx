@@ -38,25 +38,49 @@ export const debRepositoryDeleteAction = Action({
     }),
 });
 
+const DISTRIBUTION_PAGE_SIZE = 100;
+
+// A repository can be serving more distributions than a single page holds, and
+// any the lookup misses are left pointing at a repository that no longer exists.
+async function listDistributions(repository) {
+  const distributions = [];
+  let page = 1;
+  let count = Infinity;
+
+  while (distributions.length < count) {
+    const { data } = await DebDistributionAPI.list({
+      repository,
+      page,
+      page_size: DISTRIBUTION_PAGE_SIZE,
+    });
+
+    // Also stops the loop should count ever disagree with what the pages return.
+    if (!data.results?.length) {
+      break;
+    }
+
+    distributions.push(...data.results);
+    count = data.count;
+    page++;
+  }
+
+  return distributions;
+}
+
 async function deleteRepository(
   { name, pulp_href, pulpId },
   { addAlert, setState, listQuery },
 ) {
-  // TODO: handle more pages
-  const distributionsToDelete = await DebDistributionAPI.list({
-    repository: pulp_href,
-    page: 1,
-    page_size: 100,
-  })
-    .then(({ data: { results } }) => results || [])
-    .catch((e) => {
+  const distributionsToDelete = await listDistributions(pulp_href).catch(
+    (e) => {
       handleHttpError(
         t`Failed to list distributions, removing only the repository.`,
         () => null,
         addAlert,
       )(e);
       return [];
-    });
+    },
+  );
 
   const deleteRepo = DebRepositoryAPI.delete(pulpId)
     .then(({ data }) => {
