@@ -63,9 +63,11 @@ const DebRepositoryDetail = PageWithTabs<
   listUrl: formatPath(Paths.deb.repository.list),
   query: ({ name }) =>
     DebRepositoryAPI.list({ name, page_size: 1 })
-      .then(({ data: { results } }) => results[0])
+      .then(({ data }) => data?.results?.[0])
       .then((repository) => {
-        // using the list api, so an empty array is really a 404
+        // There is no detail endpoint keyed by name, so a name matching nothing
+        // answers 200 with an empty list. Turn that into the 404 the page already
+        // knows how to render, instead of resolving with undefined.
         if (!repository) {
           return Promise.reject({ response: { status: 404 } });
         }

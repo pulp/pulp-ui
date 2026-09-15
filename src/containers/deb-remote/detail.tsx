@@ -16,14 +16,18 @@ const DebRemoteDetail = PageWithTabs<DebRemoteType>({
   headerActions: [debRemoteEditAction, debRemoteDeleteAction],
   listUrl: formatPath(Paths.deb.remote.list),
   query: ({ name }) =>
-    DebRemoteAPI.list({ name })
-      .then(({ data: { results } }) => results[0])
-      .then(
-        (remote) =>
-          remote ||
-          // using the list api, so an empty array is really a 404
-          Promise.reject({ response: { status: 404 } }),
-      ),
+    DebRemoteAPI.list({ name, page_size: 1 }).then(({ data }) => {
+      const remote = data?.results?.[0];
+
+      // There is no detail endpoint keyed by name, so a name matching nothing
+      // answers 200 with an empty list. Turn that into the 404 the page already
+      // knows how to render, instead of resolving with undefined.
+      if (!remote) {
+        return Promise.reject({ response: { status: 404 } });
+      }
+
+      return remote;
+    }),
   renderTab: (tab, item, actionContext) =>
     ({
       details: <DetailsTab item={item} actionContext={actionContext} />,
