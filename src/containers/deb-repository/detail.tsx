@@ -26,23 +26,28 @@ import { RepositoryVersionsTab } from './tab-repository-versions';
 const DebRepositoryDetail = PageWithTabs<
   DebRepositoryType & { remote?: DebRemoteType }
 >({
-  breadcrumbs: ({ name, tab, params: { repositoryVersion } }) =>
-    [
+  breadcrumbs: ({ name, tab, params: { repositoryVersion } }) => {
+    const crumbs = [
       { url: formatPath(Paths.deb.repository.list), name: t`Repositories` },
       { url: formatPath(Paths.deb.repository.detail, { name }), name },
-      tab === 'repository-versions' && repositoryVersion
-        ? {
+    ];
+
+    if (tab !== 'repository-versions') {
+      return crumbs;
+    }
+
+    // Looking at a single version keeps a link back to the list of them.
+    return repositoryVersion
+      ? [
+          ...crumbs,
+          {
             url: formatPath(Paths.deb.repository.detail, { name }, { tab }),
             name: t`Versions`,
-          }
-        : null,
-      tab === 'repository-versions' && repositoryVersion
-        ? { name: t`Version ${repositoryVersion}` }
-        : null,
-      tab === 'repository-versions' && !repositoryVersion
-        ? { name: t`Versions` }
-        : null,
-    ].filter(Boolean),
+          },
+          { name: t`Version ${repositoryVersion}` },
+        ]
+      : [...crumbs, { name: t`Versions` }];
+  },
   displayName: 'DebRepositoryDetail',
   errorTitle: msg`Repository could not be displayed.`,
   headerActions: [
