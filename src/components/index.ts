@@ -137,6 +137,7 @@ export { Sort, type SortFieldType } from './sort';
 export { SortTable } from './sort-table';
 export { StatefulDropdown } from './stateful-dropdown';
 export { StatusIndicator } from './status-indicator';
+export { SyncModal } from './sync-modal';
 export { TableOfContents } from './table-of-contents';
 export { Tag } from './tag';
 export { TagLabel } from './tag-label';
