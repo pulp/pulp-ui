@@ -51,6 +51,27 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
+  it('Deb repositories', () => {
+    cy.ui('deb/repositories');
+    cy.assertTitle('Repositories');
+
+    cy.contains('No repositories yet');
+  });
+
+  it('Deb remotes', () => {
+    cy.ui('deb/remotes');
+    cy.assertTitle('Remotes');
+
+    cy.contains('No remotes yet');
+
+    // an apt remote cannot sync without being told which suites to fetch, so the
+    // form carries fields the other plugins have no use for
+    cy.contains('button', 'Add remote').click();
+    cy.get('#distributions');
+    cy.get('#components');
+    cy.get('#architectures');
+  });
+
   it('File repositories', () => {
     cy.ui('file/repositories');
     cy.assertTitle('Repositories');

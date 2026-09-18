@@ -1,8 +1,13 @@
 import { t } from '@lingui/core/macro';
 import {
   AnsibleDistributionAPI,
+  AnsibleRemoteAPI,
   AnsibleRepositoryAPI,
+  DebDistributionAPI,
+  DebRemoteAPI,
+  DebRepositoryAPI,
   FileDistributionAPI,
+  FileRemoteAPI,
   FileRepositoryAPI,
   RPMRepositoryAPI,
 } from 'src/api';
@@ -18,16 +23,25 @@ export function plugin2api(plugin) {
     case 'ansible':
       return {
         DistributionAPI: AnsibleDistributionAPI,
+        RemoteAPI: AnsibleRemoteAPI,
         RepositoryAPI: AnsibleRepositoryAPI,
+      };
+    case 'deb':
+      return {
+        DistributionAPI: DebDistributionAPI,
+        RemoteAPI: DebRemoteAPI,
+        RepositoryAPI: DebRepositoryAPI,
       };
     case 'file':
       return {
         DistributionAPI: FileDistributionAPI,
+        RemoteAPI: FileRemoteAPI,
         RepositoryAPI: FileRepositoryAPI,
       };
     case 'rpm':
       return {
         // FIXME: DistributionAPI: RPMDistributionAPI,
+        // FIXME: RemoteAPI: RPMRemoteAPI,
         RepositoryAPI: RPMRepositoryAPI,
       };
     default:
