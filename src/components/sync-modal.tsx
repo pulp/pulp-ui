@@ -5,21 +5,29 @@ import { HelpButton, Spinner } from 'src/components';
 
 interface IProps {
   closeAction: () => null;
+  // Which way the mirror switch starts. Plugins disagree: pulp_deb's API defaults
+  // a sync to not mirroring, where ansible and file have always offered to.
+  defaultMirror?: boolean;
   syncAction: (syncParams) => Promise<void>;
   name: string;
 }
 
-export const SyncModal = ({ closeAction, syncAction, name }: IProps) => {
+export const SyncModal = ({
+  closeAction,
+  defaultMirror = true,
+  syncAction,
+  name,
+}: IProps) => {
   const [pending, setPending] = useState(false);
   const [syncParams, setSyncParams] = useState({
-    mirror: true,
+    mirror: defaultMirror,
     optimize: true,
   });
 
   useEffect(() => {
     setPending(false);
-    setSyncParams({ mirror: true, optimize: true });
-  }, [name]);
+    setSyncParams({ mirror: defaultMirror, optimize: true });
+  }, [name, defaultMirror]);
 
   if (!name) {
     return null;
