@@ -1,5 +1,5 @@
 import { t } from '@lingui/core/macro';
-import { LoginLink } from 'src/components';
+import { LoginLink } from '../components/login-link';
 import { mapErrorMessages } from './map-error-messages';
 
 export function errorMessage(

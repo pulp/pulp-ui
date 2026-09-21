@@ -2,7 +2,7 @@ import { type MessageDescriptor, i18n } from '@lingui/core';
 import { Button } from '@patternfly/react-core';
 import { DropdownItem } from '@patternfly/react-core/deprecated';
 import { type ReactNode } from 'react';
-import { Tooltip } from 'src/components';
+import { Tooltip } from '../components/patternfly-wrappers/tooltip';
 
 type ModalType = ({ addAlert, listQuery, query, setState, state }) => ReactNode;
 

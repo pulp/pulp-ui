@@ -1,7 +1,10 @@
 import { msg, t } from '@lingui/core/macro';
-import { AnsibleDistributionAPI } from 'src/api';
-import { getDistroURL, repositoryDistro } from 'src/utilities';
-import type { Distribution } from 'src/utilities/repository-distro';
+import { AnsibleDistributionAPI } from '../api/ansible-distribution';
+import { getDistroURL } from '../utilities/get-repo-url';
+import {
+  type Distribution,
+  repositoryDistro,
+} from '../utilities/repository-distro';
 import { Action } from './action';
 
 export const ansibleRepositoryCopyAction = Action({

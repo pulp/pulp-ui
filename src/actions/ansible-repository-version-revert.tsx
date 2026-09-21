@@ -1,9 +1,12 @@
 import { msg, t } from '@lingui/core/macro';
 import { Button, Modal } from '@patternfly/react-core';
 import { useState } from 'react';
-import { AnsibleRepositoryAPI } from 'src/api';
-import { Spinner } from 'src/components';
-import { handleHttpError, parsePulpIDFromURL, taskAlert } from 'src/utilities';
+import { AnsibleRepositoryAPI } from '../api/ansible-repository';
+import { Spinner } from '../components/patternfly-wrappers/l10n';
+import { handleHttpError } from '../utilities/fail-alerts';
+import { parsePulpIDFromURL } from '../utilities/parse-pulp-id';
+import { taskAlert } from '../utilities/task-alert';
+
 import { Action } from './action';
 
 const RevertModal = ({

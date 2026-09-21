@@ -2,9 +2,11 @@ import { msg, t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import { Text } from '@patternfly/react-core';
 import { useState } from 'react';
-import { AnsibleRepositoryAPI } from 'src/api';
-import { DeleteModal } from 'src/components';
-import { handleHttpError, parsePulpIDFromURL, taskAlert } from 'src/utilities';
+import { DeleteModal } from '../components/delete-modal';
+import { AnsibleRepositoryAPI } from '../api/ansible-repository';
+import { handleHttpError } from '../utilities/fail-alerts';
+import { parsePulpIDFromURL } from '../utilities/parse-pulp-id';
+import { taskAlert } from '../utilities/task-alert';
 import { Action } from './action';
 
 const remove = (
