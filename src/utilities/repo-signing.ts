@@ -1,5 +1,5 @@
 import { t } from '@lingui/core/macro';
-import { SignContainersAPI } from 'src/api';
+import { SignContainersAPI } from '../api/sign-containers';
 import { waitForTaskUrl } from './wait-for-task';
 
 export class RepoSigningUtils {

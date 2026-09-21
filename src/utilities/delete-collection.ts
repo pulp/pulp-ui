@@ -1,9 +1,7 @@
 import { t } from '@lingui/core/macro';
-import {
-  CollectionAPI,
-  CollectionVersionAPI,
-  type CollectionVersionSearch,
-} from 'src/api';
+import { CollectionAPI } from '../api/collection';
+import { CollectionVersionAPI } from '../api/collection-version';
+import { type CollectionVersionSearch } from '../api/response-types/collection';
 import { jsxErrorMessage } from './fail-alerts';
 import { parsePulpIDFromURL } from './parse-pulp-id';
 import { repositoryRemoveCollection } from './repository-remove-collection';

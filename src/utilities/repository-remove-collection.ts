@@ -1,5 +1,5 @@
 import { t } from '@lingui/core/macro';
-import { AnsibleRepositoryAPI } from 'src/api';
+import { AnsibleRepositoryAPI } from '../api/ansible-repository';
 import { parsePulpIDFromURL } from './parse-pulp-id';
 import { waitForTaskUrl } from './wait-for-task';
 

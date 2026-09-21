@@ -1,4 +1,5 @@
 import { t } from '@lingui/core/macro';
+<<<<<<< HEAD
 import {
   AnsibleDistributionAPI,
   AnsibleRemoteAPI,
@@ -11,6 +12,13 @@ import {
   FileRepositoryAPI,
   RPMRepositoryAPI,
 } from 'src/api';
+=======
+import { AnsibleDistributionAPI } from '../api/ansible-distribution';
+import { AnsibleRepositoryAPI } from '../api/ansible-repository';
+import { FileDistributionAPI } from '../api/file-distribution';
+import { FileRepositoryAPI } from '../api/file-repository';
+import { RPMRepositoryAPI } from '../api/rpm-repository';
+>>>>>>> c1a0cf5 (Extended eslint rule and fixed circular deps in src/utilities)
 
 // returns the preferred distribution base_path given a repo name
 // if there is a distribution with the same name as the repository, it will be used (as long as it's connected to the right repo too)

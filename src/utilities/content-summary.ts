@@ -1,4 +1,4 @@
-import { type CollectionVersionSearch } from 'src/api';
+import { type CollectionVersionSearch } from '../api/response-types/collection';
 
 class Summary {
   total_count: number;

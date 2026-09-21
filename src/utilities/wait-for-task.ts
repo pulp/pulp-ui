@@ -1,5 +1,5 @@
 import { t } from '@lingui/core/macro';
-import { TaskAPI } from 'src/api';
+import { TaskAPI } from '../api/task';
 import { parsePulpIDFromURL } from './parse-pulp-id';
 
 interface Options {

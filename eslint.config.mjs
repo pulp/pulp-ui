@@ -120,7 +120,8 @@ export default defineConfig([
     rules: {
       'no-restricted-imports': ['warn', {
         paths: [
-          { name: 'src/api', message: "Import the specific file and not the barrel." }
+          { name: 'src/api', message: "Import the specific file and not the barrel." },
+          { name: 'src/utilities', message: "Import the specific file and not the barrel." }
         ]
       }]
     }

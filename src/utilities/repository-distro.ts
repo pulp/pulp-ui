@@ -1,6 +1,10 @@
 import { t } from '@lingui/core/macro';
-import { GenericDistributionAPI, GenericRepositoryAPI } from 'src/api';
-import { ModelToApi, parsePulpResource } from 'src/utilities';
+import {
+  GenericDistributionAPI,
+  GenericRepositoryAPI,
+} from '../api/generic-pulp';
+import { ModelToApi } from './model-to-api';
+import { parsePulpResource } from './parse-pulp-id';
 
 // returns the preferred distribution given a repo name
 // if there is a distribution with the same name as the repository, it will be used (as long as it's connected to the right repo too)
