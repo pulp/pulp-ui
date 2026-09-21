@@ -1,4 +1,4 @@
-import { type RemoteType } from '.';
+import { type RemoteType } from './response-types/remote';
 import { PulpAPI } from './pulp';
 
 // Deletes any hidden fields from the object so that they don't get sent to the API

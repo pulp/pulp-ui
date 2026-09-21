@@ -115,4 +115,14 @@ export default defineConfig([
       '@typescript-eslint/no-var-requires': 'off',
     },
   },
+  {
+    files: ['src/**/**/*.{js,jsx,ts,tsx}'],
+    rules: {
+      'no-restricted-imports': ['warn', {
+        paths: [
+          { name: 'src/api', message: "Import the specific file and not the barrel." }
+        ]
+      }]
+    }
+  }
 ]);
