@@ -2,7 +2,7 @@ import { t } from '@lingui/core/macro';
 import { Link, useLocation } from 'react-router';
 import { Paths, formatPath } from 'src/paths';
 import { config } from 'src/ui-config';
-import { loginURL } from 'src/utilities';
+import { loginURL } from '../utilities/login-url';
 
 interface IProps {
   button?: boolean;

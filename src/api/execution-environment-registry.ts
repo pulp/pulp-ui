@@ -1,5 +1,5 @@
-import { type RemoteType } from './response-types/remote';
 import { PulpAPI } from './pulp';
+import { type RemoteType } from './response-types/remote';
 
 // Deletes any hidden fields from the object so that they don't get sent to the API
 function clearSetFieldsFromRequest(data, hidden_fields) {

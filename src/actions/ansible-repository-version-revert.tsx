@@ -6,7 +6,6 @@ import { Spinner } from '../components/patternfly-wrappers/l10n';
 import { handleHttpError } from '../utilities/fail-alerts';
 import { parsePulpIDFromURL } from '../utilities/parse-pulp-id';
 import { taskAlert } from '../utilities/task-alert';
-
 import { Action } from './action';
 
 const RevertModal = ({

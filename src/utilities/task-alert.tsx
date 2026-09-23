@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/react/macro';
 import { type ReactNode } from 'react';
-import { MaybeLink } from '../components/maybe-link';
 import { Paths, formatPath } from 'src/paths';
+import { MaybeLink } from '../components/maybe-link';
 import { parsePulpIDFromURL } from './parse-pulp-id';
 
 type VariantType = 'custom' | 'success' | 'danger' | 'warning' | 'info';

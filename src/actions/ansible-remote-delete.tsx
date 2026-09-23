@@ -1,6 +1,6 @@
 import { msg, t } from '@lingui/core/macro';
-import { DeleteRemoteModal } from '../components/delete-remote-modal';
 import { AnsibleRemoteAPI } from '../api/ansible-remote';
+import { DeleteRemoteModal } from '../components/delete-remote-modal';
 import { handleHttpError } from '../utilities/fail-alerts';
 import { parsePulpIDFromURL } from '../utilities/parse-pulp-id';
 import { taskAlert } from '../utilities/task-alert';

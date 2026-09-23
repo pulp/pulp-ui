@@ -11,7 +11,6 @@ import { Table, Tbody, Td, Tr } from '@patternfly/react-table';
 import { sortBy } from 'lodash';
 import { Component } from 'react';
 import { Link } from 'react-router';
-import { type GroupType, type RoleType } from 'src/api';
 import {
   DeleteModal,
   EmptyStateNoData,
@@ -29,7 +28,9 @@ import {
   Spinner,
   WizardModal,
 } from 'src/components';
-import { ParamHelper } from 'src/utilities';
+import { type RoleType } from '../api/response-types/role';
+import { type GroupType } from '../api/response-types/user';
+import { ParamHelper } from '../utilities/param-helper';
 
 interface UserType {
   username: string;
