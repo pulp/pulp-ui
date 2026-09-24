@@ -107,7 +107,8 @@
   },
   "allowScripts": {
     "cypress@16.0.0": true,
-    "esbuild@0.28.2": true
+    "esbuild@0.28.2": true,
+    "msw@2.15.0": true
   },
   "workspaces": [
     "packages/*"
