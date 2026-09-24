@@ -19,13 +19,13 @@ export default defineConfig({
       indexFiles: false,
       override: {
         mutator: {
-            path: './src/mutator/pulp-fetch.ts',
-            name: 'pulpFetch'
+          path: './src/mutator/pulp-fetch.ts',
+          name: 'pulpFetch',
         },
         fetch: {
-            includeHttpResponseReturnType: false,
-        }
-      }
+          includeHttpResponseReturnType: false,
+        },
+      },
     },
   },
 });
