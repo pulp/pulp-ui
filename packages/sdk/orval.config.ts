@@ -17,6 +17,15 @@ export default defineConfig({
       target: './src/core/core.ts',
       schemas: { path: './src/core/models', splitByTags: true },
       indexFiles: false,
+      override: {
+        mutator: {
+            path: './src/mutator/pulp-fetch.ts',
+            name: 'pulpFetch'
+        },
+        fetch: {
+            includeHttpResponseReturnType: false,
+        }
+      }
     },
   },
 });
