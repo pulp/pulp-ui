@@ -14,6 +14,8 @@
   },
   "devDependencies": {
     "orval": "8.35.0",
-    "typescript": "7.0.2"
+    "typescript": "7.0.2",
+    "msw": "2.15.0",
+    "vitest": "5.0.1"
   }
 }
