@@ -1,5 +1,5 @@
 {
-  "name": "@pulp/sdk",
+  "name": "@pulp-ui/sdk",
   "version": "0.0.1",
   "license": "Apache-2.0",
   "author": "Pulp",
@@ -8,7 +8,12 @@
   ],
   "private": true,
   "type": "module",
-  "dependencies": {
-    "orval": "8.37.0"
+  "scripts": {
+    "generate": "orval --config ./orval.config.ts",
+    "typecheck": "tsc --noEmit -p ./tsconfig.json"
+  },
+  "devDependencies": {
+    "orval": "8.35.0",
+    "typescript": "7.0.2"
   }
 }
