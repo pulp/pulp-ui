@@ -1,0 +1,26 @@
+{
+  "name": "@pulp-ui/sdk",
+  "version": "0.0.1",
+  "license": "Apache-2.0",
+  "author": "Pulp",
+  "contributors": [
+    "Redtigercod4"
+  ],
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "orval --config ./orval.config.ts",
+    "typecheck": "tsc --noEmit -p ./tsconfig.json",
+    "test": "vitest run",
+    "test:integration": "vitest --tags-filter=integration",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "orval": "8.35.0",
+    "typescript": "7.0.2",
+    "msw": "2.15.0",
+    "vitest": "5.0.1",
+    "@vitest/coverage-v8": "5.0.1",
+    "happy-dom": "20.14.5"
+  }
+}
