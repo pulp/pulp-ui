@@ -6,7 +6,6 @@ import {
 } from '@patternfly/react-core';
 import { Table, Tbody } from '@patternfly/react-table';
 import { type ReactNode, useEffect, useState } from 'react';
-import { type ActionType } from 'src/actions';
 import {
   AppliedFilters,
   CompoundFilter,
@@ -20,7 +19,9 @@ import {
   type RenderTableRow,
   SortTable,
 } from 'src/components';
-import { filterIsSet, handleHttpError } from 'src/utilities';
+import { type ActionType } from '../actions/action';
+import { handleHttpError } from '../utilities/fail-alerts';
+import { filterIsSet } from '../utilities/filter-is-set';
 
 interface IProps<T> {
   actionContext: {

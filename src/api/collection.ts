@@ -1,4 +1,4 @@
-import { repositoryBasePath } from 'src/utilities';
+import { repositoryBasePath } from '../utilities/repository-distro';
 import { PulpAPI } from './pulp';
 import {
   type CollectionUploadType,

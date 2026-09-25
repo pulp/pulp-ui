@@ -1,7 +1,9 @@
 import { msg, t } from '@lingui/core/macro';
-import { FileRepositoryAPI } from 'src/api';
-import { SyncModal } from 'src/components';
-import { handleHttpError, parsePulpIDFromURL, taskAlert } from 'src/utilities';
+import { FileRepositoryAPI } from '../api/file-repository';
+import { SyncModal } from '../components/sync-modal';
+import { handleHttpError } from '../utilities/fail-alerts';
+import { parsePulpIDFromURL } from '../utilities/parse-pulp-id';
+import { taskAlert } from '../utilities/task-alert';
 import { Action } from './action';
 
 export const fileRepositorySyncAction = Action({

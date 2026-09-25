@@ -7,7 +7,6 @@ import {
 } from '@patternfly/react-core';
 import { Table, Tbody } from '@patternfly/react-table';
 import { Component, type ReactNode } from 'react';
-import { type ActionType } from 'src/actions';
 import { AppContext, type IAppContextType } from 'src/app-context';
 import {
   AlertList,
@@ -25,13 +24,11 @@ import {
   SortTable,
   closeAlert,
 } from 'src/components';
-import {
-  ParamHelper,
-  type RouteProps,
-  filterIsSet,
-  jsxErrorMessage,
-  withRouter,
-} from 'src/utilities';
+import { type ActionType } from '../actions/action';
+import { jsxErrorMessage } from '../utilities/fail-alerts';
+import { filterIsSet } from '../utilities/filter-is-set';
+import { ParamHelper } from '../utilities/param-helper';
+import { type RouteProps, withRouter } from '../utilities/with-router';
 
 interface IState<T> {
   params: {

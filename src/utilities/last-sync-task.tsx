@@ -1,4 +1,6 @@
-import { DateComponent, HelpButton, StatusIndicator } from 'src/components';
+import { DateComponent } from '../components/date-component';
+import { HelpButton } from '../components/help-button';
+import { StatusIndicator } from '../components/status-indicator';
 
 export function lastSynced(entity) {
   if (!entity.last_sync_task || !entity.last_sync_task.finished_at) {

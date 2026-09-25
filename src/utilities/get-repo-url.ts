@@ -1,6 +1,6 @@
 import { config } from 'src/ui-config';
-import { parsePulpResource } from 'src/utilities';
-import { ModelToApi } from 'src/utilities';
+import { ModelToApi } from './model-to-api';
+import { parsePulpResource } from './parse-pulp-id';
 
 export function getDistroURL(distribution) {
   const resource = parsePulpResource(

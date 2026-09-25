@@ -1,5 +1,5 @@
 import { msg } from '@lingui/core/macro';
-import { downloadString } from 'src/utilities';
+import { downloadString } from '../utilities/download-data';
 import { Action } from './action';
 
 export const ansibleRemoteDownloadClientAction = Action({

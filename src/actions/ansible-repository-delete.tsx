@@ -1,12 +1,11 @@
 import { msg, t } from '@lingui/core/macro';
-import { AnsibleDistributionAPI, AnsibleRepositoryAPI } from 'src/api';
-import { DeleteRepositoryModal } from 'src/components';
-import {
-  handleHttpError,
-  parsePulpIDFromURL,
-  taskAlert,
-  waitForTaskUrl,
-} from 'src/utilities';
+import { AnsibleDistributionAPI } from '../api/ansible-distribution';
+import { AnsibleRepositoryAPI } from '../api/ansible-repository';
+import { DeleteRepositoryModal } from '../components/delete-repository-modal';
+import { handleHttpError } from '../utilities/fail-alerts';
+import { parsePulpIDFromURL } from '../utilities/parse-pulp-id';
+import { taskAlert } from '../utilities/task-alert';
+import { waitForTaskUrl } from '../utilities/wait-for-task';
 import { Action } from './action';
 
 export const ansibleRepositoryDeleteAction = Action({

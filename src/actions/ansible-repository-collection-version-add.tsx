@@ -5,16 +5,18 @@ import { useState } from 'react';
 import {
   AnsibleRepositoryAPI,
   type AnsibleRepositoryType,
-  CollectionVersionAPI,
-  type CollectionVersionSearch,
-} from 'src/api';
+} from '../api/ansible-repository';
+import { CollectionVersionAPI } from '../api/collection-version';
+import { type CollectionVersionSearch } from '../api/response-types/collection';
 import {
   AlertList,
   type AlertType,
-  DetailList,
   closeAlert,
-} from 'src/components';
-import { handleHttpError, parsePulpIDFromURL, taskAlert } from 'src/utilities';
+} from '../components/alert-list';
+import { DetailList } from '../components/detail-list';
+import { handleHttpError } from '../utilities/fail-alerts';
+import { parsePulpIDFromURL } from '../utilities/parse-pulp-id';
+import { taskAlert } from '../utilities/task-alert';
 import { Action } from './action';
 
 const add = (

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ParamHelper } from 'src/utilities';
+import { ParamHelper } from '../utilities/param-helper';
 
 export class BaseAPI {
   http: { delete; get; interceptors; patch; post; put };

@@ -1,5 +1,5 @@
 import { satisfies } from 'compare-versions';
-import { PulpStatusAPI } from 'src/api';
+import { PulpStatusAPI } from '../api/pulp-status';
 
 interface PluginVersion {
   name: string;
