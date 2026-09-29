@@ -91,11 +91,9 @@ function standaloneMenu() {
       [
         menuItem(t`Containers`, {
           url: formatPath(Paths.container.repository.list),
-          condition: BROKEN,
         }),
         menuItem(t`Remote registries`, {
           url: formatPath(Paths.container.remote.list),
-          condition: BROKEN,
         }),
       ],
     ),
