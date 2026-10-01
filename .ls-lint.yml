@@ -9,4 +9,4 @@ ls:
 ignore:
   - '.git'
   - 'dist'
-  - 'node_modules'
+  - '**/node_modules'
