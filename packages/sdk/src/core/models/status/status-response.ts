@@ -5,12 +5,12 @@
  * Fetch, Upload, Organize, and Distribute Software Packages
  * OpenAPI spec version: v3
  */
-import type { AppStatusResponse } from './app-status-response';
-import type { ContentSettingsResponse } from './content-settings-response';
-import type { DatabaseConnectionResponse } from './database-connection-response';
-import type { RedisConnectionResponse } from './redis-connection-response';
-import type { StorageResponse } from './storage-response';
-import type { VersionResponse } from './version-response';
+import type { AppStatusResponse } from './app-status-response.ts';
+import type { ContentSettingsResponse } from './content-settings-response.ts';
+import type { DatabaseConnectionResponse } from './database-connection-response.ts';
+import type { RedisConnectionResponse } from './redis-connection-response.ts';
+import type { StorageResponse } from './storage-response.ts';
+import type { VersionResponse } from './version-response.ts';
 
 /**
  * Serializer for the status information of the app
