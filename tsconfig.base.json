@@ -14,5 +14,6 @@
     "exactOptionalPropertyTypes": true,
     "noImplicitOverride": true,
     "noImplicitAny": true
-  }
+  },
+  "exclude": ["node_modules"]
 }
