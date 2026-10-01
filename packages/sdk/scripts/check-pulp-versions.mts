@@ -1,54 +1,12 @@
-import { readFileSync } from 'node:fs';
+import {
+  fetchRemoteVersions,
+  isVersionLess,
+  readLocalVersions,
+  supportedPlugins,
+} from './versions.mts';
 
-const supportedPlugins = [
-  'core',
-  'hugging_face',
-  'python',
-  'gem',
-  'ansible',
-  'certguard',
-  'container',
-  'deb',
-  'rpm',
-  'maven',
-  'npm',
-  'ostree',
-];
-
-interface RemoteVersion {
-  component: string;
-  version: string;
-}
-
-const remoteVersionsResponse = await fetch(
-  'http://localhost:8080/pulp/api/v3/status/',
-  {
-    method: 'GET',
-  },
-);
-
-if (!remoteVersionsResponse.ok) {
-  throw new Error('Unable to get remote versions from Pulp.');
-}
-
-const remoteVersionsData: RemoteVersion[] = (
-  await remoteVersionsResponse.json()
-).versions;
-
-if (!Array.isArray(remoteVersionsData)) {
-  throw new Error('Malformed remote versions response.');
-}
-
-const remoteVersions = new Map(
-  remoteVersionsData.map(({ component, version }) => [component, version]),
-);
-
-const localVersionsData = readFileSync(
-  new URL('../pulp-versions.json', import.meta.url),
-  'utf-8',
-);
-const localVersions: Record<string, string> =
-  JSON.parse(localVersionsData).versions;
+const remoteVersions = await fetchRemoteVersions();
+const localVersions = readLocalVersions();
 
 const notInstalled: string[] = [];
 const notTracked: string[] = [];
@@ -68,9 +26,23 @@ for (const plugin of supportedPlugins) {
     continue;
   }
 
-  if (remoteVersion < localVersion) {
+  if (isVersionLess(remoteVersion, localVersion)) {
     regressions.push(plugin);
   }
 }
 
-console.log(regressions);
+if (notInstalled.length > 0) {
+  console.warn(
+    'Supported plugins not installed on the running Pulp instance:',
+    notInstalled,
+  );
+}
+
+if (notTracked.length > 0) {
+  console.warn('Plugins not yet tracked in pulp-versions.json:', notTracked);
+}
+
+if (regressions.length > 0) {
+  console.error('Pulp plugin version regressions detected:', regressions);
+  process.exit(1);
+}

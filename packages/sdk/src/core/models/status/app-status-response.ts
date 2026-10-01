@@ -5,7 +5,7 @@
  * Fetch, Upload, Organize, and Distribute Software Packages
  * OpenAPI spec version: v3
  */
-import type { AppStatusResponseVersions } from './app-status-response-versions';
+import type { AppStatusResponseVersions } from './app-status-response-versions.ts';
 
 export interface AppStatusResponse {
   /** The name of the worker. */

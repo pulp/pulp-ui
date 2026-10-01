@@ -9,7 +9,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "orval --config ./orval.config.ts",
+    "generate": "npm run check-versions && orval --config ./orval.config.ts",
+    "check-versions": "node ./scripts/check-pulp-versions.mts",
+    "update-versions": "node ./scripts/update-pulp-versions.mts",
     "typecheck": "tsc --noEmit -p ./tsconfig.json",
     "test": "vitest run",
     "test:integration": "vitest --tags-filter=integration",
