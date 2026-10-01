@@ -22,5 +22,8 @@
     "vitest": "5.0.1",
     "@vitest/coverage-v8": "5.0.1",
     "happy-dom": "20.14.5"
+  },
+  "exports": {
+    "./core/*": "./src/core/*.ts"
   }
 }

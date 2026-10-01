@@ -22,7 +22,7 @@ describe("Integration: pulpFetch", { tags: ["integration"] }, () => {
 		expect(result).toStrictEqual({ version: [] });
 	});
 
-	it("throws error carrying the status and parsed body on a non-2xx response", async () => {
+	it("throws error carrying the status and parsed body on a non-2xx JSON response", async () => {
 		server.use(
 			http.get("/pulp/api/v3/status/", () =>
 				HttpResponse.json({ detail: "Not found." }, { status: 404 }),
@@ -140,7 +140,7 @@ describe("Integration: pulpFetch", { tags: ["integration"] }, () => {
 		expect(contentType).toStrictEqual("application/merge-patch+json");
 	});
 
-	it("resolves with undefined on a 204 No Content response", async () => {
+	it("resolves with null on a 204 No Content response", async () => {
 		server.use(
 			http.delete("/pulp/api/v3/rpm/rpm/1234567890", () => {
 				return new HttpResponse(null, { status: 204 });
