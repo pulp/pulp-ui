@@ -6,10 +6,10 @@
  * OpenAPI spec version: v3
  */
 import { pulpFetch } from '../mutator/pulp-fetch.ts';
-import type { LoginReadParams } from './models/login/login-read-params.ts';
-import type { LoginResponse } from './models/login/login-response.ts';
-import type { LoginUpdateResponse } from './models/login/login-update-response.ts';
-import type { PatchedLoginUpdate } from './models/login/patched-login-update.ts';
+import type { LoginReadParams } from './models/login/login-read-params.zod.ts';
+import type { LoginResponse } from './models/login/login-response.zod.ts';
+import type { LoginUpdateResponse } from './models/login/login-update-response.zod.ts';
+import type { PatchedLoginUpdate } from './models/login/patched-login-update.zod.ts';
 
 export const getLoginReadUrl = (params?: LoginReadParams) => {
   const normalizedParams = new URLSearchParams();

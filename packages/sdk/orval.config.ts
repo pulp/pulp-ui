@@ -16,7 +16,7 @@ export default defineConfig({
       namingConvention: 'kebab-case',
       mode: 'tags',
       target: './src/core/core.ts',
-      schemas: { path: './src/core/models', splitByTags: true },
+      schemas: { path: './src/core/models', splitByTags: true, type: 'zod' },
       indexFiles: false,
       clean: true,
       override: {
@@ -34,6 +34,9 @@ export default defineConfig({
           ...(info.description ? [info.description] : []),
           ...(info.version ? [`OpenAPI spec version: ${info.version}`] : []),
         ],
+        zod: {
+          generateReusableSchemas: true,
+        },
       },
     },
     hooks: {
