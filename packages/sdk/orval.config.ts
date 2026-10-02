@@ -8,7 +8,7 @@ export default defineConfig({
       target: targetUrl,
       filters: {
         mode: 'include',
-        tags: ['Status'],
+        tags: ['Status', 'Login'],
       },
     },
     output: {
