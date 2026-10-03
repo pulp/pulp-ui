@@ -1,13 +1,13 @@
 import { msg, t } from '@lingui/core/macro';
 import { Td, Tr } from '@patternfly/react-table';
 import { RPMRemoteAPI, RPMRepositoryAPI, type RPMRepositoryType } from 'src/api';
-import { rpmRepositoryCreateAction, rpmRepositoryEditAction } from 'src/actions';
+import { rpmRepositoryCreateAction, rpmRepositoryEditAction, rpmRepositoryDeleteAction } from 'src/actions';
 import { DateComponent, ListItemActions, ListPage, PulpLabels } from 'src/components';
 import { parsePulpIDFromURL } from 'src/utilities';
 import { Link } from 'react-router';
 import { Paths, formatPath } from 'src/paths';
 
-const listItemActions = [rpmRepositoryEditAction];
+const listItemActions = [rpmRepositoryEditAction, rpmRepositoryDeleteAction];
 const typeaheadQuery = ({ inputText, selectedFilter, setState }) => {
   if (selectedFilter !== 'remote') {
     return;

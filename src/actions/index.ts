@@ -29,3 +29,4 @@ export { fileRepositoryEditAction } from './file-repository-edit';
 export { fileRepositorySyncAction } from './file-repository-sync';
 export { rpmRepositoryCreateAction } from './rpm-repository-create';
 export { rpmRepositoryEditAction } from './rpm-repository-edit';
+export { rpmRepositoryDeleteAction } from './rpm-repository-delete';
