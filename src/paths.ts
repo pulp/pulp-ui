@@ -152,6 +152,11 @@ export const Paths = {
     search: '/search',
   },
   rpm: {
+    repository: {
+      detail: '/rpm/repositories/detail/:name',
+      edit: '/rpm/repositories/edit/:name',
+      list: '/rpm/repositories',
+    },
     package: { list: '/rpm/rpms' },
   },
 };
