@@ -148,6 +148,28 @@ export const RepositoryForm = ({
         t`Retained number of versions`,
         t`In order to retain all versions, leave this field blank.`,
       )}
+      {plugin === 'rpm' && (
+        <>
+          {numericField(
+            'retain_package_versions',
+            t`Versions kept per package`,
+            t`How many versions of each package to keep; older ones are dropped on sync. Set to 0 to keep all versions.`,
+          )}
+          {formGroup(
+            'autopublish',
+            t`Autopublish`,
+            t`Create a publication for every new repository version, so distributions pointing at this repository always serve the latest content.`,
+            <Checkbox
+              id='autopublish'
+              isChecked={!!repository['autopublish']}
+              onChange={(_event, value) =>
+                updateRepository({ ...repository, autopublish: value })
+              }
+              label={t`Publish new versions automatically`}
+            />,
+          )}
+        </>
+      )}
 
       {formGroup(
         'distributions',
@@ -191,8 +213,12 @@ export const RepositoryForm = ({
           </div>
         </>,
       )}
-
-      {formGroup(
+      
+      {plugin !== 'rpm' && formGroup(
+        // putting the plugin check here because private repositories
+        // aren't an RPM concept. It's worth noting that (to my knowledge)
+        // Ansible Galaxy is the only thing that would need the private flag
+        // NP - 2026
         'private',
         t`Make private`,
         t`Make the repository private.`,
