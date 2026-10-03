@@ -78,7 +78,9 @@ export {
 } from './response-types/user';
 export { RoleAPI } from './role';
 export { RPMPackageAPI } from './rpm-package';
-export { RPMRepositoryAPI } from './rpm-repository';
+export { RPMDistributionAPI } from './rpm-distribution';
+export { RPMRemoteAPI, type RPMRemoteType } from './rpm-remote';
+export { RPMRepositoryAPI, type RPMRepositoryType,} from './rpm-repository';
 export { SignCollectionAPI } from './sign-collections';
 export { SignContainersAPI } from './sign-containers';
 export { SigningServiceAPI, type SigningServiceType } from './signing-service';

@@ -9,6 +9,8 @@ import { FileDistributionAPI } from '../api/file-distribution';
 import { FileRemoteAPI } from '../api/file-remote';
 import { FileRepositoryAPI } from '../api/file-repository';
 import { RPMRepositoryAPI } from '../api/rpm-repository';
+import { RPMDistributionAPI } from '../api/rpm-distribution';
+import { RPMRemoteAPI } from '../api/rpm-remote';
 
 // returns the preferred distribution base_path given a repo name
 // if there is a distribution with the same name as the repository, it will be used (as long as it's connected to the right repo too)
@@ -38,8 +40,8 @@ export function plugin2api(plugin) {
       };
     case 'rpm':
       return {
-        // FIXME: DistributionAPI: RPMDistributionAPI,
-        // FIXME: RemoteAPI: RPMRemoteAPI,
+        DistributionAPI: RPMDistributionAPI,
+        RemoteAPI: RPMRemoteAPI,
         RepositoryAPI: RPMRepositoryAPI,
       };
     default:
