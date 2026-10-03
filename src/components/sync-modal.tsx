@@ -1,5 +1,5 @@
 import { t } from '@lingui/core/macro';
-import { Button, FormGroup, Modal, Switch } from '@patternfly/react-core';
+import { Button, FormGroup, FormSelect, FormSelectOption, Modal, Switch } from '@patternfly/react-core';
 import { useEffect, useState } from 'react';
 import { HelpButton, Spinner } from 'src/components';
 
@@ -10,11 +10,16 @@ interface IProps {
   defaultMirror?: boolean;
   syncAction: (syncParams) => Promise<void>;
   name: string;
+  // When given, a sync policy dropdown replaces the mirror switch (pulp_rpm).
+  syncPolicies?: { id: string; label: string }[];
+  defaultSyncPolicy?: string;
 }
 
 export const SyncModal = ({
   closeAction,
   defaultMirror = true,
+  defaultSyncPolicy,
+  syncPolicies,
   syncAction,
   name,
 }: IProps) => {
@@ -22,12 +27,13 @@ export const SyncModal = ({
   const [syncParams, setSyncParams] = useState({
     mirror: defaultMirror,
     optimize: true,
+    sync_policy: defaultSyncPolicy,
   });
 
   useEffect(() => {
     setPending(false);
-    setSyncParams({ mirror: defaultMirror, optimize: true });
-  }, [name, defaultMirror]);
+    setSyncParams({ mirror: defaultMirror, optimize: true, sync_policy: defaultSyncPolicy });  }, 
+    [name, defaultMirror, defaultSyncPolicy]);
 
   if (!name) {
     return null;
@@ -61,23 +67,47 @@ export const SyncModal = ({
       title={t`Sync repository "${name}"`}
       variant='medium'
     >
-      <FormGroup
-        label={t`Mirror`}
-        labelIcon={
-          <HelpButton
-            content={t`If selected, all content that is not present in the remote repository will be removed from the local repository; otherwise, sync will add missing content.`}
-          />
-        }
-      >
-        <Switch
-          isChecked={syncParams.mirror}
-          onChange={(_event, mirror) =>
-            setSyncParams({ ...syncParams, mirror })
+      {syncPolicies ? (
+        <FormGroup
+          label={t`Sync policy`}
+          fieldId='sync_policy'
+          labelIcon={
+            <HelpButton
+              content={t`Additive keeps everything already in the repository. Mirror content only removes what the remote no longer has. Mirror complete also reproduces the remote's metadata exactly, which kickstart trees need.`}
+            />
           }
-          label={t`Content not present in remote repository will be removed from the local repository`}
-          labelOff={t`Sync will only add missing content`}
-        />
-      </FormGroup>
+        >
+          <FormSelect
+            id='sync_policy'
+            value={syncParams.sync_policy}
+            onChange={(_event, sync_policy) =>
+              setSyncParams({ ...syncParams, sync_policy })
+            }
+          >
+            {syncPolicies.map(({ id, label }) => (
+              <FormSelectOption key={id} value={id} label={label} />
+            ))}
+          </FormSelect>
+        </FormGroup>
+      ) : (
+        <FormGroup
+          label={t`Mirror`}
+          labelIcon={
+            <HelpButton
+              content={t`If selected, all content that is not present in the remote repository will be removed from the local repository; otherwise, sync will add missing content.`}
+            />
+          }
+        >
+          <Switch
+            isChecked={syncParams.mirror}
+            onChange={(_event, mirror) =>
+              setSyncParams({ ...syncParams, mirror })
+            }
+            label={t`Content not present in remote repository will be removed from the local repository`}
+            labelOff={t`Sync will only add missing content`}
+          />
+        </FormGroup>
+      )}
       <br />
       <FormGroup
         label={t`Optimize`}
