@@ -14,6 +14,7 @@ const initialRepository: RPMRepositoryType = {
   retain_repo_versions: 1,
   pulp_labels: {},
   remote: null,
+  autopublish: true,
 };
 
 const RPMRepositoryEdit = Page<RPMRepositoryType>({
