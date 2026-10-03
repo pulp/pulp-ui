@@ -20,6 +20,7 @@ import {
 import { DetailsTab } from './tab-details';
 import { DistributionsTab } from './tab-distributions';
 import { RepositoryVersionsTab } from './tab-repository-versions';
+import { PackagesTab } from './tab-packages';
 
 const RPMRepositoryDetail = PageWithTabs<
   RPMRepositoryType & { remote?: RPMRemoteType }
@@ -106,6 +107,7 @@ const RPMRepositoryDetail = PageWithTabs<
       distributions: (
         <DistributionsTab item={item} actionContext={actionContext} />
       ),
+      packages: <PackagesTab item={item} actionContext={actionContext} />,
     })[tab],
   tabs: (tab, name) => [
     {
@@ -133,6 +135,15 @@ const RPMRepositoryDetail = PageWithTabs<
         Paths.rpm.repository.detail,
         { name },
         { tab: 'distributions' },
+      ),
+    },
+    {
+      active: tab === 'packages',
+      title: t`Packages`,
+      link: formatPath(
+        Paths.rpm.repository.detail,
+        { name },
+        { tab: 'packages' },
       ),
     },
   ],
