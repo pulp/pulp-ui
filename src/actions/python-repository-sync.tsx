@@ -16,6 +16,7 @@ export const pythonRepositorySyncAction = Action({
       <SyncModal
         closeAction={() => setState({ syncModalOpen: null })}
         defaultMirror={MIRROR_BY_DEFAULT}
+        showOptimize={false}
         syncAction={(syncParams) =>
           syncRepository(state.syncModalOpen, { addAlert, query }, syncParams)
         }
@@ -44,10 +45,9 @@ export const pythonRepositorySyncAction = Action({
 
 function syncRepository({ name, pulp_href }, { addAlert, query }, syncParams) {
   const pulpId = parsePulpIDFromURL(pulp_href);
-  return PythonRepositoryAPI.sync(
-    pulpId,
-    syncParams || { mirror: MIRROR_BY_DEFAULT },
-  )
+  return PythonRepositoryAPI.sync(pulpId, {
+    mirror: syncParams?.mirror ?? MIRROR_BY_DEFAULT,
+  })
     .then(({ data }) => {
       addAlert(taskAlert(data.task, t`Sync started for repository "${name}".`));
 
