@@ -151,6 +151,18 @@ export const Paths = {
     login: '/login',
     search: '/search',
   },
+  python: {
+    remote: {
+      detail: '/python/remotes/detail/:name',
+      edit: '/python/remotes/edit/:name',
+      list: '/python/remotes',
+    },
+    repository: {
+      detail: '/python/repositories/detail/:name',
+      edit: '/python/repositories/edit/:name',
+      list: '/python/repositories',
+    },
+  },
   rpm: {
     package: { list: '/rpm/rpms' },
   },

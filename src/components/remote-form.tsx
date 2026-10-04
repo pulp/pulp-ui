@@ -37,7 +37,7 @@ interface IProps {
   allowEditName?: boolean;
   closeModal: () => void;
   errorMessages: ErrorMessagesType;
-  plugin: 'ansible' | 'container' | 'deb' | 'file';
+  plugin: 'ansible' | 'container' | 'deb' | 'file' | 'python';
   remote: RemoteType;
   saveRemote: () => void;
   showMain?: boolean;
@@ -191,6 +191,7 @@ export class RemoteForm extends Component<IProps, IState> {
       case 'container':
       case 'deb':
       case 'file':
+      case 'python':
         disabledFields = disabledFields.concat([
           'auth_url',
           'token',

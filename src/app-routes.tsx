@@ -50,6 +50,12 @@ import {
   NamespaceDetail,
   Partners,
   PulpStatus,
+  PythonRemoteDetail,
+  PythonRemoteEdit,
+  PythonRemoteList,
+  PythonRepositoryDetail,
+  PythonRepositoryEdit,
+  PythonRepositoryList,
   RPMPackageList,
   RoleCreate,
   RoleList,
@@ -338,6 +344,30 @@ const routes: IRouteConfig[] = [
     component: AboutProject,
     path: Paths.meta.about,
     noAuth: true,
+  },
+  {
+    component: PythonRemoteDetail,
+    path: Paths.python.remote.detail,
+  },
+  {
+    component: PythonRemoteEdit,
+    path: Paths.python.remote.edit,
+  },
+  {
+    component: PythonRemoteList,
+    path: Paths.python.remote.list,
+  },
+  {
+    component: PythonRepositoryDetail,
+    path: Paths.python.repository.detail,
+  },
+  {
+    component: PythonRepositoryEdit,
+    path: Paths.python.repository.edit,
+  },
+  {
+    component: PythonRepositoryList,
+    path: Paths.python.repository.list,
   },
   {
     component: RPMPackageList,
