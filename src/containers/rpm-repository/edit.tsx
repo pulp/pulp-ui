@@ -21,7 +21,10 @@ const RPMRepositoryEdit = Page<RPMRepositoryType>({
   breadcrumbs: ({ name }) =>
     [
       { url: formatPath(Paths.rpm.repository.list), name: t`Repositories` },
-      name && { name },
+      name && {
+        url: formatPath(Paths.rpm.repository.detail, { name }),
+        name,
+      },
       name ? { name: t`Edit` } : { name: t`Add` },
     ].filter(Boolean),
 
@@ -133,8 +136,11 @@ const RPMRepositoryEdit = Page<RPMRepositoryType>({
             repositoryToEdit: undefined,
           });
 
-          navigate(formatPath(Paths.rpm.repository.list));
-          
+          navigate(
+            formatPath(Paths.rpm.repository.detail, {
+              name: data.name,
+            }),
+          );
         })
         .catch(({ response: { data } }) =>
           setState({
@@ -148,7 +154,13 @@ const RPMRepositoryEdit = Page<RPMRepositoryType>({
 
     const closeModal = () => {
       setState({ errorMessages: {}, repositoryToEdit: undefined });
-        navigate(formatPath(Paths.rpm.repository.list));
+      navigate(
+        item
+          ? formatPath(Paths.rpm.repository.detail, {
+              name: item.name,
+            })
+          : formatPath(Paths.rpm.repository.list),
+      );
     };
 
     return (

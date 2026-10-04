@@ -37,7 +37,17 @@ export const DetailsTab = ({ item }: TabProps) => {
         },
         {
           label: t`Remote`,
-          value: item?.remote ? item.remote.name : t`None`,
+          value: item?.remote ? (
+            <Link
+              to={formatPath(Paths.rpm.remote.detail, {
+                name: item.remote.name,
+              })}
+            >
+              {item.remote.name}
+            </Link>
+          ) : (
+            t`None`
+          ),
         },
         {
           label: t`Autopublish`,

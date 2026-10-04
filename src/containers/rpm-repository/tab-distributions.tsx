@@ -42,8 +42,8 @@ export const DistributionsTab = ({
 
   // An RPM remote only needs a URL to consume this distribution.
   const cliConfig = (base_path) =>
-        `pulp rpm remote create --name "${item.name}" --url "${getRepoURL(base_path)}"`;
-  
+    `pulp rpm remote create --name "${item.name}" --url "${getRepoURL(base_path)}"`;
+
   const renderTableRow = (
     item: Distribution,
     index: number,
@@ -78,7 +78,7 @@ export const DistributionsTab = ({
         addAlert,
         query,
         hasPermission,
-        // No hasObjectPermission: an apt repository carries no my_permissions to
+        // No hasObjectPermission: an RPM repository carries no my_permissions to
         // check, and nothing in this list is gated on one. Whoever adds an action
         // that is wants a real check here, not a stub that always agrees.
       }}

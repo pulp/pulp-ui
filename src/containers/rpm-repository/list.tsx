@@ -1,16 +1,25 @@
 import { msg, t } from '@lingui/core/macro';
 import { Td, Tr } from '@patternfly/react-table';
-import { RPMRemoteAPI, RPMRepositoryAPI, type RPMRepositoryType } from 'src/api';
+import { Link } from 'react-router';
 import {
   rpmRepositoryCreateAction,
   rpmRepositoryDeleteAction,
   rpmRepositoryEditAction,
   rpmRepositorySyncAction,
 } from 'src/actions';
-import { DateComponent, ListItemActions, ListPage, PulpLabels } from 'src/components';
-import { parsePulpIDFromURL } from 'src/utilities';
-import { Link } from 'react-router';
+import {
+  RPMRemoteAPI,
+  RPMRepositoryAPI,
+  type RPMRepositoryType,
+} from 'src/api';
+import {
+  DateComponent,
+  ListItemActions,
+  ListPage,
+  PulpLabels,
+} from 'src/components';
 import { Paths, formatPath } from 'src/paths';
+import { parsePulpIDFromURL } from 'src/utilities';
 
 const listItemActions = [
   rpmRepositoryEditAction,
@@ -68,7 +77,9 @@ const RPMRepositoryList = ListPage<RPMRepositoryType>({
     return (
       <Tr key={index}>
         <Td>
-          <Link to={formatPath(Paths.rpm.repository.detail, { name })}>{name}</Link>
+          <Link to={formatPath(Paths.rpm.repository.detail, { name })}>
+            {name}
+          </Link>
         </Td>
         <Td>
           <PulpLabels labels={pulp_labels} />

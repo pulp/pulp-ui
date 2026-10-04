@@ -1,8 +1,8 @@
 import { msg, t } from '@lingui/core/macro';
 import { Trans } from '@lingui/react/macro';
 import {
-  rpmRepositoryEditAction,
   rpmRepositoryDeleteAction,
+  rpmRepositoryEditAction,
   rpmRepositorySyncAction,
 } from 'src/actions';
 import {
@@ -21,8 +21,8 @@ import {
 } from 'src/utilities';
 import { DetailsTab } from './tab-details';
 import { DistributionsTab } from './tab-distributions';
-import { RepositoryVersionsTab } from './tab-repository-versions';
 import { PackagesTab } from './tab-packages';
+import { RepositoryVersionsTab } from './tab-repository-versions';
 
 const RPMRepositoryDetail = PageWithTabs<
   RPMRepositoryType & { remote?: RPMRemoteType }
@@ -84,7 +84,7 @@ const RPMRepositoryDetail = PageWithTabs<
         };
 
         return Promise.all([
-          // the plugin-aware variant, so the deb distribution endpoint is the
+          // the plugin-aware variant, so the RPM distribution endpoint is the
           // one consulted
           pluginRepositoryBasePath(
             'rpm',

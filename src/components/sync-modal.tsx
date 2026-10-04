@@ -1,5 +1,12 @@
 import { t } from '@lingui/core/macro';
-import { Button, FormGroup, FormSelect, FormSelectOption, Modal, Switch } from '@patternfly/react-core';
+import {
+  Button,
+  FormGroup,
+  FormSelect,
+  FormSelectOption,
+  Modal,
+  Switch,
+} from '@patternfly/react-core';
 import { useEffect, useState } from 'react';
 import { HelpButton, Spinner } from 'src/components';
 
@@ -32,8 +39,12 @@ export const SyncModal = ({
 
   useEffect(() => {
     setPending(false);
-    setSyncParams({ mirror: defaultMirror, optimize: true, sync_policy: defaultSyncPolicy });  }, 
-    [name, defaultMirror, defaultSyncPolicy]);
+    setSyncParams({
+      mirror: defaultMirror,
+      optimize: true,
+      sync_policy: defaultSyncPolicy,
+    });
+  }, [name, defaultMirror, defaultSyncPolicy]);
 
   if (!name) {
     return null;
