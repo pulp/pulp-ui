@@ -21,6 +21,7 @@ import {
 } from 'src/utilities';
 import { DetailsTab } from './tab-details';
 import { DistributionsTab } from './tab-distributions';
+import { PackagesTab } from './tab-packages';
 import { RepositoryVersionsTab } from './tab-repository-versions';
 
 const PythonRepositoryDetail = PageWithTabs<
@@ -107,6 +108,7 @@ const PythonRepositoryDetail = PageWithTabs<
       'repository-versions': (
         <RepositoryVersionsTab item={item} actionContext={actionContext} />
       ),
+      packages: <PackagesTab item={item} actionContext={actionContext} />,
       distributions: (
         <DistributionsTab item={item} actionContext={actionContext} />
       ),
@@ -137,6 +139,15 @@ const PythonRepositoryDetail = PageWithTabs<
         Paths.python.repository.detail,
         { name },
         { tab: 'distributions' },
+      ),
+    },
+    {
+      active: tab === 'packages',
+      title: t`Packages`,
+      link: formatPath(
+        Paths.python.repository.detail,
+        { name },
+        { tab: 'packages' },
       ),
     },
   ],

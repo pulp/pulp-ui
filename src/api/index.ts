@@ -88,6 +88,7 @@ export {
   PythonRepositoryAPI,
   type PythonRepositoryType,
 } from './python-repository';
+export { PythonPackageAPI } from './python-package';
 export { RPMPackageAPI } from './rpm-package';
 export { RPMRepositoryAPI } from './rpm-repository';
 export { SignCollectionAPI } from './sign-collections';
