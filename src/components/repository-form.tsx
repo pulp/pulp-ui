@@ -149,6 +149,40 @@ export const RepositoryForm = ({
         t`In order to retain all versions, leave this field blank.`,
       )}
 
+      {plugin === 'python' && (
+        <>
+          {formGroup(
+            'allow_package_substitution',
+            t`Allow package substitution`,
+            t`Allow replacing an existing package with one that has the same filename but a different checksum. When off, any new repository version that would cause such a substitution is rejected, whether from sync, upload or modify.`,
+            <Checkbox
+              id='allow_package_substitution'
+              isChecked={repository['allow_package_substitution'] !== false}
+              onChange={(_event, value) =>
+                updateRepository({
+                  ...repository,
+                  allow_package_substitution: value,
+                })
+              }
+              label={t`Allow same-filename packages with different contents`}
+            />,
+          )}
+          {formGroup(
+            'error_on_reject',
+            t`Fail on rejected packages`,
+            t`When on, a rejected package fails the whole repository version and nothing is added. When off, rejected packages are skipped, the rest are added, and the skipped ones are listed in the task's progress report.`,
+            <Checkbox
+              id='error_on_reject'
+              isChecked={repository['error_on_reject'] !== false}
+              onChange={(_event, value) =>
+                updateRepository({ ...repository, error_on_reject: value })
+              }
+              label={t`Fail the whole version if any package is rejected`}
+            />,
+          )}
+        </>
+      )}
+
       {formGroup(
         'distributions',
         t`Distributions`,
