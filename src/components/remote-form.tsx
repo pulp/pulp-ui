@@ -9,6 +9,8 @@ import {
   FlexItem,
   Form,
   FormGroup,
+  FormSelect,
+  FormSelectOption,
   InputGroup,
   InputGroupItem,
   Modal,
@@ -33,11 +35,15 @@ import {
   validateURLHelper,
 } from 'src/utilities';
 
+// Plugins whose remotes offer a download policy in this form. pulp_file and
+// pulp_deb accept the same three policies; add them here once tested.
+const PLUGINS_WITH_POLICY = ['rpm'];
+
 interface IProps {
   allowEditName?: boolean;
   closeModal: () => void;
   errorMessages: ErrorMessagesType;
-  plugin: 'ansible' | 'container' | 'deb' | 'file';
+  plugin: 'ansible' | 'container' | 'deb' | 'file' | 'rpm';
   remote: RemoteType;
   saveRemote: () => void;
   showMain?: boolean;
@@ -191,6 +197,7 @@ export class RemoteForm extends Component<IProps, IState> {
       case 'container':
       case 'deb':
       case 'file':
+      case 'rpm':
         disabledFields = disabledFields.concat([
           'auth_url',
           'token',
@@ -337,7 +344,33 @@ export class RemoteForm extends Component<IProps, IState> {
             {...validateURLHelper(errorMessages['url'], remote.url)}
           />
         </FormGroup>
-
+        {PLUGINS_WITH_POLICY.includes(plugin) && (
+          <FormGroup
+            fieldId={'policy'}
+            label={t`Download policy`}
+            labelIcon={
+              <HelpButton
+                content={t`Immediate downloads all packages during sync and is required when the remote will not stay reachable. On demand syncs metadata only and downloads each package the first time a client requests it. Streamed passes packages through to clients without storing them.`}
+              />
+            }
+            isRequired={requiredFields.includes('policy')}
+          >
+            <FormSelect
+              id='policy'
+              value={remote.policy || 'immediate'}
+              onChange={(_event, value) => this.updateRemote(value, 'policy')}
+            >
+              <FormSelectOption value='immediate' label={t`Immediate`} />
+              <FormSelectOption value='on_demand' label={t`On demand`} />
+              <FormSelectOption value='streamed' label={t`Streamed`} />
+            </FormSelect>
+            <FormFieldHelper
+              variant={'policy' in errorMessages ? 'error' : 'default'}
+            >
+              {errorMessages['policy']}
+            </FormFieldHelper>
+          </FormGroup>
+        )}
         {plugin === 'deb' ? (
           <>
             <FormGroup
