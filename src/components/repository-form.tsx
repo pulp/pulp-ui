@@ -225,20 +225,20 @@ export const RepositoryForm = ({
           </div>
         </>,
       )}
-
-      {formGroup(
-        'private',
-        t`Make private`,
-        t`Make the repository private.`,
-        <Checkbox
-          id='private'
-          isChecked={repository.private}
-          label={t`Make private`}
-          onChange={(_event, value) =>
-            updateRepository({ ...repository, private: value })
-          }
-        />,
-      )}
+      {plugin !== 'python' &&
+        formGroup(
+          'private',
+          t`Make private`,
+          t`Make the repository private.`,
+          <Checkbox
+            id='private'
+            isChecked={repository.private}
+            label={t`Make private`}
+            onChange={(_event, value) =>
+              updateRepository({ ...repository, private: value })
+            }
+          />,
+        )}
 
       {formGroup(
         'remote',
