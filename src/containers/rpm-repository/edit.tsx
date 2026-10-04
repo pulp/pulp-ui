@@ -65,6 +65,10 @@ const RPMRepositoryEdit = Page<RPMRepositoryType>({
         }
       });
 
+      // retain_package_versions is not nullable in pulp_rpm; an empty field
+      // means keep every version, which the API spells 0
+      data.retain_package_versions ??= 0;
+
       if (item) {
         delete data.last_sync_task;
         delete data.last_synced_metadata_time;

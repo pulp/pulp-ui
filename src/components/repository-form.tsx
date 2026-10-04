@@ -153,7 +153,7 @@ export const RepositoryForm = ({
           {numericField(
             'retain_package_versions',
             t`Versions kept per package`,
-            t`How many versions of each package to keep; older ones are dropped on sync. Set to 0 to keep all versions.`,
+            t`How many versions of each package to keep; older ones are dropped on sync. Leave blank to keep all versions.`,
           )}
           {formGroup(
             'autopublish',
