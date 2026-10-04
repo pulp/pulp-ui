@@ -77,6 +77,17 @@ export {
   type UserType,
 } from './response-types/user';
 export { RoleAPI } from './role';
+export { PythonDistributionAPI } from './python-distribution';
+export {
+  PythonRemoteAPI,
+  type PythonPackageType,
+  type PythonPlatform,
+  type PythonRemoteType,
+} from './python-remote';
+export {
+  PythonRepositoryAPI,
+  type PythonRepositoryType,
+} from './python-repository';
 export { RPMPackageAPI } from './rpm-package';
 export { RPMRepositoryAPI } from './rpm-repository';
 export { SignCollectionAPI } from './sign-collections';
