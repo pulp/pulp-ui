@@ -162,6 +162,7 @@ export const Paths = {
       edit: '/python/repositories/edit/:name',
       list: '/python/repositories',
     },
+    package: { list: '/python/packages' },
   },
   rpm: {
     package: { list: '/rpm/rpms' },

@@ -125,6 +125,9 @@ function standaloneMenu() {
         menuItem(t`Remotes`, {
           url: formatPath(Paths.python.remote.list),
         }),
+        menuItem(t`Packages`, {
+          url: formatPath(Paths.python.package.list),
+        }),
       ],
     ),
     menuSection('Pulp RPM', { condition: and(loggedIn, hasPlugin('rpm')) }, [
