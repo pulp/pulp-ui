@@ -61,6 +61,14 @@ const PythonRemoteEdit = Page<PythonRemoteType>({
 
       const data = { ...remoteToEdit };
 
+      // Includes and excludes are edited one specifier per line; drop blank
+      // lines and surrounding whitespace before sending them to Pulp.
+      for (const field of ['includes', 'excludes'] as const) {
+        if (Array.isArray(data[field])) {
+          data[field] = data[field].map((s) => s.trim()).filter(Boolean);
+        }
+      }
+
       if (!item) {
         // prevent "This field may not be blank." when writing in and then deleting username/password/etc
         // only when creating, edit diffs with item
