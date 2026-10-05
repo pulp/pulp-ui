@@ -12,18 +12,11 @@
     "generate": "npm run check-versions && orval --config ./orval.config.ts",
     "check-versions": "node ./scripts/check-pulp-versions.mts",
     "update-versions": "node ./scripts/update-pulp-versions.mts",
-    "typecheck": "tsc --noEmit -p ./tsconfig.json",
-    "test": "vitest run",
-    "test:integration": "vitest --tags-filter=integration",
-    "test:coverage": "vitest run --coverage"
+    "typecheck": "tsc --noEmit -p ./tsconfig.json"
   },
   "devDependencies": {
     "orval": "8.35.0",
-    "typescript": "7.0.2",
-    "msw": "2.15.0",
-    "vitest": "5.0.1",
-    "@vitest/coverage-v8": "5.0.1",
-    "happy-dom": "20.14.5"
+    "typescript": "7.0.2"
   },
   "exports": {
     "./core/*": "./src/core/*.ts"

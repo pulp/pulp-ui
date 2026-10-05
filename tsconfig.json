@@ -19,6 +19,6 @@
     "strictNullChecks": false,
     "target": "es5"
   },
-  "include": ["./src/"],
+  "include": ["./src/", "vitest.shims.ts", "vitest.config.ts"],
   "exclude": ["node_modules"]
 }
