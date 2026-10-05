@@ -69,7 +69,11 @@
     "ajv": "8.20.0",
     "commander": "15.0.0",
     "vite": "8.3.0",
-    "zod": "4.6.5"
+    "zod": "4.6.5",
+    "msw": "2.15.0",
+    "vitest": "5.0.1",
+    "@vitest/coverage-v8": "5.0.1",
+    "happy-dom": "20.14.5"
   },
   "scripts": {
     "build": "NODE_ENV=production webpack --config config/build.config.js",
@@ -100,7 +104,10 @@
     "prettier:check": "prettier -l .",
     "sort-exports": "perl -i -pe 's/^export/import/' src/**/index.ts ; npm run prettier ; perl -i -pe 's/^import/export/' src/**/index.ts",
     "start": "NODE_ENV=development webpack serve --config config/start.config.js",
-    "test": "true",
+    "test": "vitest run",
+    "test:integration": "vitest --tags-filter=integration",
+    "test:unit": "vitest --tags-filter=unit",
+    "test:coverage": "vitest run --coverage",
     "upgrade": "npx npm-check-updates -u -t minor"
   },
   "engines": {
