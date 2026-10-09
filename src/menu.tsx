@@ -115,6 +115,21 @@ function standaloneMenu() {
         url: formatPath(Paths.file.remote.list),
       }),
     ]),
+    menuSection(
+      'Pulp Python',
+      { condition: and(loggedIn, hasPlugin('python')) },
+      [
+        menuItem(t`Repositories`, {
+          url: formatPath(Paths.python.repository.list),
+        }),
+        menuItem(t`Remotes`, {
+          url: formatPath(Paths.python.remote.list),
+        }),
+        menuItem(t`Packages`, {
+          url: formatPath(Paths.python.package.list),
+        }),
+      ],
+    ),
     menuSection('Pulp RPM', { condition: and(loggedIn, hasPlugin('rpm')) }, [
       menuItem(t`RPMs`, {
         url: formatPath(Paths.rpm.package.list),
