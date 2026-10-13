@@ -3,6 +3,7 @@
 
 declare module '*.png';
 declare module '*.svg';
+declare module '*.css';
 
 // Declare configuration globals here so that TypeScript compiles
 /* eslint-disable-next-line no-var */

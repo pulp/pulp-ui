@@ -1,0 +1,46 @@
+.pulp-status-indicator {
+  --pulp-status-indicator-bg: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: var(--pf-v5-global--spacer--sm);
+  padding: 12px 36px;
+  border-radius: var(--pf-v5-global--BorderRadius--lg);
+  background-color: var(--pulp-status-indicator-bg);
+  box-shadow: var(--pf-v5-global--BoxShadow--sm);
+  font-weight: var(--pf-v5-global--FontWeight--normal);
+  font-size: var(--pf-v5-global--FontSize--lg);
+  color: var(--pf-v5-global--Color--200);
+}
+
+:where(.pf-v5-theme-dark) .pulp-status-indicator {
+  --pulp-status-indicator-bg: #1e2026;
+  color: #b8bbbeff;
+}
+
+.pulp-status-indicator::before {
+  content: '';
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background-color: var(--pf-v5-global--disabled-color--100);
+}
+
+.pulp-status-indicator--success::before {
+  background-color: var(--pf-v5-global--success-color--100);
+}
+
+.pulp-status-indicator--warning::before {
+  background-color: var(--pf-v5-global--warning-color--100);
+}
+
+.pulp-status-indicator--danger::before {
+  background-color: var(--pf-v5-global--danger-color--100);
+}
+
+@media (max-width: 576px) {
+  .pulp-status-indicator {
+    padding: 8px 20px;
+    font-size: var(--pf-v5-global--FontSize--sm);
+  }
+}

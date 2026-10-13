@@ -14,6 +14,11 @@ export default defineConfig({
         description:
           'Pure functions, Zod schemas, and ACL codecs - no network or DOM',
       },
+      {
+        name: 'component',
+        description:
+          'React components rendered with RTL in happy-dom - no network',
+      },
     ],
     coverage: {
       provider: 'v8',
