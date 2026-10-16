@@ -140,10 +140,10 @@ describe('Integration: pulpFetch', { tags: ['integration'] }, () => {
     expect(contentType).toStrictEqual('application/merge-patch+json');
   });
 
-  it('resolves with null on a 204 No Content response', async () => {
+  it('resolves with undefined on a 204 No Content response', async () => {
     server.use(
       http.delete('/pulp/api/v3/rpm/rpm/1234567890', () => {
-        return new HttpResponse(null, { status: 204 });
+        return new HttpResponse(undefined, { status: 204 });
       }),
     );
 
@@ -151,7 +151,7 @@ describe('Integration: pulpFetch', { tags: ['integration'] }, () => {
       method: 'DELETE',
     });
 
-    expect(result).toBeNull();
+    expect(result).toBeUndefined();
   });
 
   it('throws when a 2xx response is missing Content-Type', async () => {
