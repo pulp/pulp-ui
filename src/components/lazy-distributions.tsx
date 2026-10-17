@@ -11,7 +11,7 @@ export const LazyDistributions = ({
   repositoryHref,
 }: {
   emptyText?: string;
-  plugin: 'ansible' | 'deb' | 'file' | 'rpm';
+  plugin: 'ansible' | 'deb' | 'file' | 'python' | 'rpm';
   repositoryHref: string;
 }) => {
   const [distributions, setDistributions] = useState([]);

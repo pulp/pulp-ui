@@ -13,6 +13,7 @@ import {
   InputGroupItem,
   Modal,
   Switch,
+  TextArea,
   TextInput,
 } from '@patternfly/react-core';
 import DownloadIcon from '@patternfly/react-icons/dist/esm/icons/download-icon';
@@ -37,7 +38,7 @@ interface IProps {
   allowEditName?: boolean;
   closeModal: () => void;
   errorMessages: ErrorMessagesType;
-  plugin: 'ansible' | 'container' | 'deb' | 'file';
+  plugin: 'ansible' | 'container' | 'deb' | 'file' | 'python';
   remote: RemoteType;
   saveRemote: () => void;
   showMain?: boolean;
@@ -191,6 +192,7 @@ export class RemoteForm extends Component<IProps, IState> {
       case 'container':
       case 'deb':
       case 'file':
+      case 'python':
         disabledFields = disabledFields.concat([
           'auth_url',
           'token',
@@ -337,6 +339,182 @@ export class RemoteForm extends Component<IProps, IState> {
             {...validateURLHelper(errorMessages['url'], remote.url)}
           />
         </FormGroup>
+
+        {plugin === 'python' ? (
+          <>
+            {(['includes', 'excludes'] as const).map((field) => (
+              <FormGroup
+                key={field}
+                fieldId={field}
+                label={field === 'includes' ? t`Includes` : t`Excludes`}
+                labelIcon={
+                  <HelpButton
+                    content={
+                      field === 'includes'
+                        ? t`Projects to sync, one specifier per line, for example "django>=4.2". Leave empty to sync every project the remote offers.`
+                        : t`Projects to skip, one specifier per line, for example "django<4". Applied after includes.`
+                    }
+                  />
+                }
+              >
+                <TextArea
+                  validated={field in errorMessages ? 'error' : 'default'}
+                  id={field}
+                  placeholder={'django>=4.2\nrequests'}
+                  value={(remote[field] || []).join('\n')}
+                  onChange={(_event, value) =>
+                    this.updateRemote(value.split('\n'), field)
+                  }
+                  autoResize
+                />
+                <FormFieldHelper
+                  variant={field in errorMessages ? 'error' : 'default'}
+                >
+                  {errorMessages[field]}
+                </FormFieldHelper>
+              </FormGroup>
+            ))}
+
+            <FormGroup
+              fieldId={'prereleases'}
+              label={t`Pre-releases`}
+              labelIcon={
+                <HelpButton
+                  content={t`Whether to include pre-release versions in the sync.`}
+                />
+              }
+            >
+              <Checkbox
+                id='prereleases'
+                isChecked={!!remote['prereleases']}
+                onChange={(_event, value) =>
+                  this.updateRemote(value, 'prereleases')
+                }
+                label={t`Include pre-release versions`}
+              />
+            </FormGroup>
+
+            <FormGroup
+              fieldId={'package_types'}
+              label={t`Package types`}
+              labelIcon={
+                <HelpButton
+                  content={t`Package types to sync. Leave all unticked to sync every type.`}
+                />
+              }
+            >
+              {[
+                'sdist',
+                'bdist_wheel',
+                'bdist_egg',
+                'bdist_dumb',
+                'bdist_rpm',
+                'bdist_msi',
+                'bdist_wininst',
+                'bdist_dmg',
+              ].map((type) => (
+                <Checkbox
+                  key={type}
+                  id={`package_types_${type}`}
+                  label={type}
+                  isChecked={(remote['package_types'] || []).includes(type)}
+                  onChange={(_event, checked) =>
+                    this.updateRemote(
+                      checked
+                        ? [...(remote['package_types'] || []), type]
+                        : (remote['package_types'] || []).filter(
+                            (t) => t !== type,
+                          ),
+                      'package_types',
+                    )
+                  }
+                />
+              ))}
+            </FormGroup>
+
+            <FormGroup
+              fieldId={'keep_latest_packages'}
+              label={t`Latest versions kept per package`}
+              labelIcon={
+                <HelpButton
+                  content={t`How many of the newest versions of each package to sync, including pre-releases if those are synced. Leave blank to keep all versions.`}
+                />
+              }
+            >
+              <TextInput
+                validated={
+                  'keep_latest_packages' in errorMessages ? 'error' : 'default'
+                }
+                id='keep_latest_packages'
+                type='number'
+                value={remote['keep_latest_packages'] || ''}
+                onChange={(_event, value) =>
+                  this.updateRemote(
+                    value === '' ? 0 : Number(value),
+                    'keep_latest_packages',
+                  )
+                }
+              />
+              <FormFieldHelper
+                variant={
+                  'keep_latest_packages' in errorMessages ? 'error' : 'default'
+                }
+              >
+                {errorMessages['keep_latest_packages']}
+              </FormFieldHelper>
+            </FormGroup>
+
+            <FormGroup
+              fieldId={'exclude_platforms'}
+              label={t`Excluded platforms`}
+              labelIcon={
+                <HelpButton
+                  content={t`Platforms whose packages should not be synced.`}
+                />
+              }
+            >
+              {['windows', 'macos', 'freebsd', 'linux'].map((platform) => (
+                <Checkbox
+                  key={platform}
+                  id={`exclude_platforms_${platform}`}
+                  label={platform}
+                  isChecked={(remote['exclude_platforms'] || []).includes(
+                    platform,
+                  )}
+                  onChange={(_event, checked) =>
+                    this.updateRemote(
+                      checked
+                        ? [...(remote['exclude_platforms'] || []), platform]
+                        : (remote['exclude_platforms'] || []).filter(
+                            (p) => p !== platform,
+                          ),
+                      'exclude_platforms',
+                    )
+                  }
+                />
+              ))}
+            </FormGroup>
+
+            <FormGroup
+              fieldId={'provenance'}
+              label={t`Provenance`}
+              labelIcon={
+                <HelpButton
+                  content={t`Whether to also sync the provenance attestations published for packages.`}
+                />
+              }
+            >
+              <Checkbox
+                id='provenance'
+                isChecked={!!remote['provenance']}
+                onChange={(_event, value) =>
+                  this.updateRemote(value, 'provenance')
+                }
+                label={t`Sync package provenance`}
+              />
+            </FormGroup>
+          </>
+        ) : null}
 
         {plugin === 'deb' ? (
           <>
