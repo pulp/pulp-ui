@@ -86,6 +86,31 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
+  it('RPM repositories', () => {
+    cy.ui('rpm/repositories');
+    cy.assertTitle('Repositories');
+
+    cy.contains('No repositories yet');
+
+    // pulp_rpm repositories carry publishing and retention settings the other
+    // plugins have no use for
+    cy.contains('button', 'Add repository').click();
+    cy.get('#autopublish');
+    cy.get('#retain_package_versions');
+  });
+
+  it('RPM remotes', () => {
+    cy.ui('rpm/remotes');
+    cy.assertTitle('Remotes');
+
+    cy.contains('No remotes yet');
+
+    // the download policy decides whether packages are fetched during sync or
+    // on first request, so an RPM remote offers it in the form
+    cy.contains('button', 'Add remote').click();
+    cy.get('#policy');
+  });
+
   it('RPMs', () => {
     cy.ui('rpm/rpms');
     cy.assertTitle('Packages');
