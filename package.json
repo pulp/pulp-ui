@@ -68,7 +68,7 @@
     "webpack-dev-server": "6.0.0",
     "ajv": "8.20.0",
     "commander": "15.0.0",
-    "vite": "8.3.0"
+    "vite": "8.3.4"
   },
   "scripts": {
     "build": "NODE_ENV=production webpack --config config/build.config.js",
