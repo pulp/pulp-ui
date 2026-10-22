@@ -4,7 +4,7 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "jsx": "react-jsx",
-    "lib": ["es2021", "dom"],
+    "lib": ["es2021", "dom", "DOM.Iterable"],
     "module": "es2020",
     "moduleResolution": "bundler",
     "noImplicitAny": false,

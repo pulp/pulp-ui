@@ -5,5 +5,6 @@
     "lib": ["ES2025", "DOM"],
     "allowImportingTsExtensions": true
   },
-  "include": ["src", "orval.config.ts", "scripts"]
+  "include": ["src", "orval.config.ts", "scripts"],
+  "exclude": ["dist"]
 }
