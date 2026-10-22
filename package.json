@@ -76,6 +76,7 @@
     "happy-dom": "20.14.5"
   },
   "scripts": {
+    "prepare": "npm run build -w @pulp-ui/sdk",
     "build": "NODE_ENV=production webpack --config config/build.config.js",
     "cypress": "cypress open",
     "cypress:chrome": "cypress run --e2e --browser chrome --headless",

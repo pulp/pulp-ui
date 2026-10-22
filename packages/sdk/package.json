@@ -12,13 +12,17 @@
     "generate": "npm run check-versions && orval --config ./orval.config.ts",
     "check-versions": "node ./scripts/check-pulp-versions.mts",
     "update-versions": "node ./scripts/update-pulp-versions.mts",
-    "typecheck": "tsc --noEmit -p ./tsconfig.json"
+    "typecheck": "tsc --noEmit -p ./tsconfig.json",
+    "build": "tsc -p tsconfig.build.json"
   },
   "devDependencies": {
     "orval": "8.35.0",
     "typescript": "7.0.2"
   },
   "exports": {
-    "./core/*": "./src/core/*.ts"
+    "./core/*": {
+      "types": "./dist/core/*.d.ts",
+      "default": "./dist/core/*.js"
+    }
   }
 }
