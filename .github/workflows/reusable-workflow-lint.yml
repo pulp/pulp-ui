@@ -20,7 +20,7 @@ jobs:
       - name: Run zizmor
         env:
           GH_TOKEN: ${{ github.token }}
-        run: uvx zizmor@1.31.1 --format=sarif --output=zizmor-results.sarif .
+        run: uvx zizmor@1.31.1 --format=sarif . > zizmor-results.sarif
 
       - name: Fail on findings
         run: |

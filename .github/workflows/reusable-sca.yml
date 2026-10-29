@@ -21,7 +21,7 @@ jobs:
           scan-args: |-
             --lockfile=package-lock.json
             --format=sarif
-            --output=osv-results.sarif
+            --output-file=osv-results.sarif
 
       - name: Upload SARIF artifact
         if: always()
