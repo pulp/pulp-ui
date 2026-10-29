@@ -6,8 +6,8 @@
  * OpenAPI spec version: v3
  */
 import { pulpFetch } from '../mutator/pulp-fetch.ts';
-import type { StatusReadParams } from './models/status/status-read-params.ts';
-import type { StatusResponse } from './models/status/status-response.ts';
+import type { StatusReadParams } from './models/status/status-read-params.zod.ts';
+import type { StatusResponse } from './models/status/status-response.zod.ts';
 
 export const getStatusReadUrl = (params?: StatusReadParams) => {
   const normalizedParams = new URLSearchParams();

@@ -28,6 +28,10 @@ function defineHeaders(options: RequestInit): Headers {
     }
   }
 
+  // NOTE: pulpcore checks for this header on every request and suppresses the native Basic-auth popup on a 401.
+  // REF: https://github.com/pulp/pulpcore/blob/f647966fecd0cce43d08ce907ea079d309ca8f0a/pulpcore/app/authentication.py#L23-L29
+  headers.set('X-Requested-With', 'XMLHttpRequest');
+
   return headers;
 }
 

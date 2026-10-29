@@ -13,19 +13,20 @@
     "check-versions": "node ./scripts/check-pulp-versions.mts",
     "update-versions": "node ./scripts/update-pulp-versions.mts",
     "typecheck": "tsc --noEmit -p ./tsconfig.json",
-    "test": "vitest run",
-    "test:integration": "vitest --tags-filter=integration",
-    "test:coverage": "vitest run --coverage"
+    "build": "tsc -p tsconfig.build.json"
   },
   "devDependencies": {
     "orval": "8.35.0",
     "typescript": "7.0.2",
-    "msw": "2.15.0",
-    "vitest": "5.0.1",
-    "@vitest/coverage-v8": "5.0.1",
-    "happy-dom": "20.14.5"
+    "zod": "4.6.5"
+  },
+  "peerDependencies": {
+    "zod": "^4.6.5"
   },
   "exports": {
-    "./core/*": "./src/core/*.ts"
+    "./core/*": {
+      "types": "./dist/core/*.d.ts",
+      "default": "./dist/core/*.js"
+    }
   }
 }
