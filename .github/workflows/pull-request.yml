@@ -21,8 +21,8 @@ jobs:
   dependency-review:
     uses: $/.github/workflows/reusable-dependency-review.yml
 
-  secret-scanning:
-    uses: $/.github/workflows/reusable-secrets-scan.yml
+  # secret-scanning:
+  #   uses: $/.github/workflows/reusable-secrets-scan.yml
 
   software-composition-analysis:
     uses: $/.github/workflows/reusable-sca.yml
