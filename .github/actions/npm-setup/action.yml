@@ -1,0 +1,25 @@
+name: "npm setup"
+description: "Sets up NodeJS with npm caching and dependencies installed"
+
+inputs:
+  node-version:
+    description: "NodeJS version"
+    required: false
+    default: "24"
+  install-command:
+    description: "Dependency installation command"
+    required: false
+    default: "npm clean-install"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Install node ${{ inputs.node-version }}"
+      uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: "npm"
+
+    - name: "Install dependencies"
+      shell: bash
+      run: ${{ inputs.install-command }}
