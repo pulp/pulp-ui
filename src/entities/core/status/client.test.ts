@@ -26,7 +26,7 @@ describe('Integration: StatusClient', { tags: ['integration'] }, () => {
     online_content_apps: [],
     database_connection: { connected: true },
     redis_connection: { connected: true },
-    content_settings: { content_path_prefix: '/pilp/content' },
+    content_settings: { content_path_prefix: '/pulp/content' },
     domain_enabled: false,
   } satisfies StatusResponse;
 

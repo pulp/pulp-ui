@@ -167,4 +167,18 @@ describe('Integration: pulpFetch', { tags: ['integration'] }, () => {
       pulpFetch('/pulp/api/v3/status/', { method: 'GET' }),
     ).rejects.toThrow('Response missing Content-Type header');
   });
+
+  it('sends "X-Requested-With: XMLHttpRequest" header on every request', async () => {
+    let expectedHeader: string | null = null;
+    server.use(
+      http.get('/pulp/api/v3/status/', ({ request }) => {
+        expectedHeader = request.headers.get('x-requested-with');
+        return HttpResponse.json({ version: [] });
+      }),
+    );
+
+    await pulpFetch('/pulp/api/v3/status/', { method: 'GET' });
+
+    expect(expectedHeader).toStrictEqual('XMLHttpRequest');
+  });
 });

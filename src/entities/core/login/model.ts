@@ -1,13 +1,26 @@
 import { LoginResponse } from '@pulp-ui/sdk/core/models/login/login-response.zod';
+import { loginUpdateResponseUsernameMax } from '@pulp-ui/sdk/core/models/login/login-update-response.zod';
 import { z } from 'zod';
 
+const pulpHrefSchema = z
+  .string()
+  .startsWith('/')
+  .refine((value) => !value.startsWith('//'), {
+    error: 'pulp_href must not have a leading double slash',
+  })
+  .refine((value) => !/\s/.test(value), {
+    error: 'pulp_href must not contain whitespace',
+  });
+
 const loginDomainSchema = z.object({
-  href: z.url(),
+  href: pulpHrefSchema,
   prn: z.string(),
   username: z.string(),
 });
 
-const loginResponseRequired = LoginResponse.required({
+const loginResponseRequired = LoginResponse.extend({
+  pulp_href: pulpHrefSchema,
+}).required({
   pulp_href: true,
   prn: true,
   username: true,
@@ -27,7 +40,12 @@ const loginResponseCodec = z.codec(loginResponseRequired, loginDomainSchema, {
 });
 
 const credentialsSchema = z.object({
-  username: z.string(),
+  username: z
+    .string()
+    .refine((value) => !value.includes(':'), {
+      error: 'username must not contain a colon.',
+    })
+    .max(loginUpdateResponseUsernameMax),
   password: z.string(),
 });
 

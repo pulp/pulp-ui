@@ -17,7 +17,7 @@ describe('Unit: status model', { tags: ['unit'] }, () => {
     online_api_apps: [],
     online_content_apps: [],
     database_connection: { connected: true },
-    content_settings: { content_path_prefix: '/pilp/content' },
+    content_settings: { content_path_prefix: '/pulp/content' },
     domain_enabled: false,
   } satisfies StatusResponse;
 

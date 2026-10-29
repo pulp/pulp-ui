@@ -17,7 +17,11 @@
   },
   "devDependencies": {
     "orval": "8.35.0",
-    "typescript": "7.0.2"
+    "typescript": "7.0.2",
+    "zod": "4.6.5"
+  },
+  "peerDependencies": {
+    "zod": "^4.6.5"
   },
   "exports": {
     "./core/*": {

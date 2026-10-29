@@ -7,12 +7,12 @@ import {
 } from './model';
 
 async function retrieve(): Promise<Login> {
-  return loginResponseCodec.parse(await loginRead());
+  return loginResponseCodec.decode(await loginRead());
 }
 
 async function login(credentials: Credentials): Promise<Login> {
   const authorisation = credentialsCodec.encode(credentials);
-  return loginResponseCodec.parse(
+  return loginResponseCodec.decode(
     await postLogin({ headers: { Authorization: authorisation } }),
   );
 }

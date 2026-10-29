@@ -12,7 +12,7 @@ describe('Integration: LoginClient', { tags: ['integration'] }, () => {
   afterAll(() => server.close());
 
   const loginResponseBody = {
-    pulp_href: 'https://exmaple.com/pulp/api/v3/users/4/',
+    pulp_href: '/pulp/api/v3/users/4/',
     prn: 'prn:auth.user:4',
     username: 'admin',
   } satisfies LoginResponse;
@@ -34,7 +34,7 @@ describe('Integration: LoginClient', { tags: ['integration'] }, () => {
     });
   });
 
-  it('login send the credentials as a UTF-8 Basic Auth header', async () => {
+  it('login sends the credentials as a UTF-8 Basic Auth header', async () => {
     let authorization: string | null = null;
     server.use(
       http.post('/pulp/api/v3/login/', ({ request }) => {
@@ -48,7 +48,7 @@ describe('Integration: LoginClient', { tags: ['integration'] }, () => {
     expect(authorization).toStrictEqual(basic('admin', 'password'));
   });
 
-  it('login rejectrs with the status on invalid credentials', async () => {
+  it('login rejects with the status on invalid credentials', async () => {
     server.use(
       http.post('/pulp/api/v3/login/', () =>
         HttpResponse.json(
