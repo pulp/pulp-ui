@@ -1,0 +1,56 @@
+name: Pull Request
+on:
+  pull_request:
+    branches: ['main']
+
+concurrency:
+  group: pr-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  docs:
+    # NOTE: The workflow tag and the pulpdocs_ref must match.
+    uses: 'pulp/pulp-docs/.github/workflows/docs-ci.yml@main'
+    with:
+      pulpdocs_ref: 'main'
+
+  workflow-lint:
+    uses: $/.github/workflows/_workflow-lint.yml
+
+  linting:
+    uses: $/.github/workflows/_lint.yml
+
+  dependency-review:
+    uses: $/.github/workflows/_dependency-review.yml
+
+  security-scans:
+    uses: $/.github/workflows/_security-scans.yml
+
+  build:
+    uses: $/.github/workflows/_build.yml
+
+  test:
+    uses: $/.github/workflows/_test.yml
+
+  merge-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pulp-ui (${{ github.ref }})
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 128
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Fail on merge commits
+        run: |
+          # fail on merge commits in the PR
+          # since squash&merge doesn't create merge commits,
+          # and the last non-squash merges were in Jul 2019,
+          # we can just look for any merge commits since 2020
+          count=`git log --min-parents=2 --since 2020-01-01 | tee /dev/stderr | wc -l`
+          [ "$count" = 0 ]

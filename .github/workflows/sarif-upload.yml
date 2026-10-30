@@ -1,0 +1,51 @@
+name: Upload SARIF results
+on:
+  workflow_run:
+    workflows: ['Pull Request']
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+  security-events: write
+
+jobs:
+  upload-sarif:
+    if: ${{ !github.event.workflow_run.head_repository.fork }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download CodeQL SARIF
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: codeql-results
+          path: ./sarif-input
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Download zizmor SARIF
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: zizmor-results
+          path: ./sarif-input
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Download osv SARIF
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: osv-results
+          path: ./sarif-input
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Validate downloaded SARIF files
+        run: |
+          for f in ./sarif-input/*.sarif; do
+            echo "Validating $f"
+            jq -e '.version and .runs' "$f" > /dev/null || { echo "::error::$f is not valid SARIF"; exit 1; }
+          done
+
+      - name: Upload all SARIF results
+        uses: github/codeql-action/upload-sarif@v4.39.1
+        with:
+          sarif_file: ./sarif-input

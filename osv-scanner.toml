@@ -1,0 +1,4 @@
+[[IgnoredVulns]]
+id = "CVE-2026-93753"
+ignoreUntil = 2027-01-30
+reason = "deepmerge: no fixed version available (https://github.com/TehShrike/deepmerge/issues/285)"

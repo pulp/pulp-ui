@@ -1,0 +1,34 @@
+name: Lint
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pulp-ui (${{ github.ref }})
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: npm Setup
+        uses: $/.github/actions/npm-setup
+        with:
+          install-command: 'npm install'
+
+      - name: 'Fail if npm install changed package-lock.json'
+        run: git diff --exit-code package-lock.json
+
+      - name: Install python 3.13
+        uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.13'
+
+      - name: Install lint dependencies
+        run: npm run lint-setup
+
+      - name: Run lint
+        run: npm run lint

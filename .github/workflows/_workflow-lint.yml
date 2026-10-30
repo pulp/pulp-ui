@@ -1,0 +1,55 @@
+name: Workflow lint
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  zizmor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pulp-ui (${{ github.ref }})
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.3.3
+
+      - name: Run zizmor
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: uvx zizmor@1.31.1 --format=sarif . > zizmor-results.sarif
+
+      - name: Fail on findings
+        run: |
+          count=$(jq '[.runs[].results[]] | length' zizmor-results.sarif)
+          echo "zizmor found $count issue(s)"
+          [ "$count" -eq 0 ]
+
+      - name: Upload SARIF artifact
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: zizmor-results
+          path: zizmor-results.sarif
+          retention-days: 1
+
+  actions-lock:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pulp-ui (${{ github.ref }})
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install gh-actions-lock extension
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh extension install github/gh-actions-lock --pin v0.4.0
+
+      - name: Verify actions.lock is up to date
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh actions-lock --verify

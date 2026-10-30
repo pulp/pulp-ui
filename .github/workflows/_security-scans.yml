@@ -1,0 +1,83 @@
+name: Security Scans
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  # TODO(#398): Currently blocked by pulp organisation actions allow-list - gitleaks-action isn't permitted.
+  # secret-scanning:
+  # runs-on: ubuntu-latest
+  # steps:
+  #   - name: Checkout pulp-ui (${{ github.ref }})
+  #     uses: actions/checkout@v7.0.1
+  #     with:
+  #       persist-credentials: false
+  #       fetch-depth: 0
+
+  #   - name: Run Gitleaks
+  #     uses: gitleaks/gitleaks-action@v3.0.0
+  #     env:
+  #       GITHUB_TOKEN: ${{ github.token }}
+
+  software-composition-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pulp-ui (${{ github.ref }})
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run OSV-Scanner
+        uses: google/osv-scanner-action/osv-scanner-action@v2.7.0
+        with:
+          scan-args: |-
+            --lockfile=package-lock.json
+            --format=sarif
+            --output-file=osv-results.sarif
+
+      - name: Upload SARIF artifact
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: osv-results
+          path: osv-results.sarif
+          retention-days: 1
+
+  codeql:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pulp-ui (${{ github.ref }})
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: npm Setup
+        uses: $/.github/actions/npm-setup
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4.39.1
+        with:
+          languages: javascript-typescript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4.39.1
+        with:
+          upload: never
+          output: sarif-results
+
+      - name: Fail on findings
+        run: |
+          count=$(jq -s '[.[] | .runs[].results[]] | length' sarif-results/*.sarif)
+          echo "CodeQL found $count issue(s)"
+          [ "$count" -eq 0 ]
+
+      - name: Upload SARIF artifact
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: codeql-results
+          path: sarif-results
+          retention-days: 1
