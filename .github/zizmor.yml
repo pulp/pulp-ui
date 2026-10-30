@@ -8,4 +8,7 @@ rules:
       - sarif-upload.yml:3
   artipacked:
     ignore:
-      - cron-release.yml:17
+      - cron-release.yml:16
+  adhoc-packages:
+    ignore:
+      - cypress.yml:86

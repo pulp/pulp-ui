@@ -18,7 +18,6 @@ workflows:
         - 'actions/setup-node@v7.1.0'
         - 'actions/upload-artifact@v7.0.2'
         - 'github/codeql-action@v4.39.1'
-        - 'gitleaks/gitleaks-action@v3.0.0'
         - 'google/osv-scanner-action@v2.7.0'
     '.github/workflows/_test.yml':
         - 'actions/checkout@v7.0.1'
@@ -95,11 +94,6 @@ dependencies:
         commit: 'sha1-9b3254085494b55a0f7c4c2b3d2d52cc712ce370'
         owner_id: 9919
         repo_id: 259445878
-    'gitleaks/gitleaks-action@v3.0.0':
-        ref: 'v3.0.0'
-        commit: 'sha1-e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e'
-        owner_id: 90395851
-        repo_id: 242854909
     'google/osv-scanner-action@v2.7.0':
         ref: 'v2.7.0'
         commit: 'sha1-b1d267aea5211fa648d9d442fa64b90dbdcbdd36'
