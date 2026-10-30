@@ -1,6 +1,8 @@
 version: 2
 updates:
   - package-ecosystem: 'npm'
+    cooldown:
+      default-days: 7
     directory: '/'
     schedule:
       interval: 'weekly'
@@ -31,6 +33,8 @@ updates:
           - 'version-update:semver-major'
 
   - package-ecosystem: 'github-actions'
+    cooldown:
+      default-days: 7
     directory: '/'
     schedule:
       interval: 'weekly'

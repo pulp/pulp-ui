@@ -13,16 +13,17 @@ concurrency:
   group: cypress-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   cypress:
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-
     steps:
-      - name: 'Checkout pulp-ui (${{ github.ref }})'
+      - name: Checkout pulp-ui (${{ github.ref }})
         uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
 
       - name: 'backend setup'
         run: |

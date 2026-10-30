@@ -13,28 +13,22 @@ permissions:
 
 jobs:
   workflow-lint:
-    uses: $/.github/workflows/reusable-workflow-lint.yml
+    uses: $/.github/workflows/_workflow-lint.yml
 
   linting:
-    uses: $/.github/workflows/reusable-lint.yml
+    uses: $/.github/workflows/_lint.yml
 
   dependency-review:
-    uses: $/.github/workflows/reusable-dependency-review.yml
+    uses: $/.github/workflows/_dependency-review.yml
 
-  # secret-scanning:
-  #   uses: $/.github/workflows/reusable-secrets-scan.yml
-
-  software-composition-analysis:
-    uses: $/.github/workflows/reusable-sca.yml
-
-  sast-quality:
-    uses: $/.github/workflows/reusable-sast.yml
+  security-scans:
+    uses: $/.github/workflows/_security-scans.yml
 
   build:
-    uses: $/.github/workflows/reusable-build.yml
+    uses: $/.github/workflows/_build.yml
 
   test:
-    uses: $/.github/workflows/reusable-test.yml
+    uses: $/.github/workflows/_test.yml
 
   merge-commits:
     runs-on: ubuntu-latest

@@ -2,7 +2,10 @@ rules:
   unpinned-uses:
     config:
       policies:
-        "*": ref-pin
+        '*': ref-pin
   dangerous-triggers:
     ignore:
       - sarif-upload.yml:3
+  artipacked:
+    ignore:
+      - cron-release.yml:17

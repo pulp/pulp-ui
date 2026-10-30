@@ -6,7 +6,7 @@ permissions:
   contents: read
 
 jobs:
-  workflow-lint:
+  zizmor:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout pulp-ui (${{ github.ref }})
@@ -39,6 +39,11 @@ jobs:
   actions-lock:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout pulp-ui (${{ github.ref }})
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
       - name: Install gh-actions-lock extension
         env:
           GH_TOKEN: ${{ github.token }}
