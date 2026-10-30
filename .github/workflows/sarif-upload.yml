@@ -1,7 +1,7 @@
 name: Upload SARIF results
 on:
   workflow_run:
-    workflows: ["Pull Request"]
+    workflows: ['Pull Request']
     types: [completed]
 
 permissions:

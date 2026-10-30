@@ -1,0 +1,8 @@
+rules:
+  unpinned-uses:
+    config:
+      policies:
+        "*": ref-pin
+  dangerous-triggers:
+    ignore:
+      - sarif-upload.yml:3
