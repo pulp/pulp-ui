@@ -38,6 +38,13 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ github.token }}
 
+      - name: Validate downloaded SARIF files
+        run: |
+          for f in ./sarif-input/*.sarif; do
+            echo "Validating $f"
+            jq -e '.version and .runs' "$f" > /dev/null || { echo "::error::$f is not valid SARIF"; exit 1; }
+          done
+
       - name: Upload all SARIF results
         uses: github/codeql-action/upload-sarif@v4.39.1
         with:

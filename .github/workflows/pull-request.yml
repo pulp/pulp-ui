@@ -12,6 +12,12 @@ permissions:
   actions: read
 
 jobs:
+  docs:
+    # NOTE: The workflow tag and the pulpdocs_ref must match.
+    uses: 'pulp/pulp-docs/.github/workflows/docs-ci.yml@main'
+    with:
+      pulpdocs_ref: 'main'
+
   workflow-lint:
     uses: $/.github/workflows/_workflow-lint.yml
 

@@ -9,7 +9,6 @@ permissions:
 jobs:
   # TODO(#398): Currently blocked by pulp organisation actions allow-list - gitleaks-action isn't permitted.
   # secret-scanning:
-  # if: false
   # runs-on: ubuntu-latest
   # steps:
   #   - name: Checkout pulp-ui (${{ github.ref }})
