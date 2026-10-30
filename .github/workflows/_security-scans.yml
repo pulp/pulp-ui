@@ -47,7 +47,7 @@ jobs:
           path: osv-results.sarif
           retention-days: 1
 
-  static-application-security-testing:
+  codeql:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout pulp-ui (${{ github.ref }})
