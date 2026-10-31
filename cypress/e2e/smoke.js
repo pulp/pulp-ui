@@ -86,6 +86,40 @@ describe('UI smoke tests', () => {
     // TODO
   });
 
+  it('Python repositories', () => {
+    cy.ui('python/repositories');
+    cy.assertTitle('Repositories');
+
+    cy.contains('No repositories yet');
+
+    // pulp_python repositories can refuse package substitution, so the form
+    // carries settings the other plugins have no use for
+    cy.contains('button', 'Add repository').click();
+    cy.get('#allow_package_substitution');
+    cy.get('#error_on_reject');
+  });
+
+  it('Python remotes', () => {
+    cy.ui('python/remotes');
+    cy.assertTitle('Remotes');
+
+    cy.contains('No remotes yet');
+
+    // a Python remote filters what it syncs by project, package type and platform
+    cy.contains('button', 'Add remote').click();
+    cy.get('#includes');
+    cy.get('#excludes');
+    cy.get('#keep_latest_packages');
+    cy.get('#package_types_sdist');
+  });
+
+  it('Python packages', () => {
+    cy.ui('python/packages');
+    cy.assertTitle('Packages');
+
+    cy.contains('No packages yet');
+  });
+
   it('RPMs', () => {
     cy.ui('rpm/rpms');
     cy.assertTitle('Packages');

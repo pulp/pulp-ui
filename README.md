@@ -28,6 +28,7 @@ PulpUI is a community driven single-page application that talks to a running [pu
 ### Plugins
 - Ansible (repositories, remotes, collections, namespaces, approvals, imports)
 - File (repositories, remotes)
+- Python (repositories, remotes, packages)
 - RPM (content)
 - Container (execution environments, tags, manifests)
 
