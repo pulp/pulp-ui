@@ -1,16 +1,5 @@
 import { i18n } from '@lingui/core';
-
-// remember to update lingui.config.js as well
-export const availableLanguages = ['en', 'es', 'fr', 'ko', 'nl', 'ja', 'zh'];
-export const languageNames = {
-  en: 'English',
-  es: 'Español',
-  fr: 'Français',
-  ko: '한국어',
-  nl: 'Nederlands',
-  ja: '日本語',
-  zh: '中文',
-};
+import { availableLanguages, languageNames } from './lib/l10n/languages';
 
 async function activate(locale: string, pseudolocalization = false) {
   const { messages } = await import(`src/../locale/${locale}.js`);
@@ -83,3 +72,5 @@ if (pseudolocalization) {
 }
 
 activate(language, pseudolocalization);
+
+export { availableLanguages, languageNames }

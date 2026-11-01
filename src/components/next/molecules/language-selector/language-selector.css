@@ -1,0 +1,56 @@
+.pulp-language-selector__toggle.pf-v5-c-menu-toggle {
+  --pf-v5-c-menu-toggle--PaddingTop: 12px;
+  --pf-v5-c-menu-toggle--PaddingBottom: 12px;
+  --pf-v5-c-menu-toggle--PaddingRight: 4px;
+  --pf-v5-c-menu-toggle--PaddingLeft: 16px;
+  --pf-v5-c-menu-toggle--BorderRadius: var(--pf-v5-global--BorderRadius--lg);
+  --pf-v5-c-menu-toggle__icon--MarginRight: 14px;
+  --pf-v5-c-menu-toggle__controls--PaddingLeft: 14px;
+  font-size: var(--pf-v5-global--FontSize--lg);
+}
+
+.pulp-language-selector__toggle.pf-v5-c-menu-toggle.pf-m-plain {
+  --pulp-language-selector-bg: #ffffff;
+  --pulp-language-selector-border: rgb(255 226 235/5%);
+  --pulp-language-selector-color: #515154;
+  --pulp-language-selector-bg-hover: #f3f4f8;
+  background-color: var(--pulp-language-selector-bg);
+  color: var(--pulp-language-selector-color);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+}
+
+:where(.pf-v5-theme-dark)
+  .pulp-language-selector__toggle.pf-v5-c-menu-toggle.pf-m-plain {
+  --pulp-language-selector-bg: #1e2026;
+  --pulp-language-selector-border: rgb(60 63 66 / 50%);
+  --pulp-language-selector-color: #b8bbbe;
+  --pulp-language-selector-bg-hover: #2a2d35;
+}
+
+.pulp-language-selector__toggle.pf-v5-c-menu-toggle.pf-m-plain::before {
+  border: var(--pf-v5-global--BorderWidth--sm) solid
+    var(--pf-v5-global--BorderColor--100);
+  border-radius: var(--pf-v5-c-menu-toggle--BorderRadius);
+}
+
+.pulp-language-selector__toggle.pf-v5-c-menu-toggle.pf-m-plain:hover,
+.pulp-language-selector__toggle.pf-v5-c-menu-toggle.pf-m-plain:focus-visible,
+.pulp-language-selector__toggle.pf-v5-c-menu-toggle.pf-m-plain.pf-m-expanded {
+  background-color: var(--pulp-language-selector-bg-hover);
+}
+
+.pulp-language-selector__menu.pf-v5-c-menu {
+  margin-block: 8px;
+  border-radius: var(--pf-v5-global--BorderRadius--sm);
+  overflow: hidden;
+}
+
+@media (max-width: 576px) {
+  .pulp-language-selector__toggle.pf-v5-c-menu-toggle {
+    --pf-v5-c-menu-toggle--PaddingTop: 8px;
+    --pf-v5-c-menu-toggle--PaddingBottom: 8px;
+    --pf-v5-c-menu-toggle--PaddingLeft: 12px;
+    --pf-v5-c-menu-toggle--PaddingRight: 12px;
+    font-size: var(--pf-v5-global-FontSize--sm);
+  }
+}

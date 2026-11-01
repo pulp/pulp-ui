@@ -1,0 +1,56 @@
+.pulp-text-field.pf-v5-c-form-control {
+  --pf-v5-c-form-control--BackgroundColor: transparent;
+  --pf-v5-c-form-control--PaddingTop: 1rem;
+  --pf-v5-c-form-control--PaddingBottom: 1rem;
+  --pf-v5-c-form-control--PaddingLeft: 1.25rem;
+  --pf-v5-c-form-control--PaddingRight: 1.25rem;
+  --pf-v5-c-form-control--before--BorderTopColor: var(
+    --pf-v5-global--BorderColor--100
+  );
+  --pf-v5-c-form-control--before--BorderRightColor: var(
+    --pf-v5-global--BorderColor--100
+  );
+  --pf-v5-c-form-control--before--BorderBottomColor: var(
+    --pf-v5-global--BorderColor--100
+  );
+  --pf-v5-c-form-control--before--BorderLeftColor: var(
+    --pf-v5-global--BorderColor--100
+  );
+  --pf-v5-c-form-control--before--BorderRadius: 12px;
+  --pf-v5-c-form-control--before--BorderTopWidth: 1px;
+  --pf-v5-c-form-control--before--BorderRightWidth: 1px;
+  --pf-v5-c-form-control--before--BorderBottomWidth: 1px;
+  --pf-v5-c-form-control--before--BorderLeftWidth: 1px;
+  --pf-v5-c-form-control--after--BorderBottomWidth: 0;
+  --pf-v5-c-form-control--BorderRadius: 12px;
+  border-radius: 12px;
+  min-height: 3.5rem;
+  border: none;
+}
+
+.pulp-text-field.pf-v5-c-form-control::before {
+  border-radius: 12px;
+}
+
+.pulp-text-field.pf-v5-c-form-control::after {
+  display: none;
+}
+
+.pulp-text-field.pf-v5-c-form-control:focus-within {
+  --pf-v5-c-form-control--before--BorderTopColor: var(
+    --pf-v5-global--BorderColor--100
+  );
+  --pf-v5-c-form-control--before--BorderRightColor: var(
+    --pf-v5-global--BorderColor--100
+  );
+  --pf-v5-c-form-control--before--BorderBottomColor: var(
+    --pf-v5-global--BorderColor--100
+  );
+  --pf-v5-c-form-control--before--BorderLeftColor: var(
+    --pf-v5-global--BorderColor--100
+  );
+}
+
+.pulp-text-field.pf-v5-c-form-control > input {
+  border-radius: 12px;
+}
