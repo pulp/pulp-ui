@@ -11,7 +11,6 @@ permissions:
 
 jobs:
   upload-sarif:
-    if: ${{ !github.event.workflow_run.head_repository.fork }}
     runs-on: ubuntu-latest
     steps:
       - name: Download CodeQL SARIF

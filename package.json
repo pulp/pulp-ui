@@ -37,14 +37,14 @@
     "@trivago/prettier-plugin-sort-imports": "^6.0.0",
     "@types/react": "^18.3.2",
     "@vitest/coverage-v8": "5.0.1",
+    "@vitest/mocker": "5.0.5",
     "ajv": "8.20.0",
     "babel-loader": "^10.0.0",
-    "body-parser": "2.4.0",
     "clean-webpack-plugin": "^4.0.0",
     "commander": "15.0.0",
     "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^7.1.2",
-    "cypress": "16.0.0",
+    "cypress": "16.2.1",
     "eslint": "^10.13.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-cypress": "^7.0.2",
@@ -66,17 +66,20 @@
     "stylelint": "^16.26.1",
     "stylelint-config-recommended-scss": "^16.0.2",
     "stylelint-scss": "^6.14.0",
-    "systeminformation": "5.33.16",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.72.0",
     "url-join": "^5.0.0",
     "vite": "8.3.4",
     "vitest": "5.0.5",
-    "@vitest/mocker": "5.0.5",
     "webpack": "5.110.3",
     "webpack-cli": "7.2.3",
     "webpack-dev-server": "6.0.0",
     "zod": "4.6.7"
+  },
+  "overrides": {
+    "systeminformation": "5.33.16",
+    "body-parser": "2.4.0",
+    "minimatch": "11.0.3"
   },
   "scripts": {
     "prepare": "npm run build -w @pulp-ui/sdk",
@@ -121,7 +124,8 @@
   "allowScripts": {
     "cypress@16.0.0": true,
     "esbuild@0.28.2": true,
-    "msw@2.15.0": true
+    "msw@2.15.0": true,
+    "cypress@16.2.1": true
   },
   "workspaces": [
     "packages/*"
