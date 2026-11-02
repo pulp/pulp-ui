@@ -1,3 +1,13 @@
+## 0.1.27 (2026-11-02) {: #0.1.27 }
+
+### What's Changed
+* deps: addressed minimatch cve-2026-118764 and updated cypress to 16.2.1 [#401](https://github.com/pulp/pulp-ui/pull/401)
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.26...v0.1.27
+
+---
+
 ## 0.1.26 (2026-10-31) {: #0.1.26 }
 
 ### What's Changed
