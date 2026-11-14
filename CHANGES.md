@@ -1,3 +1,14 @@
+## 0.1.28 (2026-11-14) {: #0.1.28 }
+
+### What's Changed
+* build(deps): bump github/codeql-action from 4.39.1 to 4.39.3 by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/404
+* build(deps): bump the lingui group with 4 updates by @dependabot[bot] in https://github.com/pulp/pulp-ui/pull/402
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.27...v0.1.28
+
+---
+
 ## 0.1.27 (2026-11-02) {: #0.1.27 }
 
 ### What's Changed
