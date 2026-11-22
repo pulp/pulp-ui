@@ -35,6 +35,7 @@
     "@lingui/babel-plugin-lingui-macro": "^6.11.0",
     "@lingui/cli": "^6.11.0",
     "@ls-lint/ls-lint": "^2.3.1",
+    "@storybook/addon-webpack5-compiler-swc": "4.0.3",
     "@storybook/react-webpack5": "10.5.10",
     "@testing-library/dom": "10.4.2",
     "@testing-library/react": "16.3.3",
@@ -66,7 +67,7 @@
     "sass": "1.97.1",
     "sass-loader": "^16.0.6",
     "source-map-loader": "^5.0.0",
-    "storybook": "10.5.10",
+    "storybook": "10.6.5",
     "style-loader": "^4.0.0",
     "stylelint": "^16.26.1",
     "stylelint-config-recommended-scss": "^16.0.2",
@@ -84,7 +85,8 @@
   "overrides": {
     "systeminformation": "5.33.16",
     "body-parser": "2.4.0",
-    "minimatch": "11.0.3"
+    "minimatch": "11.0.3",
+    "webpack-dev-middleware": "8.3.0"
   },
   "scripts": {
     "prepare": "npm run build -w @pulp-ui/sdk",
@@ -116,8 +118,8 @@
     "prettier:check": "prettier -l .",
     "sort-exports": "perl -i -pe 's/^export/import/' src/**/index.ts ; npm run prettier ; perl -i -pe 's/^import/export/' src/**/index.ts",
     "start": "NODE_ENV=development webpack serve --config config/start.config.js",
-    "storybook": "SWC_NATIVE_BINDING_CACHE=/tmp/pulp-ui-swc-cache storybook dev -p 6006",
-    "storybook:build": "SWC_NATIVE_BINDING_CACHE=/tmp/pulp-ui-swc-cache storybook build",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
     "test": "vitest run",
     "test:integration": "vitest --tags-filter=integration",
     "test:unit": "vitest --tags-filter=unit",
