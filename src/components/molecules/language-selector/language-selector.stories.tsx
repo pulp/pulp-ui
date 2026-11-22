@@ -1,8 +1,8 @@
 import { Divider } from '@patternfly/react-core';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useState } from 'react';
-import { isLanguageCode } from '../../../../lib/l10n/is-language-code';
-import type { LanguageCode } from '../../../../lib/l10n/languages';
+import { isLanguageCode } from '../../../lib/l10n/is-language-code';
+import type { LanguageCode } from '../../../lib/l10n/languages';
 import { LanguageSelector } from './language-selector';
 
 const meta: Meta<typeof LanguageSelector> = {

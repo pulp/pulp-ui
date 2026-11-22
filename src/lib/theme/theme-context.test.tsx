@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ThemeProvider, useTheme } from './theme-context';
 import { applyThemeClass } from './theme-dom';
 import {
-  Theme,
+  type Theme,
   getSystemTheme,
   readStoredTheme,
   subscribeToSystemTheme,
