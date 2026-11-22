@@ -53,8 +53,8 @@ const createFakeMediaQueryList = (matches = false): MediaQueryList => {
     dispatchEvent: target.dispatchEvent.bind(target),
     // NOTE: Deprecated from the web standard. Only added to satifiy the type.
     // REF: https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList/removeListener
-    addListener: () => {},
-    removeListener: () => {},
+    addListener: () => undefined,
+    removeListener: () => undefined,
   };
 };
 

@@ -6,10 +6,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import {
-  type LanguageCode,
-  languageNames,
-} from '../../../lib/l10n/languages';
+import { type LanguageCode, languageNames } from '../../../lib/l10n/languages';
 import { LanguageSelector } from './language-selector';
 
 afterEach(cleanup);

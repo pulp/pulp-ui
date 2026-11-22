@@ -27,7 +27,7 @@ describe('Component: ThemeProvider', { tags: ['component'] }, () => {
   ] as const)('uses the stored preference %s as isDark', (stored, expected) => {
     vi.mocked(readStoredTheme).mockReturnValueOnce(stored);
     vi.mocked(getSystemTheme).mockReturnValueOnce('light');
-    vi.mocked(subscribeToSystemTheme).mockReturnValueOnce(() => {});
+    vi.mocked(subscribeToSystemTheme).mockReturnValueOnce(() => undefined);
 
     const { result } = renderUseTheme();
 
@@ -38,7 +38,7 @@ describe('Component: ThemeProvider', { tags: ['component'] }, () => {
   it('falls back to the system theme when no preference is stored', () => {
     vi.mocked(readStoredTheme).mockReturnValueOnce(null);
     vi.mocked(getSystemTheme).mockReturnValueOnce('dark');
-    vi.mocked(subscribeToSystemTheme).mockReturnValueOnce(() => {});
+    vi.mocked(subscribeToSystemTheme).mockReturnValueOnce(() => undefined);
 
     const { result } = renderUseTheme();
 
@@ -55,7 +55,7 @@ describe('Component: ThemeProvider', { tags: ['component'] }, () => {
   it('applies the theme class on mount and whenever isDark changes', () => {
     vi.mocked(readStoredTheme).mockReturnValueOnce('light');
     vi.mocked(getSystemTheme).mockReturnValueOnce('light');
-    vi.mocked(subscribeToSystemTheme).mockReturnValueOnce(() => {});
+    vi.mocked(subscribeToSystemTheme).mockReturnValueOnce(() => undefined);
 
     const { result } = renderUseTheme();
     expect(applyThemeClass).toHaveBeenCalledExactlyOnceWith(false);
@@ -69,10 +69,10 @@ describe('Component: ThemeProvider', { tags: ['component'] }, () => {
     vi.mocked(readStoredTheme).mockReturnValueOnce('light');
     vi.mocked(getSystemTheme).mockReturnValueOnce('light');
 
-    let onSystemChange: (theme: Theme) => void = () => {};
+    let onSystemChange: (theme: Theme) => void = () => undefined;
     vi.mocked(subscribeToSystemTheme).mockImplementationOnce((onChange) => {
       onSystemChange = onChange;
-      return () => {};
+      return () => undefined;
     });
 
     const { result } = renderUseTheme();
@@ -85,10 +85,10 @@ describe('Component: ThemeProvider', { tags: ['component'] }, () => {
     vi.mocked(readStoredTheme).mockReturnValueOnce(null);
     vi.mocked(getSystemTheme).mockReturnValueOnce('light');
 
-    let onSystemChange: (theme: Theme) => void = () => {};
+    let onSystemChange: (theme: Theme) => void = () => undefined;
     vi.mocked(subscribeToSystemTheme).mockImplementationOnce((onChange) => {
       onSystemChange = onChange;
-      return () => {};
+      return () => undefined;
     });
 
     const { result } = renderUseTheme();
@@ -101,7 +101,7 @@ describe('Component: ThemeProvider', { tags: ['component'] }, () => {
   it('cycles light -> dark -> system -> light on successive toggles', () => {
     vi.mocked(readStoredTheme).mockReturnValueOnce('light');
     vi.mocked(getSystemTheme).mockReturnValueOnce('light');
-    vi.mocked(subscribeToSystemTheme).mockReturnValueOnce(() => {});
+    vi.mocked(subscribeToSystemTheme).mockReturnValueOnce(() => undefined);
 
     const { result } = renderUseTheme();
 

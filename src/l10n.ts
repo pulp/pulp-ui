@@ -73,4 +73,4 @@ if (pseudolocalization) {
 
 activate(language, pseudolocalization);
 
-export { availableLanguages, languageNames }
+export { availableLanguages, languageNames };

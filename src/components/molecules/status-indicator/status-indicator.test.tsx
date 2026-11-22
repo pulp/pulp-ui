@@ -32,7 +32,11 @@ describe('Component: StatusIndicator', { tags: ['component'] }, () => {
 
     const indicator = screen.getByRole('status');
 
-    expect(indicator.classList.contains('pulp-status-indicator--danger')).toStrictEqual(true);
-    expect(indicator.classList.contains('pulp-status-indicator--success')).toStrictEqual(false);
-  })
+    expect(
+      indicator.classList.contains('pulp-status-indicator--danger'),
+    ).toStrictEqual(true);
+    expect(
+      indicator.classList.contains('pulp-status-indicator--success'),
+    ).toStrictEqual(false);
+  });
 });

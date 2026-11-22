@@ -37,7 +37,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => applyThemeClass(isDark), [isDark]);
 
   const toggleTheme = (): void => {
-    let nextTheme: Theme | null = null;
+    let nextTheme: Theme | null;
 
     switch (preference) {
       case 'light':
@@ -72,4 +72,4 @@ const useTheme = (): ThemeContextProps => {
   return ctx;
 };
 
-export { ThemeProvider, useTheme };
+export { ThemeProvider, ThemeContext, useTheme };

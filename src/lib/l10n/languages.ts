@@ -12,5 +12,5 @@ const languageNames = {
 
 type LanguageCode = keyof typeof languageNames;
 
-export { availableLanguages, languageNames }
-export type { LanguageCode }
+export { availableLanguages, languageNames };
+export type { LanguageCode };

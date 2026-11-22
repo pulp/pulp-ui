@@ -7,10 +7,7 @@ import {
 import GlobeIcon from '@patternfly/react-icons/dist/esm/icons/globe-icon';
 import { type FC, useState } from 'react';
 import { isLanguageCode } from '../../../lib/l10n/is-language-code';
-import {
-  type LanguageCode,
-  languageNames,
-} from '../../../lib/l10n/languages';
+import { type LanguageCode, languageNames } from '../../../lib/l10n/languages';
 import './language-selector.css';
 
 interface LanguageSelectorProps {
