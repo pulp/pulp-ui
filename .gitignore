@@ -10,3 +10,7 @@ cypress/videos/*
 dist/
 node_modules/
 npm-debug.log*
+
+*storybook.log
+storybook-static
+.cache/

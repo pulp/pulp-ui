@@ -37,6 +37,17 @@ describe('Unit: login model', { tags: ['unit'] }, () => {
       );
     });
 
+    it('encodes cyrillic credentials as UTF-8', () => {
+      expect(
+        credentialsCodec.encode({
+          username: 'адмін',
+          password: 'товариш',
+        }),
+      ).toStrictEqual(
+        `Basic ${Buffer.from('адмін:товариш', 'utf-8').toString('base64')}`,
+      );
+    });
+
     it('throws on decode, since a header cannot be reversed', () => {
       expect(() =>
         credentialsCodec.decode(

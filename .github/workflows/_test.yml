@@ -33,3 +33,17 @@ jobs:
 
       - name: Run tests
         run: npm run test:unit
+
+  component-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pulp-ui (${{ github.ref }})
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: npm Setup
+        uses: $/.github/actions/npm-setup
+
+      - name: Run tests
+        run: npm run test:component

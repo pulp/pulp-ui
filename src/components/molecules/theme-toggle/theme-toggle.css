@@ -1,0 +1,31 @@
+.pulp-theme-toggle.pf-v5-c-button {
+  --pulp-theme-toggle-bg: #ffffff;
+  --pulp-theme-toggle-icon: #515154;
+  --pulp-theme-toggle-bg-hover: #f3f4f8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 53px;
+  height: 53px;
+  border-radius: 50%;
+  background-color: var(--pulp-theme-toggle-bg);
+  color: var(--pulp-theme-toggle-icon);
+}
+
+:where(.pf-v5-theme-dark) .pulp-theme-toggle.pf-v5-c-button {
+  --pulp-theme-toggle-bg: #1e2026;
+  --pulp-theme-toggle-icon: #b8bbbe;
+  --pulp-theme-toggle-bg-hover: #2a2d35;
+}
+
+.pulp-theme-toggle.pf-v5-c-button:hover,
+.pulp-theme-toggle.pf-v5-c-button:focus-visible {
+  background-color: var(--pulp-theme-toggle-bg-hover);
+}
+
+@media (max-width: 576px) {
+  .pulp-theme-toggle.pf-v5-c-button {
+    width: 44px;
+    height: 44px;
+  }
+}
