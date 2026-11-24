@@ -1,3 +1,13 @@
+## 0.1.29 (2026-11-24) {: #0.1.29 }
+
+### What's Changed
+* feat: adds login UI component foundations following atomic design system [#409](https://github.com/pulp/pulp-ui/pull/409)
+
+
+**Full Changelog**: https://github.com/pulp/pulp-ui/compare/v0.1.28...v0.1.29
+
+---
+
 ## 0.1.28 (2026-11-14) {: #0.1.28 }
 
 ### What's Changed
