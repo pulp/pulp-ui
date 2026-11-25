@@ -12,6 +12,15 @@ export {
   ContainerDistributionAPI,
   ContainerPullThroughDistributionAPI,
 } from './container-distribution';
+export {
+  ContainerRepositoryNativeAPI,
+  type ContainerRepositoryNativeType,
+  type ContainerRepositoryVersionType,
+} from './container-repository-native';
+export {
+  ContainerRemoteNativeAPI,
+  type ContainerRemoteNativeType,
+} from './container-remote-native';
 export { ContainerTagAPI } from './container-tag';
 export { DebDistributionAPI } from './deb-distribution';
 export { DebRemoteAPI, type DebRemoteType } from './deb-remote';

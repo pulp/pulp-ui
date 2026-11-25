@@ -1,3 +1,50 @@
 .delete-container-modal-message {
   padding-bottom: var(--pf-v5-global--spacer--md);
 }
+
+.execution-environment-layout {
+  display: grid;
+  gap: var(--pf-v5-global--spacer--lg);
+  grid-template-columns: minmax(18rem, 22rem) minmax(0, 1fr);
+}
+
+.execution-environment-layout__content {
+  min-width: 0;
+}
+
+.container-repository-sidebar {
+  border: 1px solid var(--pf-v5-global--BorderColor--100);
+  border-radius: var(--pf-v5-global--BorderRadius--sm);
+  padding: var(--pf-v5-global--spacer--md);
+  position: sticky;
+  top: var(--pf-v5-global--spacer--lg);
+}
+
+.container-repository-sidebar__header {
+  display: grid;
+  gap: var(--pf-v5-global--spacer--sm);
+  margin-bottom: var(--pf-v5-global--spacer--md);
+}
+
+.container-repository-sidebar__status {
+  display: flex;
+  justify-content: center;
+  padding: var(--pf-v5-global--spacer--xl) 0;
+}
+
+.container-repository-sidebar__link {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 992px) {
+  .execution-environment-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .container-repository-sidebar {
+    position: static;
+  }
+}
